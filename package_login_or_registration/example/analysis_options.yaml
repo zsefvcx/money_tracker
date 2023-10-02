@@ -4,6 +4,3 @@ linter:
   rules:
     unnecessary_await_in_return: false
     sort_pub_dependencies: false
-
-
-
