@@ -12,12 +12,31 @@ class MainFormAuthorization extends StatefulWidget {
 class _MainFormAuthorizationState extends State<MainFormAuthorization> {
   bool _loginUser = false;
   bool _passwordVisible = false;
+  bool _process = false;
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _emailController= TextEditingController();
+  final TextEditingController _passwordController= TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _emailController.text = '';
+    _passwordController.text = '';
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(padding:  const EdgeInsets.all(15),
         child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -45,7 +64,9 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                     ),
                     20.h,
                     TextFormField(
+                      controller: _emailController,
                       mouseCursor: SystemMouseCursors.text,
+                      validator: ValidatorFields.checkEMail,
                       decoration: const InputDecoration(
                         labelText: 'E-mail',
                         hintText: 'Введите свою почту',
@@ -53,8 +74,10 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                     ),
                     20.h,
                     TextFormField(
+                      controller: _passwordController,
                       mouseCursor: SystemMouseCursors.text,
                       obscureText: _passwordVisible,
+                      validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
                       obscuringCharacter: '*',
                       decoration: InputDecoration(
                         labelText: 'Пароль',
@@ -76,10 +99,15 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                     ),
                     40.h,
                     ElevatedButton(onPressed: (){
-                      if (kDebugMode) {
-                        _loginUser
-                            ? print('New User Login')
-                            : print('Login');
+                      final cSt = _formKey.currentState;
+                      if(cSt != null && cSt.validate() && !_process) {
+                        _process = true;
+                        if (kDebugMode) {
+                          _loginUser
+                              ? print('New User Login')
+                              : print('Login');
+                        }
+                        _process = false;
                       }
                     }, child: _loginUser
                         ? const Text('Регистрация')

@@ -1,8 +1,7 @@
 /// This library allows you to organize an authorization form
 library package_login_or_registration;
 
-export 'src/extensions.dart';
-export 'src/main_form_authorization.dart';
+export 'src/src.dart';
 
 /// A Calculator.
 class Calculator {
