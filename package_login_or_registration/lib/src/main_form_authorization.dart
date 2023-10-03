@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:package_login_or_registration/package_login_or_registration.dart';
+
+import 'package:package_login_or_registration/src/src.dart';
 
 class MainFormAuthorization extends StatefulWidget {
   const MainFormAuthorization({super.key});
@@ -49,6 +50,9 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                     10.h,
                     Text('Учет доходов',
                         style: theme.textTheme.titleLarge?.copyWith(
+                          fontFamily: 'SF UI Display',
+                          fontSize: 24,
+                          height: 24/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
                           fontWeight: FontWeight.bold
                         ),
                       textAlign: TextAlign.center,
@@ -57,6 +61,9 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                       width: 180,
                       child: Text('Ваша история доходов всегда под рукой',
                         style: theme.textTheme.bodyLarge?.copyWith(
+                            fontFamily: 'SF UI Display',
+                            fontSize: 15,
+                            height: 17/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
                             fontWeight: FontWeight.normal
                         ),
                         textAlign: TextAlign.center,
@@ -110,9 +117,10 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                         _process = false;
                       }
                     }, child: _loginUser
-                        ? const Text('Регистрация')
-                        : const Text('Войти'),
+                        ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
+                        : const Text('Войти', style: TextStyle(color: Colors.white),),
                     style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(CustomColors.violetFirm),
                       mouseCursor: MaterialStatePropertyAll(SystemMouseCursors.click),
                       minimumSize: MaterialStatePropertyAll(Size(double.maxFinite, 50)),
                     ),
