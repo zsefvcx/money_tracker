@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   surf_lint_rules: ^3.0.0
   internet_connection_checker: ^1.0.0+1
+  window_manager: ^0.3.4
 
 dev_dependencies:
   flutter_test:
