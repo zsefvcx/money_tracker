@@ -5,17 +5,16 @@ import 'package:hash/hash.dart';
 
 class UserAuthorizationPassword {
 
-  static final sha512 = SHA512();
-
   static String hashSHA512(String value) {
     final hash = conv.utf8.encode(value);
     //return conv.utf8.decode(res);
   if (kDebugMode) {
     print(hash);
     print(conv.utf8.decode(hash));
+    print('SHA512 digest as bytes: ${SHA512().update(hash).digest()}');
   }
 
-    return sha512.update(hash).;
+    return SHA512().update(hash).digest().join('.');
   }
 
 
