@@ -107,6 +107,9 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                   ),
                   40.h,
                   ElevatedButton(onPressed: (){
+                    if (kDebugMode) {
+                      print(UserAuthorizationPassword.hashSHA512('value'));
+                    }
                     final cSt = _formKey.currentState;
                     if(cSt != null && cSt.validate() && !_process) {
                       _process = true;

@@ -41,11 +41,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
 
 
-        elevatedButtonTheme: const ElevatedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(CustomColors.violetFirm),
-            mouseCursor: MaterialStatePropertyAll(SystemMouseCursors.click),
-            minimumSize: MaterialStatePropertyAll(Size(double.maxFinite, 50)),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: CustomColors.violetFirm,
+            minimumSize: const Size(double.maxFinite, 50),
+            enabledMouseCursor: SystemMouseCursors.click,
           ),
         ),
 
@@ -71,7 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Scaffold(
-        body: MainFormAuthorization(),
+        body: Padding(
+          padding: EdgeInsets.only(top: 10, bottom: 25),
+          child: MainFormAuthorization(),
+        ),
       ),
     );
   }
