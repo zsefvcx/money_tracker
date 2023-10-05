@@ -118,6 +118,16 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
                             ? print('New User Login')
                             : print('Login');
                       }
+                      if(_loginUser){
+                        // UserAuthorizationPassword(
+                        //   id: null,
+                        //   userName: _emailController.text,
+                        //   userPassword: _passwordController.text,
+                        // )
+
+
+                      }
+
                       _process = false;
                     }
                   }, child: _loginUser

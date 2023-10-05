@@ -11,27 +11,35 @@ class ValidatorFields {
 
   static String? checkPasswordCompliant(String? value, [int minLength = 8]) {
     if (value == null || value.length < minLength) {
-      return 'Длинна пароля меньше $minLength!';
+      return 'Длинна пароля меньше $minLength или пароль пустой';
     }
-    if(RegExp('[A-Z]').hasMatch(value)){
-      if(RegExp('[0-9]').hasMatch(value)){
-        if(RegExp('[0-9]').hasMatch(value)){
-          if(RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)){
-            if (kDebugMode) {
-              print(value.hashCode);
+    if(!RegExp('[ ]').hasMatch(value)) {
+      if (!RegExp('[а-яА-Я]').hasMatch(value)) {
+        if (RegExp('[A-Z]').hasMatch(value)) {
+          if (RegExp('[0-9]').hasMatch(value)) {
+            if (RegExp('[0-9]').hasMatch(value)) {
+              if (RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+                if (kDebugMode) {
+                  print(value.hashCode);
+                }
+                return null;
+              } else {
+                return 'Пароль должен соержать спецсимволы';
+              }
+            } else {
+              return 'Пароль должен соержать прописные буквы';
             }
-            return null;
           } else {
-            return 'Пароль должен соержать спецсимволы';
+            return 'Пароль должен соержать цифры';
           }
         } else {
-          return 'Пароль должен соержать прописные буквы';
+          return 'Пароль должен соержать заглавные буквы';
         }
       } else {
-        return 'Пароль должен соержать цифры';
+        return 'Пароль должен соержать только латинские символы';
       }
     } else {
-      return 'Пароль должен соержать заглавные буквы';
+      return 'Пароль не должен содержать пробелов';
     }
   }
 
