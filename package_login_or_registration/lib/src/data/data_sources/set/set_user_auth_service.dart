@@ -9,7 +9,7 @@ abstract class SetUserAuthService {
     bool internet = false,
   });
 
-  Future<UserAuthorizationPasswordEntity?> setPasswordAndUserGroup({
+  Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
     required UserGroup userGroup,

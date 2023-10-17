@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:package_login_or_registration/src/core/core.dart';
 import 'package:package_login_or_registration/src/data/data_sources/set/set_user_auth_service.dart';
 import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
-import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 
 class SetUserAuthServiceImpl implements SetUserAuthService {
 
@@ -12,7 +11,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   SetUserAuthServiceImpl({required this.secureStorage});
 
   @override
-  Future<UserAuthorizationPasswordEntity?> setPasswordAndUserGroup({
+  Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
     required UserGroup userGroup,
@@ -29,7 +28,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final res = jsonEncode(json);
       // Write value
       await secureStorage.write(key: Keys.userData, value: res);
-      return user;
+      return true;
     } on Exception catch(e){
       throw ArgumentError('Error setPasswordAndUserGroup: $e');
     }

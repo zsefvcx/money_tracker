@@ -1,4 +1,4 @@
-import 'package:package_login_or_registration/src/core/core.dart';
+
 import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
 
 abstract class GetUserAuthService {

@@ -23,7 +23,7 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   }
 
   @override
-  Future<UserAuthorizationPasswordEntity?> setPasswordAndUserGroup({
+  Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
     required UserGroup userGroup,

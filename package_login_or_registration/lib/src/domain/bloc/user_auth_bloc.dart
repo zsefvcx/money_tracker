@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:package_login_or_registration/package_login_or_registration.dart';
-import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
 //import 'package:injectable/injectable.dart';
 import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 import 'package:package_login_or_registration/src/domain/repositories/get_user_auth_repository.dart';
@@ -113,24 +112,17 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             value.completer.complete();
           },
           checkUserName: (value) async {
-            emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<bool>(
                 function: () async => await  getUserAuthRepository.checkUserName(
                     userNameHash512: value.userNameHash512
                 ),
             );
-            final data = (res==null || !res)?null:UserAuthorizationPasswordModel(
-              statusAuthorization: false,
-              userNameHash512: value.userNameHash512,
-            );
-            userAuthData = userAuthData.copyWithData(
-              data: data,
-              error: error,
-              e: e,
-              timeOut: timeOut,
-            );
-            _response(emit);
-            value.completer.complete();
+            if (error){
+              Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
           },
           checkPassword: (value) async {
             emit(const UserAuthState.loading());
@@ -150,42 +142,32 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             value.completer.complete();
           },
           setUserName: (value) async {
-            emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async => await setUserAuthRepository.setUserName(
                   userNameHash512: value.userNameHash512
               ),
             );
-            final data = (res==null || !res)?null:UserAuthorizationPasswordModel(
-              statusAuthorization: false,
-              userNameHash512: value.userNameHash512,
-            );
-            userAuthData = userAuthData.copyWithData(
-              data: data,
-              error: error,
-              e: e,
-              timeOut: timeOut,
-            );
-            _response(emit);
-            value.completer.complete();
+            if (error){
+              Logger.print('Error setUserName.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
           },
           setPassword: (value) async {
-            emit(const UserAuthState.loading());
-            final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
                   userNameHash512: value.userNameHash512,
                   userPasswordHash512: value.userPasswordHash512,
                   userGroup: value.userGroup
               )
             );
-            userAuthData = userAuthData.copyWithData(
-              data: res,
-              error: error,
-              e: e,
-              timeOut: timeOut,
-            );
-            _response(emit);
-            value.completer.complete();
+            if (error){
+              Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
           },
       );
     });

@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_login_or_registration/src/core/hash.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
-import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 
 import 'package:package_login_or_registration/src/src.dart';
 
@@ -29,8 +29,8 @@ class _MainFormState extends State<MainForm> {
   @override
   void initState() {
     super.initState();
-    _emailController.text = '';
-    _passwordController.text = '';
+    _emailController.text = 'test@test.ru';
+    _passwordController.text = 'dddDDDD4475.';
     if (widget.loginUser==null) {
       _loginUser = true;
     } else {
@@ -120,10 +120,7 @@ class _MainFormState extends State<MainForm> {
                     ),
                   ),
                   40.h,
-                  ElevatedButton(onPressed: (){
-                    if (kDebugMode) {
-                     // print(UserAuthorizationPassword.hashSHA512('value'));
-                    }
+                  ElevatedButton(onPressed: () async {
                     final cSt = _formKey.currentState;
                     if(cSt != null && cSt.validate() && !_process) {
                       _process = true;
@@ -132,14 +129,95 @@ class _MainFormState extends State<MainForm> {
                             ? print('New User Login')
                             : print('Login');
                       }
-                      if(_loginUser){
+                      final completer = Completer();
+                      final completerFinal = Completer();
+                      final completerFinalSet = Completer();
+                      final hashUserName = Hash.hashSHA512(
+                          _emailController.text);
+                      final hashPassword = Hash.hashSHA512(
+                          _passwordController.text);
+                        blocBloc.add(UserAuthEvent.checkUserName(
+                            userNameHash512: hashUserName,
+                            completer: completer)
+                        );
+                        final res = await completer.future;
+                        if (res is bool && res) {
+                          if(_loginUser) {
+                            if (context.mounted) {
+                              CustomShowSnackBar.showSnackBar(
+                                  'Такой пользователь существует', context
+                              );
+                            }
+                            _process = false;
+                            return;
+                          }
+                          ///Логинимся
 
-                        // UserAuthorizationPassword(
-                        //   id: null,
-                        //   userName: _emailController.text,
-                        //   userPassword: _passwordController.text,
-                        // )
-                      }
+
+                        } else {
+                            if(!_loginUser) {
+                              if (context.mounted) {
+                                CustomShowSnackBar.showSnackBar(
+                                    'Такого пользователя не существует', context
+                                );
+                              }
+                              _process = false;
+                              return;
+                            }
+                            ///Регистрируемся
+                            blocBloc.add(UserAuthEvent.setUserName(
+                                userNameHash512: hashUserName,
+                                completer: completerFinal)
+                            );
+                            final res = await completerFinal.future;
+                            if (res is bool && res) {
+                              blocBloc.add(UserAuthEvent.setPassword(
+                                  userNameHash512: hashUserName,
+                                  userPasswordHash512: hashPassword,
+                                  userGroup: UserGroup.admin,
+                                  completer: completerFinalSet)
+                              );
+                              final res = await completerFinalSet.future;
+                              if (res is bool && res) {
+                                if (kDebugMode) {
+                                  print('New User Login create...');
+                                }
+                              } else {
+                                if (context.mounted) {
+                                  CustomShowSnackBar.showSnackBar(
+                                      'Имя пользователя занято или запрещено.', context
+                                  );
+                                }
+                              }
+                            } else {
+                              if (context.mounted) {
+                                CustomShowSnackBar.showSnackBar(
+                                    'Имя пользователя занято или запрещено.', context
+                                );
+                              }
+                            }
+                        }
+
+                      // } else {
+                      //   blocBloc.add(UserAuthEvent.setUserName(
+                      //       userNameHash512: hashUserName,
+                      //       completer: completer)
+                      //   );
+                      //   final res = await completer.future;
+                      //   if (res is bool && res) {
+                      //     if (context.mounted) {
+                      //       CustomShowSnackBar.showSnackBar(
+                      //           'Имя пользователя свободно.', context
+                      //       );
+                      //     }
+                      //   } else {
+                      //     if (context.mounted) {
+                      //       CustomShowSnackBar.showSnackBar(
+                      //           'Имя пользователя занято или запрещено.', context
+                      //       );
+                      //     }
+                      //   }
+                      // }
                       _process = false;
                     }
                   }, child: _loginUser
