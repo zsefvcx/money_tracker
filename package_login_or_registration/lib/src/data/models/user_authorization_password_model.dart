@@ -1,48 +1,23 @@
-import 'dart:convert' as conv;
-
 import 'package:flutter/foundation.dart';
-import 'package:hash/hash.dart';
-
-enum UserGroup {
-  admin,
-  user,
-  guest;
-
-  @override
-  String toString() {
-    return name;
-  }
-}
+import 'package:package_login_or_registration/src/core/user_group.dart';
+import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 
 @immutable
-class UserAuthorizationPassword {
-  static String hashSHA512(String value) {
-    final hash = conv.utf8.encode(value);
-    if (kDebugMode) {
-      print(hash);
-      print(conv.utf8.decode(hash));
-      print('SHA512 digest as bytes: ${SHA512().update(hash).digest()}');
-    }
-    return SHA512().update(hash).digest().join('.');
-  }
-
-  final int? id;
-  final String userNameHash512;
-  final String userPasswordHash512;
-  final UserGroup userGroup;
+class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
 
 //<editor-fold desc="Data Methods">
-  const UserAuthorizationPassword({
-    required this.userNameHash512,
-    required this.userPasswordHash512,
-    required this.userGroup,
-    this.id,
+  const UserAuthorizationPasswordModel({
+    required super.statusAuthorization,
+    required super.userNameHash512,
+    super.userPasswordHash512,
+    super.userGroup,
+    super.id,
   });
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is UserAuthorizationPassword &&
+      (other is UserAuthorizationPasswordModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           userNameHash512 == other.userNameHash512 &&
@@ -58,16 +33,22 @@ class UserAuthorizationPassword {
 
   @override
   String toString() {
-    return 'UserAuthorizationPassword{ id: $id, userNameHash512: $userNameHash512, userPasswordHash512: $userPasswordHash512, userGroup: $userGroup,}';
+    return 'UserAuthorizationPassword{statusAuthorization:$statusAuthorization,'
+           ' id: $id, '
+           'userNameHash512: $userNameHash512, '
+           'userPasswordHash512: $userPasswordHash512, '
+           'userGroup: $userGroup';
   }
 
-  UserAuthorizationPassword copyWith({
+  UserAuthorizationPasswordModel copyWith({
+    bool? statusAuthorization,
     int? id,
     String? userNameHash512,
     String? userPasswordHash512,
     UserGroup? userGroup,
   }) {
-    return UserAuthorizationPassword(
+    return UserAuthorizationPasswordModel(
+      statusAuthorization: statusAuthorization ?? this.statusAuthorization,
       id: id ?? this.id,
       userNameHash512: userNameHash512 ?? this.userNameHash512,
       userPasswordHash512: userPasswordHash512 ?? this.userPasswordHash512,
@@ -77,6 +58,7 @@ class UserAuthorizationPassword {
 
   Map<String, dynamic> toMap() {
     return {
+      'statusAuthorization': statusAuthorization,
       'id': id,
       'userNameHash512': userNameHash512,
       'userPasswordHash512': userPasswordHash512,
@@ -84,8 +66,9 @@ class UserAuthorizationPassword {
     };
   }
 
-  factory UserAuthorizationPassword.fromMap(Map<String, dynamic> map) {
-    return UserAuthorizationPassword(
+  factory UserAuthorizationPasswordModel.fromMap(Map<String, dynamic> map) {
+    return UserAuthorizationPasswordModel(
+      statusAuthorization: map['statusAuthorization'] as bool,
       id: map['id'] as int,
       userNameHash512: map['userNameHash512'] as String,
       userPasswordHash512: map['userPasswordHash512'] as String,

@@ -2,9 +2,3 @@
 library package_login_or_registration;
 
 export 'src/src.dart';
-
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  static int addOne(int value) => value + 1;
-}
