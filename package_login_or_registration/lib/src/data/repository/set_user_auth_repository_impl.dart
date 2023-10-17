@@ -1,5 +1,6 @@
 import 'package:package_login_or_registration/src/core/core.dart';
 import 'package:package_login_or_registration/src/data/data_sources/set/set_user_auth_service.dart';
+import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
 import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 import 'package:package_login_or_registration/src/domain/repositories/set_user_auth_repository.dart';
 
@@ -45,7 +46,7 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   @override
   Future<bool?> updateUserData({required UserAuthorizationPasswordEntity value}) async {
     return await setUserAuthService.updateUserData(
-      value: value,
+      value: value as UserAuthorizationPasswordModel,
       internet: await networkInfo.isConnected,);
   }
 }

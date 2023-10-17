@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
+import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 
 import 'package:package_login_or_registration/src/src.dart';
 
 class MainForm extends StatefulWidget {
-  const MainForm({super.key});
+  const MainForm({super.key, this.loginUser});
+
+  final bool? loginUser;
 
   @override
   State<MainForm> createState() => _MainFormState();
@@ -20,11 +25,17 @@ class _MainFormState extends State<MainForm> {
   final TextEditingController _emailController= TextEditingController();
   final TextEditingController _passwordController= TextEditingController();
 
+
   @override
   void initState() {
     super.initState();
     _emailController.text = '';
     _passwordController.text = '';
+    if (widget.loginUser==null) {
+      _loginUser = true;
+    } else {
+      _loginUser = false;
+    }
   }
 
   @override
@@ -37,6 +48,7 @@ class _MainFormState extends State<MainForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final blocBloc = context.read<GetUserAuthBloc>();
     return Padding(
       padding: const EdgeInsets.only(left: 25, right: 25),
       child: Form(
@@ -121,15 +133,13 @@ class _MainFormState extends State<MainForm> {
                             : print('Login');
                       }
                       if(_loginUser){
+
                         // UserAuthorizationPassword(
                         //   id: null,
                         //   userName: _emailController.text,
                         //   userPassword: _passwordController.text,
                         // )
-
-
                       }
-
                       _process = false;
                     }
                   }, child: _loginUser
@@ -148,6 +158,7 @@ class _MainFormState extends State<MainForm> {
                       print('Login');
                     }
                     setState(() {
+
                       _loginUser = !_loginUser;
                     });
                   }, child: _loginUser

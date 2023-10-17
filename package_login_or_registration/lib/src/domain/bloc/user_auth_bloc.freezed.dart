@@ -1662,7 +1662,8 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(UserAuthorizationPasswordEntity model) loaded,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) =>
@@ -1670,7 +1671,8 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) =>
@@ -1678,7 +1680,8 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1687,6 +1690,7 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
     required TResult Function(_loadedState value) loaded,
     required TResult Function(_errorState value) error,
     required TResult Function(_timeOut value) timeOut,
@@ -1695,6 +1699,7 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
     TResult? Function(_loadedState value)? loaded,
     TResult? Function(_errorState value)? error,
     TResult? Function(_timeOut value)? timeOut,
@@ -1703,6 +1708,7 @@ mixin _$UserAuthState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
     TResult Function(_loadedState value)? loaded,
     TResult Function(_errorState value)? error,
     TResult Function(_timeOut value)? timeOut,
@@ -1768,7 +1774,8 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(UserAuthorizationPasswordEntity model) loaded,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1779,7 +1786,8 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1790,7 +1798,8 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1805,6 +1814,7 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
     required TResult Function(_loadedState value) loaded,
     required TResult Function(_errorState value) error,
     required TResult Function(_timeOut value) timeOut,
@@ -1816,6 +1826,7 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
     TResult? Function(_loadedState value)? loaded,
     TResult? Function(_errorState value)? error,
     TResult? Function(_timeOut value)? timeOut,
@@ -1827,6 +1838,7 @@ class _$loadingStateImpl implements _loadingState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
     TResult Function(_loadedState value)? loaded,
     TResult Function(_errorState value)? error,
     TResult Function(_timeOut value)? timeOut,
@@ -1844,12 +1856,130 @@ abstract class _loadingState implements UserAuthState {
 }
 
 /// @nodoc
+abstract class _$$newUserStateImplCopyWith<$Res> {
+  factory _$$newUserStateImplCopyWith(
+          _$newUserStateImpl value, $Res Function(_$newUserStateImpl) then) =
+      __$$newUserStateImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$newUserStateImplCopyWithImpl<$Res>
+    extends _$UserAuthStateCopyWithImpl<$Res, _$newUserStateImpl>
+    implements _$$newUserStateImplCopyWith<$Res> {
+  __$$newUserStateImplCopyWithImpl(
+      _$newUserStateImpl _value, $Res Function(_$newUserStateImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$newUserStateImpl implements _newUserState {
+  const _$newUserStateImpl();
+
+  @override
+  String toString() {
+    return 'UserAuthState.newUser()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$newUserStateImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() loading,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
+    required TResult Function() error,
+    required TResult Function() timeOut,
+  }) {
+    return newUser();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? loading,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
+    TResult? Function()? error,
+    TResult? Function()? timeOut,
+  }) {
+    return newUser?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? loading,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
+    TResult Function()? error,
+    TResult Function()? timeOut,
+    required TResult orElse(),
+  }) {
+    if (newUser != null) {
+      return newUser();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
+    required TResult Function(_loadedState value) loaded,
+    required TResult Function(_errorState value) error,
+    required TResult Function(_timeOut value) timeOut,
+  }) {
+    return newUser(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
+    TResult? Function(_loadedState value)? loaded,
+    TResult? Function(_errorState value)? error,
+    TResult? Function(_timeOut value)? timeOut,
+  }) {
+    return newUser?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
+    TResult Function(_loadedState value)? loaded,
+    TResult Function(_errorState value)? error,
+    TResult Function(_timeOut value)? timeOut,
+    required TResult orElse(),
+  }) {
+    if (newUser != null) {
+      return newUser(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _newUserState implements UserAuthState {
+  const factory _newUserState() = _$newUserStateImpl;
+}
+
+/// @nodoc
 abstract class _$$loadedStateImplCopyWith<$Res> {
   factory _$$loadedStateImplCopyWith(
           _$loadedStateImpl value, $Res Function(_$loadedStateImpl) then) =
       __$$loadedStateImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({UserAuthorizationPasswordEntity model});
 }
 
 /// @nodoc
@@ -1859,84 +1989,63 @@ class __$$loadedStateImplCopyWithImpl<$Res>
   __$$loadedStateImplCopyWithImpl(
       _$loadedStateImpl _value, $Res Function(_$loadedStateImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? model = null,
-  }) {
-    return _then(_$loadedStateImpl(
-      model: null == model
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
-              as UserAuthorizationPasswordEntity,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$loadedStateImpl implements _loadedState {
-  const _$loadedStateImpl({required this.model});
-
-  @override
-  final UserAuthorizationPasswordEntity model;
+  const _$loadedStateImpl();
 
   @override
   String toString() {
-    return 'UserAuthState.loaded(model: $model)';
+    return 'UserAuthState.loaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$loadedStateImpl &&
-            (identical(other.model, model) || other.model == model));
+        (other.runtimeType == runtimeType && other is _$loadedStateImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, model);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$loadedStateImplCopyWith<_$loadedStateImpl> get copyWith =>
-      __$$loadedStateImplCopyWithImpl<_$loadedStateImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(UserAuthorizationPasswordEntity model) loaded,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
-    return loaded(model);
+    return loaded();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
-    return loaded?.call(model);
+    return loaded?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(model);
+      return loaded();
     }
     return orElse();
   }
@@ -1945,6 +2054,7 @@ class _$loadedStateImpl implements _loadedState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
     required TResult Function(_loadedState value) loaded,
     required TResult Function(_errorState value) error,
     required TResult Function(_timeOut value) timeOut,
@@ -1956,6 +2066,7 @@ class _$loadedStateImpl implements _loadedState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
     TResult? Function(_loadedState value)? loaded,
     TResult? Function(_errorState value)? error,
     TResult? Function(_timeOut value)? timeOut,
@@ -1967,6 +2078,7 @@ class _$loadedStateImpl implements _loadedState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
     TResult Function(_loadedState value)? loaded,
     TResult Function(_errorState value)? error,
     TResult Function(_timeOut value)? timeOut,
@@ -1980,14 +2092,7 @@ class _$loadedStateImpl implements _loadedState {
 }
 
 abstract class _loadedState implements UserAuthState {
-  const factory _loadedState(
-          {required final UserAuthorizationPasswordEntity model}) =
-      _$loadedStateImpl;
-
-  UserAuthorizationPasswordEntity get model;
-  @JsonKey(ignore: true)
-  _$$loadedStateImplCopyWith<_$loadedStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  const factory _loadedState() = _$loadedStateImpl;
 }
 
 /// @nodoc
@@ -2029,7 +2134,8 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(UserAuthorizationPasswordEntity model) loaded,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -2040,7 +2146,8 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -2051,7 +2158,8 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -2066,6 +2174,7 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
     required TResult Function(_loadedState value) loaded,
     required TResult Function(_errorState value) error,
     required TResult Function(_timeOut value) timeOut,
@@ -2077,6 +2186,7 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
     TResult? Function(_loadedState value)? loaded,
     TResult? Function(_errorState value)? error,
     TResult? Function(_timeOut value)? timeOut,
@@ -2088,6 +2198,7 @@ class _$errorStateImpl implements _errorState {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
     TResult Function(_loadedState value)? loaded,
     TResult Function(_errorState value)? error,
     TResult Function(_timeOut value)? timeOut,
@@ -2143,7 +2254,8 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(UserAuthorizationPasswordEntity model) loaded,
+    required TResult Function() newUser,
+    required TResult Function() loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -2154,7 +2266,8 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult? Function()? newUser,
+    TResult? Function()? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -2165,7 +2278,8 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(UserAuthorizationPasswordEntity model)? loaded,
+    TResult Function()? newUser,
+    TResult Function()? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -2180,6 +2294,7 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_loadingState value) loading,
+    required TResult Function(_newUserState value) newUser,
     required TResult Function(_loadedState value) loaded,
     required TResult Function(_errorState value) error,
     required TResult Function(_timeOut value) timeOut,
@@ -2191,6 +2306,7 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_loadingState value)? loading,
+    TResult? Function(_newUserState value)? newUser,
     TResult? Function(_loadedState value)? loaded,
     TResult? Function(_errorState value)? error,
     TResult? Function(_timeOut value)? timeOut,
@@ -2202,6 +2318,7 @@ class _$timeOutImpl implements _timeOut {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_loadingState value)? loading,
+    TResult Function(_newUserState value)? newUser,
     TResult Function(_loadedState value)? loaded,
     TResult Function(_errorState value)? error,
     TResult Function(_timeOut value)? timeOut,

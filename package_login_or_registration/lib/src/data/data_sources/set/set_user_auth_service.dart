@@ -1,4 +1,5 @@
 import 'package:package_login_or_registration/src/core/core.dart';
+import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
 import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
 
 abstract class SetUserAuthService {
@@ -15,7 +16,7 @@ abstract class SetUserAuthService {
     bool internet = false,
   });
 
-  Future<bool?> updateUserData({required UserAuthorizationPasswordEntity value, bool internet = false,});
+  Future<bool?> updateUserData({required UserAuthorizationPasswordModel value, bool internet = false,});
 
   Future<bool?> deleteUserData({bool internet = false,});
 }

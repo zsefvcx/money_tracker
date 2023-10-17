@@ -1,24 +1,62 @@
+import 'dart:convert';
+
+import 'package:package_login_or_registration/src/core/core.dart';
 import 'package:package_login_or_registration/src/data/data_sources/get/get_user_auth_service.dart';
 import 'package:package_login_or_registration/src/data/models/user_authorization_password_model.dart';
 
 class GetUserAuthServiceImpl implements GetUserAuthService {
+
+  final SecureStorage secureStorage;
+
+  GetUserAuthServiceImpl({required this.secureStorage});
+
   @override
-  Future<UserAuthorizationPasswordModel?> checkPassword({required String userNameHash512, required String userPasswordHash512, bool internet = false}) {
-    // TODO: implement checkPassword
-    throw UnimplementedError();
+  Future<UserAuthorizationPasswordModel?> checkPassword({
+    required String userNameHash512,
+    required String userPasswordHash512,
+    bool internet = false
+  }) async {
+    try{
+      // Read value
+      final userData = await secureStorage.read(key: Keys.userData);
+      if (userData == null || userData == '') return null;
+      final json = jsonDecode(userData);
+      if (json is Map<String, dynamic>) {
+        final user = UserAuthorizationPasswordModel.fromMap(json);
+        if (userNameHash512 == user.userNameHash512 &&
+            userPasswordHash512 == user.userPasswordHash512
+        ){
+          return user;
+        }
+      }
+      return null;
+    } on Exception catch(e){
+      throw ArgumentError('Error checkPassword: $e');
+    }
   }
 
   @override
-  Future<bool?> checkUserName({required String userNameHash512, bool internet = false}) {
-    // TODO: implement checkUserName
-    throw UnimplementedError();
+  Future<bool?> checkUserName({required String userNameHash512, bool internet = false}) async {
+    try{
+      // Read value
+      final userName = await secureStorage.read(key: Keys.userName);
+      if (userName == null || userName == '') return null;
+      return userNameHash512 == userName;
+    } on Exception catch(e){
+      throw ArgumentError('Error checkUserName: $e');
+    }
   }
 
   @override
-  Future<UserAuthorizationPasswordModel?> loadUserData() {
-    // TODO: implement loadUserData
-    throw UnimplementedError();
+  Future<UserAuthorizationPasswordModel?> loadUserData() async {
+    try{
+      // Read value
+      final userData = await secureStorage.read(key: Keys.userData);
+      if (userData == null || userData == '') return null;
+      final json = jsonDecode(userData);
+      return json is Map<String, dynamic>?UserAuthorizationPasswordModel.fromMap(json):null;
+    } on Exception catch(e){
+      throw ArgumentError('Error loadUserData: $e');
+    }
   }
-
-
 }

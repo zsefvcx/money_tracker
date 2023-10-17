@@ -1,4 +1,5 @@
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:package_login_or_registration/package_login_or_registration.dart';
@@ -15,8 +16,13 @@ class ServiceProvider{
   static final _getIt = GetIt.I;
 
   final NetworkInfo networkInfo = NetworkInfoImp(internetConnectionChecker: InternetConnectionChecker());
-  final GetUserAuthService getUserAuthService = GetUserAuthServiceImpl();
-  final SetUserAuthService setUserAuthService = SetUserAuthServiceImpl();
+
+  static final SecureStorage secureStorage = SecureStorageImpl(storage: const FlutterSecureStorage(aOptions: AndroidOptions(
+  encryptedSharedPreferences: true,
+  )));
+
+  final GetUserAuthService getUserAuthService = GetUserAuthServiceImpl(secureStorage: secureStorage);
+  final SetUserAuthService setUserAuthService = SetUserAuthServiceImpl(secureStorage: secureStorage);
 
   T get<T extends Object>() => _getIt.get<T>();
 

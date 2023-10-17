@@ -201,12 +201,14 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     } else{
       final data = userAuthData.data;
       if (data != null) {
-        emit(UserAuthState.loaded(model: data));
+        emit(const UserAuthState.loaded());
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
-        emit(const UserAuthState.error());
+        emit(const UserAuthState.newUser());
       }
-
+      userAuthData = userAuthData.copyWithData(
+        data: null
+      );
     }
   }
 

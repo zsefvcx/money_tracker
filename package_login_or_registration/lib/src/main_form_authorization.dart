@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:package_login_or_registration/src/domain/bloc/bloc_factory.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
+import 'package:package_login_or_registration/src/presentation/main_builder.dart';
 import 'package:package_login_or_registration/src/presentation/main_form.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _MainFormAuthorizationState extends State<MainFormAuthorization> {
           create: (_) => _getUserAuthBloc
         ),
       ],
-      child: const MainForm(),
+      child: const MainBuilderForm(),
     );
   }
 }
