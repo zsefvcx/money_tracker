@@ -8,7 +8,7 @@ abstract class GetUserAuthService {
     bool internet = false,
   });
 
-  Future<UserAuthorizationPasswordModel?> checkPassword({
+  Future<bool?> checkPassword({
     required String userNameHash512,
     required String userPasswordHash512,
     bool internet = false,

@@ -125,21 +125,18 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             }
           },
           checkPassword: (value) async {
-            emit(const UserAuthState.loading());
-            final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async => await  getUserAuthRepository.checkPassword(
                   userNameHash512: value.userNameHash512,
                   userPasswordHash512: value.userPasswordHash512
               ),
             );
-            userAuthData = userAuthData.copyWithData(
-              data: res,
-              error: error,
-              e: e,
-              timeOut: timeOut,
-            );
-            _response(emit);
-            value.completer.complete();
+            if (error){
+              Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
           },
           setUserName: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(

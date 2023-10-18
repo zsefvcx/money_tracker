@@ -6,7 +6,7 @@ abstract class GetUserAuthRepository {
     required String userNameHash512
   });
 
-  Future<UserAuthorizationPasswordEntity?> checkPassword({
+  Future<bool?> checkPassword({
     required String userNameHash512,
     required String userPasswordHash512,
   });

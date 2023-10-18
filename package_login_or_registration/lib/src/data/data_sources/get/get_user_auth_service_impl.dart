@@ -11,7 +11,7 @@ class GetUserAuthServiceImpl implements GetUserAuthService {
   GetUserAuthServiceImpl({required this.secureStorage});
 
   @override
-  Future<UserAuthorizationPasswordModel?> checkPassword({
+  Future<bool?> checkPassword({
     required String userNameHash512,
     required String userPasswordHash512,
     bool internet = false
@@ -26,7 +26,7 @@ class GetUserAuthServiceImpl implements GetUserAuthService {
         if (userNameHash512 == user.userNameHash512 &&
             userPasswordHash512 == user.userPasswordHash512
         ){
-          return user;
+          return true;
         }
       }
       return null;
