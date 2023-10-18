@@ -57,16 +57,18 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
   }
 
   Map<String, dynamic> toMap() {
+    final ug = userGroup??UserGroup.guest;
     return {
       'statusAuthorization': statusAuthorization,
       'id': id,
       'userNameHash512': userNameHash512,
       'userPasswordHash512': userPasswordHash512,
-      'userGroup': userGroup,
+      'userGroup': ug.index,
     };
   }
 
   factory UserAuthorizationPasswordModel.fromMap(Map<String, dynamic> map) {
+    int ugInd =
     return UserAuthorizationPasswordModel(
       statusAuthorization: map['statusAuthorization'] as bool,
       id: map['id'] as int,
