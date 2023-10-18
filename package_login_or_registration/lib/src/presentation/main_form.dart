@@ -152,13 +152,28 @@ class _MainFormState extends State<MainForm> {
                             return;
                           }
                           ///Логинимся
-
-
+                          blocBloc.add(UserAuthEvent.checkPassword(
+                              userNameHash512: hashUserName,
+                              userPasswordHash512: hashPassword,
+                              completer: completerFinal)
+                          );
+                          final res = await completerFinal.future;
+                          if (res is bool && res) {
+                            if (kDebugMode) {
+                              print('User Login in system...');
+                            }
+                          } else {
+                            if (context.mounted) {
+                              CustomShowSnackBar.showSnackBar(
+                                  'Такого пользователя не существует или ошибка в пароле', context
+                              );
+                            }
+                          }
                         } else {
                             if(!_loginUser) {
                               if (context.mounted) {
                                 CustomShowSnackBar.showSnackBar(
-                                    'Такого пользователя не существует', context
+                                    'Такого пользователя не существует или ошибка в пароле', context
                                 );
                               }
                               _process = false;

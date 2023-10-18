@@ -68,13 +68,13 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
   }
 
   factory UserAuthorizationPasswordModel.fromMap(Map<String, dynamic> map) {
-    int ugInd =
+    final ugInd = map['userGroup'] as int;
     return UserAuthorizationPasswordModel(
       statusAuthorization: map['statusAuthorization'] as bool,
-      id: map['id'] as int,
+      id: map['id'] as int?,
       userNameHash512: map['userNameHash512'] as String,
       userPasswordHash512: map['userPasswordHash512'] as String,
-      userGroup: map['userGroup'] as UserGroup,
+      userGroup: UserGroup.values[ugInd],
     );
   }
 
