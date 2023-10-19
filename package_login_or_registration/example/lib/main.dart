@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: RouteGenerator.initialRoute,
-      onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
+      onGenerateRoute: RouteGenerator.generateRoute,
     );
   }
 }
@@ -126,7 +126,7 @@ class MainPageExpenses extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Октябрь 2020'),
+            title: const Text('Октябрь 2023'),
             centerTitle: true,
             leading: const Icon(Icons.add),
           ),

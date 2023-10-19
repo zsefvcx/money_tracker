@@ -2,14 +2,16 @@
 import 'package:package_login_or_registration/src/domain/bloc/bloc_factory.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
 
-class MainBlocInit {
-
+class MainBloc{
   static late final GetUserAuthBloc getUserAuthBloc;
+}
 
+
+class MainBlocInit {
   static void initState() {
     BlocFactory.instance.initialize();
-    getUserAuthBloc = BlocFactory.instance.get<GetUserAuthBloc>();
-    getUserAuthBloc.add(const UserAuthEvent.init());
+    MainBloc.getUserAuthBloc = BlocFactory.instance.get<GetUserAuthBloc>();
+    MainBloc.getUserAuthBloc.add(const UserAuthEvent.init());
   }
 
 }
