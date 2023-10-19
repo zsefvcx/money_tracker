@@ -1,5 +1,5 @@
-export 'custom_colors.dart';
 export 'custom_show_snack_bar.dart';
+export 'custom_theme_prop.dart';
 export 'extensions.dart';
 export 'keys_storage.dart';
 export 'logger.dart';

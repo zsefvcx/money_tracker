@@ -20,7 +20,6 @@ class MainForm extends StatefulWidget {
 class _MainFormState extends State<MainForm> {
   bool _loginUser = false;
   bool _passwordVisible = false;
-  bool _process = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController= TextEditingController();
   final TextEditingController _passwordController= TextEditingController();
@@ -48,7 +47,9 @@ class _MainFormState extends State<MainForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     final blocBloc = context.read<GetUserAuthBloc>();
+    final valueListenableProcess = ValueNotifier<bool>(false);
     return Padding(
       padding: const EdgeInsets.only(left: 25, right: 25),
       child: Form(
@@ -98,7 +99,7 @@ class _MainFormState extends State<MainForm> {
                   TextFormField(
                     controller: _passwordController,
                     mouseCursor: SystemMouseCursors.text,
-                    obscureText: _passwordVisible,
+                    obscureText: !_passwordVisible,
                     validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
                     obscuringCharacter: '*',
                     decoration: InputDecoration(
@@ -106,7 +107,7 @@ class _MainFormState extends State<MainForm> {
                       hintText: 'Введите свой пароль',
                       suffixIcon: IconButton(
                         icon: Icon(
-                          !_passwordVisible
+                          _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
                           color: theme.primaryColor,
@@ -120,124 +121,25 @@ class _MainFormState extends State<MainForm> {
                     ),
                   ),
                   40.h,
-                  ElevatedButton(onPressed: () async {
-                    final cSt = _formKey.currentState;
-                    if(cSt != null && cSt.validate() && !_process) {
-                      _process = true;
-                      if (kDebugMode) {
-                        _loginUser
-                            ? print('New User Login')
-                            : print('Login');
-                      }
-                      final completer = Completer();
-                      final completerFinal = Completer();
-                      final completerFinalSet = Completer();
-                      final hashUserName = Hash.hashSHA512(
-                          _emailController.text);
-                      final hashPassword = Hash.hashSHA512(
-                          _passwordController.text);
-                        blocBloc.add(UserAuthEvent.checkUserName(
-                            userNameHash512: hashUserName,
-                            completer: completer)
-                        );
-                        final res = await completer.future;
-                        if (res is bool && res) {
-                          if(_loginUser) {
-                            if (context.mounted) {
-                              CustomShowSnackBar.showSnackBar(
-                                  'Такой пользователь существует', context
-                              );
-                            }
-                            _process = false;
-                            return;
-                          }
-                          ///Логинимся
-                          blocBloc.add(UserAuthEvent.checkPassword(
-                              userNameHash512: hashUserName,
-                              userPasswordHash512: hashPassword,
-                              completer: completerFinal)
-                          );
-                          final res = await completerFinal.future;
-                          if (res is bool && res) {
-                            if (kDebugMode) {
-                              print('User Login in system...');
-                            }
-                          } else {
-                            if (context.mounted) {
-                              CustomShowSnackBar.showSnackBar(
-                                  'Такого пользователя не существует или ошибка в пароле', context
-                              );
-                            }
-                          }
-                        } else {
-                            if(!_loginUser) {
-                              if (context.mounted) {
-                                CustomShowSnackBar.showSnackBar(
-                                    'Такого пользователя не существует или ошибка в пароле', context
-                                );
-                              }
-                              _process = false;
-                              return;
-                            }
-                            ///Регистрируемся
-                            blocBloc.add(UserAuthEvent.setUserName(
-                                userNameHash512: hashUserName,
-                                completer: completerFinal)
-                            );
-                            final res = await completerFinal.future;
-                            if (res is bool && res) {
-                              blocBloc.add(UserAuthEvent.setPassword(
-                                  userNameHash512: hashUserName,
-                                  userPasswordHash512: hashPassword,
-                                  userGroup: UserGroup.admin,
-                                  completer: completerFinalSet)
-                              );
-                              final res = await completerFinalSet.future;
-                              if (res is bool && res) {
-                                if (kDebugMode) {
-                                  print('New User Login create...');
-                                }
-                              } else {
-                                if (context.mounted) {
-                                  CustomShowSnackBar.showSnackBar(
-                                      'Имя пользователя занято или запрещено.', context
-                                  );
-                                }
-                              }
-                            } else {
-                              if (context.mounted) {
-                                CustomShowSnackBar.showSnackBar(
-                                    'Имя пользователя занято или запрещено.', context
-                                );
-                              }
-                            }
-                        }
-
-                      // } else {
-                      //   blocBloc.add(UserAuthEvent.setUserName(
-                      //       userNameHash512: hashUserName,
-                      //       completer: completer)
-                      //   );
-                      //   final res = await completer.future;
-                      //   if (res is bool && res) {
-                      //     if (context.mounted) {
-                      //       CustomShowSnackBar.showSnackBar(
-                      //           'Имя пользователя свободно.', context
-                      //       );
-                      //     }
-                      //   } else {
-                      //     if (context.mounted) {
-                      //       CustomShowSnackBar.showSnackBar(
-                      //           'Имя пользователя занято или запрещено.', context
-                      //       );
-                      //     }
-                      //   }
-                      // }
-                      _process = false;
-                    }
-                  }, child: _loginUser
-                      ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
-                      : const Text('Войти', style: TextStyle(color: Colors.white),),
+                  GestureDetector(
+                    onTap: ()=> loginUser(blocBloc: blocBloc, valueListenableProcess: valueListenableProcess),
+                    child: ValueListenableBuilder<bool>(
+                      valueListenable: valueListenableProcess,
+                      builder: (_, value, __) {
+                          return Container(
+                            width: CustomThemeProp.buttonSize.width,
+                            height: CustomThemeProp.buttonSize.height,
+                            decoration: BoxDecoration(
+                              color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
+                              borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
+                            ),
+                            child: Center(
+                              child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                                     _loginUser ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
+                                     : const Text('Войти', style: TextStyle(color: Colors.white),),
+                            ));
+                        },
+                    ),
                   ),
                   20.h,
                 ],
@@ -263,4 +165,126 @@ class _MainFormState extends State<MainForm> {
           )),
     );
   }
+
+  Future<void> loginUser({
+    required GetUserAuthBloc blocBloc, 
+    required ValueNotifier<bool> valueListenableProcess
+  }) async {
+    final cSt = _formKey.currentState;
+    if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
+      valueListenableProcess.value = true;
+      if (kDebugMode) {
+        _loginUser
+            ? print('New User Login')
+            : print('Login');
+      }
+      await Future.delayed(const Duration(seconds: 5));
+      final completer = Completer();
+      final completerFinal = Completer();
+      final completerFinalSet = Completer();
+      final hashUserName = Hash.hashSHA512(
+          _emailController.text);
+      final hashPassword = Hash.hashSHA512(
+          _passwordController.text);
+      blocBloc.add(UserAuthEvent.checkUserName(
+          userNameHash512: hashUserName,
+          completer: completer)
+      );
+      final res = await completer.future;
+      if (res is bool && res) {
+        if(_loginUser) {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+                'Такой пользователь существует', context
+            );
+          }
+          valueListenableProcess.value = false;
+          return;
+        }
+        ///Логинимся
+        blocBloc.add(UserAuthEvent.checkPassword(
+            userNameHash512: hashUserName,
+            userPasswordHash512: hashPassword,
+            completer: completerFinal)
+        );
+        final res = await completerFinal.future;
+        if (res is bool && res) {
+          if (kDebugMode) {
+            print('User Login in system...');
+          }
+        } else {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+                'Такого пользователя не существует или ошибка в пароле', context
+            );
+          }
+        }
+      } else {
+        if(!_loginUser) {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+                'Такого пользователя не существует или ошибка в пароле', context
+            );
+          }
+          valueListenableProcess.value = false;
+          return;
+        }
+        ///Регистрируемся
+        blocBloc.add(UserAuthEvent.setUserName(
+            userNameHash512: hashUserName,
+            completer: completerFinal)
+        );
+        final res = await completerFinal.future;
+        if (res is bool && res) {
+          blocBloc.add(UserAuthEvent.setPassword(
+              userNameHash512: hashUserName,
+              userPasswordHash512: hashPassword,
+              userGroup: UserGroup.admin,
+              completer: completerFinalSet)
+          );
+          final res = await completerFinalSet.future;
+          if (res is bool && res) {
+            if (kDebugMode) {
+              print('New User Login create...');
+            }
+          } else {
+            if (context.mounted) {
+              CustomShowSnackBar.showSnackBar(
+                  'Имя пользователя занято или запрещено.', context
+              );
+            }
+          }
+        } else {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+                'Имя пользователя занято или запрещено.', context
+            );
+          }
+        }
+      }
+
+      // } else {
+      //   blocBloc.add(UserAuthEvent.setUserName(
+      //       userNameHash512: hashUserName,
+      //       completer: completer)
+      //   );
+      //   final res = await completer.future;
+      //   if (res is bool && res) {
+      //     if (context.mounted) {
+      //       CustomShowSnackBar.showSnackBar(
+      //           'Имя пользователя свободно.', context
+      //       );
+      //     }
+      //   } else {
+      //     if (context.mounted) {
+      //       CustomShowSnackBar.showSnackBar(
+      //           'Имя пользователя занято или запрещено.', context
+      //       );
+      //     }
+      //   }
+      // }
+      valueListenableProcess.value = false;
+    }
+  }
+
 }

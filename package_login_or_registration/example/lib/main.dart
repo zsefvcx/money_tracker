@@ -39,19 +39,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-
-
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: CustomColors.violetFirm,
-            minimumSize: const Size(double.maxFinite, 50),
-            enabledMouseCursor: SystemMouseCursors.click,
-          ),
-        ),
-
-
-
-
+        // shadowColor: Colors.grey,
+        // elevatedButtonTheme: ElevatedButtonThemeData(
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: CustomThemeProp.violetFirm,
+        //     minimumSize: const Size(double.maxFinite, 50),
+        //     maximumSize: const Size(double.maxFinite, 50),
+        //     enabledMouseCursor: SystemMouseCursors.click,
+        //
+        //   ),
+        // ),
       ),
       home: const MyHomePage(),
     );
