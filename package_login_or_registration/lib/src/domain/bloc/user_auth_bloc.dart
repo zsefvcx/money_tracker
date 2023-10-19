@@ -17,6 +17,7 @@ class UserAuthData {
 
   final bool timeOut;
   final UserAuthorizationPasswordEntity? data;
+  final bool statusAuthorization;
   final bool error;
   final String e;
 
@@ -30,19 +31,22 @@ class UserAuthData {
     required this.e,
     required this.timeOut,
     required this.error,
+    this.statusAuthorization = false,
   });
 
   UserAuthData copyWithData({
-    required UserAuthorizationPasswordEntity? data,
+    UserAuthorizationPasswordEntity? data,
     String? e,
     bool? timeOut,
     bool? error,
+    bool? statusAuthorization,
   }){
     return UserAuthData(
       data: data,
       e: e ?? this.e,
       timeOut: timeOut ?? this.timeOut,
       error: error ?? this.error,
+      statusAuthorization: statusAuthorization ?? this.statusAuthorization,
     );
   }
 }
@@ -78,8 +82,9 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
+              statusAuthorization: res?.statusAuthorization,
             );
-            _response(emit);
+            await _response(emit);
             value.completer?.complete();
           },
           updateUserData: (value) async {
@@ -93,8 +98,9 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
+              statusAuthorization: res,
             );
-            _response(emit);
+            await _response(emit);
             value.completer.complete();
           },
           logout: (value) async {
@@ -103,12 +109,12 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               function: () async => await setUserAuthRepository.deleteUserData(),
             );
             userAuthData = userAuthData.copyWithData(
-              data: null,
               error: error,
               e: e,
               timeOut: timeOut,
+              statusAuthorization: false,
             );
-            _response(emit);
+            await _response(emit);
             value.completer.complete();
           },
           checkUserName: (value) async {
@@ -116,6 +122,12 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                 function: () async => await  getUserAuthRepository.checkUserName(
                     userNameHash512: value.userNameHash512
                 ),
+            );
+            userAuthData = userAuthData.copyWithData(
+              error: error,
+              e: e,
+              timeOut: timeOut,
+              statusAuthorization: false,
             );
             if (error){
               Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
@@ -131,10 +143,17 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                   userPasswordHash512: value.userPasswordHash512
               ),
             );
+            userAuthData = userAuthData.copyWithData(
+              error: error,
+              e: e,
+              timeOut: timeOut,
+              statusAuthorization: false,
+            );
             if (error){
               Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
+              userAuthData = userAuthData.copyWithData(statusAuthorization: true);
               value.completer.complete(res);
             }
           },
@@ -143,6 +162,12 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               function: () async => await setUserAuthRepository.setUserName(
                   userNameHash512: value.userNameHash512
               ),
+            );
+            userAuthData = userAuthData.copyWithData(
+              error: error,
+              e: e,
+              timeOut: timeOut,
+              statusAuthorization: false,
             );
             if (error){
               Logger.print('Error setUserName.:$timeOut:$e', name: 'err', error: true);
@@ -159,10 +184,17 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                   userGroup: value.userGroup
               )
             );
+            userAuthData = userAuthData.copyWithData(
+              error: error,
+              e: e,
+              timeOut: timeOut,
+              statusAuthorization: false,
+            );
             if (error){
               Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
+              userAuthData = userAuthData.copyWithData(statusAuthorization: true);
               value.completer.complete(res);
             }
           },
@@ -170,7 +202,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     });
   }
 
-  void _response(Emitter<UserAuthState> emit){
+  Future<void> _response(Emitter<UserAuthState> emit) async {
     if (userAuthData.error){
       if(userAuthData.timeOut){
         emit(const UserAuthState.timeOut());
@@ -185,9 +217,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const UserAuthState.newUser());
       }
-      userAuthData = userAuthData.copyWithData(
-        data: null
-      );
+      userAuthData = userAuthData.copyWithData();
     }
   }
 
@@ -197,6 +227,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     var e = '';
     T? res;
     try {
+      await Future.delayed(const Duration(seconds: 1));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;

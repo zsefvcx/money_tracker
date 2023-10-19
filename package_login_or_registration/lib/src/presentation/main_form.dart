@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_login_or_registration/src/core/hash.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
+import 'package:package_login_or_registration/src/presentation/widgets/main_splash_widget.dart';
 
 import 'package:package_login_or_registration/src/src.dart';
 
@@ -47,128 +48,104 @@ class _MainFormState extends State<MainForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     final blocBloc = context.read<GetUserAuthBloc>();
     final valueListenableProcess = ValueNotifier<bool>(false);
-    return Padding(
-      padding: const EdgeInsets.only(left: 25, right: 25),
-      child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                children: [
-                  const Icon(
-                    Icons.import_contacts,
-                    size: 150,
+    return Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                const Hero(tag: Keys.heroIdSplash,
+                    child: MainSplashWidget()),
+                TextFormField(
+                  controller: _emailController,
+                  mouseCursor: SystemMouseCursors.text,
+                  validator: ValidatorFields.checkEMail,
+                  decoration: const InputDecoration(
+                    labelText: 'E-mail',
+                    hintText: 'Введите свою почту',
                   ),
-                  10.h,
-                  Text('Учет доходов',
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontFamily: 'SF UI Display',
-                        fontSize: 24,
-                        height: 24/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
-                        fontWeight: FontWeight.bold
+                ),
+                20.h,
+                TextFormField(
+                  controller: _passwordController,
+                  mouseCursor: SystemMouseCursors.text,
+                  obscureText: !_passwordVisible,
+                  validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
+                  obscuringCharacter: '*',
+                  decoration: InputDecoration(
+                    labelText: 'Пароль',
+                    hintText: 'Введите свой пароль',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: theme.primaryColor,
                       ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    width: 180,
-                    child: Text('Ваша история доходов всегда под рукой',
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                          fontFamily: 'SF UI Display',
-                          fontSize: 15,
-                          height: 17/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
-                          fontWeight: FontWeight.normal
-                      ),
-                      textAlign: TextAlign.center,
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
                     ),
                   ),
-                  20.h,
-                  TextFormField(
-                    controller: _emailController,
-                    mouseCursor: SystemMouseCursors.text,
-                    validator: ValidatorFields.checkEMail,
-                    decoration: const InputDecoration(
-                      labelText: 'E-mail',
-                      hintText: 'Введите свою почту',
-                    ),
+                ),
+                40.h,
+                GestureDetector(
+                  onTap: ()=> loginUser(
+                      blocBloc: blocBloc,
+                      valueListenableProcess: valueListenableProcess,
+                      context: context,
                   ),
-                  20.h,
-                  TextFormField(
-                    controller: _passwordController,
-                    mouseCursor: SystemMouseCursors.text,
-                    obscureText: !_passwordVisible,
-                    validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
-                    obscuringCharacter: '*',
-                    decoration: InputDecoration(
-                      labelText: 'Пароль',
-                      hintText: 'Введите свой пароль',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _passwordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                          color: theme.primaryColor,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _passwordVisible = !_passwordVisible;
-                          });
-                        },
-                      ),
-                    ),
+                  child: ValueListenableBuilder<bool>(
+                    valueListenable: valueListenableProcess,
+                    builder: (_, value, __) {
+                        return Container(
+                          width: CustomThemeProp.buttonSize.width,
+                          height: CustomThemeProp.buttonSize.height,
+                          decoration: BoxDecoration(
+                            color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
+                            borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
+                          ),
+                          child: Center(
+                            child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                                   _loginUser ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
+                                   : const Text('Войти', style: TextStyle(color: Colors.white),),
+                          ));
+                      },
                   ),
-                  40.h,
-                  GestureDetector(
-                    onTap: ()=> loginUser(blocBloc: blocBloc, valueListenableProcess: valueListenableProcess),
-                    child: ValueListenableBuilder<bool>(
-                      valueListenable: valueListenableProcess,
-                      builder: (_, value, __) {
-                          return Container(
-                            width: CustomThemeProp.buttonSize.width,
-                            height: CustomThemeProp.buttonSize.height,
-                            decoration: BoxDecoration(
-                              color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
-                              borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
-                            ),
-                            child: Center(
-                              child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                                     _loginUser ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
-                                     : const Text('Войти', style: TextStyle(color: Colors.white),),
-                            ));
-                        },
-                    ),
-                  ),
-                  20.h,
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (_loginUser) const Text('Уже есть аккаунт?') else const Text('Еще нет аккаунта?'),
-                  TextButton(onPressed: (){
-                    if (kDebugMode) {
-                      print('Login');
-                    }
-                    setState(() {
+                ),
+                20.h,
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (_loginUser) const Text('Уже есть аккаунт?') else const Text('Еще нет аккаунта?'),
+                TextButton(onPressed: (){
+                  if (kDebugMode) {
+                    print('Login');
+                  }
+                  setState(() {
 
-                      _loginUser = !_loginUser;
-                    });
-                  }, child: _loginUser
-                      ? const Text('Войти')
-                      : const Text('Регистрация'),),
-                ],
-              ),
-            ],
-          )),
-    );
+                    _loginUser = !_loginUser;
+                  });
+                }, child: _loginUser
+                    ? const Text('Войти')
+                    : const Text('Регистрация'),),
+              ],
+            ),
+          ],
+        ));
   }
 
   Future<void> loginUser({
     required GetUserAuthBloc blocBloc, 
-    required ValueNotifier<bool> valueListenableProcess
+    required ValueNotifier<bool> valueListenableProcess,
+    required BuildContext context,
   }) async {
     final cSt = _formKey.currentState;
     if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
@@ -178,7 +155,7 @@ class _MainFormState extends State<MainForm> {
             ? print('New User Login')
             : print('Login');
       }
-      await Future.delayed(const Duration(seconds: 5));
+      await Future.delayed(const Duration(seconds: 1));
       final completer = Completer();
       final completerFinal = Completer();
       final completerFinalSet = Completer();
@@ -211,6 +188,14 @@ class _MainFormState extends State<MainForm> {
         if (res is bool && res) {
           if (kDebugMode) {
             print('User Login in system...');
+          }
+          if (context.mounted){
+            await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
+              arguments: {
+                 'newUser': false,
+                 'statusAuthorization':blocBloc.userAuthData.statusAuthorization,
+              },
+            );
           }
         } else {
           if (context.mounted) {
@@ -246,6 +231,14 @@ class _MainFormState extends State<MainForm> {
           if (res is bool && res) {
             if (kDebugMode) {
               print('New User Login create...');
+            }
+            if (context.mounted){
+              await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
+                arguments: {
+                  'newUser': true,
+                  'statusAuthorization':blocBloc.userAuthData.statusAuthorization,
+                },
+              );
             }
           } else {
             if (context.mounted) {

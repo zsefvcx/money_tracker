@@ -24,45 +24,149 @@ Future<void> main() async {
       await windowManager.focus();
     });
   }
+
+  MainBlocInit.initState();
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        // shadowColor: Colors.grey,
-        // elevatedButtonTheme: ElevatedButtonThemeData(
-        //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: CustomThemeProp.violetFirm,
-        //     minimumSize: const Size(double.maxFinite, 50),
-        //     maximumSize: const Size(double.maxFinite, 50),
-        //     enabledMouseCursor: SystemMouseCursors.click,
-        //
-        //   ),
-        // ),
       ),
-      home: const MyHomePage(),
+      initialRoute: RouteGenerator.initialRoute,
+      onGenerateRoute: (RouteSettings settings)=>RouteGenerator.generateRoute(settings),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({ super.key});
+class RouteGenerator {
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  static String initialRoute = MyHomePage.routeName;
+
+  static List<String> title = ['Error', ];
+
+
+  static Route<dynamic> generateRoute(RouteSettings settings){
+    //final args = settings.arguments;
+
+    switch(settings.name){
+      case MyHomePage.routeName:
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const MyHomePage(),
+        );
+      case MainPageExpenses.routeName:
+         return PageRouteBuilder(
+           pageBuilder: (context, animation, secondaryAnimation) =>
+               const MainPageExpenses(),
+      );
+    //case HotelView.routeName:
+    // if(args != null && args is Map<String, HotelPreview>){
+    //   if(args['hotel']!=null){
+    //     HotelPreview data = args['hotel'] as HotelPreview;
+    //     return PageRouteBuilder(
+    //       pageBuilder:(context, animation, secondaryAnimation) =>
+    //           HotelView(hotel: data,),
+    //     );
+    //   } else {
+    //     return _errorRoute();
+    //   }
+    // } else {
+    //   return _errorRoute();
+    // }
+    //  return _errorRoute();
+      default:
+        return _errorRoute();
+    }
+  }
+
+  static Route<dynamic> _errorRoute() {
+    //currentIndex.index = 0;
+    return MaterialPageRoute(builder: (context) {
+      return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          leading: IconButton(icon: const Icon(Icons.close),
+            onPressed: ()=>Navigator.of(context).
+            pushReplacementNamed(MainPageExpenses.routeName,
+              // arguments: {
+              //   'TabIndex':currentIndex.index,
+              // },
+            ),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: Text(title[0]),
+          centerTitle: true,
+        ),
+        body: const Center(
+          child: Text('Page not found!'),
+        ),
+      );
+    },
+      fullscreenDialog: true,
+    );
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MainPageExpenses extends StatelessWidget {
+  static const routeName = r'\PageExpenses';
+
+  const MainPageExpenses({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Октябрь 2020'),
+            centerTitle: true,
+            leading: const Icon(Icons.add),
+          ),
+          body: const Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 25),
+              child: Placeholder(),
+          ),
+          bottomSheet: const BottomAppBar(child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 25),
+                child: Column(
+                  children: [
+                    Icon(Icons.credit_card),
+                    Text('Расходы'),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: 25),
+                child: Column(
+                  children: [
+                    Icon(Icons.person),
+                    Text('Профиль'),
+                  ],
+                ),
+              ),
+            ],
+          )),
+        ),
+    );
+  }
+}
+
+
+class MyHomePage extends StatelessWidget {
+  static const routeName = r'\';
+
+  const MyHomePage({ super.key});
 
   @override
   Widget build(BuildContext context) {
