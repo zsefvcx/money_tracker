@@ -124,7 +124,7 @@ class MainPageExpenses extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: const Text('Октябрь 2023'),
+            title: Text('Октябрь 2023'.hardcoded),
             centerTitle: true,
             leading: const Icon(Icons.add),
           ),
@@ -132,24 +132,24 @@ class MainPageExpenses extends StatelessWidget {
               padding: EdgeInsets.only(top: 10, bottom: 25),
               child: Placeholder(),
           ),
-          bottomSheet: const BottomAppBar(child: Row(
+          bottomSheet: BottomAppBar(child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 25),
+                padding: const EdgeInsets.only(left: 25),
                 child: Column(
                   children: [
-                    Icon(Icons.credit_card),
-                    Text('Расходы'),
+                    const Icon(Icons.credit_card),
+                    Text('Расходы'.hardcoded),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(right: 25),
+                padding: const EdgeInsets.only(right: 25),
                 child: Column(
                   children: [
-                    Icon(Icons.person),
-                    Text('Профиль'),
+                    const Icon(Icons.person),
+                    Text('Профиль'.hardcoded),
                   ],
                 ),
               ),

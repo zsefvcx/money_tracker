@@ -63,9 +63,9 @@ class _MainFormState extends State<MainForm> {
                   controller: _emailController,
                   mouseCursor: SystemMouseCursors.text,
                   validator: ValidatorFields.checkEMail,
-                  decoration: const InputDecoration(
-                    labelText: 'E-mail',
-                    hintText: 'Введите свою почту',
+                  decoration: InputDecoration(
+                    labelText: 'E-mail'.hardcoded,
+                    hintText: 'Введите свою почту'.hardcoded,
                   ),
                 ),
                 20.h,
@@ -76,8 +76,8 @@ class _MainFormState extends State<MainForm> {
                   validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
                   obscuringCharacter: '*',
                   decoration: InputDecoration(
-                    labelText: 'Пароль',
-                    hintText: 'Введите свой пароль',
+                    labelText: 'Пароль'.hardcoded,
+                    hintText: 'Введите свой пароль'.hardcoded,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _passwordVisible
@@ -112,8 +112,8 @@ class _MainFormState extends State<MainForm> {
                           ),
                           child: Center(
                             child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                                   _loginUser ? const Text('Регистрация', style: TextStyle(color: Colors.white),)
-                                   : const Text('Войти', style: TextStyle(color: Colors.white),),
+                                   _loginUser ? Text('Регистрация'.hardcoded, style: const TextStyle(color: Colors.white),)
+                                   : Text('Войти'.hardcoded, style: const TextStyle(color: Colors.white),),
                           ));
                       },
                   ),
@@ -124,7 +124,7 @@ class _MainFormState extends State<MainForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (_loginUser) const Text('Уже есть аккаунт?') else const Text('Еще нет аккаунта?'),
+                if (_loginUser) Text('Уже есть аккаунт?'.hardcoded) else Text('Еще нет аккаунта?'.hardcoded),
                 TextButton(onPressed: (){
                   if (kDebugMode) {
                     print('Login');
@@ -134,8 +134,8 @@ class _MainFormState extends State<MainForm> {
                     _loginUser = !_loginUser;
                   });
                 }, child: _loginUser
-                    ? const Text('Войти')
-                    : const Text('Регистрация'),),
+                    ? Text('Войти'.hardcoded)
+                    : Text('Регистрация'.hardcoded),),
               ],
             ),
           ],
@@ -152,8 +152,8 @@ class _MainFormState extends State<MainForm> {
       valueListenableProcess.value = true;
       if (kDebugMode) {
         _loginUser
-            ? print('New User Login')
-            : print('Login');
+            ? print('New User Login'.hardcoded)
+            : print('Login'.hardcoded);
       }
       await Future.delayed(const Duration(seconds: 1));
       final completer = Completer();
@@ -172,7 +172,7 @@ class _MainFormState extends State<MainForm> {
         if(_loginUser) {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такой пользователь существует', context
+                'Такой пользователь существует'.hardcoded, context
             );
           }
           valueListenableProcess.value = false;
@@ -187,7 +187,7 @@ class _MainFormState extends State<MainForm> {
         final res = await completerFinal.future;
         if (res is bool && res) {
           if (kDebugMode) {
-            print('User Login in system...');
+            print('User Login in system...'.hardcoded);
           }
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
@@ -200,7 +200,7 @@ class _MainFormState extends State<MainForm> {
         } else {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такого пользователя не существует или ошибка в пароле', context
+                'Такого пользователя не существует или ошибка в пароле'.hardcoded, context
             );
           }
         }
@@ -208,7 +208,7 @@ class _MainFormState extends State<MainForm> {
         if(!_loginUser) {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такого пользователя не существует или ошибка в пароле', context
+                'Такого пользователя не существует или ошибка в пароле'.hardcoded, context
             );
           }
           valueListenableProcess.value = false;
@@ -230,7 +230,7 @@ class _MainFormState extends State<MainForm> {
           final res = await completerFinalSet.future;
           if (res is bool && res) {
             if (kDebugMode) {
-              print('New User Login create...');
+              print('New User Login create...'.hardcoded);
             }
             if (context.mounted){
               await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
@@ -243,39 +243,18 @@ class _MainFormState extends State<MainForm> {
           } else {
             if (context.mounted) {
               CustomShowSnackBar.showSnackBar(
-                  'Имя пользователя занято или запрещено.', context
+                  'Имя пользователя занято или запрещено.'.hardcoded, context
               );
             }
           }
         } else {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Имя пользователя занято или запрещено.', context
+                'Имя пользователя занято или запрещено.'.hardcoded, context
             );
           }
         }
       }
-
-      // } else {
-      //   blocBloc.add(UserAuthEvent.setUserName(
-      //       userNameHash512: hashUserName,
-      //       completer: completer)
-      //   );
-      //   final res = await completer.future;
-      //   if (res is bool && res) {
-      //     if (context.mounted) {
-      //       CustomShowSnackBar.showSnackBar(
-      //           'Имя пользователя свободно.', context
-      //       );
-      //     }
-      //   } else {
-      //     if (context.mounted) {
-      //       CustomShowSnackBar.showSnackBar(
-      //           'Имя пользователя занято или запрещено.', context
-      //       );
-      //     }
-      //   }
-      // }
       valueListenableProcess.value = false;
     }
   }

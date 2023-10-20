@@ -15,14 +15,14 @@ class MainSplashWidget extends StatelessWidget {
       children: [
         Image.asset('assets/img/Gradient_75_93.png'),
         10.h,
-        Text('Учёт расходов',
+        Text('Учёт расходов'.hardcoded,
           style: theme.textTheme.titleLarge,
           textAlign: CustomThemeProp.titleLargeTypography.textAlign,
         ),
         10.h,
         SizedBox(
           width: 180,
-          child: Text('Ваша история расходов всегда под рукой',
+          child: Text('Ваша история расходов всегда под рукой'.hardcoded,
             style: theme.textTheme.titleMedium,
             textAlign: CustomThemeProp.titleMediumTypography.textAlign,
           ),
