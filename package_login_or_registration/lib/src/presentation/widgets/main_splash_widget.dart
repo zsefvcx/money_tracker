@@ -14,30 +14,17 @@ class MainSplashWidget extends StatelessWidget {
     return Column(
       children: [
         Image.asset('assets/img/Gradient_75_93.png'),
-        // const Icon(
-        //   Icons.import_contacts,
-        //   size: 150,
-        // ),
         10.h,
-        Text('Учет доходов',
-          style: theme.textTheme.titleLarge?.copyWith(
-              fontFamily: 'SF UI Display',
-              fontSize: 24,
-              height: 24/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
-              fontWeight: FontWeight.bold
-          ),
-          textAlign: TextAlign.center,
+        Text('Учёт расходов',
+          style: theme.textTheme.titleLarge,
+          textAlign: CustomThemeProp.titleLargeTypography.textAlign,
         ),
+        10.h,
         SizedBox(
           width: 180,
-          child: Text('Ваша история доходов всегда под рукой',
-            style: theme.textTheme.bodyLarge?.copyWith(
-                fontFamily: 'SF UI Display',
-                fontSize: 15,
-                height: 17/15,//When height is non-null, the line height of the span of text will be a multiple of fontSize and be exactly fontSize * height logical pixels tall.
-                fontWeight: FontWeight.normal
-            ),
-            textAlign: TextAlign.center,
+          child: Text('Ваша история расходов всегда под рукой',
+            style: theme.textTheme.titleMedium,
+            textAlign: CustomThemeProp.titleMediumTypography.textAlign,
           ),
         ),
         20.h,

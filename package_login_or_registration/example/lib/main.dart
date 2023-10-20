@@ -38,9 +38,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: themeMainProgram,
       initialRoute: RouteGenerator.initialRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
@@ -170,13 +168,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.only(top: 10, bottom: 25),
-          child: MainFormAuthorization(),
-        ),
-      ),
-    );
+    return const MainFormAuthorization();
   }
 }

@@ -17,3 +17,10 @@ extension NumberTypeExtensions on num {
   );
 
 }
+
+///Расширение класа стринг на случай если придеться заниматься локализацией
+extension StringHardcoded on String {
+  String get hardcoded => this;
+}
+
+

@@ -26,8 +26,7 @@ class ErrorTimeOutWidget extends StatelessWidget {
         if(blocBloc.userAuthData.isError)const Text('Ошибка!') else
         const Text('Случилось что-то не то...'),
         if(blocBloc.userAuthData.isTimeOut)const Text('Таймаут') else
-          const Text('Ответ получен.')  ,
-
+          const Text('Ответ получен.'),
         const SizedBox(
           height: 50,
         ),
