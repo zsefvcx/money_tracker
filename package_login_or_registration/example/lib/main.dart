@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/package_login_or_registration.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -39,7 +41,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: themeMainProgram,
-      locale: const Locale('en'),
+      localizationsDelegates: const [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      //locale: const Locale('en'),
       initialRoute: RouteGenerator.initialRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
     );

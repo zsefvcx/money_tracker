@@ -28,7 +28,7 @@ class MainBuilderForm extends StatelessWidget {
                     CircularProgressIndicator(),
                   ],
                 ),
-                loaded:  (_)=> const MainForm(loginUser: true),
+                loaded:  (_)=> MainForm(loginUser: true),
                 error:   (_)=> const ErrorTimeOutWidget(),
                 timeOut: (_)=> const ErrorTimeOutWidget(),
                 newUser: (_)=> const MainForm(),

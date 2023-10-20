@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/hash.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
 import 'package:package_login_or_registration/src/presentation/widgets/main_splash_widget.dart';
@@ -65,7 +66,7 @@ class _MainFormState extends State<MainForm> {
                   validator: ValidatorFields.checkEMail,
                   decoration: InputDecoration(
                     labelText: 'E-mail'.hardcoded,
-                    hintText: 'Введите свою почту'.hardcoded,
+                    hintText: S.of(context).enterEmail,
                   ),
                 ),
                 20.h,
