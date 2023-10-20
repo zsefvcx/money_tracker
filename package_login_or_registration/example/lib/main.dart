@@ -39,6 +39,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: themeMainProgram,
+      locale: const Locale('en'),
       initialRoute: RouteGenerator.initialRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
