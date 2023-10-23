@@ -37,6 +37,7 @@ class _MainFormState extends State<MainForm> {
     } else {
       _loginUser = false;
     }
+    _focusNode.requestFocus();
   }
 
   @override
@@ -53,6 +54,7 @@ class _MainFormState extends State<MainForm> {
     final theme = Theme.of(context);
     final blocBloc = context.read<GetUserAuthBloc>();
     final valueListenableProcess = ValueNotifier<(bool, bool)>((false, false));
+    FocusScope.of(context).requestFocus();
     return Form(
         key: _formKey,
         child: Column(
@@ -67,6 +69,7 @@ class _MainFormState extends State<MainForm> {
                   focusNode: _focusNode,
                   style: theme.textTheme.bodyMedium,
                   cursorColor: CustomThemeProp.violetFirm,
+
                   onTap: () {
                      setState(() {
                        FocusScope.of(context).requestFocus();
