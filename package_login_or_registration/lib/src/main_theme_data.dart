@@ -5,6 +5,13 @@ TextTheme _textLight(TextTheme base) {
   return base.copyWith(
     titleLarge: CustomThemeProp.titleLargeTypography.style,
     titleMedium: CustomThemeProp.titleMediumTypography.style,
+    titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(
+      color: Colors.white,
+    ),
+
+
+    bodyMedium: CustomThemeProp.bodyMediumTypography.style,
+    bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
   );
 }
 
@@ -12,29 +19,47 @@ TextTheme _textBlack(TextTheme base) {
   return base.copyWith(
     titleLarge: CustomThemeProp.titleLargeTypography.style,
     titleMedium: CustomThemeProp.titleMediumTypography.style,
+    titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(
+      color: Colors.white,
+    ),
+
+    bodyMedium: CustomThemeProp.bodyMediumTypography.style,
+    bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
   );
 }
 
 InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
   return base.copyWith(
-    focusedBorder: UnderlineInputBorder(borderSide: BorderSide(
-      color: Colors.deepOrange.shade100,
+    border: const UnderlineInputBorder(borderSide: BorderSide(
+      color: CustomThemeProp.grayLight,
       width: 2,
+    )),
+    focusedBorder: const UnderlineInputBorder(borderSide: BorderSide(
+       color: CustomThemeProp.violetFirm,
+       width: 2,
     )),
     enabledBorder: const UnderlineInputBorder(borderSide: BorderSide(
-      color: Colors.black54,
-      width: 2,
+       color: CustomThemeProp.grayLight,
+       width: 2,
     )),
-    floatingLabelAlignment: FloatingLabelAlignment.start,
-    floatingLabelStyle: TextStyle(
-      color: Colors.deepOrange[100],
-    ),
-    labelStyle: const TextStyle(
-      color: Colors.black54,
-    ),
 
-    //suffixIconColor: Colors.black54,
-    //focusColor: Colors.deepOrange[100],
+    suffixIconColor: CustomThemeProp.grayLight,
+    focusColor: CustomThemeProp.violetFirm,
+
+
+
+    floatingLabelBehavior: FloatingLabelBehavior.auto,
+    floatingLabelAlignment: FloatingLabelAlignment.start,
+
+    labelStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    floatingLabelStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    errorStyle: CustomThemeProp.bodyMediumTypographyRed.style,
+
+    hintStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    counterStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    prefixStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    suffixStyle: CustomThemeProp.bodyMediumTypographyGray.style,
+    helperStyle: CustomThemeProp.bodyMediumTypographyGray.style,
 
 
   );
@@ -130,7 +155,6 @@ ThemeData themeMainProgram = _theme.copyWith(
   //primaryColorLight: Colors.deepOrange[100],
   //primaryColorDark: Colors.deepOrange[100],
   //scaffoldBackgroundColor: Colors.white,
-
 
 
   appBarTheme: _appBarTheme(_theme.appBarTheme),

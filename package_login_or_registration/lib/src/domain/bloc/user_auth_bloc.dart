@@ -239,6 +239,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;
       e = ee.toString();
+    // ignore: avoid_catches_without_on_clauses
     } catch(ee, t){
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;

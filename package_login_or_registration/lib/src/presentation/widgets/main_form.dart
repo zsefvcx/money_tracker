@@ -24,13 +24,14 @@ class _MainFormState extends State<MainForm> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController= TextEditingController();
   final TextEditingController _passwordController= TextEditingController();
-
+  final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNodeSecond = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _emailController.text = 'test@test.ru';
-    _passwordController.text = 'dddDDDD4475.';
+    //_emailController.text = 'test@test.ru';
+    //_passwordController.text = 'dddDDDD4475.';
     if (widget.loginUser==null) {
       _loginUser = true;
     } else {
@@ -42,6 +43,8 @@ class _MainFormState extends State<MainForm> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _focusNode.dispose();
+    _focusNodeSecond.dispose();
     super.dispose();
   }
 
@@ -49,7 +52,7 @@ class _MainFormState extends State<MainForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final blocBloc = context.read<GetUserAuthBloc>();
-    final valueListenableProcess = ValueNotifier<bool>(false);
+    final valueListenableProcess = ValueNotifier<(bool, bool)>((false, false));
     return Form(
         key: _formKey,
         child: Column(
@@ -60,30 +63,54 @@ class _MainFormState extends State<MainForm> {
                 const Hero(tag: Keys.heroIdSplash,
                     child: MainSplashWidget()),
                 TextFormField(
+                  autofocus: true,
+                  focusNode: _focusNode,
+                  style: theme.textTheme.bodyMedium,
+                  cursorColor: CustomThemeProp.violetFirm,
+                  onTap: () {
+                     setState(() {
+                       FocusScope.of(context).requestFocus();
+                     });
+                  },
                   controller: _emailController,
                   mouseCursor: SystemMouseCursors.text,
                   validator: (value) => ValidatorFields.checkEMail(value, context),
                   decoration: InputDecoration(
+                    floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
+                      color: _focusNode.hasFocus?CustomThemeProp.violetFirm:null,
+                    ),
                     labelText: S.of(context).email,
                     hintText: S.of(context).enterEmail,
                   ),
                 ),
                 20.h,
                 TextFormField(
+                  autofocus: true,
                   controller: _passwordController,
+                  style: theme.textTheme.bodyMedium,
+                  focusNode: _focusNodeSecond,
+                  cursorColor: CustomThemeProp.violetFirm,
+                  onTap: () {
+                    setState(() {
+                      FocusScope.of(context).requestFocus();
+                    });
+                  },
                   mouseCursor: SystemMouseCursors.text,
                   obscureText: !_passwordVisible,
                   validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
                   obscuringCharacter: '*',
                   decoration: InputDecoration(
+                    floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
+                      color: _focusNodeSecond.hasFocus?CustomThemeProp.violetFirm:null,
+                    ),
                     labelText: S.of(context).password,
                     hintText: S.of(context).enterYourPassword,
+                    suffixIconColor: _focusNodeSecond.hasFocus?CustomThemeProp.violetFirm:null,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _passwordVisible
                             ? Icons.visibility
                             : Icons.visibility_off,
-                        color: theme.primaryColor,
                       ),
                       onPressed: () {
                         setState(() {
@@ -100,22 +127,35 @@ class _MainFormState extends State<MainForm> {
                       valueListenableProcess: valueListenableProcess,
                       context: context,
                   ),
-                  child: ValueListenableBuilder<bool>(
-                    valueListenable: valueListenableProcess,
-                    builder: (_, value, __) {
-                        return Container(
-                          width: CustomThemeProp.buttonSize.width,
-                          height: CustomThemeProp.buttonSize.height,
-                          decoration: BoxDecoration(
-                            color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
-                            borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
-                          ),
-                          child: Center(
-                            child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                                   _loginUser ? Text(S.of(context).registration, style: const TextStyle(color: Colors.white),)
-                                   : Text(S.of(context).signIn, style: const TextStyle(color: Colors.white),),
-                          ));
-                      },
+                  child: FocusableActionDetector(
+                    autofocus: true,
+                    mouseCursor: SystemMouseCursors.click,
+                    onFocusChange: (value) => valueListenableProcess.value=(valueListenableProcess.value.$1, value),
+                    child: ValueListenableBuilder<(bool, bool)>(
+                      valueListenable: valueListenableProcess,
+                      builder: (_, value, __) {
+                          return Container(
+                            width: CustomThemeProp.buttonSize.width,
+                            height: CustomThemeProp.buttonSize.height,
+                            decoration: BoxDecoration(
+                              color: value.$1?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
+                              boxShadow: [
+                                if(value.$2)const BoxShadow(
+                                  color: CustomThemeProp.grayLight,
+                                  spreadRadius: 4,
+                                  blurRadius: 5,
+                                  offset: Offset(0, 3), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
+                            ),
+                            child: Center(
+                              child: value.$1? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                                     _loginUser ? Text(S.of(context).registration, style: theme.textTheme.titleSmall,)
+                                     : Text(S.of(context).signIn, style: theme.textTheme.titleSmall,),
+                            ));
+                        },
+                    ),
                   ),
                 ),
                 20.h,
@@ -125,7 +165,9 @@ class _MainFormState extends State<MainForm> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 if (_loginUser) Text(S.of(context).alreadyHaveAnAccount) else Text(S.of(context).noAccountYet),
-                TextButton(onPressed: (){
+                TextButton(
+                  autofocus: true,
+                  onPressed: (){
                     if (kDebugMode) {
                       print('Login');
                     }
@@ -134,8 +176,8 @@ class _MainFormState extends State<MainForm> {
                       _loginUser = !_loginUser;
                     });
                   }, child: _loginUser
-                    ? Text(S.of(context).signIn)
-                    : Text(S.of(context).registration),
+                    ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
+                    : Text(S.of(context).registration, style: theme.textTheme.bodyLarge,),
                 ),
               ],
             ),
@@ -145,12 +187,15 @@ class _MainFormState extends State<MainForm> {
 
   Future<void> loginUser({
     required GetUserAuthBloc blocBloc, 
-    required ValueNotifier<bool> valueListenableProcess,
+    required ValueNotifier<(bool, bool)> valueListenableProcess,
     required BuildContext context,
   }) async {
+    final s1 = valueListenableProcess.value.$1;
+    final s2 = valueListenableProcess.value.$2;
+
     final cSt = _formKey.currentState;
-    if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
-      valueListenableProcess.value = true;
+    if(cSt != null && cSt.validate() && !s1) {
+      valueListenableProcess.value = (true, s2);
       if (kDebugMode) {
         _loginUser
             ? print('New User Login')
@@ -176,7 +221,7 @@ class _MainFormState extends State<MainForm> {
                S.of(context).suchAUserExists, context
             );
           }
-          valueListenableProcess.value = false;
+          valueListenableProcess.value = (false, s2);
           return;
         }
         ///Логинимся
@@ -212,7 +257,7 @@ class _MainFormState extends State<MainForm> {
                 S.of(context).thisUserDoesNotExist, context
             );
           }
-          valueListenableProcess.value = false;
+          valueListenableProcess.value = (false, s2);
           return;
         }
         ///Регистрируемся
@@ -256,8 +301,7 @@ class _MainFormState extends State<MainForm> {
           }
         }
       }
-      valueListenableProcess.value = false;
+      valueListenableProcess.value = (false, s2);
     }
   }
-
 }
