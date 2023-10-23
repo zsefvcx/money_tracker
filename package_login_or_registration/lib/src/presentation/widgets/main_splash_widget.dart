@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/core.dart';
 
 class MainSplashWidget extends StatelessWidget {
@@ -15,14 +16,14 @@ class MainSplashWidget extends StatelessWidget {
       children: [
         Image.asset('assets/img/Gradient_75_93.png'),
         10.h,
-        Text('Учёт расходов'.hardcoded,
+        Text(S.of(context).costAccounting,
           style: theme.textTheme.titleLarge,
           textAlign: CustomThemeProp.titleLargeTypography.textAlign,
         ),
         10.h,
         SizedBox(
           width: 180,
-          child: Text('Ваша история расходов всегда под рукой'.hardcoded,
+          child: Text(S.of(context).yourExpenseHistoryIsAlwaysAtHand,
             style: theme.textTheme.titleMedium,
             textAlign: CustomThemeProp.titleMediumTypography.textAlign,
           ),

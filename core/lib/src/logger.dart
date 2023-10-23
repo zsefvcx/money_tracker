@@ -1,8 +1,7 @@
 import 'dart:developer' as dev;
 
-
 import 'package:flutter/material.dart';
-import 'package:package_login_or_registration/package_login_or_registration.dart';
+import 'package:package_login_or_registration/src/core/core.dart';
 
 ///Логгер в систему.
 abstract class Logger {

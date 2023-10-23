@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:package_login_or_registration/generated/l10n.dart';
 
 class CustomShowSnackBar {
 
@@ -8,7 +7,7 @@ class CustomShowSnackBar {
     final snackBar = SnackBar(
       content: Text(massage),
       action: SnackBarAction(
-        label: S.of(context).ok,
+        label: 'Ок',
         onPressed: () {
           // Some code to undo the change.
         },

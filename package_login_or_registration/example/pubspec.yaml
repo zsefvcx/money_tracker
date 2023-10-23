@@ -45,4 +45,5 @@ flutter:
     - assets/img/Gradient_75_93.png
   #fonts:
   #  - family: SF UI Display
-
+flutter_intl:
+  enabled: true

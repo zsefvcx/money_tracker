@@ -4,3 +4,10 @@ linter:
   rules:
     unnecessary_await_in_return: false
     sort_pub_dependencies: false
+
+analyzer:
+  exclude:
+    - '**.g.dart'
+    - '**.freezed.dart'
+    - 'lib/generated/l10n.dart'
+    - 'lib/generated/intl/**.dart'

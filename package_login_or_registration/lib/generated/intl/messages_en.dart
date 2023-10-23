@@ -22,6 +22,49 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "enterEmail": MessageLookupByLibrary.simpleMessage("Enter your email")
+        "alreadyHaveAnAccount":
+            MessageLookupByLibrary.simpleMessage("Already have an account?"),
+        "costAccounting":
+            MessageLookupByLibrary.simpleMessage("Cost accounting"),
+        "email": MessageLookupByLibrary.simpleMessage("E-mail"),
+        "emailFormatIsNotCorrect": MessageLookupByLibrary.simpleMessage(
+            "E-Mail format is not correct"),
+        "enterEmail": MessageLookupByLibrary.simpleMessage("Enter your email"),
+        "enterText": MessageLookupByLibrary.simpleMessage("Enter text"),
+        "enterYourPassword":
+            MessageLookupByLibrary.simpleMessage("Enter your password"),
+        "error": MessageLookupByLibrary.simpleMessage("Error!"),
+        "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
+        "ok": MessageLookupByLibrary.simpleMessage("Ok"),
+        "password": MessageLookupByLibrary.simpleMessage("Password"),
+        "registration": MessageLookupByLibrary.simpleMessage("Registration"),
+        "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
+        "replyReceived": MessageLookupByLibrary.simpleMessage("Reply received"),
+        "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
+        "somethingWrongHappened":
+            MessageLookupByLibrary.simpleMessage("Something wrong happened..."),
+        "suchAUserExists":
+            MessageLookupByLibrary.simpleMessage("Such a user exists"),
+        "thePasswordMustContainCapitalLetters":
+            MessageLookupByLibrary.simpleMessage(
+                "The password must contain capital letters"),
+        "thePasswordMustContainNumbers": MessageLookupByLibrary.simpleMessage(
+            "The password must contain numbers"),
+        "thePasswordMustContainOnlyLatinCharacters":
+            MessageLookupByLibrary.simpleMessage(
+                "The password must contain only Latin characters"),
+        "thePasswordMustContainSpecialCharacters":
+            MessageLookupByLibrary.simpleMessage(
+                "The password must contain special characters"),
+        "thePasswordMustNotContainSpaces": MessageLookupByLibrary.simpleMessage(
+            "The password must not contain spaces"),
+        "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
+            "The username is taken or disabled"),
+        "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
+            "This user does not exist or there is an error in the password"),
+        "timeout": MessageLookupByLibrary.simpleMessage("TimeOut"),
+        "yourExpenseHistoryIsAlwaysAtHand":
+            MessageLookupByLibrary.simpleMessage(
+                "Your expense history is always at hand")
       };
 }

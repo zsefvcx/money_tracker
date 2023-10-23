@@ -1,4 +1,5 @@
 
+
 import 'package:flutter/material.dart';
 
 class Typography {
@@ -87,6 +88,10 @@ text-align: center;
 //   line-height: 17px;
 //   letter-spacing: 0em;
 //   text-align: left;
+
+
+
+
 //
 //   static Typography largeTypoH_15_Bold= Typography(
 //     fontFamily: mainFont,
@@ -114,6 +119,8 @@ text-align: center;
 //   letter-spacing: 0em;
 //   text-align: center;
 //
+
+
 
   static const buttonSize = Size(double.maxFinite, 50);
 

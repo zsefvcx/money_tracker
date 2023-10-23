@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/hash.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
 import 'package:package_login_or_registration/src/presentation/widgets/main_splash_widget.dart';
@@ -63,9 +62,9 @@ class _MainFormState extends State<MainForm> {
                 TextFormField(
                   controller: _emailController,
                   mouseCursor: SystemMouseCursors.text,
-                  validator: ValidatorFields.checkEMail,
+                  validator: (value) => ValidatorFields.checkEMail(value, context),
                   decoration: InputDecoration(
-                    labelText: 'E-mail'.hardcoded,
+                    labelText: S.of(context).email,
                     hintText: S.of(context).enterEmail,
                   ),
                 ),
@@ -74,11 +73,11 @@ class _MainFormState extends State<MainForm> {
                   controller: _passwordController,
                   mouseCursor: SystemMouseCursors.text,
                   obscureText: !_passwordVisible,
-                  validator: _loginUser?ValidatorFields.checkPasswordCompliant:null,
+                  validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
                   obscuringCharacter: '*',
                   decoration: InputDecoration(
-                    labelText: 'Пароль'.hardcoded,
-                    hintText: 'Введите свой пароль'.hardcoded,
+                    labelText: S.of(context).password,
+                    hintText: S.of(context).enterYourPassword,
                     suffixIcon: IconButton(
                       icon: Icon(
                         _passwordVisible
@@ -113,8 +112,8 @@ class _MainFormState extends State<MainForm> {
                           ),
                           child: Center(
                             child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                                   _loginUser ? Text('Регистрация'.hardcoded, style: const TextStyle(color: Colors.white),)
-                                   : Text('Войти'.hardcoded, style: const TextStyle(color: Colors.white),),
+                                   _loginUser ? Text(S.of(context).registration, style: const TextStyle(color: Colors.white),)
+                                   : Text(S.of(context).signIn, style: const TextStyle(color: Colors.white),),
                           ));
                       },
                   ),
@@ -125,18 +124,19 @@ class _MainFormState extends State<MainForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (_loginUser) Text('Уже есть аккаунт?'.hardcoded) else Text('Еще нет аккаунта?'.hardcoded),
+                if (_loginUser) Text(S.of(context).alreadyHaveAnAccount) else Text(S.of(context).noAccountYet),
                 TextButton(onPressed: (){
-                  if (kDebugMode) {
-                    print('Login');
-                  }
-                  setState(() {
+                    if (kDebugMode) {
+                      print('Login');
+                    }
+                    setState(() {
 
-                    _loginUser = !_loginUser;
-                  });
-                }, child: _loginUser
-                    ? Text('Войти'.hardcoded)
-                    : Text('Регистрация'.hardcoded),),
+                      _loginUser = !_loginUser;
+                    });
+                  }, child: _loginUser
+                    ? Text(S.of(context).signIn)
+                    : Text(S.of(context).registration),
+                ),
               ],
             ),
           ],
@@ -153,8 +153,8 @@ class _MainFormState extends State<MainForm> {
       valueListenableProcess.value = true;
       if (kDebugMode) {
         _loginUser
-            ? print('New User Login'.hardcoded)
-            : print('Login'.hardcoded);
+            ? print('New User Login')
+            : print('Login');
       }
       await Future.delayed(const Duration(seconds: 1));
       final completer = Completer();
@@ -173,7 +173,7 @@ class _MainFormState extends State<MainForm> {
         if(_loginUser) {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такой пользователь существует'.hardcoded, context
+               S.of(context).suchAUserExists, context
             );
           }
           valueListenableProcess.value = false;
@@ -188,7 +188,7 @@ class _MainFormState extends State<MainForm> {
         final res = await completerFinal.future;
         if (res is bool && res) {
           if (kDebugMode) {
-            print('User Login in system...'.hardcoded);
+            print('User Login in system...');
           }
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
@@ -201,7 +201,7 @@ class _MainFormState extends State<MainForm> {
         } else {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такого пользователя не существует или ошибка в пароле'.hardcoded, context
+                S.of(context).thisUserDoesNotExist, context
             );
           }
         }
@@ -209,7 +209,7 @@ class _MainFormState extends State<MainForm> {
         if(!_loginUser) {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Такого пользователя не существует или ошибка в пароле'.hardcoded, context
+                S.of(context).thisUserDoesNotExist, context
             );
           }
           valueListenableProcess.value = false;
@@ -231,7 +231,7 @@ class _MainFormState extends State<MainForm> {
           final res = await completerFinalSet.future;
           if (res is bool && res) {
             if (kDebugMode) {
-              print('New User Login create...'.hardcoded);
+              print('New User Login create...');
             }
             if (context.mounted){
               await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
@@ -244,14 +244,14 @@ class _MainFormState extends State<MainForm> {
           } else {
             if (context.mounted) {
               CustomShowSnackBar.showSnackBar(
-                  'Имя пользователя занято или запрещено.'.hardcoded, context
+                  S.of(context).theUsernameIsTakenOrDisabled, context
               );
             }
           }
         } else {
           if (context.mounted) {
             CustomShowSnackBar.showSnackBar(
-                'Имя пользователя занято или запрещено.'.hardcoded, context
+                S.of(context).theUsernameIsTakenOrDisabled, context
             );
           }
         }

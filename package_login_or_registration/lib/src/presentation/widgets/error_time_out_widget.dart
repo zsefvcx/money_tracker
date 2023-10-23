@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/core.dart';
 import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
 
@@ -24,10 +25,10 @@ class ErrorTimeOutWidget extends StatelessWidget {
           ),
         ),
         10.h,
-        if(blocBloc.userAuthData.isError)Text('Ошибка!'.hardcoded) else
-        Text('Случилось что-то не то...'.hardcoded),
-        if(blocBloc.userAuthData.isTimeOut)Text('Таймаут'.hardcoded) else
-          Text('Ответ получен.'.hardcoded),
+        if(blocBloc.userAuthData.isError)Text(S.of(context).error) else
+        Text(S.of(context).somethingWrongHappened),
+        if(blocBloc.userAuthData.isTimeOut)Text(S.of(context).timeout) else
+          Text(S.of(context).replyReceived),
         const SizedBox(
           height: 50,
         ),
@@ -35,7 +36,7 @@ class ErrorTimeOutWidget extends StatelessWidget {
             onPressed: () {
               blocBloc.add(const UserAuthEvent.init());
             },
-            child: Text('Повторить'.hardcoded)),
+            child: Text(S.of(context).repeat)),
       ],
     );
   }

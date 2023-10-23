@@ -22,6 +22,50 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "enterEmail": MessageLookupByLibrary.simpleMessage("Введите свою почту")
+        "alreadyHaveAnAccount":
+            MessageLookupByLibrary.simpleMessage("Уже есть аккаунт?"),
+        "costAccounting": MessageLookupByLibrary.simpleMessage("Учёт расходов"),
+        "email": MessageLookupByLibrary.simpleMessage("E-mail"),
+        "emailFormatIsNotCorrect":
+            MessageLookupByLibrary.simpleMessage("Формат E-Mail не правильный"),
+        "enterEmail":
+            MessageLookupByLibrary.simpleMessage("Введите свою почту"),
+        "enterText": MessageLookupByLibrary.simpleMessage("Введите текст"),
+        "enterYourPassword":
+            MessageLookupByLibrary.simpleMessage("Введите свой пароль"),
+        "error": MessageLookupByLibrary.simpleMessage("Ошибка!"),
+        "noAccountYet":
+            MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),
+        "ok": MessageLookupByLibrary.simpleMessage("Ok"),
+        "password": MessageLookupByLibrary.simpleMessage("Пароль"),
+        "registration": MessageLookupByLibrary.simpleMessage("Регистрация"),
+        "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
+        "replyReceived": MessageLookupByLibrary.simpleMessage("Ответ получен"),
+        "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
+        "somethingWrongHappened":
+            MessageLookupByLibrary.simpleMessage("Случилось что-то не то..."),
+        "suchAUserExists": MessageLookupByLibrary.simpleMessage(
+            "Такой пользователь существует"),
+        "thePasswordMustContainCapitalLetters":
+            MessageLookupByLibrary.simpleMessage(
+                "Пароль должен содержать заглавные буквы"),
+        "thePasswordMustContainNumbers": MessageLookupByLibrary.simpleMessage(
+            "Пароль должен содержать цифры"),
+        "thePasswordMustContainOnlyLatinCharacters":
+            MessageLookupByLibrary.simpleMessage(
+                "Пароль должен соержать только латинские символы"),
+        "thePasswordMustContainSpecialCharacters":
+            MessageLookupByLibrary.simpleMessage(
+                "Пароль должен содержать специальные символы"),
+        "thePasswordMustNotContainSpaces": MessageLookupByLibrary.simpleMessage(
+            "Пароль не должен содержать пробелов"),
+        "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
+            "Имя пользователя занято или запрещено"),
+        "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
+            "Такого пользователя не существует или ошибка в пароле"),
+        "timeout": MessageLookupByLibrary.simpleMessage("Таймаут"),
+        "yourExpenseHistoryIsAlwaysAtHand":
+            MessageLookupByLibrary.simpleMessage(
+                "Ваша история расходов всегда под рукой")
       };
 }

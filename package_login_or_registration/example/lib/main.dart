@@ -1,9 +1,10 @@
 import 'dart:io';
 
+import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:package_login_or_registration/generated/l10n.dart';
-import 'package:package_login_or_registration/package_login_or_registration.dart';
+
+import 'package:package_login_or_registration/package_login_or_registration.dart' as login;
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -27,7 +28,7 @@ Future<void> main() async {
     });
   }
 
-  MainBlocInit.initState();
+  login.MainBlocInit.initState();
 
   runApp(const MyApp());
 }
@@ -40,15 +41,16 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: themeMainProgram,
+      theme: login.themeMainProgram,
       localizationsDelegates: const [
         S.delegate,
+        login.S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      //locale: const Locale('en'),
+      locale: const Locale('en'),
       initialRoute: RouteGenerator.initialRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
@@ -114,8 +116,8 @@ class RouteGenerator {
           title: Text(title[0]),
           centerTitle: true,
         ),
-        body: const Center(
-          child: Text('Page not found!'),
+        body: Center(
+          child: Text(S.of(context).pageNotFound),
         ),
       );
     },
@@ -134,7 +136,7 @@ class MainPageExpenses extends StatelessWidget {
     return SafeArea(
         child: Scaffold(
           appBar: AppBar(
-            title: Text('Октябрь 2023'.hardcoded),
+            title: Text(DateTime.now().toString()),
             centerTitle: true,
             leading: const Icon(Icons.add),
           ),
@@ -150,7 +152,7 @@ class MainPageExpenses extends StatelessWidget {
                 child: Column(
                   children: [
                     const Icon(Icons.credit_card),
-                    Text('Расходы'.hardcoded),
+                    Text(S.of(context).expenses),
                   ],
                 ),
               ),
@@ -159,7 +161,7 @@ class MainPageExpenses extends StatelessWidget {
                 child: Column(
                   children: [
                     const Icon(Icons.person),
-                    Text('Профиль'.hardcoded),
+                    Text(S.of(context).profile),
                   ],
                 ),
               ),
@@ -178,6 +180,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MainFormAuthorization();
+    return const login.MainFormAuthorization();
   }
 }
