@@ -1,16 +1,15 @@
 import 'dart:async';
 
+//import 'package:injectable/injectable.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:package_login_or_registration/package_login_or_registration.dart';
-//import 'package:injectable/injectable.dart';
-import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
-import 'package:package_login_or_registration/src/domain/repositories/get_user_auth_repository.dart';
-import 'package:package_login_or_registration/src/domain/repositories/set_user_auth_repository.dart';
+import 'package:package_login_or_registration/src/core/core.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
 
+part 'user_auth_bloc.freezed.dart';
 part 'user_auth_event.dart';
 part 'user_auth_state.dart';
-part 'user_auth_bloc.freezed.dart';
 
 //@injectable
 class UserAuthData {

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
 import 'package:package_login_or_registration/src/main_bloc_init.dart';
 import 'package:package_login_or_registration/src/presentation/main_builder.dart';
 import 'package:provider/provider.dart';

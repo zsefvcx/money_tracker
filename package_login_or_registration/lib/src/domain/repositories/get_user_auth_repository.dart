@@ -1,4 +1,4 @@
-import 'package:package_login_or_registration/src/domain/entities/user_authorization_password_entity.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
 
 abstract class GetUserAuthRepository {
 

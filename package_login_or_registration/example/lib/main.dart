@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:example/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:package_login_or_registration/package_login_or_registration.dart' as login;
 import 'package:window_manager/window_manager.dart';
 

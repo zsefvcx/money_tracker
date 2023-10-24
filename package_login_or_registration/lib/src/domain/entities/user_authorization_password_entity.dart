@@ -1,4 +1,3 @@
-
 import 'package:package_login_or_registration/src/core/core.dart';
 
 abstract class UserAuthorizationPasswordEntity {

@@ -2,15 +2,9 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:package_login_or_registration/package_login_or_registration.dart';
-import 'package:package_login_or_registration/src/data/data_sources/get/get_user_auth_service.dart';
-import 'package:package_login_or_registration/src/data/data_sources/get/get_user_auth_service_impl.dart';
-import 'package:package_login_or_registration/src/data/data_sources/set/set_user_auth_service.dart';
-import 'package:package_login_or_registration/src/data/data_sources/set/set_user_auth_service_impl.dart';
-import 'package:package_login_or_registration/src/data/repository/get_user_auth_repository_impl.dart';
-import 'package:package_login_or_registration/src/data/repository/set_user_auth_repository_impl.dart';
-import 'package:package_login_or_registration/src/domain/repositories/get_user_auth_repository.dart';
-import 'package:package_login_or_registration/src/domain/repositories/set_user_auth_repository.dart';
+import 'package:package_login_or_registration/src/core/core.dart';
+import 'package:package_login_or_registration/src/data/data.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
 
 class ServiceProvider{
   static final _getIt = GetIt.I;

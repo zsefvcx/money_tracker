@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/core.dart';
 
-class MainSplashWidget extends StatelessWidget {
-  const MainSplashWidget({
+class MainSplash extends StatelessWidget {
+  const MainSplash({
     super.key,
 
   });

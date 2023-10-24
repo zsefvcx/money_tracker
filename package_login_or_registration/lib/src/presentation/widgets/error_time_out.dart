@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_login_or_registration/generated/l10n.dart';
 import 'package:package_login_or_registration/src/core/core.dart';
-import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
 
-
-class ErrorTimeOutWidget extends StatelessWidget {
-  const ErrorTimeOutWidget({
+class ErrorTimeOut extends StatelessWidget {
+  const ErrorTimeOut({
     super.key,
   });
 

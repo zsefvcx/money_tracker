@@ -1,13 +1,11 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:package_login_or_registration/src/core/hash.dart';
-import 'package:package_login_or_registration/src/domain/bloc/user_auth_bloc.dart';
-import 'package:package_login_or_registration/src/presentation/widgets/main_splash_widget.dart';
-
-import 'package:package_login_or_registration/src/src.dart';
+import 'package:package_login_or_registration/generated/l10n.dart';
+import 'package:package_login_or_registration/src/core/core.dart';
+import 'package:package_login_or_registration/src/domain/domain.dart';
+import 'package:package_login_or_registration/src/presentation/presentation.dart';
 
 class MainForm extends StatefulWidget {
   const MainForm({super.key, this.loginUser});
@@ -20,24 +18,23 @@ class MainForm extends StatefulWidget {
 
 class _MainFormState extends State<MainForm> {
   bool _loginUser = false;
-  bool _passwordVisible = false;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController= TextEditingController();
   final TextEditingController _passwordController= TextEditingController();
   final FocusNode _focusNode = FocusNode();
   final FocusNode _focusNodeSecond = FocusNode();
+  final FocusNode _focusNodeThree = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    //_emailController.text = 'test@test.ru';
-    //_passwordController.text = 'dddDDDD4475.';
+    _emailController.text = 'test@test.ru';
+    _passwordController.text = 'dddDDDD4475.';
     if (widget.loginUser==null) {
       _loginUser = true;
     } else {
       _loginUser = false;
     }
-    _focusNode.requestFocus();
   }
 
   @override
@@ -46,6 +43,7 @@ class _MainFormState extends State<MainForm> {
     _passwordController.dispose();
     _focusNode.dispose();
     _focusNodeSecond.dispose();
+    _focusNodeThree.dispose();
     super.dispose();
   }
 
@@ -53,7 +51,9 @@ class _MainFormState extends State<MainForm> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final blocBloc = context.read<GetUserAuthBloc>();
-    final valueListenableProcess = ValueNotifier<(bool, bool)>((false, false));
+    final valueListenableProcess = ValueNotifier<bool>(false);
+
+    final valueLoginProcess = ValueNotifier<bool>(false);
     FocusScope.of(context).requestFocus();
     return Form(
         key: _formKey,
@@ -63,147 +63,96 @@ class _MainFormState extends State<MainForm> {
             Column(
               children: [
                 const Hero(tag: Keys.heroIdSplash,
-                    child: MainSplashWidget()),
-                TextFormField(
+                    child: MainSplash()),
+                CustomTextFormField(
                   autofocus: true,
                   focusNode: _focusNode,
-                  style: theme.textTheme.bodyMedium,
-                  cursorColor: CustomThemeProp.violetFirm,
-
-                  onTap: () {
-                     setState(() {
-                       FocusScope.of(context).requestFocus();
-                     });
-                  },
+                  nextFocusNode: _focusNodeSecond,
                   controller: _emailController,
-                  mouseCursor: SystemMouseCursors.text,
+                  labelText: S.of(context).email,
+                  hintText: S.of(context).enterEmail,
                   validator: (value) => ValidatorFields.checkEMail(value, context),
-                  decoration: InputDecoration(
-                    floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
-                      color: _focusNode.hasFocus?CustomThemeProp.violetFirm:null,
-                    ),
-                    labelText: S.of(context).email,
-                    hintText: S.of(context).enterEmail,
-                  ),
                 ),
                 20.h,
-                TextFormField(
-                  autofocus: true,
-                  controller: _passwordController,
-                  style: theme.textTheme.bodyMedium,
+                CustomTextFormField(
                   focusNode: _focusNodeSecond,
-                  cursorColor: CustomThemeProp.violetFirm,
-                  onTap: () {
-                    setState(() {
-                      FocusScope.of(context).requestFocus();
-                    });
-                  },
-                  mouseCursor: SystemMouseCursors.text,
-                  obscureText: !_passwordVisible,
+                  nextFocusNode: _focusNodeThree,
+                  controller: _passwordController,
+                  obscureText: true,
+                  labelText: S.of(context).password,
+                  hintText: S.of(context).enterYourPassword,
                   validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
-                  obscuringCharacter: '*',
-                  decoration: InputDecoration(
-                    floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
-                      color: _focusNodeSecond.hasFocus?CustomThemeProp.violetFirm:null,
-                    ),
-                    labelText: S.of(context).password,
-                    hintText: S.of(context).enterYourPassword,
-                    suffixIconColor: _focusNodeSecond.hasFocus?CustomThemeProp.violetFirm:null,
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    ),
-                  ),
                 ),
                 40.h,
-                GestureDetector(
+                CustomButton(
+                  focusNode: _focusNodeThree,
                   onTap: ()=> loginUser(
-                      blocBloc: blocBloc,
-                      valueListenableProcess: valueListenableProcess,
-                      context: context,
+                    blocBloc: blocBloc,
+                    valueListenableProcess: valueListenableProcess,
+                    context: context,
                   ),
-                  child: FocusableActionDetector(
-                    autofocus: true,
-                    mouseCursor: SystemMouseCursors.click,
-                    onFocusChange: (value) => valueListenableProcess.value=(valueListenableProcess.value.$1, value),
-                    child: ValueListenableBuilder<(bool, bool)>(
-                      valueListenable: valueListenableProcess,
-                      builder: (_, value, __) {
-                          return Container(
-                            width: CustomThemeProp.buttonSize.width,
-                            height: CustomThemeProp.buttonSize.height,
-                            decoration: BoxDecoration(
-                              color: value.$1?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
-                              boxShadow: [
-                                if(value.$2)const BoxShadow(
-                                  color: CustomThemeProp.grayLight,
-                                  spreadRadius: 4,
-                                  blurRadius: 5,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
-                            ),
-                            child: Center(
-                              child: value.$1? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                                     _loginUser ? Text(S.of(context).registration, style: theme.textTheme.titleSmall,)
-                                     : Text(S.of(context).signIn, style: theme.textTheme.titleSmall,),
-                            ));
-                        },
-                    ),
+                  child:
+                  ValueListenableBuilder<bool>(
+                    valueListenable: valueListenableProcess,
+                    builder: (_, value, __) {
+                      return Container(
+                        width: CustomThemeProp.buttonSize.width,
+                        height: CustomThemeProp.buttonSize.height,
+                        decoration: BoxDecoration(
+                          color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
+                          borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
+                        ),
+                        child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                        ValueListenableBuilder<bool>(
+                          valueListenable: valueLoginProcess,
+                          builder: (_, value, __) {
+                            return Text(
+                              value?(S.of(context).registration):(S.of(context).signIn),
+                              style: theme.textTheme.titleSmall,
+                            );
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ),
                 20.h,
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (_loginUser) Text(S.of(context).alreadyHaveAnAccount) else Text(S.of(context).noAccountYet),
-                TextButton(
-                  autofocus: true,
-                  onPressed: (){
-                    if (kDebugMode) {
-                      print('Login');
-                    }
-                    setState(() {
-
-                      _loginUser = !_loginUser;
-                    });
-                  }, child: _loginUser
-                    ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
-                    : Text(S.of(context).registration, style: theme.textTheme.bodyLarge,),
-                ),
-              ],
+            ValueListenableBuilder<bool>(
+            valueListenable: valueLoginProcess,
+            builder: (_, value, __) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(value
+                    ? S.of(context).alreadyHaveAnAccount
+                    : S.of(context).noAccountYet,
+                    style: theme.textTheme.titleMedium
+                  ),
+                  TextButton(
+                    onPressed: (){
+                      valueLoginProcess.value = !valueLoginProcess.value;
+                    },
+                    child: value
+                     ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
+                     : Text(S.of(context).registration, style: theme.textTheme.bodyLarge,),
+                  ),
+                ],
+              );},
             ),
           ],
-        ));
+    ));
   }
 
   Future<void> loginUser({
     required GetUserAuthBloc blocBloc, 
-    required ValueNotifier<(bool, bool)> valueListenableProcess,
+    required ValueNotifier<bool> valueListenableProcess,
     required BuildContext context,
   }) async {
-    final s1 = valueListenableProcess.value.$1;
-    final s2 = valueListenableProcess.value.$2;
-
     final cSt = _formKey.currentState;
-    if(cSt != null && cSt.validate() && !s1) {
-      valueListenableProcess.value = (true, s2);
-      if (kDebugMode) {
-        _loginUser
-            ? print('New User Login')
-            : print('Login');
-      }
+    if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
+      valueListenableProcess.value = true;
       await Future.delayed(const Duration(seconds: 1));
       final completer = Completer();
       final completerFinal = Completer();
@@ -224,7 +173,7 @@ class _MainFormState extends State<MainForm> {
                S.of(context).suchAUserExists, context
             );
           }
-          valueListenableProcess.value = (false, s2);
+          valueListenableProcess.value = false;
           return;
         }
         ///Логинимся
@@ -235,9 +184,6 @@ class _MainFormState extends State<MainForm> {
         );
         final res = await completerFinal.future;
         if (res is bool && res) {
-          if (kDebugMode) {
-            print('User Login in system...');
-          }
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
               arguments: {
@@ -260,7 +206,7 @@ class _MainFormState extends State<MainForm> {
                 S.of(context).thisUserDoesNotExist, context
             );
           }
-          valueListenableProcess.value = (false, s2);
+          valueListenableProcess.value = false;
           return;
         }
         ///Регистрируемся
@@ -278,9 +224,6 @@ class _MainFormState extends State<MainForm> {
           );
           final res = await completerFinalSet.future;
           if (res is bool && res) {
-            if (kDebugMode) {
-              print('New User Login create...');
-            }
             if (context.mounted){
               await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
                 arguments: {
@@ -304,7 +247,7 @@ class _MainFormState extends State<MainForm> {
           }
         }
       }
-      valueListenableProcess.value = (false, s2);
+      valueListenableProcess.value = false;
     }
   }
 }

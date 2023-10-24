@@ -1,6 +1,7 @@
 export 'custom_show_snack_bar.dart';
 export 'custom_theme_prop.dart';
 export 'extensions.dart';
+export 'hash.dart';
 export 'keys_storage.dart';
 export 'logger.dart';
 export 'network_info.dart';
