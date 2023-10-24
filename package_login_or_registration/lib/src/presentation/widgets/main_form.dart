@@ -102,15 +102,17 @@ class _MainFormState extends State<MainForm> {
                           color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
                           borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
                         ),
-                        child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                        ValueListenableBuilder<bool>(
-                          valueListenable: valueLoginProcess,
-                          builder: (_, value, __) {
-                            return Text(
-                              value?(S.of(context).registration):(S.of(context).signIn),
-                              style: theme.textTheme.titleSmall,
-                            );
-                          },
+                        child: Center(
+                          child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                          ValueListenableBuilder<bool>(
+                            valueListenable: valueLoginProcess,
+                            builder: (_, value, __) {
+                              return Text(
+                                value?(S.of(context).registration):(S.of(context).signIn),
+                                style: theme.textTheme.titleSmall,
+                              );
+                            },
+                          ),
                         ),
                       );
                     },
