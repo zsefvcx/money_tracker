@@ -42,14 +42,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: login.themeMainProgram,
       localizationsDelegates: const [
-        S.delegate,
         login.S.delegate,
+        S.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      locale: const Locale('en'),
+      //locale: const Locale('ru'),
       initialRoute: RouteGenerator.initialRoute,
       onGenerateRoute: RouteGenerator.generateRoute,
     );
