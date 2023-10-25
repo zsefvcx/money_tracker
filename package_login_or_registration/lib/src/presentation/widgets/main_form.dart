@@ -57,94 +57,97 @@ class _MainFormState extends State<MainForm> {
     FocusScope.of(context).requestFocus();
     return Form(
         key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              children: [
-                const Hero(tag: Keys.heroIdSplash,
-                    child: MainSplash()),
-                CustomTextFormField(
-                  autofocus: true,
-                  focusNode: _focusNode,
-                  nextFocusNode: _focusNodeSecond,
-                  controller: _emailController,
-                  labelText: S.of(context).email,
-                  hintText: S.of(context).enterEmail,
-                  validator: (value) => ValidatorFields.checkEMail(value, context),
-                ),
-                20.h,
-                CustomTextFormField(
-                  focusNode: _focusNodeSecond,
-                  nextFocusNode: _focusNodeThree,
-                  controller: _passwordController,
-                  obscureText: true,
-                  labelText: S.of(context).password,
-                  hintText: S.of(context).enterYourPassword,
-                  validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
-                ),
-                40.h,
-                CustomButton(
-                  focusNode: _focusNodeThree,
-                  onTap: ()=> loginUser(
-                    blocBloc: blocBloc,
-                    valueListenableProcess: valueListenableProcess,
-                    context: context,
-                  ),
-                  child:
-                  ValueListenableBuilder<bool>(
-                    valueListenable: valueListenableProcess,
-                    builder: (_, value, __) {
-                      return Container(
-                        width: CustomThemeProp.buttonSize.width,
-                        height: CustomThemeProp.buttonSize.height,
-                        decoration: BoxDecoration(
-                          color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
-                          borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
-                        ),
-                        child: Center(
-                          child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
-                          ValueListenableBuilder<bool>(
-                            valueListenable: valueLoginProcess,
-                            builder: (_, value, __) {
-                              return Text(
-                                value?(S.of(context).registration):(S.of(context).signIn),
-                                style: theme.textTheme.titleSmall,
-                              );
-                            },
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                20.h,
-              ],
-            ),
-            ValueListenableBuilder<bool>(
-            valueListenable: valueLoginProcess,
-            builder: (_, value, __) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 children: [
-                  Text(value
-                    ? S.of(context).alreadyHaveAnAccount
-                    : S.of(context).noAccountYet,
-                    style: theme.textTheme.titleMedium
+                  const Hero(tag: Keys.heroIdSplash,
+                      child: MainSplash()),
+                  CustomTextFormField(
+                    autofocus: true,
+                    focusNode: _focusNode,
+                    nextFocusNode: _focusNodeSecond,
+                    controller: _emailController,
+                    labelText: S.of(context).email,
+                    hintText: S.of(context).enterEmail,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) => ValidatorFields.checkEMail(value, context),
                   ),
-                  TextButton(
-                    onPressed: (){
-                      valueLoginProcess.value = !valueLoginProcess.value;
-                    },
-                    child: value
-                     ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
-                     : Text(S.of(context).registration, style: theme.textTheme.bodyLarge,),
+                  20.h,
+                  CustomTextFormField(
+                    focusNode: _focusNodeSecond,
+                    nextFocusNode: _focusNodeThree,
+                    controller: _passwordController,
+                    obscureText: true,
+                    labelText: S.of(context).password,
+                    hintText: S.of(context).enterYourPassword,
+                    validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
                   ),
+                  40.h,
+                  CustomButton(
+                    focusNode: _focusNodeThree,
+                    onTap: ()=> loginUser(
+                      blocBloc: blocBloc,
+                      valueListenableProcess: valueListenableProcess,
+                      context: context,
+                    ),
+                    child:
+                    ValueListenableBuilder<bool>(
+                      valueListenable: valueListenableProcess,
+                      builder: (_, value, __) {
+                        return Container(
+                          width: CustomThemeProp.buttonSize.width,
+                          height: CustomThemeProp.buttonSize.height,
+                          decoration: BoxDecoration(
+                            color: value?CustomThemeProp.grayLight:CustomThemeProp.violetFirm,
+                            borderRadius: BorderRadius.all(Radius.circular(CustomThemeProp.buttonSize.height/2)),
+                          ),
+                          child: Center(
+                            child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
+                            ValueListenableBuilder<bool>(
+                              valueListenable: valueLoginProcess,
+                              builder: (_, value, __) {
+                                return Text(
+                                  value?(S.of(context).registration):(S.of(context).signIn),
+                                  style: theme.textTheme.titleSmall,
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  20.h,
                 ],
-              );},
-            ),
-          ],
-    ));
+              ),
+              ValueListenableBuilder<bool>(
+              valueListenable: valueLoginProcess,
+              builder: (_, value, __) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(value
+                      ? S.of(context).alreadyHaveAnAccount
+                      : S.of(context).noAccountYet,
+                      style: theme.textTheme.titleMedium
+                    ),
+                    TextButton(
+                      onPressed: (){
+                        valueLoginProcess.value = !valueLoginProcess.value;
+                      },
+                      child: value
+                       ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
+                       : Text(S.of(context).registration, style: theme.textTheme.bodyLarge,),
+                    ),
+                  ],
+                );},
+              ),
+            ],
+    ),
+        ));
   }
 
   Future<void> loginUser({

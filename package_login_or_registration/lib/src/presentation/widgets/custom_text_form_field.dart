@@ -3,6 +3,7 @@ import 'package:package_login_or_registration/src/core/core.dart';
 
 class CustomTextFormField extends StatefulWidget {
   const CustomTextFormField({
+    this.keyboardType,
     this.validator,
     this.focusNode,
     this.nextFocusNode,
@@ -21,6 +22,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? labelText;
   final String? hintText;
   final bool autofocus;
+  final TextInputType? keyboardType;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -67,6 +69,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             validator: widget.validator,
             obscureText: value.$2,
             obscuringCharacter: '*',
+            keyboardType: widget.keyboardType,
             decoration: InputDecoration(
               floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
                 color: (widget.focusNode?.hasFocus ?? true)?CustomThemeProp.violetFirm:null,
