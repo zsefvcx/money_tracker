@@ -51,16 +51,33 @@ void main() {
       monthlyExpenses.add(DayExpenses.fromMap({
         'id': 11, 'idCategory': 0, 'dateTime': '2023-10-22 15:00:37.428551', 'sum': '10000000'
       }));
-
-
+      monthlyExpenses.add(DayExpenses.fromMap({
+        'id': 12, 'idCategory': 1, 'dateTime': '2023-10-21 15:00:37.428551', 'sum': '10000000'
+      }));
+      monthlyExpenses.add(DayExpenses.fromMap({
+        'id': 13, 'idCategory': 0, 'dateTime': '2023-10-22 15:00:37.428551', 'sum': '10000000'
+      }));
 
       if (kDebugMode) print(monthlyExpenses);
+
+      if (kDebugMode) print('\n');
+      if (kDebugMode) print(monthlyExpenses.length);
+      if (kDebugMode) print('\n');
+      if (kDebugMode) print(monthlyExpenses.param);
+      if (kDebugMode) print('\n');
+      if (kDebugMode) print(monthlyExpenses.totalSum(0));
+      if (kDebugMode) print('\n');
 
       final yearExpenses = YearExpenses();
       yearExpenses.completeExpense[monthlyExpenses.param] = monthlyExpenses;
       if (kDebugMode) print('\n');
       if (kDebugMode) print(yearExpenses);
       if (kDebugMode) print('\n');
+      if (kDebugMode) print(yearExpenses);
+      if (kDebugMode) print('\n');
+
+
+
     });
   });
 }
