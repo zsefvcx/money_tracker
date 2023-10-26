@@ -42,9 +42,17 @@ void main() {
         year: DateTime.now().year,
       );
 
-      monthlyExpenses.completeExpenses[dayExpenses1.idCategory!] = dayExpenses1;
-      monthlyExpenses.completeExpenses[dayExpenses2.idCategory!] = dayExpenses2;
-      monthlyExpenses.completeExpenses[dayExpenses3.idCategory!] = dayExpenses3;
+      monthlyExpenses.add(dayExpenses1);
+      monthlyExpenses.add(dayExpenses2);
+      monthlyExpenses.add(dayExpenses3);
+      monthlyExpenses.add(DayExpenses.fromMap({
+        'id': 10, 'idCategory': 0, 'dateTime': '2023-10-22 15:00:37.428551', 'sum': '10000000'
+      }));
+      monthlyExpenses.add(DayExpenses.fromMap({
+        'id': 11, 'idCategory': 0, 'dateTime': '2023-10-22 15:00:37.428551', 'sum': '10000000'
+      }));
+
+
 
       if (kDebugMode) print(monthlyExpenses);
 

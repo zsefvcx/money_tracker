@@ -21,20 +21,17 @@ class MonthlyExpenses {
     final day = value.dateTime.day;
 
     if(status == null) {//нет вообще категорий
-      completeExpenses[value.idCategory] = <int, Set<DayExpenses>>{day: [value]};//добавляем элемент в категорию
-      return true;
+      completeExpenses[value.idCategory] = <int, Set<DayExpenses>>{day: {value}};//добавляем элемент в категорию
     } else {//есть категория
       final status2  = status[day];
       if(status2 == null){//проверяем наличие такого элемента с таким днем
-        completeExpenses[value.idCategory] = <int, [DayExpenses]>{day: [value]};//добавляем эелмент в категорию
-        return true;
+        completeExpenses[value.idCategory] = <int, Set<DayExpenses>>{day: {value}};//добавляем эелмент в категорию
       } else {
-        completeExpenses[value.idCategory]![day];
-
+        status2.add(value);
+        //completeExpenses[value.idCategory]![day]!.add(value);
       }
-
     }
-    return false;
+    return true;
   }
 
   @override
