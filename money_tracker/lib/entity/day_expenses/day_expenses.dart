@@ -20,10 +20,7 @@ class DayExpenses extends Equatable{
   (int, int, int) get param => (dateTime.day, dateTime.month, dateTime.year);
 
   const DayExpenses({
-    this.id,
-    required this.idCategory,
-    required this.dateTime,
-    required this.sum,
+    required this.idCategory, required this.dateTime, required this.sum, this.id,
   });
 
   DayExpenses copyWith({
