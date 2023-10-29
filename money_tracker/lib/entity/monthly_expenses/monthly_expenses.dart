@@ -31,7 +31,9 @@ class MonthlyExpenses extends Equatable{
   @override
   List<Object?> get props => [month, year, completeExpenses];
 
-  bool checkDayExpenses(int month, int year) => (month==this.month&&year==this.year);
+  bool checkDayExpenses(int month, int year) {
+    return month==this.month&&year==this.year;
+  }
 
   bool statusCategory({required int idCategory}) {
     final status = completeExpenses[idCategory];
@@ -107,15 +109,15 @@ class MonthlyExpenses extends Equatable{
   }
 
   BigInt totalSumCategory(int idCategory) =>
-      (completeExpenses[idCategory]?.values
+      completeExpenses[idCategory]?.values
              .fold<BigInt>(BigInt.from(0),(previousValue, dataCategory) =>
           dataCategory.values.fold<BigInt>(previousValue, (previousValue, dataDay) =>
-          previousValue + dataDay.sum)))??BigInt.from(0);
+          previousValue + dataDay.sum))??BigInt.from(0);
 
   BigInt totalSumCategoryDay(int idCategory, int day) =>
-      (completeExpenses[idCategory]?[day]?.values
+      completeExpenses[idCategory]?[day]?.values
           .fold<BigInt>(BigInt.from(0), (previousValue, dataDay) =>
-          previousValue + dataDay.sum))??BigInt.from(0);
+          previousValue + dataDay.sum)??BigInt.from(0);
 
   /// Connect the generated [_$MonthlyExpensesFromJson] function to the `fromJson`
   /// factory.

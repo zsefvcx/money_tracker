@@ -11,20 +11,26 @@ class CategoriesExpenses  extends Equatable{
 
   const CategoriesExpenses({required this.completeCategories});
 
-  bool status({required int id}) => completeCategories[id]==null?false:true;
+  bool status({required int id}) {
+    if (completeCategories[id]==null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
   @override
   List<Object?> get props => [completeCategories];
 
-  /// Connect the generated [_$CategoriesExpensesFromJson] function to the `fromJson`
+  /// Connect the generated _$CategoriesExpensesFromJson function to the `fromJson`
   /// factory.
   factory CategoriesExpenses.fromJson(Map<String, dynamic> json) => _$CategoriesExpensesFromJson(json);
 
-  /// Connect the generated [_$CategoryExpensesToJson] function to the `toJson` method.
+  /// Connect the generated _$CategoryExpensesToJson function to the `toJson` method.
   Map<String, dynamic> toJson() => _$CategoriesExpensesToJson(this);
 
   @override
   String toString() {
-    return 'categoriesExpenses: {${completeCategories.toString()}}';
+    return 'categoriesExpenses: {$completeCategories}';
   }
 }

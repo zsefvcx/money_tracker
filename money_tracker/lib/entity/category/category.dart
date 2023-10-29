@@ -11,9 +11,7 @@ class CategoryExpenses extends Equatable{
   final String colorHex;
 
   const CategoryExpenses({
-    this.id,
-    required this.name,
-    required this.colorHex,
+    required this.name, required this.colorHex, this.id,
   });
 
   CategoryExpenses copyWith({

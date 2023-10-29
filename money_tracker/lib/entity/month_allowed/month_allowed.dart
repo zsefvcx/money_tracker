@@ -22,7 +22,11 @@ class MonthAllowed extends Equatable{
 
   bool status(DateTime value){
     final status = monthEnabled[value.year];
-    return status==null?false:status.contains(value.month);
+    if (status==null) {
+      return false;
+    } else {
+      return status.contains(value.month);
+    }
   }
 
   void add(DateTime value){
@@ -46,6 +50,6 @@ class MonthAllowed extends Equatable{
 
   @override
   String toString() {
-    return 'MonthAllowed: {${monthEnabled.toString()}}';
+    return 'MonthAllowed: {$monthEnabled}';
   }
 }

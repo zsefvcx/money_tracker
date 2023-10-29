@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:money_tracker/entity/entity.dart';
 
@@ -23,18 +22,18 @@ void main() {
       expect(category10.toString(),
           'categoryExpenses: {id: 0, name: Name1, colorHex: 5895ff}');
 
-      var data = jsonEncode(category10.toJson());
+      final data = jsonEncode(category10.toJson());
       final json = jsonDecode(data);
-      final category11 = CategoryExpenses.fromJson(json);
+      final category11 = CategoryExpenses.fromJson(json as Map<String, dynamic>);
       expect(category11==category10, true);
 
       const category2 = CategoryExpenses(
           id: 1, name: 'Name2', colorHex: '009ff2');
       const category3 = CategoryExpenses(
           id: 2, name: 'Name3', colorHex: '5800f2');
-      final Map<int, CategoryExpenses> completeCategories = {};
+      final completeCategories = <int, CategoryExpenses>{};
       final categoriesExpenses = CategoriesExpenses(completeCategories: completeCategories);
-      final Map<int, CategoryExpenses> completeCategories2 = {};
+      final completeCategories2 = <int, CategoryExpenses>{};
       categoriesExpenses.completeCategories[category1.id!] = category1;
       categoriesExpenses.completeCategories[category2.id!] = category2;
       categoriesExpenses.completeCategories[category3.id!] = category3;
@@ -49,9 +48,9 @@ void main() {
       categoriesExpenses2.completeCategories[category3.id!] = category3;
       expect(categoriesExpenses==categoriesExpenses2, true);
 
-      var data1 = jsonEncode(categoriesExpenses.toJson());
+      final data1 = jsonEncode(categoriesExpenses.toJson());
       final json1 = jsonDecode(data1);
-      final categoriesExpenses3 = CategoriesExpenses.fromJson(json1);
+      final categoriesExpenses3 = CategoriesExpenses.fromJson(json1 as Map<String, dynamic>);
       expect(categoriesExpenses==categoriesExpenses3, true);
       expect(categoriesExpenses.status(id: 0), true);
       expect(categoriesExpenses.status(id: 10), false);
@@ -76,14 +75,14 @@ void main() {
       expect(dayExpenses1==dayExpenses10, false);
       final dayExpenses11 = DayExpenses(id: 0, idCategory: 0, dateTime: dataTime, sum: BigInt.from(10000000));
       expect(dayExpenses1==dayExpenses11, true);
-      var data = jsonEncode(dayExpenses10.toJson());
+      final data = jsonEncode(dayExpenses10.toJson());
       final json = jsonDecode(data);
       expect(json, dayExpenses10.toJson());
 
       final dayExpenses2 = DayExpenses(id: 1, idCategory: 1, dateTime: dataTime, sum: BigInt.from(60000000));
       final dayExpenses3 = DayExpenses(id: 2, idCategory: 2, dateTime: dataTime, sum: BigInt.from(30000000));
 
-      final Map<int, Map<int, Map<int, DayExpenses>>> completeExpenses = {};
+      final completeExpenses = <int, Map<int, Map<int, DayExpenses>>>{};
 
       final monthlyExpenses = MonthlyExpenses(
         month: dataTime.month,
@@ -91,7 +90,7 @@ void main() {
         completeExpenses: completeExpenses,
       );
 
-      final Map<int, Map<int, Map<int, DayExpenses>>> completeExpenses1 = {};
+      final completeExpenses1 = <int, Map<int, Map<int, DayExpenses>>>{};
 
       final monthlyExpenses1 = MonthlyExpenses(
         month: dataTime.month,
@@ -131,9 +130,9 @@ void main() {
       }));
 
       expect(monthlyExpenses.length, 6);
-      var data1 = jsonEncode(monthlyExpenses.toJson());
+      final data1 = jsonEncode(monthlyExpenses.toJson());
       final json1 = jsonDecode(data1);
-      final monthlyExpenses2 = MonthlyExpenses.fromJson(json1);
+      final monthlyExpenses2 = MonthlyExpenses.fromJson(json1 as Map<String, dynamic>);
       expect(monthlyExpenses==monthlyExpenses2, true);
       expect(monthlyExpenses.param, (10, 2023));
       expect(monthlyExpenses.totalSumCategory(0), BigInt.from(30000000));
@@ -161,16 +160,16 @@ void main() {
     });
 
     test('Month Allowed tests', () {
-      final Map<int, Set<int>> monthEnabled = {};
-      final monthAllowed = MonthAllowed(monthEnabled: monthEnabled);
-      monthAllowed.add(DateTime.parse('2023-10-22 15:00:37.428551'));
-      monthAllowed.add(DateTime.parse('2023-08-22 15:00:37.428551'));
-      monthAllowed.add(DateTime.parse('2022-08-22 15:00:37.428551'));
-      var data = jsonEncode(monthAllowed.toJson());
+      final  monthEnabled = <int, Set<int>>{};
+      final monthAllowed = MonthAllowed(monthEnabled: monthEnabled)
+      ..add(DateTime.parse('2023-10-22 15:00:37.428551'))
+      ..add(DateTime.parse('2023-08-22 15:00:37.428551'))
+      ..add(DateTime.parse('2022-08-22 15:00:37.428551'));
+      final data = jsonEncode(monthAllowed.toJson());
       expect(data, '{"monthEnabled":{"2023":[10,8],"2022":[8]}}');
       expect(monthEnabled.length, 2);
       final json = jsonDecode(data);
-      final monthAllowed2 = MonthAllowed.fromJson(json);
+      final monthAllowed2 = MonthAllowed.fromJson(json as Map<String, dynamic>);
       expect(monthAllowed==monthAllowed2, true);
       expect(monthAllowed.monthEnabled.length, 2);
       expect(monthAllowed.status(DateTime.parse('2022-08-22 15:00:37.428551')), true);
