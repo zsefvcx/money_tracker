@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:money_tracker/generated/l10n.dart';
 
 class NameMonth{
-  late Map<int, String> monthName;
+  late Map<int, String> _monthName;
 
   BuildContext context;
 
   NameMonth(this.context){
-    monthName = <int, String>{
+    _monthName = <int, String>{
       1: S.of(context).january,
       2: S.of(context).february,
       3: S.of(context).march,
@@ -24,5 +24,5 @@ class NameMonth{
     };
   }
 
-  String toNameMonth(int month) => monthName[month]??'none';
+  String toNameMonth(int month) => _monthName[month]??'none';
 }

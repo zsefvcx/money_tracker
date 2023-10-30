@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 
 class AppColors {
@@ -38,15 +39,14 @@ class MoneyTrackerHomePage extends StatefulWidget {
 class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage> {
   int touchedIndex = -1;
 
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final nowDateTime = DateTime.now();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text(DateTime.now().toString()),
+          title: Text('${NameMonth(context).toNameMonth(nowDateTime.month)} ${nowDateTime.year}'),
           actions: [
             IconButton(onPressed: () {
 
