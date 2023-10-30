@@ -38,7 +38,12 @@ abstract final class CustomThemeProp {
 
   static const String mainFont = 'SF UI Display';
 
-  static Color black = bwTheme?const Color(0xFF000000):const Color(0xFFF0F0F0);
+  static Color black = bwTheme?
+                          const Color(0xFF000000):
+                          const Color(0xFFF0F0F0);
+  static Color white = bwTheme?
+                          const Color(0xFFFFFFFF):
+                          const Color(0xFF000000);
   static const Color grayText   = Color(0xFFABABAB);
   static const Color red        = Color(0xFFF80606);
   static const Color violetFirm = Color(0xFF9053EB);
@@ -130,6 +135,43 @@ text-align: left;
     textAlign: TextAlign.center,
     letterSpacing: 0,
   );
+
+/*//styleName: h_1_24;
+font-family: SF UI Display;
+font-size: 24px;
+font-weight: 700;
+line-height: 17px;
+letter-spacing: 0em;
+text-align: center;
+*/
+  static final Typography appBarTypographyWhite = Typography(
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 24,
+    lineHeightPX: 17,
+    fontColor: white,
+    textAlign: TextAlign.center,
+    letterSpacing: 0,
+  );
+
+/*//styleName: 10_px;
+font-family: SF UI Display;
+font-size: 10px;
+font-weight: 400;
+letter-spacing: -0.40799999237060547px;
+text-align: center;
+*/
+  static final Typography bottomNavigationBarTypography = Typography(
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w400,
+    fontSize: 10,
+    lineHeightPX: 17,
+    fontColor: violetFirm,
+    textAlign: TextAlign.center,
+    letterSpacing: 0,//-0.40799999237060547,
+  );
+
+
 
 //styleName: txr_17px_reg;
 //   font-family: SF UI Display;

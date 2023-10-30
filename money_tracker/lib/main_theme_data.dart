@@ -9,8 +9,6 @@ TextTheme _textLight(TextTheme base) {
     titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(
       color: Colors.white,
     ),
-
-
     bodyMedium: CustomThemeProp.bodyMediumTypography.style,
     bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
   );
@@ -23,7 +21,6 @@ TextTheme _textBlack(TextTheme base) {
     titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(
       color: Colors.white,
     ),
-
     bodyMedium: CustomThemeProp.bodyMediumTypography.style,
     bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
   );
@@ -66,19 +63,36 @@ InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
   );
 }
 
-
 AppBarTheme _appBarTheme(AppBarTheme base) {
   return base.copyWith(
-    // backgroundColor: Colors.black54,
-    // centerTitle: false,
-    // iconTheme: IconThemeData(color: Colors.deepOrange[100]),
-    // titleTextStyle: TextStyle(color: Colors.deepOrange[100], fontSize: 16),
+    backgroundColor: CustomThemeProp.violetFirm,
+    centerTitle: true,
+    iconTheme: IconThemeData(color: CustomThemeProp.white, size: 24),
+    titleTextStyle: CustomThemeProp.appBarTypographyWhite.style,
   );
 }
 
+BottomNavigationBarThemeData _bottomNavigationBarThemeData(BottomNavigationBarThemeData base){
+  return base.copyWith(
+    backgroundColor: CustomThemeProp.white,
+    selectedItemColor: CustomThemeProp.violetFirm,
+    unselectedItemColor: CustomThemeProp.grayText,
+    selectedIconTheme:  const IconThemeData(color: CustomThemeProp.violetFirm, size: 24),
+    selectedLabelStyle: CustomThemeProp.bottomNavigationBarTypography.style,
+    unselectedIconTheme: const IconThemeData(color: CustomThemeProp.grayText, size: 24),
+    unselectedLabelStyle: CustomThemeProp.bottomNavigationBarTypography.style.copyWith(
+      color: CustomThemeProp.grayText
+    ),
+    mouseCursor: const MaterialStatePropertyAll(SystemMouseCursors.click),
+    elevation: 0,
+  );
+}
+
+
+
 CardTheme _cardTheme(CardTheme base) {
   return base.copyWith(
-    // color: Colors.deepOrange[100],
+    // color: CustomThemeProp.violetFirm,
     // elevation: 10,
     // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
     // margin: const EdgeInsets.all(10),
@@ -108,24 +122,17 @@ ButtonStyle _buttonStyle(ButtonStyle base){
   );
 }
 
-BottomNavigationBarThemeData _bottomNavigationBarThemeData(BottomNavigationBarThemeData base){
-  return base.copyWith(
-    // backgroundColor: Colors.black54.withOpacity(0.6),
-    // elevation: 0,
-    // selectedItemColor: Colors.deepOrange[100],
-    // unselectedItemColor: Colors.black,
-  );
-}
+
 
 
 
 ColorScheme _colorScheme(ColorScheme base) {
   return base.copyWith(
-    // background: Colors.white,
-    // primary: Colors.deepOrange[100],
-    // secondary: Colors.deepOrange[100],
-    // secondaryContainer: Colors.deepOrange[100],
-    // primaryContainer: Colors.deepOrange[100],
+    background: CustomThemeProp.white,
+    primary: CustomThemeProp.violetFirm,
+    secondary: CustomThemeProp.grayLight,
+    primaryContainer: CustomThemeProp.violetFirm,
+    secondaryContainer: CustomThemeProp.grayLight,
   );
 }
 
@@ -150,16 +157,26 @@ ThemeData _theme = CustomThemeProp.bwTheme?ThemeData.light():ThemeData.dark();
 ThemeData themeMainProgram = _theme.copyWith(
   useMaterial3: true,
 
-  //primaryColorLight: Colors.deepOrange[100],
-  //primaryColorDark: Colors.deepOrange[100],
-  //scaffoldBackgroundColor: Colors.white,
-
-
   appBarTheme: _appBarTheme(_theme.appBarTheme),
+
+  colorScheme: _colorScheme(_theme.colorScheme),
+  primaryColorLight: CustomThemeProp.violetFirm,
+  primaryColorDark: CustomThemeProp.violetFirm,
+  scaffoldBackgroundColor: Colors.white,
+
+
+  bottomNavigationBarTheme: _bottomNavigationBarThemeData(_theme.bottomNavigationBarTheme),
 
   textTheme: CustomThemeProp.bwTheme
       ?_textLight(_theme.textTheme)
       :_textBlack(_theme.textTheme),
+
+
+
+
+
+
+
 
   cardTheme: _cardTheme(_theme.cardTheme),
 
@@ -173,9 +190,8 @@ ThemeData themeMainProgram = _theme.copyWith(
     ),
   ),
 
-  bottomNavigationBarTheme: _bottomNavigationBarThemeData(_theme.bottomNavigationBarTheme),
 
-  colorScheme: _colorScheme(_theme.colorScheme),
+
 
   chipTheme: _chipThemeData(_theme.chipTheme),
 
