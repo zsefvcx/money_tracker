@@ -48,7 +48,11 @@ abstract final class CustomThemeProp {
   static const Color red        = Color(0xFFF80606);
   static const Color violetFirm = Color(0xFF9053EB);
   static const Color grayLight  = Color(0xFFD0D0D0);
+  static const Color grey       = Colors.grey;
 
+  //rgba(0, 0, 0, 0.15)
+  //{background: #000000; opacity: 0.1;}
+  static Color whiteWithOpacity([double opacity = 0.15]) => Colors.white.withOpacity(opacity);
 /*
 //styleName: h_1_24;
 font-family: SF UI Display;
@@ -153,6 +157,29 @@ text-align: center;
     textAlign: TextAlign.center,
     letterSpacing: 0,
   );
+/*
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: -0.40799999237060547px;
+  text-align: left;
+
+//styleName: 10_px;
+  font-family: SF UI Display;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: -0.40799999237060547px;
+  text-align: left;
+*/
+  static final Typography bodySmallTypography = Typography(
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w400,
+    fontSize: 10,
+    lineHeightPX: 17,
+    fontColor: grayText,
+    textAlign: TextAlign.left,
+    letterSpacing: -0.40799999237060547,
+  );
 
 /*//styleName: 10_px;
 font-family: SF UI Display;
@@ -168,10 +195,26 @@ text-align: center;
     lineHeightPX: 17,
     fontColor: violetFirm,
     textAlign: TextAlign.center,
-    letterSpacing: 0,//-0.40799999237060547,
+    letterSpacing: -0.40799999237060547,
   );
 
-
+  /*//styleName: 12px-bold;
+font-family: SF UI Display;
+font-size: 12px;
+font-weight: 700;
+line-height: 17px;
+letter-spacing: 0em;
+text-align: center;
+*/
+  static final Typography pieChartSectionTypography = Typography(
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w700,
+    fontSize: 12,
+    lineHeightPX: 17,
+    fontColor: white,
+    textAlign: TextAlign.center,
+    letterSpacing: 0,
+  );
 
 //styleName: txr_17px_reg;
 //   font-family: SF UI Display;

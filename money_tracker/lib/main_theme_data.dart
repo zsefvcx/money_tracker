@@ -4,13 +4,17 @@ import 'package:money_tracker/core/core.dart';
 
 TextTheme _textLight(TextTheme base) {
   return base.copyWith(
-    titleLarge: CustomThemeProp.titleLargeTypography.style,
-    titleMedium: CustomThemeProp.titleMediumTypography.style,
-    titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(
+    titleLarge: CustomThemeProp.titleLargeTypography.style,//24
+    titleMedium: CustomThemeProp.titleMediumTypography.style,//15
+    titleSmall: CustomThemeProp.titleMediumTypography.style.copyWith(//15
       color: Colors.white,
     ),
-    bodyMedium: CustomThemeProp.bodyMediumTypography.style,
-    bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
+
+    bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,//17
+    bodyMedium: CustomThemeProp.bodyMediumTypography.style,//17
+    bodySmall: CustomThemeProp.bodySmallTypography.style,//10
+    displaySmall: CustomThemeProp.pieChartSectionTypography.style,//12
+
   );
 }
 
@@ -43,8 +47,6 @@ InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
 
     suffixIconColor: CustomThemeProp.grayLight,
     focusColor: CustomThemeProp.violetFirm,
-
-
 
     floatingLabelBehavior: FloatingLabelBehavior.auto,
     floatingLabelAlignment: FloatingLabelAlignment.start,
@@ -88,17 +90,26 @@ BottomNavigationBarThemeData _bottomNavigationBarThemeData(BottomNavigationBarTh
   );
 }
 
-
-
 CardTheme _cardTheme(CardTheme base) {
   return base.copyWith(
-    // color: CustomThemeProp.violetFirm,
-    // elevation: 10,
-    // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-    // margin: const EdgeInsets.all(10),
-    // clipBehavior: Clip.antiAliasWithSaveLayer
+    color: CustomThemeProp.white,
+    surfaceTintColor: CustomThemeProp.whiteWithOpacity(),
+    margin: const EdgeInsets.only(left: 25, right: 25, bottom: 12.5, top: 12.5),
+    shadowColor: CustomThemeProp.grayLight,
+    elevation: 13,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    clipBehavior: Clip.antiAliasWithSaveLayer
   );
 }
+
+IconThemeData _iconTheme(IconThemeData base){
+  return base.copyWith(
+      color: CustomThemeProp.grey,
+      size: 24
+  );
+}
+
+
 
 ProgressIndicatorThemeData _progressIndicatorThemeData(ProgressIndicatorThemeData base){
   return base.copyWith(
@@ -116,15 +127,20 @@ DialogTheme _dialogTheme(DialogTheme base){
 
 ButtonStyle _buttonStyle(ButtonStyle base){
   return base.copyWith(
-    // backgroundColor: MaterialStatePropertyAll(Colors.deepOrange[100]),
-    // shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
-    // foregroundColor: const MaterialStatePropertyAll(Colors.black54),
+    backgroundColor: const MaterialStatePropertyAll(CustomThemeProp.violetFirm),
+    shape: MaterialStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))),
+    foregroundColor: MaterialStatePropertyAll(CustomThemeProp.white),
+
+    //padding: const MaterialStatePropertyAll(EdgeInsets.only(top: 15, bottom: 15)),
+    minimumSize: const MaterialStatePropertyAll(Size(0, 50)),
+    maximumSize: const MaterialStatePropertyAll(Size(double.maxFinite, 50)),
+
+
+    textStyle: MaterialStatePropertyAll(CustomThemeProp.bodyMediumTypography.style.copyWith(
+      color: CustomThemeProp.white,
+    )),
   );
 }
-
-
-
-
 
 ColorScheme _colorScheme(ColorScheme base) {
   return base.copyWith(
@@ -162,7 +178,7 @@ ThemeData themeMainProgram = _theme.copyWith(
   colorScheme: _colorScheme(_theme.colorScheme),
   primaryColorLight: CustomThemeProp.violetFirm,
   primaryColorDark: CustomThemeProp.violetFirm,
-  scaffoldBackgroundColor: Colors.white,
+  scaffoldBackgroundColor: CustomThemeProp.white,
 
 
   bottomNavigationBarTheme: _bottomNavigationBarThemeData(_theme.bottomNavigationBarTheme),
@@ -171,12 +187,7 @@ ThemeData themeMainProgram = _theme.copyWith(
       ?_textLight(_theme.textTheme)
       :_textBlack(_theme.textTheme),
 
-
-
-
-
-
-
+  iconTheme: _iconTheme(_theme.iconTheme),
 
   cardTheme: _cardTheme(_theme.cardTheme),
 
@@ -197,7 +208,5 @@ ThemeData themeMainProgram = _theme.copyWith(
 
   inputDecorationTheme: _inputDecorationTheme(_theme.inputDecorationTheme),
 
-  iconTheme: _theme.iconTheme.copyWith(
-    // color: Colors.deepOrange[100],
-  ),
+
 );
