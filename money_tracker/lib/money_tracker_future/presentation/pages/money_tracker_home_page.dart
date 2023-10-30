@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
-import 'package:money_tracker/presentation/pages/widgets/custom_card.dart';
-import 'package:money_tracker/presentation/pages/widgets/custom_pie_chart.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
   static const routeName = r'\PageMoneyTracker';
@@ -30,7 +29,6 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
     _tabController.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     final nowDateTime = DateTime.now();
@@ -42,9 +40,28 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
               ? Text('${NameMonth(context).toNameMonth(nowDateTime.month)} ${nowDateTime.year}')
               : Text(S.of(context).profile),
           actions: [
-            IconButton(onPressed: () {
-
-            }, icon: const Icon(Icons.add)),
+            IconButton(onPressed: () => showDialog<String>(
+                context: context,
+                builder: (context) => Dialog(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text('This is a typical dialog.'),
+                        const SizedBox(height: 15),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Close'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ), icon: const Icon(Icons.add)),
           ],
         ),
         body: TabBarView(
@@ -64,18 +81,14 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                 ),
               ],
             ),
-            Container(
+            Padding(
               padding: const EdgeInsets.only(left: 25, top: 25),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Column(
                     children: [
-                      CircleAvatar(
-                        backgroundColor: theme.colorScheme.secondary,
-                        child: const Center(child: Icon(Icons.photo_camera, size: 36, color: Colors.grey,)),
-                        radius: 40,
-                      ),
+                      const CustomCircleAvatar(),
                       13.h,
                       TextButton(onPressed: () {
 
@@ -94,9 +107,10 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
 
                           }, child: const Text('Выйти'),
                            style: theme.elevatedButtonTheme.style?.copyWith(
-                             minimumSize: const MaterialStatePropertyAll(Size(
-                                 double.minPositive,50
-                             ))
+
+                             minimumSize: MaterialStatePropertyAll(Size(
+                                 MediaQuery.of(context).size.width-80-50-25,50
+                             )),
                            ),
                           ),
                         )

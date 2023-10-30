@@ -1,0 +1,52 @@
+import 'package:money_tracker/login_future/core/core.dart';
+import 'package:money_tracker/login_future/data/data_sources/set/set_user_auth_service.dart';
+import 'package:money_tracker/login_future/data/models/user_authorization_password_model.dart';
+import 'package:money_tracker/login_future/domain/entities/user_authorization_password_entity.dart';
+import 'package:money_tracker/login_future/domain/repositories/set_user_auth_repository.dart';
+
+class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
+
+  final NetworkInfo networkInfo;
+  final SetUserAuthService setUserAuthService;
+
+  SetUserAuthRepositoryImpl({
+    required this.networkInfo,
+    required this.setUserAuthService,
+  });
+
+  @override
+  Future<bool?> setUserName({required String userNameHash512}) async {
+    return await setUserAuthService.setUserName(
+        userNameHash512: userNameHash512,
+        internet: await networkInfo.isConnected,
+    );
+  }
+
+  @override
+  Future<bool?> setPasswordAndUserGroup({
+    required String userNameHash512,
+    required String userPasswordHash512,
+    required UserGroup userGroup,
+  }) async {
+    return await setUserAuthService.setPasswordAndUserGroup(
+        userNameHash512: userNameHash512,
+        userPasswordHash512: userPasswordHash512,
+        userGroup: userGroup,
+        internet: await networkInfo.isConnected,
+    );
+  }
+
+  @override
+  Future<bool?> deleteUserData() async {
+    return await setUserAuthService.deleteUserData(
+      internet: await networkInfo.isConnected,
+    );
+  }
+
+  @override
+  Future<bool?> updateUserData({required UserAuthorizationPasswordEntity value}) async {
+    return await setUserAuthService.updateUserData(
+      value: value as UserAuthorizationPasswordModel,
+      internet: await networkInfo.isConnected,);
+  }
+}
