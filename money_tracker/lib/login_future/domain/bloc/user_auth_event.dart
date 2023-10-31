@@ -11,10 +11,6 @@ class UserAuthEvent with _$UserAuthEvent {
   const factory UserAuthEvent.logout({
     required Completer<dynamic> completer,
   }) = _logoutEvent;
-  const factory UserAuthEvent.updateUserData({
-    required UserAuthorizationPasswordEntity value,
-    required Completer<dynamic> completer,
-  }) = _updateUserDataEvent;
   const factory UserAuthEvent.checkUserName({
     required String userNameHash512,
     required Completer<dynamic> completer,

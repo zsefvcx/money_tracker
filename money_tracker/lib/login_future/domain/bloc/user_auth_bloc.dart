@@ -102,21 +102,6 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               }
             }
           },
-          updateUserData: (value) async {
-            emit(const UserAuthState.loading());
-            final (error, timeOut, e, res) = await _runGoSData<bool>(
-              function: () async => await setUserAuthRepository.updateUserData(value: value.value),
-            );
-            final data = (res==null || !res)?null:value.value;
-            userAuthData = userAuthData.copyWithData(
-              data: data,
-              error: error,
-              e: e,
-              timeOut: timeOut,
-            );
-            await _response(emit);
-            value.completer.complete();
-          },
           logout: (value) async {
             emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(

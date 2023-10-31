@@ -16,8 +16,6 @@ abstract class SetUserAuthService {
     bool internet = false,
   });
 
-  Future<bool?> updateUserData({required UserAuthorizationPasswordModel value, bool internet = false,});
-
   Future<bool?> deleteUserData({bool internet = false,});
 
   Future<UserAuthorizationPasswordModel?> logout();

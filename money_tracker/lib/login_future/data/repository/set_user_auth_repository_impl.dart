@@ -46,13 +46,6 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   }
 
   @override
-  Future<bool?> updateUserData({required UserAuthorizationPasswordEntity value}) async {
-    return await setUserAuthService.updateUserData(
-      value: value as UserAuthorizationPasswordModel,
-      internet: await networkInfo.isConnected,);
-  }
-
-  @override
   Future<UserAuthorizationPasswordEntity?> logout() async {
     return await setUserAuthService.logout();
   }

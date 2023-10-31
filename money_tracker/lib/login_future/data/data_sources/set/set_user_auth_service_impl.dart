@@ -61,19 +61,6 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   }
 
   @override
-  Future<bool?> updateUserData({required UserAuthorizationPasswordModel value, bool internet = false}) async {
-    try {
-      final json = value.toMap();
-      final res = jsonEncode(json);
-      // Write value
-      await secureStorage.write(key: Keys.userData, value: res);
-      return true;
-    } on Exception catch(e){
-      throw ArgumentError('Error updateUserData: $e');
-    }
-  }
-
-  @override
   Future<UserAuthorizationPasswordModel?> logout() async{
     try{
       // Read value
@@ -94,9 +81,6 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
     } on Exception catch(e){
       throw ArgumentError('Error logout: $e');
     }
-
-
-
   }
 
 }

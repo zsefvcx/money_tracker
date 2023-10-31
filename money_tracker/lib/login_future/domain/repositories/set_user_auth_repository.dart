@@ -14,8 +14,6 @@ abstract class SetUserAuthRepository {
     required UserGroup userGroup,
   });
 
-  Future<bool?> updateUserData({required UserAuthorizationPasswordEntity value});
-
   Future<bool?> deleteUserData();
 
   Future<UserAuthorizationPasswordEntity?> logout();
