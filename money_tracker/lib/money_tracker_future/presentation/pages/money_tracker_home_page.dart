@@ -75,7 +75,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CustomPieChart(),
+                const Hero(tag: Keys.heroIdSplash, child: CustomPieChart()),
                 Expanded(
                   child: ListView.builder(
                     itemCount: 100,
