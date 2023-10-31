@@ -30,10 +30,18 @@ class MainBuilderForm extends StatelessWidget {
                     CircularProgressIndicator(),
                   ],
                 ),
-                loaded:  (_)=> MainForm(loginUserAuth: blocBloc.userAuthData.statusAuthorization),
+                loaded:  (_)=> MainForm(
+                  loginUserAuth: blocBloc.userAuthData.statusAuthorization,
+                  eMail: blocBloc.userAuthData.eMail,
+                  valueLoginProcess: false,
+                ),
                 error:   (_)=> const ErrorTimeOut(),//
                 timeOut: (_)=> const ErrorTimeOut(),
-                newUser: (_)=> const MainForm(loginUserAuth: null),
+                newUser: (_)=> const MainForm(
+                  loginUserAuth: null,
+                  eMail: null,
+                  valueLoginProcess: true,
+                ),
                 );
               },
             ),

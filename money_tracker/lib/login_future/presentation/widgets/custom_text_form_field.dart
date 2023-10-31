@@ -40,7 +40,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final valueProcess = ValueNotifier<(bool, bool)>((false, false));
+    final valueProcess = ValueNotifier<(bool, bool)>((false, widget.obscureText));
     return FocusableActionDetector(
       focusNode: focusNode,
       onFocusChange: (focused) {

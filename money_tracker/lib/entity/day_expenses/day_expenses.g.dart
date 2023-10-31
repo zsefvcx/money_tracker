@@ -7,10 +7,10 @@ part of 'day_expenses.dart';
 // **************************************************************************
 
 DayExpenses _$DayExpensesFromJson(Map<String, dynamic> json) => DayExpenses(
-      id: json['id'] as int?,
       idCategory: json['idCategory'] as int,
       dateTime: DateTime.parse(json['dateTime'] as String),
       sum: BigInt.parse(json['sum'] as String),
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$DayExpensesToJson(DayExpenses instance) =>

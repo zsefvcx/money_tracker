@@ -25,6 +25,12 @@ class GetUserAuthServiceImpl implements GetUserAuthService {
         if (userNameHash512 == user.userNameHash512 &&
             userPasswordHash512 == user.userPasswordHash512
         ){
+          final json1 = user.copyWith(
+            statusAuthorization: true,
+          ).toMap();
+          final res = jsonEncode(json1);
+          // Write value
+          await secureStorage.write(key: Keys.userData, value: res);
           return true;
         }
       }

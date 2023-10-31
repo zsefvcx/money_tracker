@@ -17,9 +17,23 @@ class RouteGenerator {
 
     switch(settings.name){
       case MoneyTrackerHomePage.routeName:
+        //var loginUser = false;
+        var eMail = '';
+        if (args != null && args is Map<String, dynamic>)  {
+          // final dataLoginUser = args['loginUser'];
+          // if(dataLoginUser!=null && dataLoginUser is bool ){
+          //   loginUser = dataLoginUser;
+          // }
+          final dataEMail = args['eMail'];
+          if(dataEMail!=null && dataEMail is String){
+            eMail = dataEMail;
+          }
+        }
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-          const MoneyTrackerHomePage(),
+          MoneyTrackerHomePage(
+            eMail: eMail,
+          ),
         );
       case MainFormAuthorization.routeName:
         var loginUser = false;

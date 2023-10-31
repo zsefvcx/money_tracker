@@ -36,6 +36,7 @@ mixin _$UserAuthEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -56,7 +57,7 @@ mixin _$UserAuthEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) =>
       throw _privateConstructorUsedError;
@@ -75,7 +76,7 @@ mixin _$UserAuthEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) =>
@@ -237,6 +238,7 @@ class _$initEventImpl implements _initEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -260,7 +262,7 @@ class _$initEventImpl implements _initEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return init?.call(completer);
@@ -282,7 +284,7 @@ class _$initEventImpl implements _initEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -435,6 +437,7 @@ class _$logoutEventImpl implements _logoutEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -458,7 +461,7 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return logout?.call(completer);
@@ -480,7 +483,7 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -644,6 +647,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -667,7 +671,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return updateUserData?.call(value, completer);
@@ -689,7 +693,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -855,6 +859,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -878,7 +883,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return checkUserName?.call(userNameHash512, completer);
@@ -900,7 +905,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -1081,6 +1086,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -1104,7 +1110,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return checkPassword?.call(userNameHash512, userPasswordHash512, completer);
@@ -1126,7 +1132,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -1294,6 +1300,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
@@ -1317,7 +1324,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return setUserName?.call(userNameHash512, completer);
@@ -1339,7 +1346,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
@@ -1422,6 +1429,7 @@ abstract class _$$setPasswordAndUserGroupImplCopyWith<$Res>
   $Res call(
       {String userNameHash512,
       String userPasswordHash512,
+      String eMail,
       UserGroup userGroup,
       Completer<dynamic> completer});
 }
@@ -1440,6 +1448,7 @@ class __$$setPasswordAndUserGroupImplCopyWithImpl<$Res>
   $Res call({
     Object? userNameHash512 = null,
     Object? userPasswordHash512 = null,
+    Object? eMail = null,
     Object? userGroup = null,
     Object? completer = null,
   }) {
@@ -1451,6 +1460,10 @@ class __$$setPasswordAndUserGroupImplCopyWithImpl<$Res>
       userPasswordHash512: null == userPasswordHash512
           ? _value.userPasswordHash512
           : userPasswordHash512 // ignore: cast_nullable_to_non_nullable
+              as String,
+      eMail: null == eMail
+          ? _value.eMail
+          : eMail // ignore: cast_nullable_to_non_nullable
               as String,
       userGroup: null == userGroup
           ? _value.userGroup
@@ -1470,6 +1483,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   const _$setPasswordAndUserGroupImpl(
       {required this.userNameHash512,
       required this.userPasswordHash512,
+      required this.eMail,
       required this.userGroup,
       required this.completer});
 
@@ -1478,13 +1492,15 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @override
   final String userPasswordHash512;
   @override
+  final String eMail;
+  @override
   final UserGroup userGroup;
   @override
   final Completer<dynamic> completer;
 
   @override
   String toString() {
-    return 'UserAuthEvent.setPassword(userNameHash512: $userNameHash512, userPasswordHash512: $userPasswordHash512, userGroup: $userGroup, completer: $completer)';
+    return 'UserAuthEvent.setPassword(userNameHash512: $userNameHash512, userPasswordHash512: $userPasswordHash512, eMail: $eMail, userGroup: $userGroup, completer: $completer)';
   }
 
   @override
@@ -1496,6 +1512,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
                 other.userNameHash512 == userNameHash512) &&
             (identical(other.userPasswordHash512, userPasswordHash512) ||
                 other.userPasswordHash512 == userPasswordHash512) &&
+            (identical(other.eMail, eMail) || other.eMail == eMail) &&
             (identical(other.userGroup, userGroup) ||
                 other.userGroup == userGroup) &&
             (identical(other.completer, completer) ||
@@ -1503,8 +1520,8 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, userNameHash512, userPasswordHash512, userGroup, completer);
+  int get hashCode => Object.hash(runtimeType, userNameHash512,
+      userPasswordHash512, eMail, userGroup, completer);
 
   @JsonKey(ignore: true)
   @override
@@ -1533,12 +1550,13 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     required TResult Function(
             String userNameHash512,
             String userPasswordHash512,
+            String eMail,
             UserGroup userGroup,
             Completer<dynamic> completer)
         setPassword,
   }) {
     return setPassword(
-        userNameHash512, userPasswordHash512, userGroup, completer);
+        userNameHash512, userPasswordHash512, eMail, userGroup, completer);
   }
 
   @override
@@ -1557,11 +1575,11 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
   }) {
     return setPassword?.call(
-        userNameHash512, userPasswordHash512, userGroup, completer);
+        userNameHash512, userPasswordHash512, eMail, userGroup, completer);
   }
 
   @override
@@ -1580,13 +1598,13 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         setUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
-            UserGroup userGroup, Completer<dynamic> completer)?
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
         setPassword,
     required TResult orElse(),
   }) {
     if (setPassword != null) {
       return setPassword(
-          userNameHash512, userPasswordHash512, userGroup, completer);
+          userNameHash512, userPasswordHash512, eMail, userGroup, completer);
     }
     return orElse();
   }
@@ -1642,12 +1660,14 @@ abstract class _setPasswordAndUserGroup implements UserAuthEvent {
   const factory _setPasswordAndUserGroup(
           {required final String userNameHash512,
           required final String userPasswordHash512,
+          required final String eMail,
           required final UserGroup userGroup,
           required final Completer<dynamic> completer}) =
       _$setPasswordAndUserGroupImpl;
 
   String get userNameHash512;
   String get userPasswordHash512;
+  String get eMail;
   UserGroup get userGroup;
   @override
   Completer<dynamic> get completer;

@@ -8,9 +8,9 @@ part of 'category.dart';
 
 CategoryExpenses _$CategoryExpensesFromJson(Map<String, dynamic> json) =>
     CategoryExpenses(
-      id: json['id'] as int?,
       name: json['name'] as String,
       colorHex: json['colorHex'] as String,
+      id: json['id'] as int?,
     );
 
 Map<String, dynamic> _$CategoryExpensesToJson(CategoryExpenses instance) =>

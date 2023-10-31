@@ -7,7 +7,9 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/wi
 class MoneyTrackerHomePage extends StatefulWidget {
   static const routeName = r'\PageMoneyTracker';
 
-  const MoneyTrackerHomePage({super.key});
+  const MoneyTrackerHomePage({required this.eMail, super.key});
+
+  final String eMail;
 
   @override
   State<MoneyTrackerHomePage> createState() => _MoneyTrackerHomePageState();
@@ -102,7 +104,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('test@test.ruddddddddd', style: theme.textTheme.bodyMedium),
+                        Text(widget.eMail, style: theme.textTheme.bodyMedium),
                         13.h,
                         Expanded(
                           child: ElevatedButton(onPressed: () {

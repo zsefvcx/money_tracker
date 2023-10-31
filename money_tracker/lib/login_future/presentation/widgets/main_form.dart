@@ -9,9 +9,11 @@ import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:money_tracker/login_future/presentation/presentation.dart';
 
 class MainForm extends StatefulWidget {
-  const MainForm({required this.loginUserAuth, super.key});
+  const MainForm({required this.valueLoginProcess, required this.eMail, required this.loginUserAuth, super.key});
 
+  final String? eMail;
   final bool? loginUserAuth;
+  final bool  valueLoginProcess;
 
   @override
   State<MainForm> createState() => _MainFormState();
@@ -29,13 +31,15 @@ class _MainFormState extends State<MainForm> {
   @override
   void initState() {
     super.initState();
-    _emailController.text = 'test@test.ru';
+    _emailController.text = widget.eMail??'test@test.ru';
     _passwordController.text = 'dddDDDD4475.';
-    if(widget.loginUserAuth??true){
+    final dataLoginUserAuth = widget.loginUserAuth;
+    if(dataLoginUserAuth != null && dataLoginUserAuth){
       Timer.run(() {
         Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
           arguments: {
             'loginUser': true,
+            'eMail' : widget.eMail,
           }
         );
       });
@@ -55,12 +59,12 @@ class _MainFormState extends State<MainForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final blocBloc = context.read<GetUserAuthBloc>();
     final valueListenableProcess = ValueNotifier<bool>(false);
 
-    final valueLoginProcess = ValueNotifier<bool>(false);
+    final valueLoginProcess = ValueNotifier<bool>(widget.valueLoginProcess);
     FocusScope.of(context).requestFocus();
-    return widget.loginUserAuth??true
+    final dataLoginUserAuth = widget.loginUserAuth;
+    return (dataLoginUserAuth != null && dataLoginUserAuth)
         ?const Center(child: CircularProgressIndicator(),)
         :Form(
         key: _formKey,
@@ -96,9 +100,9 @@ class _MainFormState extends State<MainForm> {
                   CustomButton(
                     focusNode: _focusNodeThree,
                     onTap: ()=> loginUser(
-                      blocBloc: blocBloc,
-                      valueListenableProcess: valueListenableProcess,
                       context: context,
+                      valueListenableProcess: valueListenableProcess,
+                      valueLoginProcess: valueLoginProcess,
                     ),
                     child:
                     ValueListenableBuilder<bool>(
@@ -158,14 +162,15 @@ class _MainFormState extends State<MainForm> {
   }
 
   Future<void> loginUser({
-    required GetUserAuthBloc blocBloc, 
-    required ValueNotifier<bool> valueListenableProcess,
     required BuildContext context,
+    required ValueNotifier<bool> valueListenableProcess,
+    required ValueNotifier<bool> valueLoginProcess,
   }) async {
+    final blocBloc = context.read<GetUserAuthBloc>();
     final cSt = _formKey.currentState;
     if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
       valueListenableProcess.value = true;
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(microseconds: 500));
       final completer = Completer();
       final completerFinal = Completer();
       final completerFinalSet = Completer();
@@ -180,15 +185,15 @@ class _MainFormState extends State<MainForm> {
       final res = await completer.future;
       if (res is bool && res) {
 
-        // if(!widget.loginUserAuth) {
-        //   if (context.mounted) {
-        //     CustomShowSnackBar.showSnackBar(
-        //        S.of(context).suchAUserExists, context
-        //     );
-        //   }
-        //   valueListenableProcess.value = false;
-        //   return;
-        // }
+        if(valueLoginProcess.value) {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+               S.of(context).suchAUserExists, context
+            );
+          }
+          valueListenableProcess.value = false;
+          return;
+        }
         ///Логинимся
         blocBloc.add(UserAuthEvent.checkPassword(
             userNameHash512: hashUserName,
@@ -200,7 +205,8 @@ class _MainFormState extends State<MainForm> {
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
               arguments: {
-                 'loginUser': blocBloc.userAuthData.statusAuthorization,
+                'loginUser': blocBloc.userAuthData.statusAuthorization,
+                'eMail' : _emailController.text,
               },
             );
           }
@@ -212,15 +218,15 @@ class _MainFormState extends State<MainForm> {
           }
         }
       } else {
-        // if(widget.loginUserAuth) {
-        //   if (context.mounted) {
-        //     CustomShowSnackBar.showSnackBar(
-        //         S.of(context).thisUserDoesNotExist, context
-        //     );
-        //   }
-        //   valueListenableProcess.value = false;
-        //   return;
-        // }
+        if(!valueLoginProcess.value) {
+          if (context.mounted) {
+            CustomShowSnackBar.showSnackBar(
+                S.of(context).thisUserDoesNotExist, context
+            );
+          }
+          valueListenableProcess.value = false;
+          return;
+        }
         ///Регистрируемся
         blocBloc.add(UserAuthEvent.setUserName(
             userNameHash512: hashUserName,
@@ -241,6 +247,7 @@ class _MainFormState extends State<MainForm> {
               await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
                 arguments: {
                   'loginUser':blocBloc.userAuthData.statusAuthorization,
+                  'eMail' : _emailController.text,
                 },
               );
             }

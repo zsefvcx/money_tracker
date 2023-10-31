@@ -109,7 +109,6 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
-              statusAuthorization: res,
             );
             await _response(emit);
             value.completer.complete();
@@ -139,7 +138,6 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
-              statusAuthorization: false,
             );
             if (error){
               Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
@@ -159,7 +157,6 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
-              statusAuthorization: false,
             );
             if (error){
               Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
@@ -189,27 +186,26 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             }
           },
           setPassword: (value) async {
-            // final (error, timeOut, e, res) = await _runGoSData<bool>(
-            //   function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
-            //       userNameHash512: value.userNameHash512,
-            //       userPasswordHash512: value.userPasswordHash512,
-            //       eMail: value.eMail,
-            //       userGroup: value.userGroup
-            //   )
-            // );
-            // userAuthData = userAuthData.copyWithData(
-            //   error: error,
-            //   e: e,
-            //   timeOut: timeOut,
-            //   statusAuthorization: false,
-            // );
-            // if (error){
-            //   Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
-            //   value.completer.completeError(error);
-            // } else {
-            //   userAuthData = userAuthData.copyWithData(statusAuthorization: true);
-            //   value.completer.complete(res);
-            // }
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
+              function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
+                  userNameHash512: value.userNameHash512,
+                  userPasswordHash512: value.userPasswordHash512,
+                  eMail: value.eMail,
+                  userGroup: value.userGroup
+              ),
+            );
+            userAuthData = userAuthData.copyWithData(
+              error: error,
+              e: e,
+              timeOut: timeOut,
+            );
+            if (error){
+              Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              userAuthData = userAuthData.copyWithData(statusAuthorization: true);
+              value.completer.complete(res);
+            }
           },
       );
     });
@@ -249,7 +245,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     var e = '';
     T? res;
     try {
-      //await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(microseconds: 500));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;
