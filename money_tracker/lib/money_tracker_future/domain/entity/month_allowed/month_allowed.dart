@@ -1,16 +1,15 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 part 'month_allowed.g.dart';
 
 ///Разрешенные месяца или те месяца которые хоть раз использовались
 @JsonSerializable()
-class MonthAllowed extends Equatable{
-         //Year, Month
-  final Map<int, Set<int>> monthEnabled;
+class MonthAllowed extends MonthAllowedModels{
 
-  const MonthAllowed({required this.monthEnabled});
+  const MonthAllowed({required super.monthEnabled});
 
   MonthAllowed copyWith({
     required Map<int, Set<int>>? monthEnabled,
@@ -38,15 +37,12 @@ class MonthAllowed extends Equatable{
     }
   }
 
-  /// Connect the generated [_$MonthAllowedFromJson] function to the `fromJson`
+  /// Connect the generated _$MonthAllowedFromJson function to the `fromJson`
   /// factory.
   factory MonthAllowed.fromJson(Map<String, dynamic> json) => _$MonthAllowedFromJson(json);
 
-  /// Connect the generated [_$MonthAllowedToJson] function to the `toJson` method.
+  /// Connect the generated _$MonthAllowedToJson function to the `toJson` method.
   Map<String, dynamic> toJson() => _$MonthAllowedToJson(this);
-
-  @override
-  List<Object?> get props => [monthEnabled];
 
   @override
   String toString() {

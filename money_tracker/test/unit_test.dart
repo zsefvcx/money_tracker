@@ -1,7 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:money_tracker/entity/entity.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 void main() {
   group('A group of Entity test', () {
@@ -58,14 +59,14 @@ void main() {
 
     test('Day Monthly Year Expenses tests', () {
       final dataTime = DateTime.now();
-      final dayExpenses1 = DayExpenses(id: 0, idCategory: 0, dateTime: dataTime, sum: BigInt.from(10000000));
+      final dayExpenses1 = DayExpense(id: 0, idCategory: 0, dateTime: dataTime, sum: BigInt.from(10000000));
       expect(dayExpenses1.toJson(), <String, dynamic>{
         'id': 0,
         'idCategory': 0,
         'dateTime': dataTime.toIso8601String(),
         'sum': '10000000'
       });
-      final dayExpenses10 = DayExpenses.fromJson(const <String, dynamic>{
+      final dayExpenses10 = DayExpense.fromJson(const <String, dynamic>{
         'id': 0,
         'idCategory': 0,
         'dateTime':
@@ -73,16 +74,16 @@ void main() {
         'sum': '10000000'});
       expect(dayExpenses10.toString(), 'dayExpenses: {id: 0, idCategory: 0, dateTime: 2023-10-26 15:00:37.428551, sum: 10000000}');
       expect(dayExpenses1==dayExpenses10, false);
-      final dayExpenses11 = DayExpenses(id: 0, idCategory: 0, dateTime: dataTime, sum: BigInt.from(10000000));
+      final dayExpenses11 = DayExpense(id: 0, idCategory: 0, dateTime: dataTime, sum: BigInt.from(10000000));
       expect(dayExpenses1==dayExpenses11, true);
       final data = jsonEncode(dayExpenses10.toJson());
       final json = jsonDecode(data);
       expect(json, dayExpenses10.toJson());
 
-      final dayExpenses2 = DayExpenses(id: 1, idCategory: 1, dateTime: dataTime, sum: BigInt.from(60000000));
-      final dayExpenses3 = DayExpenses(id: 2, idCategory: 2, dateTime: dataTime, sum: BigInt.from(30000000));
+      final dayExpenses2 = DayExpense(id: 1, idCategory: 1, dateTime: dataTime, sum: BigInt.from(60000000));
+      final dayExpenses3 = DayExpense(id: 2, idCategory: 2, dateTime: dataTime, sum: BigInt.from(30000000));
 
-      final completeExpenses = <int, Map<int, Map<int, DayExpenses>>>{};
+      final completeExpenses = <int, Map<int, Map<int, DayExpense>>>{};
 
       final monthlyExpenses = MonthlyExpenses(
         month: dataTime.month,
@@ -90,7 +91,7 @@ void main() {
         completeExpenses: completeExpenses,
       );
 
-      final completeExpenses1 = <int, Map<int, Map<int, DayExpenses>>>{};
+      final completeExpenses1 = <int, Map<int, Map<int, DayExpense>>>{};
 
       final monthlyExpenses1 = MonthlyExpenses(
         month: dataTime.month,
@@ -113,19 +114,19 @@ void main() {
       monthlyExpenses1.add(dayExpenses3);
       expect(monthlyExpenses1.length, 3);
       expect(monthlyExpenses==monthlyExpenses1, true);
-      monthlyExpenses.add(DayExpenses.fromJson(<String, dynamic>{
+      monthlyExpenses.add(DayExpense.fromJson(<String, dynamic>{
         'id': 10, 'idCategory': 0, 'dateTime': dataTime.toString(), 'sum': '10000000'
       }));
       expect(monthlyExpenses.length, 4);
-      monthlyExpenses.add(DayExpenses.fromJson(<String, dynamic>{
+      monthlyExpenses.add(DayExpense.fromJson(<String, dynamic>{
         'id': 11, 'idCategory': 0, 'dateTime': dataTime.toString(), 'sum': '10000000'
       }));
       expect(monthlyExpenses.length, 5);
-      monthlyExpenses.add(DayExpenses.fromJson(<String, dynamic>{
+      monthlyExpenses.add(DayExpense.fromJson(<String, dynamic>{
         'id': 12, 'idCategory': 1, 'dateTime': dataTime.toString(), 'sum': '10000000'
       }));
       expect(monthlyExpenses.length, 6);
-      monthlyExpenses.add(DayExpenses.fromJson(const <String, dynamic>{
+      monthlyExpenses.add(DayExpense.fromJson(const <String, dynamic>{
         'id': 13, 'idCategory': 0, 'dateTime': '2023-08-22 15:00:37.428551', 'sum': '10000000'
       }));
 

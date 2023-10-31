@@ -1,19 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:money_tracker/entity/entity.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 part 'monthly_expenses.g.dart';
 
 ///РасходыЗаМесяц
 ///Загружать из памяти
 @JsonSerializable()
-class MonthlyExpenses extends Equatable{
-  final int month;
-  final int year;
-          //|категория
-          //|      //|день
-          //|        |      //|id траты
-  final Map<int, Map<int, Map<int, DayExpenses>>> completeExpenses;
+class MonthlyExpenses extends MonthlyExpensesModels{
 
   (int, int) get param => (month, year);
   //test
@@ -23,13 +18,10 @@ class MonthlyExpenses extends Equatable{
   ));
 
   const MonthlyExpenses({
-    required this.month,
-    required this.year,
-    required this.completeExpenses,
+    required super.month,
+    required super.year,
+    required super.completeExpenses,
   });
-
-  @override
-  List<Object?> get props => [month, year, completeExpenses];
 
   bool checkDayExpenses(int month, int year) {
     return month==this.month&&year==this.year;
@@ -44,7 +36,7 @@ class MonthlyExpenses extends Equatable{
     }
   }
 
-  bool status(DayExpenses value){
+  bool status(DayExpense value){
     if(!checkDayExpenses(value.dateTime.month, value.dateTime.year)) return false;
 
     final id = value.id;
@@ -69,9 +61,9 @@ class MonthlyExpenses extends Equatable{
     return true;
   }
 
-  bool mod(DayExpenses value) => add(value);
+  bool mod(DayExpense value) => add(value);
 
-  bool add(DayExpenses value){
+  bool add(DayExpense value){
     if(!checkDayExpenses(value.dateTime.month, value.dateTime.year)) return false;
 
     final id = value.id;
@@ -81,11 +73,11 @@ class MonthlyExpenses extends Equatable{
     final day = value.dateTime.day;
 
     if(status == null) {//нет вообще категорий
-      completeExpenses[value.idCategory] = <int, Map<int, DayExpenses>>{day: {id: value}};//добавляем элемент в категорию
+      completeExpenses[value.idCategory] = <int, Map<int, DayExpense>>{day: {id: value}};//добавляем элемент в категорию
     } else {//есть категория
       final status2  = status[day];
       if(status2 == null){//проверяем наличие такого элемента с таким днем
-        completeExpenses[value.idCategory] = <int, Map<int, DayExpenses>>{day: {id: value}};//добавляем эелмент в категорию
+        completeExpenses[value.idCategory] = <int, Map<int, DayExpense>>{day: {id: value}};//добавляем эелмент в категорию
       } else {
         status2[id] = value;
       }
@@ -97,7 +89,7 @@ class MonthlyExpenses extends Equatable{
 
   void remAll() => completeExpenses.clear();
 
-  void rem({required DayExpenses value}){
+  void rem({required DayExpense value}){
     if(!checkDayExpenses(value.dateTime.month, value.dateTime.year)) return;
     final dataCategory = completeExpenses[value.idCategory];
     if(dataCategory != null){
@@ -125,7 +117,6 @@ class MonthlyExpenses extends Equatable{
 
   /// Connect the generated [_$MonthlyExpensesToJson] function to the `toJson` method.
   Map<String, dynamic> toJson() => _$MonthlyExpensesToJson(this);
-
 
   @override
   String toString() {

@@ -18,7 +18,7 @@ MonthlyExpenses _$MonthlyExpensesFromJson(Map<String, dynamic> json) =>
                   int.parse(k),
                   (e as Map<String, dynamic>).map(
                     (k, e) => MapEntry(int.parse(k),
-                        DayExpenses.fromJson(e as Map<String, dynamic>)),
+                        DayExpense.fromJson(e as Map<String, dynamic>)),
                   )),
             )),
       ),

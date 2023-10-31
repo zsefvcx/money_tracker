@@ -2,11 +2,11 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'day_expenses.g.dart';
+part 'day_expense.g.dart';
 
-///Траты за день
+///Трата за день
 @JsonSerializable()
-class DayExpenses extends Equatable{
+class DayExpense extends Equatable{
   final int? id;
   final int  idCategory;
   final DateTime dateTime;
@@ -19,17 +19,17 @@ class DayExpenses extends Equatable{
                 ':${dateTime.minute<10?'0${dateTime.minute}':dateTime.minute}';
   (int, int, int) get param => (dateTime.day, dateTime.month, dateTime.year);
 
-  const DayExpenses({
+  const DayExpense({
     required this.idCategory, required this.dateTime, required this.sum, this.id,
   });
 
-  DayExpenses copyWith({
+  DayExpense copyWith({
     int? id,
     int? idCategory,
     DateTime? dateTime,
     BigInt? sum,
   }) {
-    return DayExpenses(
+    return DayExpense(
       id: id ?? this.id,
       idCategory: idCategory ?? this.idCategory,
       dateTime: dateTime ?? this.dateTime,
@@ -40,12 +40,12 @@ class DayExpenses extends Equatable{
   @override
   List<Object?> get props => [id, idCategory, dateTime, sum];
 
-  /// Connect the generated [_$DayExpensesFromJson] function to the `fromJson`
+  /// Connect the generated _$DayExpensesFromJson function to the `fromJson`
   /// factory.
-  factory DayExpenses.fromJson(Map<String, dynamic> json) => _$DayExpensesFromJson(json);
+  factory DayExpense.fromJson(Map<String, dynamic> json) => _$DayExpenseFromJson(json);
 
-  /// Connect the generated [_$DayExpensesToJson] function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$DayExpensesToJson(this);
+  /// Connect the generated _$DayExpensesToJson function to the `toJson` method.
+  Map<String, dynamic> toJson() => _$DayExpenseToJson(this);
 
   @override
   String toString() {
