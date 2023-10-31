@@ -1,6 +1,5 @@
 import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/data/data_sources/set/set_user_auth_service.dart';
-import 'package:money_tracker/login_future/data/models/user_authorization_password_model.dart';
 import 'package:money_tracker/login_future/domain/entities/user_authorization_password_entity.dart';
 import 'package:money_tracker/login_future/domain/repositories/set_user_auth_repository.dart';
 
