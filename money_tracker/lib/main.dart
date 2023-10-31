@@ -26,7 +26,7 @@ Future<void> main() async {
     });
   }
 
-  MainBlocInit.initState();
+  LoginBlocInit.initState();
 
   runApp(const MoneyTrackerApp());
 }

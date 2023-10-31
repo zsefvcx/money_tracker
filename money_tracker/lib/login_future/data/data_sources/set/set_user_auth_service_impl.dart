@@ -13,6 +13,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
+    required String eMail,
     required UserGroup userGroup,
     bool internet = false
   }) async {
@@ -21,6 +22,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
         statusAuthorization: true,
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
+        eMail: eMail,
         userGroup: userGroup,
       );
       final json = user.toMap();
@@ -66,6 +68,32 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
     } on Exception catch(e){
       throw ArgumentError('Error updateUserData: $e');
     }
+  }
+
+  @override
+  Future<bool?> logout() async{
+    try{
+      // Read value
+      final userData = await secureStorage.read(key: Keys.userData);
+      if (userData == null || userData == '') return null;
+      final json = jsonDecode(userData);
+      if (json is Map<String, dynamic>) {
+        final user = UserAuthorizationPasswordModel.fromMap(json);
+        final json1 = user.copyWith(
+          statusAuthorization: false,
+        ).toMap();
+        final res = jsonEncode(json1);
+        // Write value
+        await secureStorage.write(key: Keys.userData, value: res);
+        return true;
+      }
+      return null;
+    } on Exception catch(e){
+      throw ArgumentError('Error logout: $e');
+    }
+
+
+
   }
 
 }

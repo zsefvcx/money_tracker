@@ -7,6 +7,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
 
 //<editor-fold desc="Data Methods">
   const UserAuthorizationPasswordModel({
+    required super.eMail,
     required super.statusAuthorization,
     required super.userNameHash512,
     super.userPasswordHash512,
@@ -21,6 +22,8 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
           runtimeType == other.runtimeType &&
           id == other.id &&
           userNameHash512 == other.userNameHash512 &&
+          statusAuthorization == other.statusAuthorization &&
+          eMail ==  other.eMail &&
           userPasswordHash512 == other.userPasswordHash512 &&
           userGroup == other.userGroup);
 
@@ -29,11 +32,14 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       id.hashCode ^
       userNameHash512.hashCode ^
       userPasswordHash512.hashCode ^
-      userGroup.hashCode;
+      userGroup.hashCode ^
+      statusAuthorization.hashCode ^
+      eMail.hashCode;
 
   @override
   String toString() {
     return 'UserAuthorizationPassword{statusAuthorization:$statusAuthorization,'
+           ' eMail: $eMail,'
            ' id: $id, '
            'userNameHash512: $userNameHash512, '
            'userPasswordHash512: $userPasswordHash512, '
@@ -41,6 +47,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
   }
 
   UserAuthorizationPasswordModel copyWith({
+    String? eMail,
     bool? statusAuthorization,
     int? id,
     String? userNameHash512,
@@ -48,6 +55,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
     UserGroup? userGroup,
   }) {
     return UserAuthorizationPasswordModel(
+      eMail: eMail ?? this.eMail,
       statusAuthorization: statusAuthorization ?? this.statusAuthorization,
       id: id ?? this.id,
       userNameHash512: userNameHash512 ?? this.userNameHash512,
@@ -64,6 +72,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       'userNameHash512': userNameHash512,
       'userPasswordHash512': userPasswordHash512,
       'userGroup': ug.index,
+      'eMail' : eMail,
     };
   }
 
@@ -75,6 +84,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       userNameHash512: map['userNameHash512'] as String,
       userPasswordHash512: map['userPasswordHash512'] as String,
       userGroup: UserGroup.values[ugInd],
+      eMail: map['eMail'] as String,
     );
   }
 

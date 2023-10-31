@@ -17,6 +17,7 @@ class UserAuthData {
 
   final bool timeOut;
   final UserAuthorizationPasswordEntity? data;
+  final String eMail;
   final bool statusAuthorization;
   final bool error;
   final String e;
@@ -31,6 +32,7 @@ class UserAuthData {
     required this.e,
     required this.timeOut,
     required this.error,
+    this.eMail = '',
     this.statusAuthorization = false,
   });
 
@@ -39,6 +41,7 @@ class UserAuthData {
     String? e,
     bool? timeOut,
     bool? error,
+    String? eMail,
     bool? statusAuthorization,
   }){
     return UserAuthData(
@@ -46,6 +49,7 @@ class UserAuthData {
       e: e ?? this.e,
       timeOut: timeOut ?? this.timeOut,
       error: error ?? this.error,
+      eMail: eMail ?? this.eMail,
       statusAuthorization: statusAuthorization ?? this.statusAuthorization,
     );
   }
@@ -82,10 +86,17 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
-              statusAuthorization: res?.statusAuthorization,
             );
             await _response(emit);
-            value.completer?.complete();
+            final compl =  value.completer;
+            if(compl != null){
+              if (error){
+                Logger.print('Error init.:$timeOut:$e', name: 'err', error: true);
+                compl.completeError(error);
+              } else {
+                compl.complete(res);
+              }
+            }
           },
           updateUserData: (value) async {
             emit(const UserAuthState.loading());
@@ -105,17 +116,18 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           },
           logout: (value) async {
             emit(const UserAuthState.loading());
-            final (error, timeOut, e, _) = await _runGoSData<bool>(
-              function: () async => await setUserAuthRepository.deleteUserData(),
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
+              function: () async => await setUserAuthRepository.logout(),
             );
             userAuthData = userAuthData.copyWithData(
               error: error,
               e: e,
               timeOut: timeOut,
-              statusAuthorization: false,
+              statusAuthorization: res??false,
             );
+
             await _response(emit);
-            value.completer.complete();
+            value.completer.complete(res);
           },
           checkUserName: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
@@ -177,26 +189,27 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             }
           },
           setPassword: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<bool>(
-              function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
-                  userNameHash512: value.userNameHash512,
-                  userPasswordHash512: value.userPasswordHash512,
-                  userGroup: value.userGroup
-              )
-            );
-            userAuthData = userAuthData.copyWithData(
-              error: error,
-              e: e,
-              timeOut: timeOut,
-              statusAuthorization: false,
-            );
-            if (error){
-              Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
-              value.completer.completeError(error);
-            } else {
-              userAuthData = userAuthData.copyWithData(statusAuthorization: true);
-              value.completer.complete(res);
-            }
+            // final (error, timeOut, e, res) = await _runGoSData<bool>(
+            //   function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
+            //       userNameHash512: value.userNameHash512,
+            //       userPasswordHash512: value.userPasswordHash512,
+            //       eMail: value.eMail,
+            //       userGroup: value.userGroup
+            //   )
+            // );
+            // userAuthData = userAuthData.copyWithData(
+            //   error: error,
+            //   e: e,
+            //   timeOut: timeOut,
+            //   statusAuthorization: false,
+            // );
+            // if (error){
+            //   Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
+            //   value.completer.completeError(error);
+            // } else {
+            //   userAuthData = userAuthData.copyWithData(statusAuthorization: true);
+            //   value.completer.complete(res);
+            // }
           },
       );
     });
@@ -212,12 +225,21 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     } else{
       final data = userAuthData.data;
       if (data != null) {
+        userAuthData = userAuthData.copyWithData(
+          eMail: data.eMail,
+          statusAuthorization: data.statusAuthorization,
+        );
         emit(const UserAuthState.loaded());
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const UserAuthState.newUser());
+        userAuthData = const UserAuthData(
+          timeOut: false,
+          data: null,
+          e: '',
+          error: false,
+        );
       }
-      userAuthData = userAuthData.copyWithData();
     }
   }
 
@@ -227,7 +249,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(seconds: 1));
+      //await Future.delayed(const Duration(seconds: 1));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;
@@ -239,7 +261,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;
       e = ee.toString();
-    // ignore: avoid_catches_without_on_clauses
+    //ignore: avoid_catches_without_on_clauses
     } catch(ee, t){
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;

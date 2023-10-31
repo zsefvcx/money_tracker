@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
+import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
   Widget build(BuildContext context) {
     final nowDateTime = DateTime.now();
     final theme = Theme.of(context);
+    var logoutProcess = false;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -104,7 +106,25 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                         13.h,
                         Expanded(
                           child: ElevatedButton(onPressed: () {
+                            if(logoutProcess) return;
+                            logoutProcess = true;
+                            LoginBlocInit.logout();
+                            Navigator.of(context).pushReplacementNamed(r'\',
+                                    arguments: {
+                                      'loginUser': false,
+                                    },
+                            );
 
+                            // final res = await LoginBlocInit.logout();
+                            // if (res && mounted){
+                            //   await Navigator.of(context).pushReplacementNamed(r'\',
+                            //     arguments: {
+                            //       'newUser': false,
+                            //       'statusAuthorization':false,
+                            //     },
+                            //   );
+                            // }
+                            logoutProcess = false;
                           }, child: const Text('Выйти'),
                            style: theme.elevatedButtonTheme.style?.copyWith(
 

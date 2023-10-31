@@ -26,11 +26,13 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
+    required String eMail,
     required UserGroup userGroup,
   }) async {
     return await setUserAuthService.setPasswordAndUserGroup(
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
+        eMail: eMail,
         userGroup: userGroup,
         internet: await networkInfo.isConnected,
     );
@@ -48,5 +50,10 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
     return await setUserAuthService.updateUserData(
       value: value as UserAuthorizationPasswordModel,
       internet: await networkInfo.isConnected,);
+  }
+
+  @override
+  Future<bool?> logout() async {
+    return await setUserAuthService.logout();
   }
 }

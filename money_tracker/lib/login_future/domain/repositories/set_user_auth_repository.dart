@@ -10,6 +10,7 @@ abstract class SetUserAuthRepository {
   Future<bool?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
+    required String eMail,
     required UserGroup userGroup,
   });
 
@@ -17,4 +18,5 @@ abstract class SetUserAuthRepository {
 
   Future<bool?> deleteUserData();
 
+  Future<bool?> logout();
 }

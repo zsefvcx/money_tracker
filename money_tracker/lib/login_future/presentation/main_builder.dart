@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/login_future/core/core.dart';
@@ -5,7 +6,9 @@ import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:money_tracker/login_future/presentation/presentation.dart';
 
 class MainBuilderForm extends StatelessWidget {
-  const MainBuilderForm({super.key});
+  const MainBuilderForm({required this.loginUser, super.key});
+
+  final bool loginUser;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +21,7 @@ class MainBuilderForm extends StatelessWidget {
             ),
             child: BlocBuilder<GetUserAuthBloc, UserAuthState>(
               builder: (context, state) {
+                final blocBloc = context.read<GetUserAuthBloc>();
                 return state.map(
                 loading: (_) => const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -26,10 +30,10 @@ class MainBuilderForm extends StatelessWidget {
                     CircularProgressIndicator(),
                   ],
                 ),
-                loaded:  (_)=> const MainForm(loginUser: true),
+                loaded:  (_)=> MainForm(loginUserAuth: blocBloc.userAuthData.statusAuthorization),
                 error:   (_)=> const ErrorTimeOut(),//
                 timeOut: (_)=> const ErrorTimeOut(),
-                newUser: (_)=> const MainForm(),
+                newUser: (_)=> const MainForm(loginUserAuth: null),
                 );
               },
             ),

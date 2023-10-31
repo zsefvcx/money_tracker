@@ -9,11 +9,11 @@ class RouteGenerator {
 
   static String initialRoute = MainFormAuthorization.routeName;
 
-  static List<String> title = ['Error', ];
+  static List<String> title = ['Error',];
 
 
   static Route<dynamic> generateRoute(RouteSettings settings){
-    //final args = settings.arguments;
+    final args = settings.arguments;
 
     switch(settings.name){
       case MoneyTrackerHomePage.routeName:
@@ -22,9 +22,17 @@ class RouteGenerator {
           const MoneyTrackerHomePage(),
         );
       case MainFormAuthorization.routeName:
+        var loginUser = false;
+        if (args != null && args is Map<String, bool>)  {
+          if(args['loginUser']!=null){
+            final data = args['loginUser'];
+            loginUser = data ?? false;
+          }
+        }
+
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-          const MainFormAuthorization(),
+          MainFormAuthorization(loginUser: loginUser),
         );
     //case HotelView.routeName:
     // if(args != null && args is Map<String, HotelPreview>){

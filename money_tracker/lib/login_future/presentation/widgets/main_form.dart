@@ -9,16 +9,16 @@ import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:money_tracker/login_future/presentation/presentation.dart';
 
 class MainForm extends StatefulWidget {
-  const MainForm({super.key, this.loginUser});
+  const MainForm({required this.loginUserAuth, super.key});
 
-  final bool? loginUser;
+  final bool? loginUserAuth;
 
   @override
   State<MainForm> createState() => _MainFormState();
 }
 
 class _MainFormState extends State<MainForm> {
-  bool _loginUser = false;
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController= TextEditingController();
   final TextEditingController _passwordController= TextEditingController();
@@ -31,10 +31,14 @@ class _MainFormState extends State<MainForm> {
     super.initState();
     _emailController.text = 'test@test.ru';
     _passwordController.text = 'dddDDDD4475.';
-    if (widget.loginUser==null) {
-      _loginUser = true;
-    } else {
-      _loginUser = false;
+    if(widget.loginUserAuth??true){
+      Timer.run(() {
+        Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
+          arguments: {
+            'loginUser': true,
+          }
+        );
+      });
     }
   }
 
@@ -56,7 +60,9 @@ class _MainFormState extends State<MainForm> {
 
     final valueLoginProcess = ValueNotifier<bool>(false);
     FocusScope.of(context).requestFocus();
-    return Form(
+    return widget.loginUserAuth??true
+        ?const Center(child: CircularProgressIndicator(),)
+        :Form(
         key: _formKey,
         child: SingleChildScrollView(
           child: Column(
@@ -84,7 +90,7 @@ class _MainFormState extends State<MainForm> {
                     obscureText: true,
                     labelText: S.of(context).password,
                     hintText: S.of(context).enterYourPassword,
-                    validator: (value) => _loginUser?ValidatorFields.checkPasswordCompliant(value, context):null,
+                    validator: (value) => ValidatorFields.checkPasswordCompliant(value, context),
                   ),
                   40.h,
                   CustomButton(
@@ -173,15 +179,16 @@ class _MainFormState extends State<MainForm> {
       );
       final res = await completer.future;
       if (res is bool && res) {
-        if(_loginUser) {
-          if (context.mounted) {
-            CustomShowSnackBar.showSnackBar(
-               S.of(context).suchAUserExists, context
-            );
-          }
-          valueListenableProcess.value = false;
-          return;
-        }
+
+        // if(!widget.loginUserAuth) {
+        //   if (context.mounted) {
+        //     CustomShowSnackBar.showSnackBar(
+        //        S.of(context).suchAUserExists, context
+        //     );
+        //   }
+        //   valueListenableProcess.value = false;
+        //   return;
+        // }
         ///Логинимся
         blocBloc.add(UserAuthEvent.checkPassword(
             userNameHash512: hashUserName,
@@ -193,8 +200,7 @@ class _MainFormState extends State<MainForm> {
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
               arguments: {
-                 'newUser': false,
-                 'statusAuthorization':blocBloc.userAuthData.statusAuthorization,
+                 'loginUser': blocBloc.userAuthData.statusAuthorization,
               },
             );
           }
@@ -206,15 +212,15 @@ class _MainFormState extends State<MainForm> {
           }
         }
       } else {
-        if(!_loginUser) {
-          if (context.mounted) {
-            CustomShowSnackBar.showSnackBar(
-                S.of(context).thisUserDoesNotExist, context
-            );
-          }
-          valueListenableProcess.value = false;
-          return;
-        }
+        // if(widget.loginUserAuth) {
+        //   if (context.mounted) {
+        //     CustomShowSnackBar.showSnackBar(
+        //         S.of(context).thisUserDoesNotExist, context
+        //     );
+        //   }
+        //   valueListenableProcess.value = false;
+        //   return;
+        // }
         ///Регистрируемся
         blocBloc.add(UserAuthEvent.setUserName(
             userNameHash512: hashUserName,
@@ -225,16 +231,16 @@ class _MainFormState extends State<MainForm> {
           blocBloc.add(UserAuthEvent.setPassword(
               userNameHash512: hashUserName,
               userPasswordHash512: hashPassword,
+              eMail: _emailController.text,
               userGroup: UserGroup.admin,
               completer: completerFinalSet)
           );
           final res = await completerFinalSet.future;
           if (res is bool && res) {
             if (context.mounted){
-              await Navigator.of(context).pushReplacementNamed(r'\PageExpenses',
+              await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
                 arguments: {
-                  'newUser': true,
-                  'statusAuthorization':blocBloc.userAuthData.statusAuthorization,
+                  'loginUser':blocBloc.userAuthData.statusAuthorization,
                 },
               );
             }

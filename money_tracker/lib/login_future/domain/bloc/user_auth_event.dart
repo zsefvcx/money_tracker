@@ -28,6 +28,7 @@ class UserAuthEvent with _$UserAuthEvent {
   const factory UserAuthEvent.setPassword({
     required String userNameHash512,
     required String userPasswordHash512,
+    required String eMail,
     required UserGroup userGroup,
     required Completer<dynamic> completer,
   }) = _setPasswordAndUserGroup;

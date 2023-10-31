@@ -6,4 +6,6 @@ abstract class Keys {
 
   static const heroIdSplash  = 'IdSplash';
 
+  static const statusAuthorization = 'statusAuthorization';
+
 }
