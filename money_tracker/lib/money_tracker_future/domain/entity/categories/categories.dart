@@ -1,21 +1,22 @@
-
-import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/data/data.dart';
 
-part 'categories.g.dart';
 ///Категории
-@JsonSerializable()
-class CategoriesExpenses extends CategoriesExpensesModels{
+abstract class CategoriesExpensesModels  extends Equatable{
+  final Map<int, CategoryExpenses> completeCategories;
 
-  const CategoriesExpenses({required super.completeCategories});
+  const CategoriesExpensesModels({required this.completeCategories});
 
-  /// Connect the generated _$CategoriesExpensesFromJson function to the `fromJson`
-  /// factory.
-  factory CategoriesExpenses.fromJson(Map<String, dynamic> json) => _$CategoriesExpensesFromJson(json);
+  bool status({required int id}) {
+    if (completeCategories[id]==null) {
+      return false;
+    } else {
+      return true;
+    }
+  }
 
-  /// Connect the generated _$CategoryExpensesToJson function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$CategoriesExpensesToJson(this);
+  @override
+  List<Object?> get props => [completeCategories];
 
   @override
   String toString() {

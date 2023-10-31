@@ -53,7 +53,7 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   }
 
   @override
-  Future<bool?> logout() async {
+  Future<UserAuthorizationPasswordEntity?> logout() async {
     return await setUserAuthService.logout();
   }
 }

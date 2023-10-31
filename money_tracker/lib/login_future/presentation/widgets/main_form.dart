@@ -9,9 +9,16 @@ import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:money_tracker/login_future/presentation/presentation.dart';
 
 class MainForm extends StatefulWidget {
-  const MainForm({required this.valueLoginProcess, required this.eMail, required this.loginUserAuth, super.key});
+  const MainForm({
+    required this.valueLoginProcess,
+    required this.uuid,
+    required this.eMail,
+    required this.loginUserAuth,
+    super.key
+  });
 
   final String? eMail;
+  final String? uuid;
   final bool? loginUserAuth;
   final bool  valueLoginProcess;
 
@@ -27,6 +34,8 @@ class _MainFormState extends State<MainForm> {
   final FocusNode _focusNode = FocusNode();
   final FocusNode _focusNodeSecond = FocusNode();
   final FocusNode _focusNodeThree = FocusNode();
+  late ValueNotifier<bool> _valueLoginProcess;
+  final _valueListenableProcess = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -39,11 +48,13 @@ class _MainFormState extends State<MainForm> {
         Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
           arguments: {
             'loginUser': true,
+            'uuid' : widget.uuid,
             'eMail' : widget.eMail,
           }
         );
       });
     }
+    _valueLoginProcess = ValueNotifier<bool>(widget.valueLoginProcess);
   }
 
   @override
@@ -53,15 +64,14 @@ class _MainFormState extends State<MainForm> {
     _focusNode.dispose();
     _focusNodeSecond.dispose();
     _focusNodeThree.dispose();
+    _valueLoginProcess.dispose();
+    _valueListenableProcess.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final valueListenableProcess = ValueNotifier<bool>(false);
-
-    final valueLoginProcess = ValueNotifier<bool>(widget.valueLoginProcess);
     FocusScope.of(context).requestFocus();
     final dataLoginUserAuth = widget.loginUserAuth;
     return (dataLoginUserAuth != null && dataLoginUserAuth)
@@ -101,12 +111,12 @@ class _MainFormState extends State<MainForm> {
                     focusNode: _focusNodeThree,
                     onTap: ()=> loginUser(
                       context: context,
-                      valueListenableProcess: valueListenableProcess,
-                      valueLoginProcess: valueLoginProcess,
+                      valueListenableProcess: _valueListenableProcess,
+                      valueLoginProcess: _valueLoginProcess,
                     ),
                     child:
                     ValueListenableBuilder<bool>(
-                      valueListenable: valueListenableProcess,
+                      valueListenable: _valueListenableProcess,
                       builder: (_, value, __) {
                         return Container(
                           width: CustomThemeProp.buttonSize.width,
@@ -118,7 +128,7 @@ class _MainFormState extends State<MainForm> {
                           child: Center(
                             child: value? const CircularProgressIndicator(color: CustomThemeProp.violetFirm):
                             ValueListenableBuilder<bool>(
-                              valueListenable: valueLoginProcess,
+                              valueListenable: _valueLoginProcess,
                               builder: (_, value, __) {
                                 return Text(
                                   value?(S.of(context).registration):(S.of(context).signIn),
@@ -135,7 +145,7 @@ class _MainFormState extends State<MainForm> {
                 ],
               ),
               ValueListenableBuilder<bool>(
-              valueListenable: valueLoginProcess,
+              valueListenable: _valueLoginProcess,
               builder: (_, value, __) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -147,7 +157,7 @@ class _MainFormState extends State<MainForm> {
                     ),
                     TextButton(
                       onPressed: (){
-                        valueLoginProcess.value = !valueLoginProcess.value;
+                        _valueLoginProcess.value = !_valueLoginProcess.value;
                       },
                       child: value
                        ? Text(S.of(context).signIn, style: theme.textTheme.bodyLarge,)
@@ -206,9 +216,11 @@ class _MainFormState extends State<MainForm> {
             await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
               arguments: {
                 'loginUser': blocBloc.userAuthData.statusAuthorization,
+                'uuid' : blocBloc.userAuthData.uuid,
                 'eMail' : _emailController.text,
               },
             );
+            return;
           }
         } else {
           if (context.mounted) {
@@ -247,9 +259,11 @@ class _MainFormState extends State<MainForm> {
               await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
                 arguments: {
                   'loginUser':blocBloc.userAuthData.statusAuthorization,
+                  'uuid' : blocBloc.userAuthData.uuid,
                   'eMail' : _emailController.text,
                 },
               );
+              return;
             }
           } else {
             if (context.mounted) {

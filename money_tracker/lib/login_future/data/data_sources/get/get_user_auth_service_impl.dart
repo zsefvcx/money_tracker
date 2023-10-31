@@ -10,7 +10,7 @@ class GetUserAuthServiceImpl implements GetUserAuthService {
   GetUserAuthServiceImpl({required this.secureStorage});
 
   @override
-  Future<bool?> checkPassword({
+  Future<UserAuthorizationPasswordModel?> checkPassword({
     required String userNameHash512,
     required String userPasswordHash512,
     bool internet = false
@@ -25,13 +25,13 @@ class GetUserAuthServiceImpl implements GetUserAuthService {
         if (userNameHash512 == user.userNameHash512 &&
             userPasswordHash512 == user.userPasswordHash512
         ){
-          final json1 = user.copyWith(
+          final user1 = user.copyWith(
             statusAuthorization: true,
-          ).toMap();
-          final res = jsonEncode(json1);
+          );
+          final res = jsonEncode(user1.toMap());
           // Write value
           await secureStorage.write(key: Keys.userData, value: res);
-          return true;
+          return user1;
         }
       }
       return null;

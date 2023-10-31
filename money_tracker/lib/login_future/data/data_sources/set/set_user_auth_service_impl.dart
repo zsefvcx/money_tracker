@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/data/data.dart';
+import 'package:uuid/uuid.dart';
 
 class SetUserAuthServiceImpl implements SetUserAuthService {
 
@@ -19,6 +20,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   }) async {
     try{
       final user = UserAuthorizationPasswordModel(
+        uuid: const Uuid().v1(),
         statusAuthorization: true,
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
@@ -51,6 +53,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
     try{
       // Write value
       await secureStorage.delete(key: Keys.userName);
+      await secureStorage.delete(key: Keys.userData);
       return true;
     } on Exception catch(e){
       throw ArgumentError('Error deleteUserData: $e');
@@ -71,7 +74,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   }
 
   @override
-  Future<bool?> logout() async{
+  Future<UserAuthorizationPasswordModel?> logout() async{
     try{
       // Read value
       final userData = await secureStorage.read(key: Keys.userData);
@@ -79,13 +82,13 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final json = jsonDecode(userData);
       if (json is Map<String, dynamic>) {
         final user = UserAuthorizationPasswordModel.fromMap(json);
-        final json1 = user.copyWith(
+        final user1 = user.copyWith(
           statusAuthorization: false,
-        ).toMap();
-        final res = jsonEncode(json1);
+        );
+        final res = jsonEncode(user1.toMap());
         // Write value
         await secureStorage.write(key: Keys.userData, value: res);
-        return true;
+        return user1;
       }
       return null;
     } on Exception catch(e){

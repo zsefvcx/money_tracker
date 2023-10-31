@@ -39,5 +39,6 @@
   "emailFormatIsNotCorrect": "E-Mail format is not correct",
   "pageNotFound": "Page not found",
   "expenses": "Expenses",
-  "profile": "Profile"
+  "profile": "Profile",
+  "deleteUserData": "Delete user data!"
 }

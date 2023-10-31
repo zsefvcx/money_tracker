@@ -18,5 +18,5 @@ abstract class SetUserAuthRepository {
 
   Future<bool?> deleteUserData();
 
-  Future<bool?> logout();
+  Future<UserAuthorizationPasswordEntity?> logout();
 }

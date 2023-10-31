@@ -20,5 +20,5 @@ abstract class SetUserAuthService {
 
   Future<bool?> deleteUserData({bool internet = false,});
 
-  Future<bool?> logout();
+  Future<UserAuthorizationPasswordModel?> logout();
 }

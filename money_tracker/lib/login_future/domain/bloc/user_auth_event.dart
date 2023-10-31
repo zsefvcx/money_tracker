@@ -5,6 +5,9 @@ class UserAuthEvent with _$UserAuthEvent {
   const factory UserAuthEvent.init({
     Completer<dynamic>? completer,
   }) = _initEvent;
+  const factory UserAuthEvent.delete({
+    Completer<dynamic>? completer,
+  }) = _deleteEvent;
   const factory UserAuthEvent.logout({
     required Completer<dynamic> completer,
   }) = _logoutEvent;

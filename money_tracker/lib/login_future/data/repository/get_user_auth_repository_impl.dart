@@ -22,7 +22,7 @@ class GetUserAuthRepositoryImpl implements GetUserAuthRepository {
   }
 
   @override
-  Future<bool?> checkPassword({
+  Future<UserAuthorizationPasswordEntity?> checkPassword({
     required String userNameHash512,
     required String userPasswordHash512
   }) async {

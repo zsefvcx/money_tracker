@@ -19,9 +19,6 @@ class ValidatorFields {
         if (RegExp('[A-Z]').hasMatch(value)) {
           if (RegExp('[0-9]').hasMatch(value)) {
               if (RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-                if (kDebugMode) {
-                  print(value.hashCode);
-                }
                 return null;
               } else {
                 return S.of(context).thePasswordMustContainSpecialCharacters;

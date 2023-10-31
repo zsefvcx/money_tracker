@@ -7,8 +7,9 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/wi
 class MoneyTrackerHomePage extends StatefulWidget {
   static const routeName = r'\PageMoneyTracker';
 
-  const MoneyTrackerHomePage({required this.eMail, super.key});
+  const MoneyTrackerHomePage({required this.uuid, required this.eMail, super.key});
 
+  final String uuid;
   final String eMail;
 
   @override
@@ -44,7 +45,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
               ? Text('${NameMonth(context).toNameMonth(nowDateTime.month)} ${nowDateTime.year}')
               : Text(S.of(context).profile),
           actions: [
-            IconButton(onPressed: () => showDialog<String>(
+            if(_currentTabIndex==0)IconButton(onPressed: () => showDialog<String>(
                 context: context,
                 builder: (context) => Dialog(
                   child: Padding(
@@ -90,14 +91,19 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    children: [
-                      const CustomCircleAvatar(),
-                      13.h,
-                      TextButton(onPressed: () {
+                  SizedBox(
+                    width: 119,
+                    child: Column(
+                      children: [
+                        const CustomCircleAvatar(),
+                        13.h,
+                        TextButton(onPressed: () {
 
-                      }, child: Text('Сохранить', style: theme.textTheme.bodyLarge,)),
-                    ],
+                        }, child: Text('Сохранить', style: theme.textTheme.bodyLarge,)),
+                        13.h,
+                        Expanded(child: Text(widget.uuid, style: theme.textTheme.bodyMedium, textDirection: TextDirection.ltr,)),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: 80,
@@ -106,35 +112,33 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                       children: [
                         Text(widget.eMail, style: theme.textTheme.bodyMedium),
                         13.h,
-                        Expanded(
-                          child: ElevatedButton(onPressed: () {
-                            if(logoutProcess) return;
-                            logoutProcess = true;
-                            LoginBlocInit.logout();
-                            Navigator.of(context).pushReplacementNamed(r'\',
-                                    arguments: {
-                                      'loginUser': false,
-                                    },
-                            );
+                        ElevatedButton(onPressed: () {
+                          if(logoutProcess) return;
+                          logoutProcess = true;
+                          LoginBlocInit.logout();
+                          Navigator.of(context).pushReplacementNamed(r'\',
+                                  arguments: {
+                                    'loginUser': false,
+                                  },
+                          );
 
-                            // final res = await LoginBlocInit.logout();
-                            // if (res && mounted){
-                            //   await Navigator.of(context).pushReplacementNamed(r'\',
-                            //     arguments: {
-                            //       'newUser': false,
-                            //       'statusAuthorization':false,
-                            //     },
-                            //   );
-                            // }
-                            logoutProcess = false;
-                          }, child: const Text('Выйти'),
-                           style: theme.elevatedButtonTheme.style?.copyWith(
+                          // final res = await LoginBlocInit.logout();
+                          // if (res && mounted){
+                          //   await Navigator.of(context).pushReplacementNamed(r'\',
+                          //     arguments: {
+                          //       'newUser': false,
+                          //       'statusAuthorization':false,
+                          //     },
+                          //   );
+                          // }
+                          logoutProcess = false;
+                        }, child: const Text('Выйти'),
+                         style: theme.elevatedButtonTheme.style?.copyWith(
 
-                             minimumSize: MaterialStatePropertyAll(Size(
-                                 MediaQuery.of(context).size.width-80-50-25,50
-                             )),
-                           ),
-                          ),
+                           minimumSize: MaterialStatePropertyAll(Size(
+                               MediaQuery.of(context).size.width-80-50-25,50
+                           )),
+                         ),
                         )
                       ],
                     ),

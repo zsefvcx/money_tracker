@@ -28,6 +28,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "august": MessageLookupByLibrary.simpleMessage("Август"),
         "costAccounting": MessageLookupByLibrary.simpleMessage("Учёт расходов"),
         "december": MessageLookupByLibrary.simpleMessage("Декабрь"),
+        "deleteUserData": MessageLookupByLibrary.simpleMessage(
+            "Удалить пользовательские данные!"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect":
             MessageLookupByLibrary.simpleMessage("Формат E-Mail не правильный"),

@@ -37,6 +37,12 @@ class ErrorTimeOut extends StatelessWidget {
               blocBloc.add(const UserAuthEvent.init());
             },
             child: Text(S.of(context).repeat)),
+        TextButton(
+            onPressed: () {
+              blocBloc..add(const UserAuthEvent.delete())
+                      ..add(const UserAuthEvent.init());
+            },
+            child: Text(S.of(context).deleteUserData)),
       ],
     );
   }

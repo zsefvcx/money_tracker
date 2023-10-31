@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:money_tracker/login_future/core/user_group.dart';
+import 'package:money_tracker/login_future/core/users/user_group.dart';
 import 'package:money_tracker/login_future/domain/entities/user_authorization_password_entity.dart';
 
 @immutable
@@ -7,6 +7,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
 
 //<editor-fold desc="Data Methods">
   const UserAuthorizationPasswordModel({
+    required super.uuid,
     required super.eMail,
     required super.statusAuthorization,
     required super.userNameHash512,
@@ -23,6 +24,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
           id == other.id &&
           userNameHash512 == other.userNameHash512 &&
           statusAuthorization == other.statusAuthorization &&
+          uuid ==  other.uuid &&
           eMail ==  other.eMail &&
           userPasswordHash512 == other.userPasswordHash512 &&
           userGroup == other.userGroup);
@@ -34,11 +36,13 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       userPasswordHash512.hashCode ^
       userGroup.hashCode ^
       statusAuthorization.hashCode ^
-      eMail.hashCode;
+      eMail.hashCode ^
+      uuid.hashCode;
 
   @override
   String toString() {
     return 'UserAuthorizationPassword{statusAuthorization:$statusAuthorization,'
+           ' uuid: $uuid'
            ' eMail: $eMail,'
            ' id: $id, '
            'userNameHash512: $userNameHash512, '
@@ -47,6 +51,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
   }
 
   UserAuthorizationPasswordModel copyWith({
+    String? uuid,
     String? eMail,
     bool? statusAuthorization,
     int? id,
@@ -55,6 +60,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
     UserGroup? userGroup,
   }) {
     return UserAuthorizationPasswordModel(
+      uuid: uuid ?? this.uuid,
       eMail: eMail ?? this.eMail,
       statusAuthorization: statusAuthorization ?? this.statusAuthorization,
       id: id ?? this.id,
@@ -73,6 +79,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       'userPasswordHash512': userPasswordHash512,
       'userGroup': ug.index,
       'eMail' : eMail,
+      'uuid' : uuid,
     };
   }
 
@@ -85,6 +92,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       userPasswordHash512: map['userPasswordHash512'] as String,
       userGroup: UserGroup.values[ugInd],
       eMail: map['eMail'] as String,
+      uuid: map['uuid'] as String,
     );
   }
 

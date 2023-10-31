@@ -20,6 +20,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -45,6 +46,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -64,6 +66,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -84,6 +87,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -95,6 +99,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -106,6 +111,7 @@ mixin _$UserAuthEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -222,6 +228,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -250,6 +257,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -272,6 +280,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -298,6 +307,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -312,6 +322,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -326,6 +337,7 @@ class _$initEventImpl implements _initEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -350,6 +362,211 @@ abstract class _initEvent implements UserAuthEvent {
   @override
   @JsonKey(ignore: true)
   _$$initEventImplCopyWith<_$initEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$deleteEventImplCopyWith<$Res>
+    implements $UserAuthEventCopyWith<$Res> {
+  factory _$$deleteEventImplCopyWith(
+          _$deleteEventImpl value, $Res Function(_$deleteEventImpl) then) =
+      __$$deleteEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Completer<dynamic>? completer});
+}
+
+/// @nodoc
+class __$$deleteEventImplCopyWithImpl<$Res>
+    extends _$UserAuthEventCopyWithImpl<$Res, _$deleteEventImpl>
+    implements _$$deleteEventImplCopyWith<$Res> {
+  __$$deleteEventImplCopyWithImpl(
+      _$deleteEventImpl _value, $Res Function(_$deleteEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? completer = freezed,
+  }) {
+    return _then(_$deleteEventImpl(
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$deleteEventImpl implements _deleteEvent {
+  const _$deleteEventImpl({this.completer});
+
+  @override
+  final Completer<dynamic>? completer;
+
+  @override
+  String toString() {
+    return 'UserAuthEvent.delete(completer: $completer)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteEventImpl &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, completer);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$deleteEventImplCopyWith<_$deleteEventImpl> get copyWith =>
+      __$$deleteEventImplCopyWithImpl<_$deleteEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
+    required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(
+            UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
+        updateUserData,
+    required TResult Function(
+            String userNameHash512, Completer<dynamic> completer)
+        checkUserName,
+    required TResult Function(String userNameHash512,
+            String userPasswordHash512, Completer<dynamic> completer)
+        checkPassword,
+    required TResult Function(
+            String userNameHash512, Completer<dynamic> completer)
+        setUserName,
+    required TResult Function(
+            String userNameHash512,
+            String userPasswordHash512,
+            String eMail,
+            UserGroup userGroup,
+            Completer<dynamic> completer)
+        setPassword,
+  }) {
+    return delete(completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
+    TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(UserAuthorizationPasswordEntity value,
+            Completer<dynamic> completer)?
+        updateUserData,
+    TResult? Function(String userNameHash512, Completer<dynamic> completer)?
+        checkUserName,
+    TResult? Function(String userNameHash512, String userPasswordHash512,
+            Completer<dynamic> completer)?
+        checkPassword,
+    TResult? Function(String userNameHash512, Completer<dynamic> completer)?
+        setUserName,
+    TResult? Function(String userNameHash512, String userPasswordHash512,
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
+        setPassword,
+  }) {
+    return delete?.call(completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
+    TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(UserAuthorizationPasswordEntity value,
+            Completer<dynamic> completer)?
+        updateUserData,
+    TResult Function(String userNameHash512, Completer<dynamic> completer)?
+        checkUserName,
+    TResult Function(String userNameHash512, String userPasswordHash512,
+            Completer<dynamic> completer)?
+        checkPassword,
+    TResult Function(String userNameHash512, Completer<dynamic> completer)?
+        setUserName,
+    TResult Function(String userNameHash512, String userPasswordHash512,
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
+        setPassword,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(completer);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_updateUserDataEvent value) updateUserData,
+    required TResult Function(_checkUserNameEvent value) checkUserName,
+    required TResult Function(_checkPasswordEvent value) checkPassword,
+    required TResult Function(_setUserNameEvent value) setUserName,
+    required TResult Function(_setPasswordAndUserGroup value) setPassword,
+  }) {
+    return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_updateUserDataEvent value)? updateUserData,
+    TResult? Function(_checkUserNameEvent value)? checkUserName,
+    TResult? Function(_checkPasswordEvent value)? checkPassword,
+    TResult? Function(_setUserNameEvent value)? setUserName,
+    TResult? Function(_setPasswordAndUserGroup value)? setPassword,
+  }) {
+    return delete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
+    TResult Function(_logoutEvent value)? logout,
+    TResult Function(_updateUserDataEvent value)? updateUserData,
+    TResult Function(_checkUserNameEvent value)? checkUserName,
+    TResult Function(_checkPasswordEvent value)? checkPassword,
+    TResult Function(_setUserNameEvent value)? setUserName,
+    TResult Function(_setPasswordAndUserGroup value)? setPassword,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _deleteEvent implements UserAuthEvent {
+  const factory _deleteEvent({final Completer<dynamic>? completer}) =
+      _$deleteEventImpl;
+
+  @override
+  Completer<dynamic>? get completer;
+  @override
+  @JsonKey(ignore: true)
+  _$$deleteEventImplCopyWith<_$deleteEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -421,6 +638,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -449,6 +667,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -471,6 +690,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -497,6 +717,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -511,6 +732,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -525,6 +747,7 @@ class _$logoutEventImpl implements _logoutEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -631,6 +854,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -659,6 +883,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -681,6 +906,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -707,6 +933,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -721,6 +948,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -735,6 +963,7 @@ class _$updateUserDataEventImpl implements _updateUserDataEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -843,6 +1072,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -871,6 +1101,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -893,6 +1124,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -919,6 +1151,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -933,6 +1166,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -947,6 +1181,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -1070,6 +1305,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -1098,6 +1334,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1120,6 +1357,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1146,6 +1384,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -1160,6 +1399,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -1174,6 +1414,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -1284,6 +1525,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -1312,6 +1554,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1334,6 +1577,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1360,6 +1604,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -1374,6 +1619,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -1388,6 +1634,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,
@@ -1534,6 +1781,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
     required TResult Function(
             UserAuthorizationPasswordEntity value, Completer<dynamic> completer)
@@ -1563,6 +1811,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
     TResult? Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1586,6 +1835,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
     TResult Function(UserAuthorizationPasswordEntity value,
             Completer<dynamic> completer)?
@@ -1613,6 +1863,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
     required TResult Function(_updateUserDataEvent value) updateUserData,
     required TResult Function(_checkUserNameEvent value) checkUserName,
@@ -1627,6 +1878,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
     TResult? Function(_updateUserDataEvent value)? updateUserData,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
@@ -1641,6 +1893,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
     TResult Function(_updateUserDataEvent value)? updateUserData,
     TResult Function(_checkUserNameEvent value)? checkUserName,

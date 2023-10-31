@@ -12,10 +12,10 @@ class LoginBlocInit {
     getUserAuthBloc.add(const UserAuthEvent.init());
   }
 
-  static Future<bool> logout() async {
+  static Future<void> logout() async {
     final completer = Completer<bool>();
     getUserAuthBloc.add(UserAuthEvent.logout(completer: completer));
-    return await completer.future;
+    await completer.future;
   }
 
 }

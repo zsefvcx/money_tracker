@@ -19,11 +19,16 @@ class RouteGenerator {
       case MoneyTrackerHomePage.routeName:
         //var loginUser = false;
         var eMail = '';
+        var uuid = '';
         if (args != null && args is Map<String, dynamic>)  {
           // final dataLoginUser = args['loginUser'];
           // if(dataLoginUser!=null && dataLoginUser is bool ){
           //   loginUser = dataLoginUser;
           // }
+          final dataUuid = args['uuid'];
+          if(dataUuid!=null && dataUuid is String){
+            uuid = dataUuid;
+          }
           final dataEMail = args['eMail'];
           if(dataEMail!=null && dataEMail is String){
             eMail = dataEMail;
@@ -33,6 +38,7 @@ class RouteGenerator {
           pageBuilder: (context, animation, secondaryAnimation) =>
           MoneyTrackerHomePage(
             eMail: eMail,
+            uuid: uuid,
           ),
         );
       case MainFormAuthorization.routeName:

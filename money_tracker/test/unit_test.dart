@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/domain/domain.dart';
+import 'package:money_tracker/money_tracker_future/data/models/models.dart';
 
 void main() {
   group('A group of Entity test', () {

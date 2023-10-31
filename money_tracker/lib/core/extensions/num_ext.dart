@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 ///Расширение класса num
@@ -16,10 +15,4 @@ extension NumberTypeExtensions on num {
     width: double.parse(toString()),
   );
 
-}
-
-///Расширение класа стринг на случай если придеться заниматься локализацией
-extension StringHardcoded on String {
-  @Deprecated("Don't forget to remove hardcoded strings")
-  String get hardcoded => this;
 }

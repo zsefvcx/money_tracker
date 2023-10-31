@@ -29,6 +29,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "costAccounting":
             MessageLookupByLibrary.simpleMessage("Cost accounting"),
         "december": MessageLookupByLibrary.simpleMessage("December"),
+        "deleteUserData":
+            MessageLookupByLibrary.simpleMessage("Delete user data!"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect": MessageLookupByLibrary.simpleMessage(
             "E-Mail format is not correct"),

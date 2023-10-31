@@ -6,10 +6,12 @@ abstract class UserAuthorizationPasswordEntity {
   final String userNameHash512;
   final String? userPasswordHash512;
   final UserGroup? userGroup;
+  final String uuid;
   final String eMail;
   final bool statusAuthorization;
 
   const UserAuthorizationPasswordEntity({
+    required this.uuid,
     required this.statusAuthorization,
     required this.eMail,
     required this.userNameHash512,

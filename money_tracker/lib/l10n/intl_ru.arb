@@ -39,5 +39,6 @@
   "emailFormatIsNotCorrect": "Формат E-Mail не правильный",
   "pageNotFound": "Страница не найдена",
   "expenses": "Расходы",
-  "profile": "Профиль"
+  "profile": "Профиль",
+  "deleteUserData": "Удалить пользовательские данные!"
 }

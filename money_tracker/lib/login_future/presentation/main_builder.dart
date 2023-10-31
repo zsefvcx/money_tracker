@@ -33,6 +33,7 @@ class MainBuilderForm extends StatelessWidget {
                 loaded:  (_)=> MainForm(
                   loginUserAuth: blocBloc.userAuthData.statusAuthorization,
                   eMail: blocBloc.userAuthData.eMail,
+                  uuid: blocBloc.userAuthData.uuid,
                   valueLoginProcess: false,
                 ),
                 error:   (_)=> const ErrorTimeOut(),//
@@ -40,6 +41,7 @@ class MainBuilderForm extends StatelessWidget {
                 newUser: (_)=> const MainForm(
                   loginUserAuth: null,
                   eMail: null,
+                  uuid: null,
                   valueLoginProcess: true,
                 ),
                 );
