@@ -11,56 +11,10 @@ import 'package:money_tracker/login_future/domain/domain.dart';
 part 'user_auth_bloc.freezed.dart';
 part 'user_auth_event.dart';
 part 'user_auth_state.dart';
+part 'user_auth_data.dart';
 
 //@injectable
-class UserAuthData {
-
-  final bool timeOut;
-  final UserAuthorizationPasswordEntity? data;
-  final String uuid;
-  final String eMail;
-  final bool statusAuthorization;
-  final bool error;
-  final String e;
-
-  bool? get isLoaded => data?.statusAuthorization;
-
-  bool get isTimeOut => timeOut;
-  bool get isError => error;
-
-  const UserAuthData({
-    required this.data,
-    required this.e,
-    required this.timeOut,
-    required this.error,
-    this.uuid = '',
-    this.eMail = '',
-    this.statusAuthorization = false,
-  });
-
-  UserAuthData copyWithData({
-    UserAuthorizationPasswordEntity? data,
-    String? e,
-    bool? timeOut,
-    bool? error,
-    String? uuid,
-    String? eMail,
-    bool? statusAuthorization,
-  }){
-    return UserAuthData(
-      data: data,
-      e: e ?? this.e,
-      timeOut: timeOut ?? this.timeOut,
-      error: error ?? this.error,
-      uuid: uuid ?? this.uuid,
-      eMail: eMail ?? this.eMail,
-      statusAuthorization: statusAuthorization ?? this.statusAuthorization,
-    );
-  }
-}
-
-//@injectable
-class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
+class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
 
   final GetUserAuthRepository getUserAuthRepository;
   final SetUserAuthRepository setUserAuthRepository;
@@ -74,7 +28,7 @@ class GetUserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     error: false,
   );
 
-  GetUserAuthBloc({
+  UserAuthBloc({
     required this.getUserAuthRepository,
     required this.setUserAuthRepository,
   }) : super(const UserAuthState.loading()) {

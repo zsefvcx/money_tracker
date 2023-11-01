@@ -13,8 +13,8 @@ class BlocFactory {
   void initialize(){
     ServiceProvider.instance.initialize();
 
-    _getIt.registerLazySingleton<GetUserAuthBloc>(
-          () => GetUserAuthBloc(
+    _getIt.registerLazySingleton<UserAuthBloc>(
+          () => UserAuthBloc(
             getUserAuthRepository: ServiceProvider.instance.get<GetUserAuthRepository>(),
             setUserAuthRepository: ServiceProvider.instance.get<SetUserAuthRepository>(),
       ),

@@ -176,7 +176,7 @@ class _MainFormState extends State<MainForm> {
     required ValueNotifier<bool> valueListenableProcess,
     required ValueNotifier<bool> valueLoginProcess,
   }) async {
-    final blocBloc = context.read<GetUserAuthBloc>();
+    final blocBloc = context.read<UserAuthBloc>();
     final cSt = _formKey.currentState;
     if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
       valueListenableProcess.value = true;

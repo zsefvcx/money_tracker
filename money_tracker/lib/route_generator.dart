@@ -16,7 +16,7 @@ class RouteGenerator {
     final args = settings.arguments;
 
     switch(settings.name){
-      case MoneyTrackerHomePage.routeName:
+      case MainFormMoneyTracker.routeName:
         //var loginUser = false;
         var eMail = '';
         var uuid = '';
@@ -36,10 +36,10 @@ class RouteGenerator {
         }
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
-          MoneyTrackerHomePage(
-            eMail: eMail,
-            uuid: uuid,
-          ),
+              MainFormMoneyTracker(
+                eMail: eMail,
+                uuid: uuid,
+              ),
         );
       case MainFormAuthorization.routeName:
         var loginUser = false;
@@ -82,7 +82,7 @@ class RouteGenerator {
           automaticallyImplyLeading: false,
           leading: IconButton(icon: const Icon(Icons.close),
             onPressed: ()=>Navigator.of(context).
-            pushReplacementNamed(MoneyTrackerHomePage.routeName,
+            pushReplacementNamed(MainFormMoneyTracker.routeName,
               // arguments: {
               //   'TabIndex':currentIndex.index,
               // },

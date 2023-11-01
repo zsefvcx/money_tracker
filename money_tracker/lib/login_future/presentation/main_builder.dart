@@ -19,9 +19,9 @@ class MainBuilderForm extends StatelessWidget {
             padding: const EdgeInsets.only(
               left: 25, right: 25, top: 10, bottom: 25,
             ),
-            child: BlocBuilder<GetUserAuthBloc, UserAuthState>(
+            child: BlocBuilder<UserAuthBloc, UserAuthState>(
               builder: (context, state) {
-                final blocBloc = context.read<GetUserAuthBloc>();
+                final blocBloc = context.read<UserAuthBloc>();
                 return state.map(
                 loading: (_) => const Column(
                   mainAxisAlignment: MainAxisAlignment.center,

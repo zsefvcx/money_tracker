@@ -13,7 +13,7 @@ class ErrorTimeOut extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final blocBloc = context.read<GetUserAuthBloc>();
+    final blocBloc = context.read<UserAuthBloc>();
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

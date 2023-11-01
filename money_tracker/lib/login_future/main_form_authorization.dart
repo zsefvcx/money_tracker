@@ -16,7 +16,7 @@ class MainFormAuthorization extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider<GetUserAuthBloc>(
+        Provider<UserAuthBloc>(
           create: (_) => LoginBlocInit.getUserAuthBloc
         ),
       ],

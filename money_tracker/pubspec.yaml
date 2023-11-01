@@ -29,6 +29,8 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   internet_connection_checker: ^1.0.0+1
   uuid: ^4.1.0
+  image_picker: ^1.0.4
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +50,7 @@ dev_dependencies:
   #dart run build_runner build
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
+
 
 flutter:
   generate: true

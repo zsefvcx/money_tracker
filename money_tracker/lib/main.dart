@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_app.dart';
+import 'package:money_tracker/money_tracker_future/src.dart';
 import 'package:window_manager/window_manager.dart';
 
 Future<void> main() async {
@@ -27,6 +28,7 @@ Future<void> main() async {
   }
 
   LoginBlocInit.initState();
+  MoneyTrackerBlocsInit.initState();
 
   runApp(const MoneyTrackerApp());
 }

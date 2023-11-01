@@ -135,7 +135,7 @@ void main() {
       final json1 = jsonDecode(data1);
       final monthlyExpenses2 = MonthlyExpenses.fromJson(json1 as Map<String, dynamic>);
       expect(monthlyExpenses==monthlyExpenses2, true);
-      expect(monthlyExpenses.param, (10, 2023));
+      expect(monthlyExpenses.param, (dataTime.month, dataTime.year));
       expect(monthlyExpenses.totalSumCategory(0), BigInt.from(30000000));
       expect(monthlyExpenses.totalSumCategory(10), BigInt.from(0));
       expect(monthlyExpenses.totalSumCategoryDay(0, dataTime.day), BigInt.from(30000000));

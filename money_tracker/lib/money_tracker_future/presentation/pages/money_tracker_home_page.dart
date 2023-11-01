@@ -5,7 +5,6 @@ import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
-  static const routeName = r'\PageMoneyTracker';
 
   const MoneyTrackerHomePage({required this.uuid, required this.eMail, super.key});
 
@@ -95,11 +94,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                     width: 119,
                     child: Column(
                       children: [
-                        const CustomCircleAvatar(),
-                        13.h,
-                        TextButton(onPressed: () {
-
-                        }, child: Text('Сохранить', style: theme.textTheme.bodyLarge,)),
+                        CustomCircleAvatar(uuid: widget.uuid),
                         13.h,
                         Expanded(child: Text(widget.uuid, style: theme.textTheme.bodyMedium, textDirection: TextDirection.ltr,)),
                       ],
