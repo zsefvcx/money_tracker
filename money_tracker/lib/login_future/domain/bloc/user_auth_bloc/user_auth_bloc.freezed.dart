@@ -22,6 +22,8 @@ mixin _$UserAuthEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -45,6 +47,8 @@ mixin _$UserAuthEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -62,6 +66,8 @@ mixin _$UserAuthEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -80,6 +86,8 @@ mixin _$UserAuthEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -91,6 +99,7 @@ mixin _$UserAuthEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -102,6 +111,7 @@ mixin _$UserAuthEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -218,6 +228,8 @@ class _$initEventImpl implements _initEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -244,6 +256,8 @@ class _$initEventImpl implements _initEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -264,6 +278,8 @@ class _$initEventImpl implements _initEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -288,6 +304,8 @@ class _$initEventImpl implements _initEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -302,6 +320,7 @@ class _$initEventImpl implements _initEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -316,6 +335,7 @@ class _$initEventImpl implements _initEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -411,6 +431,8 @@ class _$deleteEventImpl implements _deleteEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -437,6 +459,8 @@ class _$deleteEventImpl implements _deleteEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -457,6 +481,8 @@ class _$deleteEventImpl implements _deleteEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -481,6 +507,8 @@ class _$deleteEventImpl implements _deleteEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -495,6 +523,7 @@ class _$deleteEventImpl implements _deleteEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -509,6 +538,7 @@ class _$deleteEventImpl implements _deleteEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -604,6 +634,8 @@ class _$logoutEventImpl implements _logoutEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -630,6 +662,8 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -650,6 +684,8 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -674,6 +710,8 @@ class _$logoutEventImpl implements _logoutEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -688,6 +726,7 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -702,6 +741,7 @@ class _$logoutEventImpl implements _logoutEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -725,6 +765,224 @@ abstract class _logoutEvent implements UserAuthEvent {
   @JsonKey(ignore: true)
   _$$logoutEventImplCopyWith<_$logoutEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$changeLoadImageStatusEventImplCopyWith<$Res>
+    implements $UserAuthEventCopyWith<$Res> {
+  factory _$$changeLoadImageStatusEventImplCopyWith(
+          _$changeLoadImageStatusEventImpl value,
+          $Res Function(_$changeLoadImageStatusEventImpl) then) =
+      __$$changeLoadImageStatusEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool status, Completer<dynamic> completer});
+}
+
+/// @nodoc
+class __$$changeLoadImageStatusEventImplCopyWithImpl<$Res>
+    extends _$UserAuthEventCopyWithImpl<$Res, _$changeLoadImageStatusEventImpl>
+    implements _$$changeLoadImageStatusEventImplCopyWith<$Res> {
+  __$$changeLoadImageStatusEventImplCopyWithImpl(
+      _$changeLoadImageStatusEventImpl _value,
+      $Res Function(_$changeLoadImageStatusEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? status = null,
+    Object? completer = null,
+  }) {
+    return _then(_$changeLoadImageStatusEventImpl(
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as bool,
+      completer: null == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$changeLoadImageStatusEventImpl implements _changeLoadImageStatusEvent {
+  const _$changeLoadImageStatusEventImpl(
+      {required this.status, required this.completer});
+
+  @override
+  final bool status;
+  @override
+  final Completer<dynamic> completer;
+
+  @override
+  String toString() {
+    return 'UserAuthEvent.changeLoadImageStatus(status: $status, completer: $completer)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$changeLoadImageStatusEventImpl &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, status, completer);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$changeLoadImageStatusEventImplCopyWith<_$changeLoadImageStatusEventImpl>
+      get copyWith => __$$changeLoadImageStatusEventImplCopyWithImpl<
+          _$changeLoadImageStatusEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Completer<dynamic>? completer) init,
+    required TResult Function(Completer<dynamic>? completer) delete,
+    required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
+    required TResult Function(
+            String userNameHash512, Completer<dynamic> completer)
+        checkUserName,
+    required TResult Function(String userNameHash512,
+            String userPasswordHash512, Completer<dynamic> completer)
+        checkPassword,
+    required TResult Function(
+            String userNameHash512, Completer<dynamic> completer)
+        setUserName,
+    required TResult Function(
+            String userNameHash512,
+            String userPasswordHash512,
+            String eMail,
+            UserGroup userGroup,
+            Completer<dynamic> completer)
+        setPassword,
+  }) {
+    return changeLoadImageStatus(status, completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Completer<dynamic>? completer)? init,
+    TResult? Function(Completer<dynamic>? completer)? delete,
+    TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
+    TResult? Function(String userNameHash512, Completer<dynamic> completer)?
+        checkUserName,
+    TResult? Function(String userNameHash512, String userPasswordHash512,
+            Completer<dynamic> completer)?
+        checkPassword,
+    TResult? Function(String userNameHash512, Completer<dynamic> completer)?
+        setUserName,
+    TResult? Function(String userNameHash512, String userPasswordHash512,
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
+        setPassword,
+  }) {
+    return changeLoadImageStatus?.call(status, completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Completer<dynamic>? completer)? init,
+    TResult Function(Completer<dynamic>? completer)? delete,
+    TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
+    TResult Function(String userNameHash512, Completer<dynamic> completer)?
+        checkUserName,
+    TResult Function(String userNameHash512, String userPasswordHash512,
+            Completer<dynamic> completer)?
+        checkPassword,
+    TResult Function(String userNameHash512, Completer<dynamic> completer)?
+        setUserName,
+    TResult Function(String userNameHash512, String userPasswordHash512,
+            String eMail, UserGroup userGroup, Completer<dynamic> completer)?
+        setPassword,
+    required TResult orElse(),
+  }) {
+    if (changeLoadImageStatus != null) {
+      return changeLoadImageStatus(status, completer);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_initEvent value) init,
+    required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
+    required TResult Function(_checkUserNameEvent value) checkUserName,
+    required TResult Function(_checkPasswordEvent value) checkPassword,
+    required TResult Function(_setUserNameEvent value) setUserName,
+    required TResult Function(_setPasswordAndUserGroup value) setPassword,
+  }) {
+    return changeLoadImageStatus(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initEvent value)? init,
+    TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
+    TResult? Function(_checkUserNameEvent value)? checkUserName,
+    TResult? Function(_checkPasswordEvent value)? checkPassword,
+    TResult? Function(_setUserNameEvent value)? setUserName,
+    TResult? Function(_setPasswordAndUserGroup value)? setPassword,
+  }) {
+    return changeLoadImageStatus?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initEvent value)? init,
+    TResult Function(_deleteEvent value)? delete,
+    TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
+    TResult Function(_checkUserNameEvent value)? checkUserName,
+    TResult Function(_checkPasswordEvent value)? checkPassword,
+    TResult Function(_setUserNameEvent value)? setUserName,
+    TResult Function(_setPasswordAndUserGroup value)? setPassword,
+    required TResult orElse(),
+  }) {
+    if (changeLoadImageStatus != null) {
+      return changeLoadImageStatus(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _changeLoadImageStatusEvent implements UserAuthEvent {
+  const factory _changeLoadImageStatusEvent(
+          {required final bool status,
+          required final Completer<dynamic> completer}) =
+      _$changeLoadImageStatusEventImpl;
+
+  bool get status;
+  @override
+  Completer<dynamic> get completer;
+  @override
+  @JsonKey(ignore: true)
+  _$$changeLoadImageStatusEventImplCopyWith<_$changeLoadImageStatusEventImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -808,6 +1066,8 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -834,6 +1094,8 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -854,6 +1116,8 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -878,6 +1142,8 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -892,6 +1158,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -906,6 +1173,7 @@ class _$checkUserNameEventImpl implements _checkUserNameEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -1029,6 +1297,8 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -1055,6 +1325,8 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -1075,6 +1347,8 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -1099,6 +1373,8 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -1113,6 +1389,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -1127,6 +1404,7 @@ class _$checkPasswordEventImpl implements _checkPasswordEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -1237,6 +1515,8 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -1263,6 +1543,8 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -1283,6 +1565,8 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -1307,6 +1591,8 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -1321,6 +1607,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -1335,6 +1622,7 @@ class _$setUserNameEventImpl implements _setUserNameEvent {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,
@@ -1481,6 +1769,8 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     required TResult Function(Completer<dynamic>? completer) init,
     required TResult Function(Completer<dynamic>? completer) delete,
     required TResult Function(Completer<dynamic> completer) logout,
+    required TResult Function(bool status, Completer<dynamic> completer)
+        changeLoadImageStatus,
     required TResult Function(
             String userNameHash512, Completer<dynamic> completer)
         checkUserName,
@@ -1508,6 +1798,8 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult? Function(Completer<dynamic>? completer)? init,
     TResult? Function(Completer<dynamic>? completer)? delete,
     TResult? Function(Completer<dynamic> completer)? logout,
+    TResult? Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult? Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult? Function(String userNameHash512, String userPasswordHash512,
@@ -1529,6 +1821,8 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult Function(Completer<dynamic>? completer)? init,
     TResult Function(Completer<dynamic>? completer)? delete,
     TResult Function(Completer<dynamic> completer)? logout,
+    TResult Function(bool status, Completer<dynamic> completer)?
+        changeLoadImageStatus,
     TResult Function(String userNameHash512, Completer<dynamic> completer)?
         checkUserName,
     TResult Function(String userNameHash512, String userPasswordHash512,
@@ -1554,6 +1848,8 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     required TResult Function(_initEvent value) init,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_logoutEvent value) logout,
+    required TResult Function(_changeLoadImageStatusEvent value)
+        changeLoadImageStatus,
     required TResult Function(_checkUserNameEvent value) checkUserName,
     required TResult Function(_checkPasswordEvent value) checkPassword,
     required TResult Function(_setUserNameEvent value) setUserName,
@@ -1568,6 +1864,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult? Function(_initEvent value)? init,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_logoutEvent value)? logout,
+    TResult? Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult? Function(_checkUserNameEvent value)? checkUserName,
     TResult? Function(_checkPasswordEvent value)? checkPassword,
     TResult? Function(_setUserNameEvent value)? setUserName,
@@ -1582,6 +1879,7 @@ class _$setPasswordAndUserGroupImpl implements _setPasswordAndUserGroup {
     TResult Function(_initEvent value)? init,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_logoutEvent value)? logout,
+    TResult Function(_changeLoadImageStatusEvent value)? changeLoadImageStatus,
     TResult Function(_checkUserNameEvent value)? checkUserName,
     TResult Function(_checkPasswordEvent value)? checkPassword,
     TResult Function(_setUserNameEvent value)? setUserName,

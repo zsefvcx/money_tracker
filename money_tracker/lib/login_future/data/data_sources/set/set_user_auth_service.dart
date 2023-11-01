@@ -19,4 +19,6 @@ abstract class SetUserAuthService {
   Future<bool?> deleteUserData({bool internet = false,});
 
   Future<UserAuthorizationPasswordModel?> logout();
+
+  Future<UserAuthorizationPasswordModel?> changeLoadImageStatus({required bool status});
 }

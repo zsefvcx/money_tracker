@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:money_tracker/login_future/core/core.dart';
+import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:money_tracker/login_future/presentation/presentation.dart';
 
@@ -34,6 +34,7 @@ class MainBuilderForm extends StatelessWidget {
                   loginUserAuth: blocBloc.userAuthData.statusAuthorization,
                   eMail: blocBloc.userAuthData.eMail,
                   uuid: blocBloc.userAuthData.uuid,
+                  loadImage: blocBloc.userAuthData.statusAuthorization,
                   valueLoginProcess: false,
                 ),
                 error:   (_)=> const ErrorTimeOut(),//
@@ -42,6 +43,7 @@ class MainBuilderForm extends StatelessWidget {
                   loginUserAuth: null,
                   eMail: null,
                   uuid: null,
+                  loadImage: false,
                   valueLoginProcess: true,
                 ),
                 );

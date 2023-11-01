@@ -36,14 +36,13 @@ class PhotoReadFromIntFileImpl extends PhotoReadFromIntFile {
   }
 
   Future<File> localFile({required String uuid}) async {
-
     final path = '${await localPath}/photo_$uuid';
     Logger.print('PathToPhoto:$path');
     return File(path);
   }
 
   @override
-  Future<PhotosModel> read({required String uuid}) async {
+  Future<PhotosModel?> read({required String uuid}) async {
     try {
       final res = mapPhotosModel[uuid];
       if(res == null) { //еще не разу не грузили за сессию
@@ -68,7 +67,7 @@ class PhotoReadFromIntFileImpl extends PhotoReadFromIntFile {
 
       final fileLocal = await file.writeAsBytes(filePathContent);
 
-      return fileLocal.path==path;
+      return true;
 
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);

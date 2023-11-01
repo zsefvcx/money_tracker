@@ -48,4 +48,9 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
   Future<UserAuthorizationPasswordEntity?> logout() async {
     return await setUserAuthService.logout();
   }
+
+  @override
+  Future<UserAuthorizationPasswordEntity?> changeLoadImageStatus({required bool status}) async {
+    return await setUserAuthService.changeLoadImageStatus(status: status);
+  }
 }

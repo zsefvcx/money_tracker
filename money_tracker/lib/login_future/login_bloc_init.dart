@@ -17,4 +17,10 @@ class LoginBlocInit {
     await completer.future;
   }
 
+  static Future<void> changeLoadImageStatus({required bool status}) async {
+    final completer = Completer<bool>();
+    getUserAuthBloc.add(UserAuthEvent.changeLoadImageStatus(status: status, completer: completer));
+    await completer.future;
+  }
+
 }

@@ -177,6 +177,25 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                 }
               }
           },
+          changeLoadImageStatus: (value) async {
+            emit(const UserAuthState.loading());
+            final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
+              function: () async => await setUserAuthRepository.changeLoadImageStatus(status: value.status),
+            );
+            userAuthData = userAuthData.copyWithData(
+              data: res,
+              error: error,
+              e: e,
+              timeOut: timeOut,
+            );
+            await _response(emit);
+            if (error){
+              Logger.print('Error changeLoadImageStatus.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res?.statusAuthorization);
+            }
+          },
       );
     });
   }
@@ -195,6 +214,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           uuid: data.uuid,
           eMail: data.eMail,
           statusAuthorization: data.statusAuthorization,
+          loadImage: data.loadImage,
         );
         emit(const UserAuthState.loaded());
       } else {
@@ -216,7 +236,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(microseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 50));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;

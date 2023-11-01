@@ -8,6 +8,7 @@ class UserAuthData {
   final String uuid;
   final String eMail;
   final bool statusAuthorization;
+  final bool loadImage;
   final bool error;
   final String e;
 
@@ -24,6 +25,7 @@ class UserAuthData {
     this.uuid = '',
     this.eMail = '',
     this.statusAuthorization = false,
+    this.loadImage = false,
   });
 
   UserAuthData copyWithData({
@@ -34,6 +36,7 @@ class UserAuthData {
     String? uuid,
     String? eMail,
     bool? statusAuthorization,
+    bool? loadImage,
   }){
     return UserAuthData(
       data: data,
@@ -43,6 +46,7 @@ class UserAuthData {
       uuid: uuid ?? this.uuid,
       eMail: eMail ?? this.eMail,
       statusAuthorization: statusAuthorization ?? this.statusAuthorization,
+      loadImage: loadImage ?? this.loadImage,
     );
   }
 }

@@ -9,10 +9,12 @@ abstract class UserAuthorizationPasswordEntity {
   final String uuid;
   final String eMail;
   final bool statusAuthorization;
+  final bool loadImage;
 
   const UserAuthorizationPasswordEntity({
     required this.uuid,
     required this.statusAuthorization,
+    required this.loadImage,
     required this.eMail,
     required this.userNameHash512,
     this.userPasswordHash512,

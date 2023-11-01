@@ -17,4 +17,6 @@ abstract class SetUserAuthRepository {
   Future<bool?> deleteUserData();
 
   Future<UserAuthorizationPasswordEntity?> logout();
+
+  Future<UserAuthorizationPasswordEntity?> changeLoadImageStatus({required bool status});
 }

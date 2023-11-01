@@ -11,6 +11,10 @@ class UserAuthEvent with _$UserAuthEvent {
   const factory UserAuthEvent.logout({
     required Completer<dynamic> completer,
   }) = _logoutEvent;
+  const factory UserAuthEvent.changeLoadImageStatus({
+    required bool status,
+    required Completer<dynamic> completer,
+  }) = _changeLoadImageStatusEvent;
   const factory UserAuthEvent.checkUserName({
     required String userNameHash512,
     required Completer<dynamic> completer,

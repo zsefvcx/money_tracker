@@ -11,6 +11,7 @@ import 'package:money_tracker/login_future/presentation/presentation.dart';
 class MainForm extends StatefulWidget {
   const MainForm({
     required this.valueLoginProcess,
+    required this.loadImage,
     required this.uuid,
     required this.eMail,
     required this.loginUserAuth,
@@ -20,7 +21,8 @@ class MainForm extends StatefulWidget {
   final String? eMail;
   final String? uuid;
   final bool? loginUserAuth;
-  final bool  valueLoginProcess;
+  final bool loadImage;
+  final bool valueLoginProcess;
 
   @override
   State<MainForm> createState() => _MainFormState();
@@ -50,6 +52,7 @@ class _MainFormState extends State<MainForm> {
             'loginUser': true,
             'uuid' : widget.uuid,
             'eMail' : widget.eMail,
+            'loadImage' : widget.loadImage,
           }
         );
       });
@@ -218,6 +221,7 @@ class _MainFormState extends State<MainForm> {
                 'loginUser': blocBloc.userAuthData.statusAuthorization,
                 'uuid' : blocBloc.userAuthData.uuid,
                 'eMail' : _emailController.text,
+                'loadImage' : blocBloc.userAuthData.loadImage,
               },
             );
             return;
@@ -261,6 +265,7 @@ class _MainFormState extends State<MainForm> {
                   'loginUser':blocBloc.userAuthData.statusAuthorization,
                   'uuid' : blocBloc.userAuthData.uuid,
                   'eMail' : _emailController.text,
+                  'loadImage' : blocBloc.userAuthData.loadImage,
                 },
               );
               return;

@@ -8,10 +8,16 @@ import 'package:provider/provider.dart';
 class MainFormMoneyTracker extends StatelessWidget {
   static const routeName = r'\PageMoneyTracker';
 
-  const MainFormMoneyTracker({required this.uuid, required this.eMail, super.key});
+  const MainFormMoneyTracker({
+    required this.loadImage,
+    required this.uuid,
+    required this.eMail,
+    super.key
+  });
 
   final String uuid;
   final String eMail;
+  final bool loadImage;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,7 @@ class MainFormMoneyTracker extends StatelessWidget {
             create: (_) => MoneyTrackerBlocsInit.photoBloc,
         ),
       ],
-      child: MoneyTrackerHomePage(uuid: uuid, eMail: eMail),
+      child: MoneyTrackerHomePage(uuid: uuid, eMail: eMail, loadImage: loadImage,),
     );
   }
 }

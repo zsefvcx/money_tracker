@@ -13,7 +13,7 @@ class PhotoReadRepositoryImpl extends PhotoReadRepository{
   });
 
   @override
-  Future<APhotosEntity> read({required String uuid}) async {
+  Future<APhotosEntity?> read({required String uuid}) async {
     return await photoReadFromIntFile.read(uuid: uuid);
   }
 

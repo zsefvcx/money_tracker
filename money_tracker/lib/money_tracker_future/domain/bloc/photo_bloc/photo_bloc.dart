@@ -1,6 +1,6 @@
-
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/core/core.dart';
@@ -8,18 +8,15 @@ import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 //import 'package:injectable/injectable.dart';
 
-
 part 'photo_bloc.freezed.dart';
 part 'photo_event.dart';
 part 'photo_state.dart';
 part 'photo_data.dart';
 
-
 //@injectable
 class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
 
   final PhotoReadRepository photoReadRepository;
-
 
   static int timeOutV = 10;
 
@@ -80,51 +77,6 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
           }
       );
     });
-
-    // on<UsersBlocEvent>((event, emit) async {
-    //   await event.map<FutureOr<void>>(
-    //       init: (value) async {
-    //         emit(const UsersBlocState.loading());
-    //         await _get(0);
-    //         //await Future.delayed(const Duration(seconds: 2));
-    //         _response(emit);
-    //       },
-    //       get: (value) async {
-    //         emit(const UsersBlocState.loading());
-    //         await _get(value.page);
-    //         //await Future.delayed(const Duration(seconds: 2));
-    //         _response(emit);
-    //       },
-    //       getCompleter: (value) async {
-    //         await _get(value.page);
-    //         //await Future.delayed(const Duration(seconds: 2));
-    //         _response(emit);
-    //         value.completer.complete();
-    //       },
-    //       insert: (value) async {
-    //         emit(const UsersBlocState.loading());
-    //         await _insert(value.value);
-    //         //await Future.delayed(const Duration(seconds: 2));
-    //         _response(emit);
-    //       },
-    //       update: (value) async {
-    //         await _update(value.oldValue, value.value);
-    //        // await Future.delayed(const Duration(seconds: 2));
-    //       },
-    //       delete: (value) async {
-    //         emit(const UsersBlocState.loading());
-    //         await _delete(value.value);
-    //         //await Future.delayed(const Duration(seconds: 2));
-    //         _response(emit);
-    //       },
-    //       insertCard: (value) async {
-    //         final (_, _, _) = await _insertCard(value: value.value);
-    //       },
-    //       updateCard: (value) async {
-    //         final (_, _, _) = await _updateCard(value: value.value);
-    //       },
-    //   );
-    // });
   }
 
   Future<void> _read(String uuid, Emitter<PhotoBlocState> emit) async {
@@ -179,7 +131,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(microseconds: 500));
+      await Future.delayed(const Duration(milliseconds: 50));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;
@@ -187,6 +139,9 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
             e = 'TimeOut';
             return null;
           });
+      if (kDebugMode) {
+        print(res);
+      }
     } on Exception catch(ee, t){
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;

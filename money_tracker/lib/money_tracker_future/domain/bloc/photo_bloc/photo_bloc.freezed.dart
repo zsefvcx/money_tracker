@@ -145,15 +145,23 @@ class __$$initEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$initEventImpl implements _initEvent {
+class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   const _$initEventImpl({required this.uuid});
 
   @override
   final String uuid;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocEvent.init(uuid: $uuid)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PhotoBlocEvent.init'))
+      ..add(DiagnosticsProperty('uuid', uuid));
   }
 
   @override
@@ -298,15 +306,23 @@ class __$$readEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$readEventImpl implements _readEvent {
+class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   const _$readEventImpl({required this.uuid});
 
   @override
   final String uuid;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocEvent.read(uuid: $uuid)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PhotoBlocEvent.read'))
+      ..add(DiagnosticsProperty('uuid', uuid));
   }
 
   @override
@@ -461,7 +477,7 @@ class __$$writeEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$writeEventImpl implements _writeEvent {
+class _$writeEventImpl with DiagnosticableTreeMixin implements _writeEvent {
   const _$writeEventImpl(
       {required this.uuid, required this.path, required this.completer});
 
@@ -473,8 +489,18 @@ class _$writeEventImpl implements _writeEvent {
   final Completer<dynamic> completer;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocEvent.write(uuid: $uuid, path: $path, completer: $completer)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PhotoBlocEvent.write'))
+      ..add(DiagnosticsProperty('uuid', uuid))
+      ..add(DiagnosticsProperty('path', path))
+      ..add(DiagnosticsProperty('completer', completer));
   }
 
   @override
@@ -632,7 +658,7 @@ class __$$deleteEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$deleteEventImpl implements _deleteEvent {
+class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   const _$deleteEventImpl({required this.uuid, required this.completer});
 
   @override
@@ -641,8 +667,17 @@ class _$deleteEventImpl implements _deleteEvent {
   final Completer<dynamic> completer;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocEvent.delete(uuid: $uuid, completer: $completer)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PhotoBlocEvent.delete'))
+      ..add(DiagnosticsProperty('uuid', uuid))
+      ..add(DiagnosticsProperty('completer', completer));
   }
 
   @override
@@ -847,12 +882,18 @@ class __$$loadingStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$loadingStateImpl implements _loadingState {
+class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   const _$loadingStateImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocState.loading()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'PhotoBlocState.loading'));
   }
 
   @override
@@ -976,15 +1017,23 @@ class __$$loadedStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$loadedStateImpl implements _loadedState {
+class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   const _$loadedStateImpl({required this.model});
 
   @override
   final APhotosEntity? model;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocState.loaded(model: $model)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'PhotoBlocState.loaded'))
+      ..add(DiagnosticsProperty('model', model));
   }
 
   @override
@@ -1107,12 +1156,18 @@ class __$$errorStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$errorStateImpl implements _errorState {
+class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   const _$errorStateImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocState.error()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'PhotoBlocState.error'));
   }
 
   @override
@@ -1221,12 +1276,18 @@ class __$$timeOutImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$timeOutImpl implements _timeOut {
+class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   const _$timeOutImpl();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'PhotoBlocState.timeOut()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty('type', 'PhotoBlocState.timeOut'));
   }
 
   @override

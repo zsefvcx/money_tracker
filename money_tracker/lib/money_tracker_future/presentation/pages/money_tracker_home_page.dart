@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/src.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/photo_bloc/photo_bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
 
-  const MoneyTrackerHomePage({required this.uuid, required this.eMail, super.key});
+  const MoneyTrackerHomePage({
+    required this.loadImage,
+    required this.uuid,
+    required this.eMail,
+    super.key
+  });
 
   final String uuid;
   final String eMail;
+  final bool loadImage;
 
   @override
   State<MoneyTrackerHomePage> createState() => _MoneyTrackerHomePageState();
@@ -36,6 +44,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
   Widget build(BuildContext context) {
     final nowDateTime = DateTime.now();
     final theme = Theme.of(context);
+    final blocBloc = context.read<PhotoBloc>();
     var logoutProcess = false;
     return SafeArea(
       child: Scaffold(
@@ -92,12 +101,11 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                 children: [
                   SizedBox(
                     width: 119,
-                    child: Column(
-                      children: [
-                        CustomCircleAvatar(uuid: widget.uuid),
-                        13.h,
-                        Expanded(child: Text(widget.uuid, style: theme.textTheme.bodyMedium, textDirection: TextDirection.ltr,)),
-                      ],
+                    child: Hero(tag: Keys.heroIdSplash,
+                        child: CustomCircleAvatar(
+                          uuid: widget.uuid,
+                          loadImage: widget.loadImage,
+                        )
                     ),
                   ),
                   SizedBox(
@@ -116,16 +124,6 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                                     'loginUser': false,
                                   },
                           );
-
-                          // final res = await LoginBlocInit.logout();
-                          // if (res && mounted){
-                          //   await Navigator.of(context).pushReplacementNamed(r'\',
-                          //     arguments: {
-                          //       'newUser': false,
-                          //       'statusAuthorization':false,
-                          //     },
-                          //   );
-                          // }
                           logoutProcess = false;
                         }, child: const Text('Выйти'),
                          style: theme.elevatedButtonTheme.style?.copyWith(
@@ -149,6 +147,9 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
         bottomNavigationBar: BottomNavigationBar(
           onTap: (currentIndex) {
             _tabController.index = currentIndex;
+            if(currentIndex == 1){
+              blocBloc.add(PhotoBlocEvent.init(uuid: widget.loadImage?widget.uuid:''));
+            }
             setState(() {
               _currentTabIndex = currentIndex;
               _tabController.animateTo(_currentTabIndex);

@@ -20,6 +20,7 @@ class RouteGenerator {
         //var loginUser = false;
         var eMail = '';
         var uuid = '';
+        var loadImage = false;
         if (args != null && args is Map<String, dynamic>)  {
           // final dataLoginUser = args['loginUser'];
           // if(dataLoginUser!=null && dataLoginUser is bool ){
@@ -33,6 +34,11 @@ class RouteGenerator {
           if(dataEMail!=null && dataEMail is String){
             eMail = dataEMail;
           }
+          final dataLoadImage = args['loadImage'];
+          if(dataLoadImage!=null && dataLoadImage is bool){
+            loadImage = dataLoadImage;
+          }
+          //'loadImage' : blocBloc.userAuthData.loadImage,
         }
         MoneyTrackerBlocsInit.init(uuid: uuid);
         return PageRouteBuilder(
@@ -40,6 +46,7 @@ class RouteGenerator {
               MainFormMoneyTracker(
                 eMail: eMail,
                 uuid: uuid,
+                loadImage: loadImage,
               ),
         );
       case MainFormAuthorization.routeName:

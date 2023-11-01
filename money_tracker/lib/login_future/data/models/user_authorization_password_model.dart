@@ -10,6 +10,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
     required super.uuid,
     required super.eMail,
     required super.statusAuthorization,
+    required super.loadImage,
     required super.userNameHash512,
     super.userPasswordHash512,
     super.userGroup,
@@ -27,6 +28,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
           uuid ==  other.uuid &&
           eMail ==  other.eMail &&
           userPasswordHash512 == other.userPasswordHash512 &&
+          loadImage == loadImage &&
           userGroup == other.userGroup);
 
   @override
@@ -37,11 +39,13 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       userGroup.hashCode ^
       statusAuthorization.hashCode ^
       eMail.hashCode ^
-      uuid.hashCode;
+      uuid.hashCode ^
+      loadImage.hashCode;
 
   @override
   String toString() {
     return 'UserAuthorizationPassword{statusAuthorization:$statusAuthorization,'
+           ' loadImage: $loadImage'
            ' uuid: $uuid'
            ' eMail: $eMail,'
            ' id: $id, '
@@ -54,6 +58,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
     String? uuid,
     String? eMail,
     bool? statusAuthorization,
+    bool? loadImage,
     int? id,
     String? userNameHash512,
     String? userPasswordHash512,
@@ -63,6 +68,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       uuid: uuid ?? this.uuid,
       eMail: eMail ?? this.eMail,
       statusAuthorization: statusAuthorization ?? this.statusAuthorization,
+      loadImage: loadImage ?? this.loadImage,
       id: id ?? this.id,
       userNameHash512: userNameHash512 ?? this.userNameHash512,
       userPasswordHash512: userPasswordHash512 ?? this.userPasswordHash512,
@@ -74,6 +80,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
     final ug = userGroup??UserGroup.guest;
     return {
       'statusAuthorization': statusAuthorization,
+      'loadImage' : loadImage,
       'id': id,
       'userNameHash512': userNameHash512,
       'userPasswordHash512': userPasswordHash512,
@@ -93,6 +100,7 @@ class UserAuthorizationPasswordModel extends UserAuthorizationPasswordEntity{
       userGroup: UserGroup.values[ugInd],
       eMail: map['eMail'] as String,
       uuid: map['uuid'] as String,
+      loadImage: map['loadImage'] as bool,
     );
   }
 

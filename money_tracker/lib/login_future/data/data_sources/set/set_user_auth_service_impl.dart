@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/data/data.dart';
 import 'package:uuid/uuid.dart';
@@ -22,6 +23,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final user = UserAuthorizationPasswordModel(
         uuid: const Uuid().v1(),
         statusAuthorization: true,
+        loadImage: false,
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
         eMail: eMail,
@@ -71,6 +73,29 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
         final user = UserAuthorizationPasswordModel.fromMap(json);
         final user1 = user.copyWith(
           statusAuthorization: false,
+        );
+        final res = jsonEncode(user1.toMap());
+        // Write value
+        await secureStorage.write(key: Keys.userData, value: res);
+        return user1;
+      }
+      return null;
+    } on Exception catch(e){
+      throw ArgumentError('Error logout: $e');
+    }
+  }
+
+  @override
+  Future<UserAuthorizationPasswordModel?> changeLoadImageStatus({required bool status}) async {
+    try{
+      // Read value
+      final userData = await secureStorage.read(key: Keys.userData);
+      if (userData == null || userData == '') return null;
+      final json = jsonDecode(userData);
+      if (json is Map<String, dynamic>) {
+        final user = UserAuthorizationPasswordModel.fromMap(json);
+        final user1 = user.copyWith(
+          loadImage: status,
         );
         final res = jsonEncode(user1.toMap());
         // Write value
