@@ -7,7 +7,11 @@ class MoneyTrackerBlocsInit {
   static void initState() {
     BlocFactory.instance.initialize();
     photoBloc = BlocFactory.instance.get<PhotoBloc>();
-    photoBloc.add(const PhotoBlocEvent.init());
+
+  }
+
+  static void init({required String uuid}){
+    photoBloc.add(PhotoBlocEvent.init(uuid: uuid));
   }
 
 }

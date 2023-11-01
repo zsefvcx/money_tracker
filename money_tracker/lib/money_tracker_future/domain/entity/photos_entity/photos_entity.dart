@@ -1,9 +1,8 @@
 import 'dart:typed_data';
 
-abstract class APhotosModel{
-  final String locator;
-  final String url;
+abstract class APhotosEntity{
+  final String uuid;
   final Uint8List contents;
 
-  APhotosModel({required this.locator, required this.url, required this.contents});
+  APhotosEntity({required this.uuid, required this.contents});
 }

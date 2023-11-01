@@ -1,11 +1,10 @@
 
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
-class PhotosEntity extends APhotosModel{
+class PhotosModel extends APhotosEntity{
 
-  PhotosEntity({
-    required super.locator,
-    required super.url,
+  PhotosModel({
+    required super.uuid,
     required super.contents,
   });
 

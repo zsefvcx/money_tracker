@@ -5,13 +5,9 @@ import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 abstract class PhotoReadFromIntFile {
 
-  Future<String> get localPath;
+  Future<PhotosModel> read({required String uuid});
 
-  Future<(File, String)> localFile({String? locator});
+  Future<bool?> write({required String uuid, required String path});
 
-  Future<PhotosEntity> readCounter({required String locator});
-
-  Future<(File, String)> writeCounter({String? locator});
-
-  Future<bool> deletePhoto({required String locator});
+  Future<bool> delete({required String uuid});
 }

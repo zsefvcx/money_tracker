@@ -34,6 +34,7 @@ class RouteGenerator {
             eMail = dataEMail;
           }
         }
+        MoneyTrackerBlocsInit.init(uuid: uuid);
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               MainFormMoneyTracker(

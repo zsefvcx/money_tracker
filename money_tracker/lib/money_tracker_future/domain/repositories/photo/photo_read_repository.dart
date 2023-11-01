@@ -4,9 +4,9 @@ import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 abstract class PhotoReadRepository {
 
-  Future<APhotosModel> readCounter({required String locator});
+  Future<APhotosEntity> read({required String uuid});
 
-  Future<(File?, String?)> writeCounter({required String? locator});
+  Future<bool?> write({required String uuid, required String path});
 
-  Future<bool?> deletePhoto({required String locator});
+  Future<bool?> delete({required String uuid});
 }

@@ -1,34 +1,32 @@
 
-part 'photo_bloc.dart';
-
+part of 'photo_bloc.dart';
 
 //@injectable
 class PhotoModelData {
 
   final bool timeOut;
-  final AUsersEntity data;
+  final APhotosEntity? data;
   final bool error;
   final String e;
 
-  bool get isLoaded => data.users.isNotEmpty;
   bool get isTimeOut => timeOut;
   bool get isError => error;
 
-  const UsersModelData({
+  const PhotoModelData({
     required this.data,
     required this.e,
     required this.timeOut,
     required this.error,
   });
 
-  UsersModelData copyWith({
-    AUsersEntity? data,
+  PhotoModelData copyWithData({
+    required APhotosEntity? data,
     String? e,
     bool? timeOut,
     bool? error,
   }){
-    return UsersModelData(
-      data: data ?? this.data,
+    return PhotoModelData(
+      data: data,
       e: e ?? this.e,
       timeOut: timeOut ?? this.timeOut,
       error: error ?? this.error,
