@@ -27,7 +27,6 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
   int _currentTabIndex = 0;
   late TabController _tabController;
 
-
   @override
   void initState() {
     super.initState();
@@ -45,6 +44,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
     final nowDateTime = DateTime.now();
     final theme = Theme.of(context);
     final blocBloc = context.read<PhotoBloc>();
+
     var logoutProcess = false;
     return SafeArea(
       child: Scaffold(
@@ -147,13 +147,18 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
         bottomNavigationBar: BottomNavigationBar(
           onTap: (currentIndex) {
             _tabController.index = currentIndex;
-            if(currentIndex == 1){
-              blocBloc.add(PhotoBlocEvent.init(uuid: widget.loadImage?widget.uuid:''));
-            }
             setState(() {
               _currentTabIndex = currentIndex;
               _tabController.animateTo(_currentTabIndex);
             });
+            if(currentIndex == 1){
+              if (widget.loadImage){
+                blocBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+              } else {
+                blocBloc.add(const PhotoBlocEvent.init(uuid: ''));
+              }
+            }
+
           },
           currentIndex: _currentTabIndex,
           items: [

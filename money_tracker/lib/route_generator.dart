@@ -40,7 +40,6 @@ class RouteGenerator {
           }
           //'loadImage' : blocBloc.userAuthData.loadImage,
         }
-        MoneyTrackerBlocsInit.init(uuid: uuid);
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
               MainFormMoneyTracker(

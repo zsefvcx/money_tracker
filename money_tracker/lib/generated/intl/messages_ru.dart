@@ -58,6 +58,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registration": MessageLookupByLibrary.simpleMessage("Регистрация"),
         "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Ответ получен"),
+        "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
         "september": MessageLookupByLibrary.simpleMessage("Сентябрь"),
         "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
         "somethingWrongHappened":

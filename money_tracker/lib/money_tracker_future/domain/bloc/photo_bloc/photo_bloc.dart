@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/core/core.dart';
-import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 //import 'package:injectable/injectable.dart';
 
@@ -35,7 +34,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
           init: (value) => _read(value.uuid, emit),
           read: (value) => _read(value.uuid, emit),
           write: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<bool>(
+            final (error, timeOut, e, res) = await _runGoSData<APhotosEntity>(
               function: () async =>
               await photoReadRepository.write(
                 uuid: value.uuid,
@@ -43,16 +42,17 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
               ),
             );
             photoModelData = photoModelData.copyWithData(
-              data: null,
+              data: res,
               timeOut: timeOut,
               error: error,
               e: e,
             );
+            await _response(emit);
             if (error){
               Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
-              value.completer.complete(res);
+              value.completer.complete(res!=null);
             }
           },
           delete: (value) async {

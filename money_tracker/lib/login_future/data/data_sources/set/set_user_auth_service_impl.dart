@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/data/data.dart';
+import 'package:money_tracker/login_future/domain/domain.dart';
 import 'package:uuid/uuid.dart';
 
 class SetUserAuthServiceImpl implements SetUserAuthService {
@@ -12,7 +13,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
   SetUserAuthServiceImpl({required this.secureStorage});
 
   @override
-  Future<bool?> setPasswordAndUserGroup({
+  Future<UserAuthorizationPasswordEntity?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
     required String eMail,
@@ -33,7 +34,7 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final res = jsonEncode(json);
       // Write value
       await secureStorage.write(key: Keys.userData, value: res);
-      return true;
+      return user;
     } on Exception catch(e){
       throw ArgumentError('Error setPasswordAndUserGroup: $e');
     }
@@ -71,13 +72,17 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final json = jsonDecode(userData);
       if (json is Map<String, dynamic>) {
         final user = UserAuthorizationPasswordModel.fromMap(json);
-        final user1 = user.copyWith(
-          statusAuthorization: false,
-        );
-        final res = jsonEncode(user1.toMap());
-        // Write value
-        await secureStorage.write(key: Keys.userData, value: res);
-        return user1;
+        if(user.statusAuthorization) {
+          final user1 = user.copyWith(
+            statusAuthorization: false,
+          );
+          final res = jsonEncode(user1.toMap());
+          // Write value
+          await secureStorage.write(key: Keys.userData, value: res);
+          return user1;
+        } else {
+          return user;
+        }
       }
       return null;
     } on Exception catch(e){
@@ -94,13 +99,17 @@ class SetUserAuthServiceImpl implements SetUserAuthService {
       final json = jsonDecode(userData);
       if (json is Map<String, dynamic>) {
         final user = UserAuthorizationPasswordModel.fromMap(json);
-        final user1 = user.copyWith(
-          loadImage: status,
-        );
-        final res = jsonEncode(user1.toMap());
-        // Write value
-        await secureStorage.write(key: Keys.userData, value: res);
-        return user1;
+        if(user.loadImage != status) {
+          final user1 = user.copyWith(
+            loadImage: status,
+          );
+          final res = jsonEncode(user1.toMap());
+          // Write value
+          await secureStorage.write(key: Keys.userData, value: res);
+          return user1;
+        } else {
+          return user;
+        }
       }
       return null;
     } on Exception catch(e){

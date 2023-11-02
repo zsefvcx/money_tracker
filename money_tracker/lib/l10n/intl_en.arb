@@ -40,5 +40,6 @@
   "pageNotFound": "Page not found",
   "expenses": "Expenses",
   "profile": "Profile",
-  "deleteUserData": "Delete user data!"
+  "deleteUserData": "Delete user data!",
+  "save": "Save"
 }

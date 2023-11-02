@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
-import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/domain/domain.dart';
 
 class ErrorTimeOut extends StatelessWidget {

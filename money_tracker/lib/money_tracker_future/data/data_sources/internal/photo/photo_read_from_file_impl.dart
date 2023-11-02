@@ -59,15 +59,20 @@ class PhotoReadFromIntFileImpl extends PhotoReadFromIntFile {
   }
 
   @override
-  Future<bool?> write({required String uuid, required String path}) async {
+  Future<PhotosModel?> write({required String uuid, required String path}) async {
     try {
       final file = await localFile(uuid: uuid);
 
       final filePathContent = await File(path).readAsBytes();
 
-      final fileLocal = await file.writeAsBytes(filePathContent);
+      final fileWrite = await file.writeAsBytes(filePathContent);
 
-      return true;
+      final res = mapPhotosModel[uuid];
+      if(res != null) {
+        mapPhotosModel.remove(uuid);
+      }
+
+      return mapPhotosModelAdd(uuid, await fileWrite.readAsBytes());
 
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);

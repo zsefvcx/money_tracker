@@ -66,6 +66,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
+              loadImage: false,
             );
             await _response(emit);
             if (error){
@@ -85,6 +86,8 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               error: error,
               e: e,
               timeOut: timeOut,
+              loadImage: false,
+              statusAuthorization: false,
             );
             if (error){
               Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
@@ -125,6 +128,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               e: e,
               timeOut: timeOut,
               statusAuthorization: false,
+              loadImage: false,
             );
             if (error){
               Logger.print('Error setUserName.:$timeOut:$e', name: 'err', error: true);
@@ -134,7 +138,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             }
           },
           setPassword: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<bool>(
+            final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
               function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
                   userNameHash512: value.userNameHash512,
                   userPasswordHash512: value.userPasswordHash512,
@@ -143,16 +147,17 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               ),
             );
             userAuthData = userAuthData.copyWithData(
+              data: res,
               error: error,
               e: e,
               timeOut: timeOut,
             );
+            await _response(emit);
             if (error){
               Logger.print('Error setPassword.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
-              userAuthData = userAuthData.copyWithData(statusAuthorization: true);
-              value.completer.complete(res);
+              value.completer.complete(res?.statusAuthorization);
             }
           },
           delete: (value) async {
@@ -165,6 +170,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                 e: e,
                 timeOut: timeOut,
                 statusAuthorization: false,
+                loadImage: false,
               );
               await _response(emit);
               final completer =  value.completer;

@@ -7,7 +7,7 @@ abstract class SetUserAuthRepository {
     required String userNameHash512
   });
 
-  Future<bool?> setPasswordAndUserGroup({
+  Future<UserAuthorizationPasswordEntity?> setPasswordAndUserGroup({
     required String userNameHash512,
     required String userPasswordHash512,
     required String eMail,

@@ -56,6 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Reply received"),
+        "save": MessageLookupByLibrary.simpleMessage("Save"),
         "september": MessageLookupByLibrary.simpleMessage("September"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "somethingWrongHappened":
