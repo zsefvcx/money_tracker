@@ -1,11 +1,11 @@
 
 import 'package:equatable/equatable.dart';
 
-class MonthAllowedModels extends Equatable{
+abstract class MonthAllowedEntity extends Equatable{
   //Year, Month
   final Map<int, Set<int>> monthEnabled;
 
-  const MonthAllowedModels({required this.monthEnabled});
+  const MonthAllowedEntity({required this.monthEnabled});
 
   @override
   List<Object?> get props => [monthEnabled];

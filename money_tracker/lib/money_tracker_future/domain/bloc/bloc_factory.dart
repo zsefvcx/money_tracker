@@ -12,10 +12,13 @@ class BlocFactory {
 
   void initialize(){
     ServiceProvider.instance.initialize();
-
-    _getIt.registerLazySingleton<PhotoBloc>(
+    _getIt..registerLazySingleton<PhotoBloc>(
           () => PhotoBloc(
-        photoReadRepository: ServiceProvider.instance.get<PhotoReadRepository>(),
+        photoRepository: ServiceProvider.instance.get<PhotoRepository>(),
+      ),
+    )..registerLazySingleton<MonthBloc>(
+          () => MonthBloc(
+        monthRepository: ServiceProvider.instance.get<MonthRepository>(),
       ),
     );
   }

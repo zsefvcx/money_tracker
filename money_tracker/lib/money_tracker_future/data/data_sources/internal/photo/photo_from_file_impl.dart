@@ -2,12 +2,11 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:path_provider/path_provider.dart';
 
-class PhotoReadFromIntFileImpl extends PhotoReadFromIntFile {
+class PhotoFromIntFileImpl extends PhotoFromIntFile {
 
   final Map<String, PhotosModel>  mapPhotosModel =  {};
 

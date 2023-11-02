@@ -31,6 +31,9 @@ dependencies:
   uuid: ^4.1.0
   image_picker: ^1.0.4
   path_provider: ^2.1.1
+  sqflite: ^2.3.0
+  sqflite_common_ffi: ^2.3.0+2
+  floor: ^1.4.2
 
 dev_dependencies:
   flutter_test:
@@ -50,6 +53,7 @@ dev_dependencies:
   #dart run build_runner build
   build_runner: ^2.4.6
   json_serializable: ^6.7.1
+  floor_generator: ^1.4.2
 
 
 flutter:

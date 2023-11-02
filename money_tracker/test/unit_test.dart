@@ -162,7 +162,7 @@ void main() {
 
     test('Month Allowed tests', () {
       final  monthEnabled = <int, Set<int>>{};
-      final monthAllowed = MonthAllowed(monthEnabled: monthEnabled)
+      final monthAllowed = MonthAllowedModel(monthEnabled: monthEnabled)
       ..add(DateTime.parse('2023-10-22 15:00:37.428551'))
       ..add(DateTime.parse('2023-08-22 15:00:37.428551'))
       ..add(DateTime.parse('2022-08-22 15:00:37.428551'));
@@ -170,7 +170,7 @@ void main() {
       expect(data, '{"monthEnabled":{"2023":[10,8],"2022":[8]}}');
       expect(monthEnabled.length, 2);
       final json = jsonDecode(data);
-      final monthAllowed2 = MonthAllowed.fromJson(json as Map<String, dynamic>);
+      final monthAllowed2 = MonthAllowedModel.fromJson(json as Map<String, dynamic>);
       expect(monthAllowed==monthAllowed2, true);
       expect(monthAllowed.monthEnabled.length, 2);
       expect(monthAllowed.status(DateTime.parse('2022-08-22 15:00:37.428551')), true);

@@ -1,6 +1,6 @@
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 
-abstract class PhotoReadFromIntFile {
+abstract class PhotoFromIntFile {
 
   Future<PhotosModel?> read({required String uuid});
 

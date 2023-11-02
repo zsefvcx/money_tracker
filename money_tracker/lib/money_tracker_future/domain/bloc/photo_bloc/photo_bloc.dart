@@ -15,7 +15,7 @@ part 'photo_data.dart';
 //@injectable
 class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
 
-  final PhotoReadRepository photoReadRepository;
+  final PhotoRepository photoRepository;
 
   static int timeOutV = 10;
 
@@ -27,16 +27,16 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
   );
 
   PhotoBloc({
-    required this.photoReadRepository,
+    required this.photoRepository,
   }) : super(const PhotoBlocState.loading()) {
     on<PhotoBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
-          init: (value) => _read(value.uuid, emit),
-          read: (value) => _read(value.uuid, emit),
+          init: (value) async => await _read(value.uuid, emit),
+          read: (value) async => await _read(value.uuid, emit),
           write: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<APhotosEntity>(
               function: () async =>
-              await photoReadRepository.write(
+              await photoRepository.write(
                 uuid: value.uuid,
                 path: value.path,
               ),
@@ -58,7 +58,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
           delete: (value) async {
               final (error, timeOut, e, res) = await _runGoSData<bool>(
                 function: () async =>
-                await photoReadRepository.delete(
+                await photoRepository.delete(
                     uuid: value.uuid
                 ),
               );
@@ -86,7 +86,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     } else {
       final (error, timeOut, e, res) = await _runGoSData<APhotosEntity>(
         function: () async =>
-        await photoReadRepository.read(
+        await photoRepository.read(
             uuid: uuid
         ),
       );

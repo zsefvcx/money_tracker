@@ -6,17 +6,20 @@ import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 class ServiceProvider{
   static final _getIt = GetIt.I;
 
-  final PhotoReadFromIntFile photoReadFromIntFile = PhotoReadFromIntFileImpl();
+  final PhotoFromIntFile photoFromIntFile = PhotoFromIntFileImpl();
+  final MonthsStatus     monthsStatus     = MonthsStatusImpl();
 
   T get<T extends Object>() => _getIt.get<T>();
 
   static final instance = ServiceProvider();
 
   void initialize(){
-    _getIt.registerLazySingleton<PhotoReadRepository>(
-          () => PhotoReadRepositoryImpl(
-        photoReadFromIntFile: photoReadFromIntFile,
-      ),
-    );
+    _getIt..registerLazySingleton<PhotoRepository>(
+          () => PhotoRepositoryImpl(
+        photoFromIntFile: photoFromIntFile,
+      ))..registerLazySingleton<MonthRepository>(
+                () => MonthRepositoryImpl(
+              monthsStatus: monthsStatus,
+      ));
   }
 }

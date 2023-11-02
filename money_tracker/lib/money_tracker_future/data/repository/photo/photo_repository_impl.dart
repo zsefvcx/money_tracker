@@ -1,27 +1,27 @@
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
-class PhotoReadRepositoryImpl extends PhotoReadRepository{
+class PhotoRepositoryImpl extends PhotoRepository{
 
-  final PhotoReadFromIntFile photoReadFromIntFile;
+  final PhotoFromIntFile photoFromIntFile;
 
-  PhotoReadRepositoryImpl({
-    required this.photoReadFromIntFile,
+  PhotoRepositoryImpl({
+    required this.photoFromIntFile,
   });
 
   @override
   Future<APhotosEntity?> read({required String uuid}) async {
-    return await photoReadFromIntFile.read(uuid: uuid);
+    return await photoFromIntFile.read(uuid: uuid);
   }
 
   @override
   Future<APhotosEntity?> write({required String uuid, required String path}) async {
-    return await photoReadFromIntFile.write(uuid: uuid, path: path);
+    return await photoFromIntFile.write(uuid: uuid, path: path);
   }
 
   @override
   Future<bool?> delete({required String uuid}) async {
-    return await photoReadFromIntFile.delete(uuid: uuid);
+    return await photoFromIntFile.delete(uuid: uuid);
   }
 
 

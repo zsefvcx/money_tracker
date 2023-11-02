@@ -1,2 +1,3 @@
 //GENERATED BARREL FILE 
-export './photo/photo_read_repository.dart'; 
+export './month/month_repository.dart';
+export './photo/photo_repository.dart';

@@ -6,14 +6,14 @@ part 'month_allowed.g.dart';
 
 ///Разрешенные месяца или те месяца которые хоть раз использовались
 @JsonSerializable()
-class MonthAllowed extends MonthAllowedModels{
+class MonthAllowedModel extends MonthAllowedEntity{
 
-  const MonthAllowed({required super.monthEnabled});
+  const MonthAllowedModel({required super.monthEnabled});
 
-  MonthAllowed copyWith({
+  MonthAllowedModel copyWith({
     required Map<int, Set<int>>? monthEnabled,
   }) {
-    return MonthAllowed(
+    return MonthAllowedModel(
         monthEnabled: monthEnabled??this.monthEnabled,
     );
   }
@@ -38,10 +38,10 @@ class MonthAllowed extends MonthAllowedModels{
 
   /// Connect the generated _$MonthAllowedFromJson function to the `fromJson`
   /// factory.
-  factory MonthAllowed.fromJson(Map<String, dynamic> json) => _$MonthAllowedFromJson(json);
+  factory MonthAllowedModel.fromJson(Map<String, dynamic> json) => _$MonthAllowedModelFromJson(json);
 
   /// Connect the generated _$MonthAllowedToJson function to the `toJson` method.
-  Map<String, dynamic> toJson() => _$MonthAllowedToJson(this);
+  Map<String, dynamic> toJson() => _$MonthAllowedModelToJson(this);
 
   @override
   String toString() {
