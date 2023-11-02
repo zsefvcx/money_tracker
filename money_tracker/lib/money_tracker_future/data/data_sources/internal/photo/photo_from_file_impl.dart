@@ -8,6 +8,106 @@ import 'package:path_provider/path_provider.dart';
 
 class PhotoFromIntFileImpl extends PhotoFromIntFile {
 
+  MonthEnableDao? dao;
+
+  Future<void> _initDataBaseFloor() async {
+    final database = await $FloorAppDatabase
+        .databaseBuilder('users_database.db')
+        .build();
+    dao = database.monthEnableDao;
+  }
+
+/*  @override
+  Future<User?> insert(User value) async {
+    try{
+      if(dbType == DBType.sqflite) {
+        return await DBProvider.db.insert(value);
+      } else if (dbType == DBType.floor) {
+        if(dao == null) await _initDataBaseFloor();
+        final daoLocal = dao;
+        if(daoLocal !=null) {
+          final id = await daoLocal.insertUser(value);
+          return value.copyWith(
+            id: id,
+          );
+        }
+        throw ArgumentError('Error insertGroup');
+    } else {
+    throw ArgumentError('not implemented');
+    }
+    } on Exception catch(e,t){
+      Logger.print('Error $e\n$t', name: 'err', error: true);
+      throw ArgumentError('Error insertGroup: $e\n$t');
+    }
+  }
+
+  @override
+  Future<int> delete(User value) async {
+    final gid = value.id;
+    try {
+      if (gid != null) {
+        if(dbType == DBType.sqflite) {
+          return await DBProvider.db.delete(gid);
+        } else if (dbType == DBType.floor) {
+          if(dao == null) await _initDataBaseFloor();
+          final daoLocal = dao;
+          if(daoLocal !=null) {
+            return await daoLocal.deleteUser(value);
+          }
+          throw ArgumentError('Error insertGroup');
+        } else {
+          throw ArgumentError('not implemented');
+        }
+      }
+    } on Exception catch(e,t){
+      Logger.print('Error $e\n$t', name: 'err', error: true);
+      throw ArgumentError('Error deleteGroup: $e\n$t');
+    }
+    throw ArgumentError('Error deleteGroup');
+  }
+
+  @override
+  Future<List<User>?> get(int page) async {
+    try {
+      if(dbType == DBType.sqflite) {
+        return await DBProvider.db.get(page);
+      } else if (dbType == DBType.floor) {
+        if(dao == null) await _initDataBaseFloor();
+        final daoLocal = dao;
+        if(daoLocal !=null) {
+          return await daoLocal.get();
+        }
+        throw ArgumentError('Error insertGroup');
+      } else {
+        throw ArgumentError('not implemented');
+      }
+    } on Exception catch(e,t){
+      Logger.print('Error $e\n$t', name: 'err', error: true);
+      throw ArgumentError('Error getGroups: $e\n$t');
+    }
+  }
+
+  @override
+  Future<int> update(User value) async {
+    try {
+      if (dbType == DBType.sqflite) {
+        return await DBProvider.db.update(value);
+      } else if (dbType == DBType.floor) {
+        if (dao == null) await _initDataBaseFloor();
+        final daoLocal = dao;
+        if (daoLocal != null) {
+          return await daoLocal.updateUser(value);
+        }
+        throw ArgumentError('Error insertGroup');
+      } else {
+        throw ArgumentError('not implemented');
+      }
+    } on Exception catch (e, t) {
+      throw ArgumentError('Error insertGroup: $e\n$t');
+    }
+  }*/
+
+
   final Map<String, PhotosModel>  mapPhotosModel =  {};
 
   PhotosModel mapPhotosModelAdd(String uuid, Uint8List contents){

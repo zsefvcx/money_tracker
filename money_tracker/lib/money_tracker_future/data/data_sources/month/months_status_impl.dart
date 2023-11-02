@@ -7,6 +7,9 @@ import 'package:path_provider/path_provider.dart';
 
 class MonthsStatusImpl extends MonthsStatus {
 
+
+
+
   final Map<String, MonthAllowedModel>  mapMonthAllowedModel =  {};
 
   MonthAllowedModel mapPhotosModelAdd(String uuid, MonthAllowedModel model){

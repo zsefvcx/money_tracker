@@ -61,7 +61,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  UserDao? _userDaoInstance;
+  MonthEnableDao? _monthEnableDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `User` (`id` INTEGER, `firstName` TEXT NOT NULL, `name` TEXT NOT NULL, `lastName` TEXT NOT NULL, `age` INTEGER NOT NULL, `image` TEXT NOT NULL, `locator` TEXT, `phone` TEXT NOT NULL, `uuid` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `MonthEnable` (`id` INTEGER NOT NULL, `year` TEXT NOT NULL, `month` TEXT NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -94,61 +94,44 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  UserDao get userDao {
-    return _userDaoInstance ??= _$UserDao(database, changeListener);
+  MonthEnableDao get monthEnableDao {
+    return _monthEnableDaoInstance ??=
+        _$MonthEnableDao(database, changeListener);
   }
 }
 
-class _$UserDao extends UserDao {
-  _$UserDao(
+class _$MonthEnableDao extends MonthEnableDao {
+  _$MonthEnableDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database, changeListener),
-        _userInsertionAdapter = InsertionAdapter(
+        _monthEnableInsertionAdapter = InsertionAdapter(
             database,
-            'User',
-            (User item) => <String, Object?>{
+            'MonthEnable',
+            (MonthEnable item) => <String, Object?>{
                   'id': item.id,
-                  'firstName': item.firstName,
-                  'name': item.name,
-                  'lastName': item.lastName,
-                  'age': item.age,
-                  'image': item.image,
-                  'locator': item.locator,
-                  'phone': item.phone,
-                  'uuid': item.uuid
+                  'year': item.year,
+                  'month': item.month
                 },
             changeListener),
-        _userUpdateAdapter = UpdateAdapter(
+        _monthEnableUpdateAdapter = UpdateAdapter(
             database,
-            'User',
+            'MonthEnable',
             ['id'],
-            (User item) => <String, Object?>{
+            (MonthEnable item) => <String, Object?>{
                   'id': item.id,
-                  'firstName': item.firstName,
-                  'name': item.name,
-                  'lastName': item.lastName,
-                  'age': item.age,
-                  'image': item.image,
-                  'locator': item.locator,
-                  'phone': item.phone,
-                  'uuid': item.uuid
+                  'year': item.year,
+                  'month': item.month
                 },
             changeListener),
-        _userDeletionAdapter = DeletionAdapter(
+        _monthEnableDeletionAdapter = DeletionAdapter(
             database,
-            'User',
+            'MonthEnable',
             ['id'],
-            (User item) => <String, Object?>{
+            (MonthEnable item) => <String, Object?>{
                   'id': item.id,
-                  'firstName': item.firstName,
-                  'name': item.name,
-                  'lastName': item.lastName,
-                  'age': item.age,
-                  'image': item.image,
-                  'locator': item.locator,
-                  'phone': item.phone,
-                  'uuid': item.uuid
+                  'year': item.year,
+                  'month': item.month
                 },
             changeListener);
 
@@ -158,25 +141,19 @@ class _$UserDao extends UserDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<User> _userInsertionAdapter;
+  final InsertionAdapter<MonthEnable> _monthEnableInsertionAdapter;
 
-  final UpdateAdapter<User> _userUpdateAdapter;
+  final UpdateAdapter<MonthEnable> _monthEnableUpdateAdapter;
 
-  final DeletionAdapter<User> _userDeletionAdapter;
+  final DeletionAdapter<MonthEnable> _monthEnableDeletionAdapter;
 
   @override
-  Future<List<User>> get() async {
+  Future<List<MonthEnable>> get() async {
     return _queryAdapter.queryList('SELECT * FROM User',
-        mapper: (Map<String, Object?> row) => User(
-            id: row['id'] as int?,
-            firstName: row['firstName'] as String,
-            name: row['name'] as String,
-            lastName: row['lastName'] as String,
-            age: row['age'] as int,
-            image: row['image'] as String,
-            locator: row['locator'] as String?,
-            phone: row['phone'] as String,
-            uuid: row['uuid'] as String));
+        mapper: (Map<String, Object?> row) => MonthEnable(
+            id: row['id'] as int,
+            year: row['year'] as String,
+            month: row['month'] as String));
   }
 
   @override
@@ -188,37 +165,31 @@ class _$UserDao extends UserDao {
   }
 
   @override
-  Stream<User?> findUserById(int id) {
+  Stream<MonthEnable?> findUserById(int id) {
     return _queryAdapter.queryStream('SELECT * FROM User WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => User(
-            id: row['id'] as int?,
-            firstName: row['firstName'] as String,
-            name: row['name'] as String,
-            lastName: row['lastName'] as String,
-            age: row['age'] as int,
-            image: row['image'] as String,
-            locator: row['locator'] as String?,
-            phone: row['phone'] as String,
-            uuid: row['uuid'] as String),
+        mapper: (Map<String, Object?> row) => MonthEnable(
+            id: row['id'] as int,
+            year: row['year'] as String,
+            month: row['month'] as String),
         arguments: [id],
         queryableName: 'User',
         isView: false);
   }
 
   @override
-  Future<int> insertUser(User person) {
-    return _userInsertionAdapter.insertAndReturnId(
-        person, OnConflictStrategy.abort);
+  Future<int> insertMonth(MonthEnable data) {
+    return _monthEnableInsertionAdapter.insertAndReturnId(
+        data, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> updateUser(User person) {
-    return _userUpdateAdapter.updateAndReturnChangedRows(
-        person, OnConflictStrategy.abort);
+  Future<int> updateMonth(MonthEnable data) {
+    return _monthEnableUpdateAdapter.updateAndReturnChangedRows(
+        data, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> deleteUser(User person) {
-    return _userDeletionAdapter.deleteAndReturnChangedRows(person);
+  Future<int> deleteMonth(MonthEnable data) {
+    return _monthEnableDeletionAdapter.deleteAndReturnChangedRows(data);
   }
 }
