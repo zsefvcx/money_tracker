@@ -149,7 +149,7 @@ class _$MonthEnableDao extends MonthEnableDao {
 
   @override
   Future<List<MonthEnable>> get() async {
-    return _queryAdapter.queryList('SELECT * FROM User',
+    return _queryAdapter.queryList('SELECT * FROM MonthEnable',
         mapper: (Map<String, Object?> row) => MonthEnable(
             id: row['id'] as int,
             year: row['year'] as String,
@@ -157,22 +157,14 @@ class _$MonthEnableDao extends MonthEnableDao {
   }
 
   @override
-  Stream<List<String>> findAllUserName() {
-    return _queryAdapter.queryListStream('SELECT name FROM User',
-        mapper: (Map<String, Object?> row) => row.values.first as String,
-        queryableName: 'User',
-        isView: false);
-  }
-
-  @override
   Stream<MonthEnable?> findUserById(int id) {
-    return _queryAdapter.queryStream('SELECT * FROM User WHERE id = ?1',
+    return _queryAdapter.queryStream('SELECT * FROM MonthEnable WHERE id = ?1',
         mapper: (Map<String, Object?> row) => MonthEnable(
             id: row['id'] as int,
             year: row['year'] as String,
             month: row['month'] as String),
         arguments: [id],
-        queryableName: 'User',
+        queryableName: 'MonthEnable',
         isView: false);
   }
 

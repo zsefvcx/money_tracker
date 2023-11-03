@@ -28,13 +28,13 @@ class MonthEnable {
 
 @dao
 abstract class MonthEnableDao {
-  @Query('SELECT * FROM User')
+  @Query('SELECT * FROM MonthEnable')
   Future<List<MonthEnable>> get();
 
-  @Query('SELECT name FROM User')
-  Stream<List<String>> findAllUserName();
+  // @Query('SELECT name FROM MonthEnable')
+  // Stream<List<String>> findAllUserName();
 
-  @Query('SELECT * FROM User WHERE id = :id')
+  @Query('SELECT * FROM MonthEnable WHERE id = :id')
   Stream<MonthEnable?> findUserById(int id);
 
   @insert
