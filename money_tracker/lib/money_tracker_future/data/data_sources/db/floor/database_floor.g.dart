@@ -157,6 +157,14 @@ class _$MonthEnableDao extends MonthEnableDao {
   }
 
   @override
+  Stream<List<String>> findAllMonthInYear() {
+    return _queryAdapter.queryListStream('SELECT year FROM MonthEnable',
+        mapper: (Map<String, Object?> row) => row.values.first as String,
+        queryableName: 'MonthEnable',
+        isView: false);
+  }
+
+  @override
   Stream<MonthEnable?> findUserById(int id) {
     return _queryAdapter.queryStream('SELECT * FROM MonthEnable WHERE id = ?1',
         mapper: (Map<String, Object?> row) => MonthEnable(
