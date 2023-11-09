@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/calendar/month_year_widget.dart';
 
 class AppCalendarDialog extends StatefulWidget {
   const AppCalendarDialog({required this.monthCurrent, super.key});

@@ -6,6 +6,7 @@ import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/photo_bloc/photo_bloc.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {

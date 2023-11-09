@@ -138,6 +138,7 @@ DialogTheme _dialogTheme(DialogTheme base){
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     backgroundColor: CustomThemeProp.white,
     surfaceTintColor: CustomThemeProp.white,
+    iconColor: CustomThemeProp.redDialog,
     titleTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
       color: CustomThemeProp.redDialog
     ),
