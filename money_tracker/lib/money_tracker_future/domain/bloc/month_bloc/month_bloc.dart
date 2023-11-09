@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 //import 'package:injectable/injectable.dart';
 
@@ -31,59 +32,69 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
   }) : super(const MonthBlocState.loading()) {
     on<MonthBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
-          init: (value) async => await _read(value.uuid, emit),
-          read: (value) async => await _read(value.uuid, emit),
+          init: (value) async => await _read(value.uuid, value.year, emit),
+          read: (value) async => await _read(value.uuid, value.year, emit),
           add: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<MonthAllowedEntity>(
+            final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
                         function: () async =>
-                        await monthRepository.add(
-                          uuid: value.uuid,
-                          month: value.month,
-                        ),
+                        await monthRepository.insert(uuid: value.uuid, year: value.year, month: value.month),
                       );
-                      monthModelData = monthModelData.copyWithData(
-                        data: res,
-                        timeOut: timeOut,
-                        error: error,
-                        e: e,
-                      );
-                      await _response(emit);
-                      if (error){
-                        Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
-                        value.completer.completeError(error);
-                      } else {
-                        value.completer.complete(res!=null);
-                      }
+
+            final data =  monthModelData.data;
+            if(res !=null && data != null &&
+                data.year == value.year && data.uuid == value.uuid) {
+              if(res.id!=null)data.months.add(value.month);
+            } else {
+              throw Exception('Error add data');
+            }
+            monthModelData = monthModelData.copyWithData(
+              data: data,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            //await _response(emit);
+            if (error){
+              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res.id!=null);
+            }
           },
           delete: (value) async {
-             final (error, timeOut, e, res) = await _runGoSData<bool>(
-                    function: () async =>
-                    await monthRepository.delete(
-                      uuid: value.uuid,
-                    ),
-                  );
-                  monthModelData = monthModelData.copyWithData(
-                    data: null,
-                    timeOut: timeOut,
-                    error: error,
-                    e: e,
-                  );
-                  if (error){
-                    Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
-                    value.completer.completeError(error);
-                  } else {
-                    value.completer.complete(res);
-                  }
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
+              function: () async =>
+                await monthRepository.delete(uuid: value.uuid, data: value.data),
+              );
+              final data =  monthModelData.data;
+              if(res !=null && data != null &&
+                 data.year == value.data.year && data.uuid == value.uuid) {
+                if(res)data.months.remove(value.data.month);
+              } else {
+                throw Exception('Error delete data');
+              }
+              monthModelData = monthModelData.copyWithData(
+                data: data,
+                timeOut: timeOut,
+                error: error,
+                e: e,
+              );
+              if (error){
+                Logger.print('Error delete.:$timeOut:$e', name: 'err', error: true);
+                value.completer.completeError(error);
+              } else {
+                value.completer.complete(res);
+              }
           }
       );
     });
   }
 
-  Future<void> _read(String uuid, Emitter<MonthBlocState> emit) async {
+  Future<void> _read(String uuid, int year, Emitter<MonthBlocState> emit) async {
     emit(const MonthBlocState.loading());
-      final (error, timeOut, e, res) = await _runGoSData<MonthAllowedEntity>(
+      final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
         function: () async =>
-        await monthRepository.read(uuid: uuid),
+        await monthRepository.findAllInYear(uuid: uuid, year: year),
       );
       monthModelData = monthModelData.copyWithData(
         data: res,

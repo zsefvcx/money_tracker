@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'database_floor.dart';
+part of 'database_floor_month.dart';
 
 // **************************************************************************
 // FloorGenerator
@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `MonthEnable` (`id` INTEGER NOT NULL, `year` TEXT NOT NULL, `month` TEXT NOT NULL, PRIMARY KEY (`id`))');
+            'CREATE TABLE IF NOT EXISTS `MonthCurrent` (`id` INTEGER, `year` INTEGER NOT NULL, `month` INTEGER NOT NULL, PRIMARY KEY (`id`))');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -104,36 +104,33 @@ class _$MonthEnableDao extends MonthEnableDao {
   _$MonthEnableDao(
     this.database,
     this.changeListener,
-  )   : _queryAdapter = QueryAdapter(database, changeListener),
-        _monthEnableInsertionAdapter = InsertionAdapter(
+  )   : _queryAdapter = QueryAdapter(database),
+        _monthCurrentInsertionAdapter = InsertionAdapter(
             database,
-            'MonthEnable',
-            (MonthEnable item) => <String, Object?>{
+            'MonthCurrent',
+            (MonthCurrent item) => <String, Object?>{
                   'id': item.id,
                   'year': item.year,
                   'month': item.month
-                },
-            changeListener),
-        _monthEnableUpdateAdapter = UpdateAdapter(
+                }),
+        _monthCurrentUpdateAdapter = UpdateAdapter(
             database,
-            'MonthEnable',
+            'MonthCurrent',
             ['id'],
-            (MonthEnable item) => <String, Object?>{
+            (MonthCurrent item) => <String, Object?>{
                   'id': item.id,
                   'year': item.year,
                   'month': item.month
-                },
-            changeListener),
-        _monthEnableDeletionAdapter = DeletionAdapter(
+                }),
+        _monthCurrentDeletionAdapter = DeletionAdapter(
             database,
-            'MonthEnable',
+            'MonthCurrent',
             ['id'],
-            (MonthEnable item) => <String, Object?>{
+            (MonthCurrent item) => <String, Object?>{
                   'id': item.id,
                   'year': item.year,
                   'month': item.month
-                },
-            changeListener);
+                });
 
   final sqflite.DatabaseExecutor database;
 
@@ -141,55 +138,53 @@ class _$MonthEnableDao extends MonthEnableDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<MonthEnable> _monthEnableInsertionAdapter;
+  final InsertionAdapter<MonthCurrent> _monthCurrentInsertionAdapter;
 
-  final UpdateAdapter<MonthEnable> _monthEnableUpdateAdapter;
+  final UpdateAdapter<MonthCurrent> _monthCurrentUpdateAdapter;
 
-  final DeletionAdapter<MonthEnable> _monthEnableDeletionAdapter;
+  final DeletionAdapter<MonthCurrent> _monthCurrentDeletionAdapter;
 
   @override
-  Future<List<MonthEnable>> get() async {
+  Future<List<MonthCurrent>> get() async {
     return _queryAdapter.queryList('SELECT * FROM MonthEnable',
-        mapper: (Map<String, Object?> row) => MonthEnable(
-            id: row['id'] as int,
-            year: row['year'] as String,
-            month: row['month'] as String));
+        mapper: (Map<String, Object?> row) => MonthCurrent(
+            id: row['id'] as int?,
+            year: row['year'] as int,
+            month: row['month'] as int));
   }
 
   @override
-  Stream<List<String>> findAllMonthInYear() {
-    return _queryAdapter.queryListStream('SELECT year FROM MonthEnable',
-        mapper: (Map<String, Object?> row) => row.values.first as String,
-        queryableName: 'MonthEnable',
-        isView: false);
+  Future<List<int>> findAllMonthInYear(int year) async {
+    return _queryAdapter.queryList(
+        'SELECT month FROM MonthEnable WHERE year = ?1',
+        mapper: (Map<String, Object?> row) => row.values.first as int,
+        arguments: [year]);
   }
 
   @override
-  Stream<MonthEnable?> findUserById(int id) {
-    return _queryAdapter.queryStream('SELECT * FROM MonthEnable WHERE id = ?1',
-        mapper: (Map<String, Object?> row) => MonthEnable(
-            id: row['id'] as int,
-            year: row['year'] as String,
-            month: row['month'] as String),
-        arguments: [id],
-        queryableName: 'MonthEnable',
-        isView: false);
+  Future<MonthCurrent?> findMonthById(int id) async {
+    return _queryAdapter.query('SELECT * FROM MonthEnable WHERE id = ?1',
+        mapper: (Map<String, Object?> row) => MonthCurrent(
+            id: row['id'] as int?,
+            year: row['year'] as int,
+            month: row['month'] as int),
+        arguments: [id]);
   }
 
   @override
-  Future<int> insertMonth(MonthEnable data) {
-    return _monthEnableInsertionAdapter.insertAndReturnId(
+  Future<int> insertMonth(MonthCurrent data) {
+    return _monthCurrentInsertionAdapter.insertAndReturnId(
         data, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> updateMonth(MonthEnable data) {
-    return _monthEnableUpdateAdapter.updateAndReturnChangedRows(
+  Future<int> updateMonth(MonthCurrent data) {
+    return _monthCurrentUpdateAdapter.updateAndReturnChangedRows(
         data, OnConflictStrategy.abort);
   }
 
   @override
-  Future<int> deleteMonth(MonthEnable data) {
-    return _monthEnableDeletionAdapter.deleteAndReturnChangedRows(data);
+  Future<int> deleteMonth(MonthCurrent data) {
+    return _monthCurrentDeletionAdapter.deleteAndReturnChangedRows(data);
   }
 }

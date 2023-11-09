@@ -44,7 +44,7 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final blocBloc = context.read<PhotoBloc>();
+    final photoBloc = context.read<PhotoBloc>();
 
     return Column(
       children: [
@@ -121,7 +121,7 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
                   final imgXFileData = imgXFile;
                   if(imgXFileData == null) return;
                   final completer = Completer<bool>();
-                  blocBloc.add(PhotoBlocEvent.write(
+                  photoBloc.add(PhotoBlocEvent.write(
                       uuid: widget.uuid,
                       path: imgXFileData.path,
                       completer: completer

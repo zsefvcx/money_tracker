@@ -129,9 +129,14 @@ ProgressIndicatorThemeData _progressIndicatorThemeData(ProgressIndicatorThemeDat
 
 DialogTheme _dialogTheme(DialogTheme base){
   return base.copyWith(
-    //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-    //backgroundColor: Colors.grey,
-
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+    backgroundColor: CustomThemeProp.white,
+    titleTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
+      color: CustomThemeProp.redDialog
+    ),
+    contentTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
+      color: CustomThemeProp.redDialog
+    ),
   );
 }
 
@@ -181,7 +186,7 @@ ThemeData themeMainProgram = _theme.copyWith(
   primaryColorLight: CustomThemeProp.violetFirm,
   primaryColorDark: CustomThemeProp.violetFirm,
   scaffoldBackgroundColor: CustomThemeProp.white,
-
+  dialogBackgroundColor: CustomThemeProp.white,
 
   bottomNavigationBarTheme: _bottomNavigationBarThemeData(_theme.bottomNavigationBarTheme),
 

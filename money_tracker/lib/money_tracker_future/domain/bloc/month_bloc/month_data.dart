@@ -5,7 +5,7 @@ part of 'month_bloc.dart';
 class MonthModelData {
 
   final bool timeOut;
-  final MonthAllowedEntity? data;
+  final MonthsCurrentYearEntity? data;
   final bool error;
   final String e;
 
@@ -20,7 +20,7 @@ class MonthModelData {
   });
 
   MonthModelData copyWithData({
-    required MonthAllowedEntity? data,
+    required MonthsCurrentYearEntity? data,
     String? e,
     bool? timeOut,
     bool? error,

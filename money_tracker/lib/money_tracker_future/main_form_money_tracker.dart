@@ -26,6 +26,9 @@ class MainFormMoneyTracker extends StatelessWidget {
         Provider<PhotoBloc>(
             create: (_) => MoneyTrackerBlocsInit.photoBloc,
         ),
+        Provider<MonthBloc>(
+          create: (_) => MoneyTrackerBlocsInit.monthBloc,
+        ),
       ],
       child: MoneyTrackerHomePage(uuid: uuid, eMail: eMail, loadImage: loadImage,),
     );

@@ -41,5 +41,8 @@
   "expenses": "Expenses",
   "profile": "Profile",
   "deleteUserData": "Delete user data!",
-  "save": "Save"
+  "save": "Save",
+  "exit": "Exit",
+  "add": "Add",
+  "close": "Close"
 }

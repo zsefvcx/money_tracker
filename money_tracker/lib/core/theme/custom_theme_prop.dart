@@ -46,6 +46,7 @@ abstract final class CustomThemeProp {
                           const Color(0xFF000000);
   static const Color grayText   = Color(0xFFABABAB);
   static const Color red        = Color(0xFFF80606);
+  static const Color redDialog  = Color(0xFFF36969);
   static const Color violetFirm = Color(0xFF9053EB);
   static const Color grayLight  = Color(0xFFD0D0D0);
   static const Color grey       = Colors.grey;

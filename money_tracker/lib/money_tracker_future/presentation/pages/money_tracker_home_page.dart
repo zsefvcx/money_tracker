@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/src.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/photo_bloc/photo_bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 
@@ -43,14 +45,23 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
   Widget build(BuildContext context) {
     final nowDateTime = DateTime.now();
     final theme = Theme.of(context);
-    final blocBloc = context.read<PhotoBloc>();
+    final photoBloc = context.read<PhotoBloc>();
+    //final monthBloc = context.read<MonthBloc>();
+    //monthBloc.add(MonthBlocEvent.init(uuid: uuid, year: year));
+
+    final monthCurrent = MonthCurrent(
+      id: null,
+      year: nowDateTime.year,
+      month: nowDateTime.month,
+    );
+
 
     var logoutProcess = false;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: _currentTabIndex==0
-              ? Text('${NameMonth(context).toNameMonth(nowDateTime.month)} ${nowDateTime.year}')
+              ? AppCalendarDialog(monthCurrent: monthCurrent)
               : Text(S.of(context).profile),
           actions: [
             if(_currentTabIndex==0)IconButton(onPressed: () => showDialog<String>(
@@ -125,7 +136,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                                   },
                           );
                           logoutProcess = false;
-                        }, child: const Text('Выйти'),
+                        }, child: Text(S.of(context).exit),
                          style: theme.elevatedButtonTheme.style?.copyWith(
 
                            minimumSize: MaterialStatePropertyAll(Size(
@@ -153,9 +164,9 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
             });
             if(currentIndex == 1){
               if (widget.loadImage){
-                blocBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+                photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
               } else {
-                blocBloc.add(const PhotoBlocEvent.init(uuid: ''));
+                photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
               }
             }
 

@@ -1,12 +1,15 @@
 
-import 'package:money_tracker/money_tracker_future/data/data.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 abstract class MonthsStatus {
 
-  Future<MonthAllowedModel?> read({required String uuid});
+  Future<MonthsCurrentYearEntity> findAllInYear({required String uuid, required int year});
 
-  Future<MonthAllowedModel?> add({required String uuid, required int month});
+  Future<MonthCurrent> insert({required String uuid, required int year, required int month});
 
-  Future<bool?> delete({required String uuid});
+  Future<bool?> delete({required String uuid, required MonthCurrent data});
+
+  Future<bool?> update({required String uuid, required MonthCurrent data});
 
 }
