@@ -33,7 +33,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
     on<MonthBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
           init: (value) async => await _read(value.uuid, value.year, emit),
-          read: (value) async => await _read(value.uuid, value.year, emit),
+          read: (value) async => await _read(value.uuid, value.year, emit, value.completer),
           add: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
                         function: () async =>
@@ -90,7 +90,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
     });
   }
 
-  Future<void> _read(String uuid, int year, Emitter<MonthBlocState> emit) async {
+  Future<void> _read(String uuid, int year, Emitter<MonthBlocState> emit, [Completer<dynamic>? completer]) async {
     emit(const MonthBlocState.loading());
       final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
         function: () async =>
@@ -102,7 +102,16 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
         error: error,
         e: e,
       );
-      await _response(emit);
+      if(completer == null) {
+        await _response(emit);
+      } else {
+        if (error){
+          Logger.print('Error delete.:$timeOut:$e', name: 'err', error: true);
+          completer.completeError(error);
+        } else {
+          completer.complete(res);
+        }
+      }
   }
 
   Future<void> _response(Emitter<MonthBlocState> emit) async {

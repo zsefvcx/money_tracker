@@ -9,9 +9,14 @@ import 'package:provider/provider.dart';
 part 'month_button.dart';
 
 class MonthYearWidget extends StatefulWidget {
-  const MonthYearWidget({required this.monthCurrent, super.key});
+  const MonthYearWidget({
+    required this.selectedMonth,
+    required this.monthCurrent,
+    super.key
+  });
 
   final MonthCurrent monthCurrent;
+  final Set<int>? selectedMonth;
 
   @override
   State<MonthYearWidget> createState() => _MonthYearWidgetState();
@@ -20,13 +25,12 @@ class MonthYearWidget extends StatefulWidget {
 class _MonthYearWidgetState extends State<MonthYearWidget> {
   late MonthCurrent _monthCurrent;
 
-  List<bool> selectMonth = List<bool>.generate(12, (index) => false);
+  int selectMonth = 0;
   List<bool> selectedMonth = List<bool>.generate(12, (index) => false);
 
   void select(int month){
     setState(() {
-      selectMonth.fillRange(0, 12, false);
-      selectMonth[month-1] = true;
+      selectMonth = month;
     });
     if (kDebugMode) {
       print(selectMonth);
@@ -92,7 +96,7 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                   children: [
                     IconButton(onPressed: () {
                       setState(() {
-                        selectMonth.fillRange(0, 12, false);
+                        selectMonth=0;
                         _monthCurrent = _monthCurrent.copyWith(
                             year: _monthCurrent.year+1
                         );
@@ -102,7 +106,7 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                     )),
                     IconButton(onPressed: () {
                       setState(() {
-                        selectMonth.fillRange(0, 12, false);
+                        selectMonth=0;
                         _monthCurrent = _monthCurrent.copyWith(
                             year: _monthCurrent.year-1
                         );

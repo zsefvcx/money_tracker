@@ -15,14 +15,6 @@ class MonthButton extends StatefulWidget {
 }
 
 class _MonthButtonState extends State<MonthButton> {
-  @override
-  void initState() {
-    super.initState();
-
-    if (kDebugMode) {
-      print(widget.month);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +30,7 @@ class _MonthButtonState extends State<MonthButton> {
           width: 50, height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            color: selectMonthNotifier.selectMonth[widget.month-1]?theme.colorScheme.primary:theme.colorScheme.background,
+            color: selectMonthNotifier.selectMonth==widget.month?theme.colorScheme.primary:theme.colorScheme.background,
           ),
           child: Center(
             child: Text(

@@ -62,7 +62,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
       child: Scaffold(
         appBar: AppBar(
           title: _currentTabIndex==0
-              ? AppCalendarDialog(monthCurrent: monthCurrent)
+              ? AppCalendarDialog(uuid: widget.uuid, monthCurrent: monthCurrent)
               : Text(S.of(context).profile),
           actions: [
             if(_currentTabIndex==0)IconButton(onPressed: () => showDialog<String>(
