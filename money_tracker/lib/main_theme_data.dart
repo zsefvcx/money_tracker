@@ -13,6 +13,8 @@ TextTheme _textLight(TextTheme base) {
     bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,//17
     bodyMedium: CustomThemeProp.bodyMediumTypography.style,//17
     bodySmall: CustomThemeProp.bodySmallTypography.style,//10
+
+    displayLarge: CustomThemeProp.displayLarge.style,//12
     displaySmall: CustomThemeProp.pieChartSectionTypography.style,//12
 
   );
@@ -27,6 +29,10 @@ TextTheme _textBlack(TextTheme base) {
     ),
     bodyMedium: CustomThemeProp.bodyMediumTypography.style,
     bodyLarge: CustomThemeProp.bodyMediumTypographyVioletFirm.style,
+    bodySmall: CustomThemeProp.bodySmallTypography.style,//10
+
+    displayLarge: CustomThemeProp.displayLarge.style,//12
+    displaySmall: CustomThemeProp.pieChartSectionTypography.style,//12
   );
 }
 
@@ -131,6 +137,7 @@ DialogTheme _dialogTheme(DialogTheme base){
   return base.copyWith(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
     backgroundColor: CustomThemeProp.white,
+    surfaceTintColor: CustomThemeProp.white,
     titleTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
       color: CustomThemeProp.redDialog
     ),
@@ -183,10 +190,12 @@ ThemeData themeMainProgram = _theme.copyWith(
   appBarTheme: _appBarTheme(_theme.appBarTheme),
 
   colorScheme: _colorScheme(_theme.colorScheme),
+
   primaryColorLight: CustomThemeProp.violetFirm,
   primaryColorDark: CustomThemeProp.violetFirm,
   scaffoldBackgroundColor: CustomThemeProp.white,
   dialogBackgroundColor: CustomThemeProp.white,
+
 
   bottomNavigationBarTheme: _bottomNavigationBarThemeData(_theme.bottomNavigationBarTheme),
 

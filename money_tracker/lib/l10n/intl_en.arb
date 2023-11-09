@@ -44,5 +44,6 @@
   "save": "Save",
   "exit": "Exit",
   "add": "Add",
-  "close": "Close"
+  "close": "Close",
+  "confirm": "Confirm"
 }

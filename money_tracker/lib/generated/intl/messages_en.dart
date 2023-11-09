@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "april": MessageLookupByLibrary.simpleMessage("April"),
         "august": MessageLookupByLibrary.simpleMessage("August"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "costAccounting":
             MessageLookupByLibrary.simpleMessage("Cost accounting"),
         "december": MessageLookupByLibrary.simpleMessage("December"),

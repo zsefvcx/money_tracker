@@ -217,6 +217,25 @@ text-align: center;
     letterSpacing: 0,
   );
 
+/*color: var(--black, #000);
+text-align: center;
+
+/* 12_px */
+font-family: SF UI Display;
+font-size: 12px;
+font-style: normal;
+font-weight: 400;
+line-height: 17px; /* 141.667% */*/
+  static final Typography displayLarge = Typography(
+    fontFamily: mainFont,
+    fontWeight: FontWeight.w400,
+    fontSize: 12,
+    lineHeightPX: 17,
+    fontColor: black,
+    textAlign: TextAlign.center,
+    letterSpacing: 0,
+  );
+
 //styleName: txr_17px_reg;
 //   font-family: SF UI Display;
 //   font-size: 17px;
