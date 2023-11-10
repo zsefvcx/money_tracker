@@ -31,4 +31,20 @@ class MonthCurrent extends Equatable {
   String toString() {
     return 'MonthEnable: {$id, $year, $month}';
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'year': year,
+      'month': month,
+    };
+  }
+
+  factory MonthCurrent.fromJson(Map<String, dynamic> map) {
+    return MonthCurrent(
+      id: map['id'] as int?,
+      year: map['year'] as int,
+      month: map['month'] as int,
+    );
+  }
 }
