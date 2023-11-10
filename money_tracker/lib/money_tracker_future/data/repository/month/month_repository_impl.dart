@@ -21,12 +21,12 @@ class MonthRepositoryImpl extends MonthRepository {
   }
 
   @override
-  Future<MonthsCurrentYearEntity> findAllInYear({required String uuid, required int year}) async {
+  Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
     return await monthsStatus.findAllInYear(uuid: uuid, year: year);
   }
 
   @override
-  Future<MonthCurrent> insert({required String uuid, required int year, required int month}) async {
+  Future<MonthCurrent?> insert({required String uuid, required int year, required int month}) async {
     return await monthsStatus.insert(uuid: uuid, year: year, month: month);
   }
 }

@@ -16,7 +16,7 @@ part 'month_data.dart';
 //@injectable
 class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
 
-  final MonthRepository monthRepository;
+  final MonthRepository _monthRepository;
 
   static int timeOutV = 10;
 
@@ -28,8 +28,8 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
   );
 
   MonthBloc({
-    required this.monthRepository,
-  }) : super(const MonthBlocState.loading()) {
+    required MonthRepository monthRepository,
+  }) : _monthRepository = monthRepository, super(const MonthBlocState.loading()) {
     on<MonthBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
           init: (value) async => await _read(value.uuid, value.year, emit),
@@ -37,7 +37,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
           add: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
                         function: () async =>
-                        await monthRepository.insert(uuid: value.uuid, year: value.year, month: value.month),
+                        await _monthRepository.insert(uuid: value.uuid, year: value.year, month: value.month),
                       );
 
             final data =  monthModelData.data;
@@ -64,7 +64,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
           delete: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async =>
-                await monthRepository.delete(uuid: value.uuid, data: value.data),
+                await _monthRepository.delete(uuid: value.uuid, data: value.data),
               );
               final data =  monthModelData.data;
               if(res !=null && data != null &&
@@ -94,7 +94,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
     emit(const MonthBlocState.loading());
       final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
         function: () async =>
-        await monthRepository.findAllInYear(uuid: uuid, year: year),
+        await _monthRepository.findAllInYear(uuid: uuid, year: year),
       );
       monthModelData = monthModelData.copyWithData(
         data: res,
@@ -106,7 +106,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
         await _response(emit);
       } else {
         if (error){
-          Logger.print('Error delete.:$timeOut:$e', name: 'err', error: true);
+          Logger.print('Error _read.:$timeOut:$e', name: 'err', error: true);
           completer.completeError(error);
         } else {
           completer.complete(res);

@@ -53,7 +53,7 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
       }
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
-      throw ArgumentError('Error readCounter!');
+      throw ArgumentError('Error read!');
     }
   }
 
@@ -75,7 +75,7 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
 
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
-      throw ArgumentError('Error writeCounter!');
+      throw ArgumentError('Error write!');
     }
   }
 
@@ -91,7 +91,7 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
       return true;
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
-      throw ArgumentError('Error deletePhoto!');
+      throw ArgumentError('Error delete!');
     }
   }
 }

@@ -15,7 +15,7 @@ class MonthsStatusImpl extends MonthsStatus {
   }
 
   @override
-  Future<MonthCurrent> insert({required String uuid, required int year, required int month}) async {
+  Future<MonthCurrent?> insert({required String uuid, required int year, required int month}) async {
     try{
         if(dao == null) await _initDataBaseFloor(uuid: uuid);
         final daoLocal = dao;
@@ -29,7 +29,7 @@ class MonthsStatusImpl extends MonthsStatus {
       throw ArgumentError('Error insert month');
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error insertGroup: $e\n$t');
+      throw ArgumentError('Error insert month: $e\n$t');
     }
   }
 
@@ -46,10 +46,10 @@ class MonthsStatusImpl extends MonthsStatus {
           return false;
         }
       }
-      throw ArgumentError('Error insert month');
+      throw ArgumentError('Error delete month');
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error insertGroup: $e\n$t');
+      throw ArgumentError('Error delete month: $e\n$t');
     }
   }
 
@@ -66,15 +66,15 @@ class MonthsStatusImpl extends MonthsStatus {
           return false;
         }
       }
-      throw ArgumentError('Error insert month');
+      throw ArgumentError('Error update month');
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error insertGroup: $e\n$t');
+      throw ArgumentError('Error update month: $e\n$t');
     }
   }
 
   @override
-  Future<MonthsCurrentYearEntity> findAllInYear({required String uuid, required int year}) async {
+  Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
     try{
       if(dao == null) await _initDataBaseFloor(uuid: uuid);
       final daoLocal = dao;
@@ -87,10 +87,10 @@ class MonthsStatusImpl extends MonthsStatus {
         );
         return monthsCurrentYearEntity;
       }
-      throw ArgumentError('Error insert month');
+      throw ArgumentError('Error findAllInYear month');
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error insertGroup: $e\n$t');
+      throw ArgumentError('Error findAllInYear month: $e\n$t');
     }
   }
 }
