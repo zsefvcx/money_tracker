@@ -250,6 +250,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             e = 'TimeOut';
             return null;
           });
+      Logger.print('res: $res', name: 'res');
     } on Exception catch(ee, t){
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;

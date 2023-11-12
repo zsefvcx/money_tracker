@@ -1,12 +1,8 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:floor/floor.dart';
 
-@entity
 class MonthCurrent extends Equatable {
-  @primaryKey
   final int? id;
-
   final int year;
   final int month;
 

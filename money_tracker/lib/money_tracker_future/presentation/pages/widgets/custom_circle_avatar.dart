@@ -115,22 +115,25 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
             valueListenable: _valueNewFile,
             builder: (_, value, __) {
 
-              return Column(children: [
-                if(value)13.h,
-                if(value)TextButton(onPressed: () async {
-                  final imgXFileData = imgXFile;
-                  if(imgXFileData == null) return;
-                  final completer = Completer<bool>();
-                  photoBloc.add(PhotoBlocEvent.write(
-                      uuid: widget.uuid,
-                      path: imgXFileData.path,
-                      completer: completer
-                  ));
-                  if (!await completer.future) return;
-                  await LoginBlocInit.changeLoadImageStatus(status: true);
-                  _valueNewFile.value = false;
-                }, child: Text(S.of(context).save, style: theme.textTheme.bodyLarge,)),
-              ],);
+              return Visibility(
+                visible: value,
+                child: Column(children: [
+                  13.h,
+                  TextButton(onPressed: () async {
+                    final imgXFileData = imgXFile;
+                    if(imgXFileData == null) return;
+                    final completer = Completer<bool>();
+                    photoBloc.add(PhotoBlocEvent.write(
+                        uuid: widget.uuid,
+                        path: imgXFileData.path,
+                        completer: completer
+                    ));
+                    if (!await completer.future) return;
+                    await LoginBlocInit.changeLoadImageStatus(status: true);
+                    _valueNewFile.value = false;
+                  }, child: Text(S.of(context).save, style: theme.textTheme.bodyLarge,)),
+                ],),
+              );
             },),
       ],
     );

@@ -6,9 +6,9 @@ abstract class MonthsStatus {
 
   Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year});
 
-  Future<MonthCurrent?> insert({required String uuid, required int year, required int month});
+  Future<MonthCurrent?> insert({required String uuid, required MonthCurrent data});
 
-  Future<bool?> delete({required String uuid, required MonthCurrent data});
+  Future<bool?> delete({required String uuid,});
 
   Future<bool?> update({required String uuid, required MonthCurrent data});
 

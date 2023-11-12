@@ -139,9 +139,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
             e = 'TimeOut';
             return null;
           });
-      if (kDebugMode) {
-        print(res);
-      }
+      Logger.print('res: $res', name: 'res');
     } on Exception catch(ee, t){
       Logger.print('$ee\n$t', name: 'err', error: true);
       error = true;

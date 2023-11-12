@@ -1,9 +1,10 @@
+import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:provider/provider.dart';
 
 part 'month_button.dart';
@@ -12,11 +13,15 @@ class MonthYearWidget extends StatefulWidget {
   const MonthYearWidget({
     required this.selectedMonth,
     required this.monthCurrent,
+    required this.monthBloc,
+    required this.uuid,
     super.key
   });
 
   final MonthCurrent monthCurrent;
   final Set<int>? selectedMonth;
+  final MonthBloc monthBloc;
+  final String uuid;
 
   @override
   State<MonthYearWidget> createState() => _MonthYearWidgetState();
@@ -32,9 +37,6 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
     setState(() {
       selectMonth = month;
     });
-    if (kDebugMode) {
-      print(selectMonth);
-    }
   }
 
   @override
@@ -42,13 +44,46 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
     super.initState();
     _monthCurrent = widget.monthCurrent;
     selectedMonth[_monthCurrent.month-1] = true;
+    widget.selectedMonth?.forEach((month) {
+      if(month>0 && month<=12){
+        selectedMonth[month-1] = true;
+      }
+    });
+    selectMonth = widget.monthCurrent.month;
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final checkYear = _monthCurrent.year==widget.monthCurrent.year;
 
+    Future<void> upOrDown(Function() fun) async {
+      fun.call();
+      final completer = Completer();
+      widget.monthBloc.add(MonthBlocEvent.read(
+        uuid: widget.uuid,
+        year: _monthCurrent.year,
+        completer: completer,
+      ));
+      await completer.future;
+      final selectedMonthSet = widget.monthBloc.monthModelData.data?.months;
+      //final selectedYear = widget.monthBloc.monthModelData.data?.year;
+      selectedMonth = List<bool>.generate(12, (index) => false);
+      //if(selectedYear==widget.monthCurrent.year)selectedMonth[_monthCurrent.month-1] = true;
+      selectedMonthSet?.forEach((month) {
+        if(month>0 && month<=12){
+          selectedMonth[month-1] = true;
+        }
+      });
+      selectMonth=_monthCurrent.year==widget.monthCurrent.year
+          ?widget.monthCurrent.month
+          :0;
+      setState(() {
+      });
+    }
+
+
+
+    var applyData = false;
     return Provider.value(
       value: this,
       child: Column(
@@ -94,23 +129,21 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(onPressed: () {
-                      setState(() {
-                        selectMonth=0;
+                    IconButton(onPressed: () async {
+                      await upOrDown(() {
                         _monthCurrent = _monthCurrent.copyWith(
                             year: _monthCurrent.year+1
                         );
-                      });
+                      },);
                     }, icon: Icon(Icons.expand_less,
                       color:  theme.colorScheme.background,
                     )),
-                    IconButton(onPressed: () {
-                      setState(() {
-                        selectMonth=0;
+                    IconButton(onPressed: () async {
+                      await upOrDown(() {
                         _monthCurrent = _monthCurrent.copyWith(
                             year: _monthCurrent.year-1
                         );
-                      });
+                      },);
                     }, icon: Icon(Icons.expand_more,
                       color: theme.colorScheme.background,
                     )),
@@ -134,7 +167,6 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                         MonthButton(
                             month: j+1,
                             select: selectedMonth[j]
-                                && checkYear
                         ),
                     ],
                   ),
@@ -149,9 +181,11 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
             child: Column(
               children: [
                 ElevatedButton(onPressed: () {
-                  if (kDebugMode) {
-                    print('Select');
-                  }
+                  if(applyData) return;
+                  applyData = true;
+                  Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWith(
+                    month: selectMonth
+                  ):null);
                 },
                   child: Text(S.of(context).confirm),
                   style: theme.elevatedButtonTheme.style?.copyWith(

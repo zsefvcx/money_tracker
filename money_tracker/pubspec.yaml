@@ -33,7 +33,6 @@ dependencies:
   path_provider: ^2.1.1
   sqflite: ^2.3.0
   sqflite_common_ffi: ^2.3.0+2
-  floor: ^1.4.2
 
 dev_dependencies:
   flutter_test:

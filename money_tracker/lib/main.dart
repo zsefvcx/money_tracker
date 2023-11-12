@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_app.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:window_manager/window_manager.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isMacOS   || Platform.isLinux || Platform.isWindows) {
+    databaseFactory = databaseFactoryFfi;
     await windowManager.ensureInitialized();
     const windowOptions = WindowOptions(
       minimumSize: Size(375, 812),

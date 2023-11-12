@@ -5,6 +5,7 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/calendar/month_year_widget.dart';
+import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 class AppCalendarDialog extends StatefulWidget {
@@ -34,11 +35,11 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
   @override
   Widget build(BuildContext context) {
     final monthBloc = context.read<MonthBloc>();
+    final moneyTrackerHomePageState= context.read<MoneyTrackerHomePageState>();
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
         onTap: () async {
-
           final completer = Completer();
           monthBloc.add(MonthBlocEvent.read(
               uuid: widget.uuid,
@@ -47,16 +48,32 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
           ));
           await completer.future;
           final selectedMonth = monthBloc.monthModelData.data?.months;
+
           if(context.mounted){
-            await showDialog<MonthCurrent?>(
+            final monthCurrent = await showDialog<MonthCurrent?>(
               context: context,
-              builder: (context) => Dialog(
+              builder: (_) => Dialog(
                 child: MonthYearWidget(
                   monthCurrent: _monthCurrent,
                   selectedMonth: selectedMonth,
+                  monthBloc: monthBloc,
+                  uuid: widget.uuid,
                 ),
               ),
             );
+            if (monthCurrent !=null && _monthCurrent != monthCurrent) {
+              final completer = Completer();
+              monthBloc.add(MonthBlocEvent.add(
+                  uuid: widget.uuid,
+                  data: monthCurrent,
+                  completer: completer)
+              );
+              await completer.future;
+              setState(() {
+                _monthCurrent = monthCurrent;
+              });
+              moneyTrackerHomePageState.setMonthCurrent(monthCurrent);
+            }
           }
         },
         child: Text(

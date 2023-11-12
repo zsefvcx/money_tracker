@@ -1,61 +1,26 @@
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:path_provider/path_provider.dart';
-
+import 'package:money_tracker/money_tracker_future/data/data_sources/db/db.dart';
 import 'package:sqflite/sqflite.dart'
         if(dart.library.io.Platform.isWindows)'package:sqflite_common_ffi/sqflite_ffi.dart'
         if(dart.library.io.Platform.isLinux  )'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-abstract class DataBaseSqfLite {
+class DataBaseSqfLiteImpl extends DataBaseSqfLite{
 
-  Future<List<int>> findAllMonthInYear(int year);
+  DataBaseSqfLiteImpl({required super.database});
 
-  Future<MonthCurrent?> findMonthById(int id);
+  static const String _table = 'MonthCurrent';
+  static const String _id = 'id';
+  static const String _year = 'year';
+  static const String _month = 'month';
 
-  Future<int> insert(MonthCurrent data, {
-    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
-  });
-
-  Future<int> update(MonthCurrent data, {
-    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
-  });
-
-  Future<int> delete(int gid);
-}
-
-///https://pub.dev/packages/hive
-///https://flutterbyexample.com/lesson/singletons
-class DBProvider extends DataBaseSqfLite{
-  DBProvider._internal();
-  static Database? _database;
-
-  static final DBProvider _db = DBProvider._internal();
-  ///синглтон - один он в приложении...
-  ///Его повсемесное использование в приложении плохой тон, но когда надо быстро то можно))
-  ///Без использовния Factory
-  static DBProvider get db => _db;
-
-  Future<Database> get database async => _database ??= await _initDB();
-
-  Future<Database> _initDB() async {
-    final dir = await getApplicationSupportDirectory();
-    final path = '${dir.path}/months_base.db';
-    Logger.print('PathToDB:$path');
-    return await openDatabase(path, version: 1, onCreate: _createDB);
-  }
-
-  final String _table = 'MonthCurrent';
-  final String _id = 'id';
-  final String _year = 'year';
-  final String _month = 'month';
-
-  Future<void> _createDB(Database db, int version) async {
+  static Future<void> createDB(Database db, int version) async {
     try {
       await db.execute(
           'CREATE TABLE "$_table" ( '
               '"$_id" INTEGER PRIMARY KEY AUTOINCREMENT, '
               '"$_year" INTEGER, '
-              '"$_month" INTEGER, '
+              '"$_month" INTEGER '
               ')'
       );
     } on Exception catch (e,t){
@@ -68,7 +33,7 @@ class DBProvider extends DataBaseSqfLite{
   ///Пока получаем все элементы из списка
   @override
   Future<List<int>> findAllMonthInYear(int year) async {
-    final db = await database;
+    final db = database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_table,
           where: '$_year = ?',
@@ -88,7 +53,7 @@ class DBProvider extends DataBaseSqfLite{
   ///INSERT findMonthById
   @override
   Future<MonthCurrent?> findMonthById(int id) async {
-    final db = await database;
+    final db = database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_table,
         where: '$_id = ?',
@@ -107,7 +72,7 @@ class DBProvider extends DataBaseSqfLite{
       {
         ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
       }) async {
-    final db = await database;
+    final db = database;
 
     //await db.execute('ALTER TABLE "$_groupTable" ADD COLUMN "$_group" TEXT');
     //await db.execute('ALTER TABLE "$_groupTable" ADD COLUMN "$_description" TEXT');
@@ -115,8 +80,9 @@ class DBProvider extends DataBaseSqfLite{
 
     /// должно быть уникальное
     final query = await db.query(_table,
-        where: '"$_name" = ?',
-        whereArgs: [data.name]);
+         where: '"$_year" = ? and "$_month" = ?',
+         whereArgs: [data.year, data.month]);
+
     if (query.isNotEmpty){
       if (query[0].isNotEmpty){///только первое вхождение
         final id = query[0][_id];
@@ -139,7 +105,7 @@ class DBProvider extends DataBaseSqfLite{
       {
         ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
       }) async {
-    final db = await database;
+    final db = database;
 
     return await db.update(
         _table,
@@ -154,7 +120,7 @@ class DBProvider extends DataBaseSqfLite{
   ///DELETE GID
   @override
   Future<int> delete(int gid) async {
-    final db = await database;
+    final db = database;
     return await db.delete(
             _table,
             where: '"$_id" = ?',

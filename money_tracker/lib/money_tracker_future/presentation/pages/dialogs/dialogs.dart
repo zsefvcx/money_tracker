@@ -1,3 +1,2 @@
 //GENERATED BARREL FILE
-export './calendar/calendar_dialog.dart'; 
-
+export './calendar/calendar_dialog.dart';

@@ -30,7 +30,11 @@ class MainFormMoneyTracker extends StatelessWidget {
           create: (_) => MoneyTrackerBlocsInit.monthBloc,
         ),
       ],
-      child: MoneyTrackerHomePage(uuid: uuid, eMail: eMail, loadImage: loadImage,),
+      child: MainBuilderForm(
+        uuid: uuid,
+        eMail: eMail,
+        loadImage: loadImage,
+      ),
     );
   }
 }

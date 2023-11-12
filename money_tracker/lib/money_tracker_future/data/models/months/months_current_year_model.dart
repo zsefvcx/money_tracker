@@ -20,10 +20,10 @@ class MonthsCurrentYearModel extends MonthsCurrentYearEntity{
    required Set<int> months,
   }){
     if (year > 0 && year < 40000 && uuid != ''){
-      if(months.length > 12){
+      if(months.length <= 12){
         var allowed = true;
         for (final element in months) {
-          if (element < 0 || element > 12){
+          if (element < 1 || element > 12){
             allowed = false;
             break;
           }

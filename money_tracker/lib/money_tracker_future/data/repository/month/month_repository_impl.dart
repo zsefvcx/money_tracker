@@ -11,8 +11,8 @@ class MonthRepositoryImpl extends MonthRepository {
   MonthRepositoryImpl({required this.monthsStatus});
 
   @override
-  Future<bool?> delete({required String uuid, required MonthCurrent data}) async {
-    return await monthsStatus.delete(uuid: uuid, data: data);
+  Future<bool?> delete({required String uuid}) async {
+    return await monthsStatus.delete(uuid: uuid);
   }
 
   @override
@@ -26,7 +26,7 @@ class MonthRepositoryImpl extends MonthRepository {
   }
 
   @override
-  Future<MonthCurrent?> insert({required String uuid, required int year, required int month}) async {
-    return await monthsStatus.insert(uuid: uuid, year: year, month: month);
+  Future<MonthCurrent?> insert({required String uuid, required MonthCurrent data}) async {
+    return await monthsStatus.insert(uuid: uuid, data: data);
   }
 }
