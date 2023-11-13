@@ -29,4 +29,9 @@ class CategoriesImpl extends CategoriesRepository{
     return await categoriesData.update(uuid: uuid, data: data);
   }
 
+  @override
+  Future<CategoryExpenses?> getById({required int id}) async {
+    return await categoriesData.getById(id: id);
+  }
+
 }

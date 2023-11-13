@@ -74,10 +74,6 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
       }) async {
     final db = database;
 
-    //await db.execute('ALTER TABLE "$_groupTable" ADD COLUMN "$_group" TEXT');
-    //await db.execute('ALTER TABLE "$_groupTable" ADD COLUMN "$_description" TEXT');
-    //await db.execute('ALTER TABLE "$_groupTable" ADD COLUMN "$_image" TEXT');
-
     /// должно быть уникальное
     final query = await db.query(_table,
          where: '"$_year" = ? and "$_month" = ?',
