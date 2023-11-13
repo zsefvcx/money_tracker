@@ -519,6 +519,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Add category`
+  String get addCategory {
+    return Intl.message(
+      'Add category',
+      name: 'addCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error! Must be 6 symbols in Hex format`
+  String get errorLengthMustBe6SymbolsInHexFormat {
+    return Intl.message(
+      'Error! Must be 6 symbols in Hex format',
+      name: 'errorLengthMustBe6SymbolsInHexFormat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name`
+  String get name {
+    return Intl.message(
+      'Name',
+      name: 'name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Color`
+  String get color {
+    return Intl.message(
+      'Color',
+      name: 'color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `field is empty`
+  String get fieldIsEmpty {
+    return Intl.message(
+      'field is empty',
+      name: 'fieldIsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter name`
+  String get enterTheName {
+    return Intl.message(
+      'Enter name',
+      name: 'enterTheName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter color`
+  String get enterColor {
+    return Intl.message(
+      'Enter color',
+      name: 'enterColor',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

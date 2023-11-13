@@ -45,5 +45,12 @@
   "exit": "Выйти",
   "add": "Добавить",
   "close": "Закрыть",
-  "confirm": "Подтвердить"
+  "confirm": "Подтвердить",
+  "addCategory": "Добавить категорию",
+  "errorLengthMustBe6SymbolsInHexFormat": "Ошибка! Должно быть 6 символов в Hex формате",
+  "name": "Название",
+  "color": "Цвет",
+  "fieldIsEmpty": "Поле не заполнено",
+  "enterTheName": "Введите название",
+  "enterColor": "Введите цвет"
 }

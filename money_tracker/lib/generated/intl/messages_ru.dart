@@ -23,11 +23,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Добавить"),
+        "addCategory":
+            MessageLookupByLibrary.simpleMessage("Добавить категорию"),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Уже есть аккаунт?"),
         "april": MessageLookupByLibrary.simpleMessage("Апрель"),
         "august": MessageLookupByLibrary.simpleMessage("Август"),
         "close": MessageLookupByLibrary.simpleMessage("Закрыть"),
+        "color": MessageLookupByLibrary.simpleMessage("Цвет"),
         "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
         "costAccounting": MessageLookupByLibrary.simpleMessage("Учёт расходов"),
         "december": MessageLookupByLibrary.simpleMessage("Декабрь"),
@@ -36,20 +39,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect":
             MessageLookupByLibrary.simpleMessage("Формат E-Mail не правильный"),
+        "enterColor": MessageLookupByLibrary.simpleMessage("Введите цвет"),
         "enterEmail":
             MessageLookupByLibrary.simpleMessage("Введите свою почту"),
         "enterText": MessageLookupByLibrary.simpleMessage("Введите текст"),
+        "enterTheName":
+            MessageLookupByLibrary.simpleMessage("Введите название"),
         "enterYourPassword":
             MessageLookupByLibrary.simpleMessage("Введите свой пароль"),
         "error": MessageLookupByLibrary.simpleMessage("Ошибка!"),
+        "errorLengthMustBe6SymbolsInHexFormat":
+            MessageLookupByLibrary.simpleMessage(
+                "Ошибка! Должно быть 6 символов в Hex формате"),
         "exit": MessageLookupByLibrary.simpleMessage("Выйти"),
         "expenses": MessageLookupByLibrary.simpleMessage("Расходы"),
         "february": MessageLookupByLibrary.simpleMessage("Февраль"),
+        "fieldIsEmpty":
+            MessageLookupByLibrary.simpleMessage("Поле не заполнено"),
         "january": MessageLookupByLibrary.simpleMessage("Январь"),
         "july": MessageLookupByLibrary.simpleMessage("Июль"),
         "june": MessageLookupByLibrary.simpleMessage("Июнь"),
         "march": MessageLookupByLibrary.simpleMessage("Март"),
         "may": MessageLookupByLibrary.simpleMessage("Май"),
+        "name": MessageLookupByLibrary.simpleMessage("Название"),
         "noAccountYet":
             MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),
         "november": MessageLookupByLibrary.simpleMessage("Ноябрь"),

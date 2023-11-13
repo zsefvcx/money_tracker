@@ -45,5 +45,12 @@
   "exit": "Exit",
   "add": "Add",
   "close": "Close",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "addCategory": "Add category",
+  "errorLengthMustBe6SymbolsInHexFormat": "Error! Must be 6 symbols in Hex format",
+  "name": "Name",
+  "color": "Color",
+  "fieldIsEmpty": "field is empty",
+  "enterTheName": "Enter name",
+  "enterColor": "Enter color"
 }

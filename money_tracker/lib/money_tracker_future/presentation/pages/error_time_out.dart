@@ -40,9 +40,7 @@ class ErrorTimeOut extends StatelessWidget {
                 Text(S.of(context).somethingWrongHappened),
               if(blocBloc.monthModelData.isTimeOut)Text(S.of(context).timeout) else
                 Text(S.of(context).replyReceived),
-              const SizedBox(
-                height: 50,
-              ),
+              50.h,
               TextButton(
                   onPressed: () {
                     blocBloc.add(MonthBlocEvent.init(uuid: uuid, data: monthCurrent));

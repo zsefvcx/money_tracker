@@ -12,6 +12,8 @@ class CustomTextFormField extends StatefulWidget {
     this.labelText,
     this.obscureText = false,
     this.autofocus = false,
+    this.maxLength,
+    this.suffixIcon,
     super.key});
 
   final TextEditingController? controller;
@@ -23,6 +25,8 @@ class CustomTextFormField extends StatefulWidget {
   final String? hintText;
   final bool autofocus;
   final TextInputType? keyboardType;
+  final int? maxLength;
+  final Widget? suffixIcon;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -69,6 +73,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             validator: widget.validator,
             obscureText: value.$2,
             obscuringCharacter: '*',
+            maxLength: widget.maxLength,
             keyboardType: widget.keyboardType,
             decoration: InputDecoration(
               floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
@@ -78,14 +83,14 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               hintText: widget.hintText,
               suffixIconColor: (widget.focusNode?.hasFocus ?? true)?CustomThemeProp.violetFirm:null,
               prefixIconColor: (widget.focusNode?.hasFocus ?? true)?CustomThemeProp.violetFirm:null,
-              suffixIcon: widget.obscureText?IconButton(
+              suffixIcon: widget.suffixIcon ?? (widget.obscureText?IconButton(
                 icon: Icon(value.$2?Icons.visibility:Icons.visibility_off),
                 onPressed: () {
                   valueProcess.value = (valueProcess.value.$1, !valueProcess.value.$2);
                   FocusScope.of(context).requestFocus(widget.focusNode);
                   widget.focusNode?.requestFocus();
                 },
-              ):null,
+              ):null),
             ),
           );
         },

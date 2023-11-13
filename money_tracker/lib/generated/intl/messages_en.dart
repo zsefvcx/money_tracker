@@ -23,11 +23,13 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Add"),
+        "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "april": MessageLookupByLibrary.simpleMessage("April"),
         "august": MessageLookupByLibrary.simpleMessage("August"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
+        "color": MessageLookupByLibrary.simpleMessage("Color"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "costAccounting":
             MessageLookupByLibrary.simpleMessage("Cost accounting"),
@@ -37,19 +39,26 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect": MessageLookupByLibrary.simpleMessage(
             "E-Mail format is not correct"),
+        "enterColor": MessageLookupByLibrary.simpleMessage("Enter color"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("Enter your email"),
         "enterText": MessageLookupByLibrary.simpleMessage("Enter text"),
+        "enterTheName": MessageLookupByLibrary.simpleMessage("Enter name"),
         "enterYourPassword":
             MessageLookupByLibrary.simpleMessage("Enter your password"),
         "error": MessageLookupByLibrary.simpleMessage("Error!"),
+        "errorLengthMustBe6SymbolsInHexFormat":
+            MessageLookupByLibrary.simpleMessage(
+                "Error! Must be 6 symbols in Hex format"),
         "exit": MessageLookupByLibrary.simpleMessage("Exit"),
         "expenses": MessageLookupByLibrary.simpleMessage("Expenses"),
         "february": MessageLookupByLibrary.simpleMessage("February"),
+        "fieldIsEmpty": MessageLookupByLibrary.simpleMessage("field is empty"),
         "january": MessageLookupByLibrary.simpleMessage("January"),
         "july": MessageLookupByLibrary.simpleMessage("July"),
         "june": MessageLookupByLibrary.simpleMessage("June"),
         "march": MessageLookupByLibrary.simpleMessage("March"),
         "may": MessageLookupByLibrary.simpleMessage("May"),
+        "name": MessageLookupByLibrary.simpleMessage("Name"),
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
         "november": MessageLookupByLibrary.simpleMessage("November"),
         "october": MessageLookupByLibrary.simpleMessage("October"),

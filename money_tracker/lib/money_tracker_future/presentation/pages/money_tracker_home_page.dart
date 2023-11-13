@@ -68,28 +68,13 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
                 monthCurrent: _monthCurrent))
             : Text(S.of(context).profile),
         actions: [
-          if(_currentTabIndex==0)IconButton(onPressed: () => showDialog<String>(
-              context: context,
-              builder: (context) => Dialog(
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const Text('This is a typical dialog.'),
-                      const SizedBox(height: 15),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text('Close'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ), icon: const Icon(Icons.add)),
+          Visibility(
+            visible: _currentTabIndex==0,
+            child: AddCategoryDialog(
+                uuid: widget.uuid,
+                monthCurrent: _monthCurrent
+            ),
+          ),
         ],
       ),
       body: TabBarView(
