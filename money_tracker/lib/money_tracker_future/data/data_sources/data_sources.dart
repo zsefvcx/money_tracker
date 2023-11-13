@@ -1,4 +1,5 @@
 //GENERATED BARREL FILE 
+export './categories/categories_data.dart';
 export './db/db.dart';
 export './internal/photo/photo_from_file.dart';
 export './internal/photo/photo_from_file_impl.dart';
