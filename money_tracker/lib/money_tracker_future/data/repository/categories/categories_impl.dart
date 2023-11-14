@@ -7,7 +7,7 @@ class CategoriesImpl extends CategoriesRepository{
 
   CategoriesData categoriesData;
 
-  CategoriesImpl(this.categoriesData);
+  CategoriesImpl({required this.categoriesData});
 
   @override
   Future<bool?> delete({required String uuid}) async {
@@ -15,8 +15,8 @@ class CategoriesImpl extends CategoriesRepository{
   }
 
   @override
-  Future<int?> getLength({required String uuid}) async {
-    return await categoriesData.getLength(uuid: uuid);
+  Future<CategoriesExpensesModels?> getAllId({required String uuid}) async {
+    return await categoriesData.getAllId(uuid: uuid);
   }
 
   @override

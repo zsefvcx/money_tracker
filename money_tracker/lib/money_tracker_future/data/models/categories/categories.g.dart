@@ -8,15 +8,11 @@ part of 'categories.dart';
 
 CategoriesExpenses _$CategoriesExpensesFromJson(Map<String, dynamic> json) =>
     CategoriesExpenses(
-      completeCategories:
-          (json['completeCategories'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(
-            int.parse(k), CategoryExpenses.fromJson(e as Map<String, dynamic>)),
-      ),
+      categoriesId:
+          (json['categoriesId'] as List<dynamic>).map((e) => e as int).toSet(),
     );
 
 Map<String, dynamic> _$CategoriesExpensesToJson(CategoriesExpenses instance) =>
     <String, dynamic>{
-      'completeCategories':
-          instance.completeCategories.map((k, e) => MapEntry(k.toString(), e)),
+      'categoriesId': instance.categoriesId.toList(),
     };

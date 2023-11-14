@@ -1,6 +1,5 @@
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/entity/entity.dart';
 
 part 'categories.g.dart';
@@ -8,7 +7,7 @@ part 'categories.g.dart';
 @JsonSerializable()
 class CategoriesExpenses extends CategoriesExpensesModels{
 
-  const CategoriesExpenses({required super.completeCategories});
+  const CategoriesExpenses({required super.categoriesId});
 
   /// Connect the generated _$CategoriesExpensesFromJson function to the `fromJson`
   /// factory.
@@ -16,9 +15,4 @@ class CategoriesExpenses extends CategoriesExpensesModels{
 
   /// Connect the generated _$CategoryExpensesToJson function to the `toJson` method.
   Map<String, dynamic> toJson() => _$CategoriesExpensesToJson(this);
-
-  @override
-  String toString() {
-    return 'categoriesExpenses: {$completeCategories}';
-  }
 }

@@ -24,10 +24,18 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController= TextEditingController();
   final TextEditingController _colorController= TextEditingController();
+
   final FocusNode _focusNode = FocusNode();
   final FocusNode _focusNodeSecond = FocusNode();
   final FocusNode _focusNodeThree = FocusNode();
   final _valueNotifierColorPickerVisible = ValueNotifier<bool>(false);
+
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController.text = '';
+  }
 
   @override
   void dispose() {
