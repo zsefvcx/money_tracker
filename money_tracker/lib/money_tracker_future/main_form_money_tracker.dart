@@ -29,6 +29,9 @@ class MainFormMoneyTracker extends StatelessWidget {
         Provider<MonthBloc>(
           create: (_) => MoneyTrackerBlocsInit.monthBloc,
         ),
+        Provider<CategoriesBloc>(
+          create: (_) => MoneyTrackerBlocsInit.categoriesBloc,
+        ),
       ],
       child: MainBuilderForm(
         uuid: uuid,

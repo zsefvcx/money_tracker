@@ -57,13 +57,21 @@ class _MainBuilderFormState extends State<MainBuilderForm> {
               ),
             ),
 
-            error: (_)=> ErrorTimeOut(uuid: widget.uuid, monthCurrent: monthCurrent),
-            timeOut: (_)=> ErrorTimeOut(uuid: widget.uuid, monthCurrent: monthCurrent),
-
+            error: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
+                uuid: widget.uuid,
+                tCurrent: monthCurrent
+            ),
+            timeOut: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
+                uuid: widget.uuid,
+                tCurrent: monthCurrent
+            ),
             loaded: (value) {
               final localMonthCurrent = value.monthCurrent;
               if (localMonthCurrent == null){
-                return ErrorTimeOut(uuid: widget.uuid, monthCurrent: monthCurrent);
+                return ErrorTimeOut<MonthBloc, MonthCurrent>(
+                    uuid: widget.uuid,
+                    tCurrent: monthCurrent
+                );
               }
               return MoneyTrackerHomePage(
                 uuid: widget.uuid,

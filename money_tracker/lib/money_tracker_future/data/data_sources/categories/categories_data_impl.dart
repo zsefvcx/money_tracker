@@ -4,16 +4,19 @@ import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 class CategoriesDataImpl extends CategoriesData {
 
+  Set<int> categoriesId = {};
+
   @override
-  Future<bool?> delete({required String uuid}) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<bool?> delete({required String uuid}) async{
+    categoriesId.clear();
+    return categoriesId.isEmpty;
   }
 
   @override
-  Future<CategoriesExpenses?> getAllId({required String uuid}) {
-    // TODO: implement getAllId
-    throw UnimplementedError();
+  Future<CategoriesExpenses?> getAllId({required String uuid}) async {
+    return CategoriesExpenses(
+      categoriesId: categoriesId
+    );
   }
 
   @override

@@ -20,7 +20,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
 
   static int timeOutV = 10;
 
-  CategoriesModelData categoriesModelData = const CategoriesModelData(
+  CategoriesModelData modelData = const CategoriesModelData(
     timeOut: false,
     data: null,
     e: '',
@@ -38,7 +38,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               function: () async =>
               await _categoriesRepository.getAllId(uuid: value.uuid),
             );
-            categoriesModelData = categoriesModelData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               timeOut: timeOut,
               error: error,
@@ -94,55 +94,53 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             // }
           },
           delete: (value) async {
-            // emit(const MonthBlocState.loading());
-            // final (error, timeOut, e, res) = await _runGoSData<bool>(
-            //   function: () async =>
-            //     await _monthRepository.delete(uuid: value.uuid),
-            //   );
-            //
-            // if(!error && res !=null && res){
-            //
-            //   final (error2, timeOut2, e2, res2) = await _runGoSData<MonthCurrent>(
-            //     function: () async =>
-            //     await _monthRepository.insert(uuid: value.uuid, data: value.data),
-            //   );
-            //   categoriesModelData = categoriesModelData.copyWithData(
-            //     data: null,
-            //     monthCurrent: res2,
-            //     timeOut: timeOut2,
-            //     error: error2,
-            //     e: e2,
-            //   );
-            // } else {
-            //   categoriesModelData = categoriesModelData.copyWithData(
-            //     data: null,
-            //     monthCurrent: null,
-            //     timeOut: timeOut,
-            //     error: error,
-            //     e: e,
-            //   );
-            // }
-            // await _response(emit);
+            emit(const CategoriesBlocState.loading());
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
+              function: () async =>
+                await _categoriesRepository.delete(uuid: value.uuid),
+              );
+
+            if(!error && res !=null && res){
+
+              final (error2, timeOut2, e2, res2) = await _runGoSData<CategoriesExpensesModels>(
+                function: () async =>
+                await _categoriesRepository.getAllId(uuid: value.uuid),
+              );
+              modelData = modelData.copyWithData(
+                data: res2,
+                timeOut: timeOut2,
+                error: error2,
+                e: e2,
+              );
+            } else {
+              modelData = modelData.copyWithData(
+                data: null,
+                timeOut: timeOut,
+                error: error,
+                e: e,
+              );
+            }
+            await _response(emit);
           }
       );
     });
   }
 
   Future<void> _response(Emitter<CategoriesBlocState> emit) async {
-    if (categoriesModelData.error){
-      if(categoriesModelData.timeOut){
+    if (modelData.error){
+      if(modelData.timeOut){
         emit(const CategoriesBlocState.timeOut());
       } else {
         emit(const CategoriesBlocState.error());
       }
     } else{
-      final data = categoriesModelData.data;
+      final data = modelData.data;
       if (data != null) {
-        emit(CategoriesBlocState.loaded(model: categoriesModelData.data,));
+        emit(CategoriesBlocState.loaded(model: modelData.data,));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const CategoriesBlocState.error());
-        categoriesModelData = categoriesModelData.copyWithData(
+        modelData = modelData.copyWithData(
           timeOut: false,
           data: null,
           e: 'Data not loaded.',

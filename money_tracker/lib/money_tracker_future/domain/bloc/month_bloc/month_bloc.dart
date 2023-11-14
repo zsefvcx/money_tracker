@@ -20,7 +20,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
 
   static int timeOutV = 10;
 
-  MonthModelData monthModelData = const MonthModelData(
+  MonthModelData modelData = const MonthModelData(
     timeOut: false,
     data: null,
     monthCurrent: null,
@@ -39,13 +39,13 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
               function: () async =>
               await _monthRepository.insert(uuid: value.uuid, data: value.data),
             );
-            final data =  monthModelData.data;
+            final data =  modelData.data;
             final monthCurrent = res;
             if(!error && res !=null && data != null &&
                 data.year == value.data.year && data.uuid == value.uuid) {
               if(res.id!=null)data.months.add(value.data.month);
             }
-            monthModelData = monthModelData.copyWithData(
+            modelData = modelData.copyWithData(
               data: data,
               monthCurrent: monthCurrent,
               timeOut: timeOut,
@@ -60,8 +60,8 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
               await _monthRepository.findAllInYear(uuid: value.uuid, year: value.year),
             );
             final data =  res;
-            final monthCurrent = monthModelData.monthCurrent;
-            monthModelData = monthModelData.copyWithData(
+            final monthCurrent = modelData.monthCurrent;
+            modelData = modelData.copyWithData(
               data: data,
               monthCurrent: monthCurrent,
               timeOut: timeOut,
@@ -81,13 +81,13 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
                         await _monthRepository.insert(uuid: value.uuid, data: value.data),
                       );
 
-            final data =  monthModelData.data;
+            final data =  modelData.data;
             final monthCurrent = res;
             if(!error && res !=null && data != null &&
                 data.year == value.data.year && data.uuid == value.uuid) {
               if(res.id!=null)data.months.add(value.data.month);
             }
-            monthModelData = monthModelData.copyWithData(
+            modelData = modelData.copyWithData(
               data: data,
               monthCurrent: monthCurrent,
               timeOut: timeOut,
@@ -114,7 +114,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
                 function: () async =>
                 await _monthRepository.insert(uuid: value.uuid, data: value.data),
               );
-              monthModelData = monthModelData.copyWithData(
+              modelData = modelData.copyWithData(
                 data: null,
                 monthCurrent: res2,
                 timeOut: timeOut2,
@@ -122,7 +122,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
                 e: e2,
               );
             } else {
-              monthModelData = monthModelData.copyWithData(
+              modelData = modelData.copyWithData(
                 data: null,
                 monthCurrent: null,
                 timeOut: timeOut,
@@ -137,21 +137,21 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
   }
 
   Future<void> _response(Emitter<MonthBlocState> emit) async {
-    if (monthModelData.error){
-      if(monthModelData.timeOut){
+    if (modelData.error){
+      if(modelData.timeOut){
         emit(const MonthBlocState.timeOut());
       } else {
         emit(const MonthBlocState.error());
       }
     } else{
-      final data = monthModelData.data;
-      final monthCurrent = monthModelData.monthCurrent;
+      final data = modelData.data;
+      final monthCurrent = modelData.monthCurrent;
       if (data != null || monthCurrent != null) {
-        emit(MonthBlocState.loaded(model:  monthModelData.data, monthCurrent: monthModelData.monthCurrent));
+        emit(MonthBlocState.loaded(model:  modelData.data, monthCurrent: modelData.monthCurrent));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const MonthBlocState.error());
-        monthModelData = monthModelData.copyWithData(
+        modelData = modelData.copyWithData(
           monthCurrent: null,
           timeOut: false,
           data: null,

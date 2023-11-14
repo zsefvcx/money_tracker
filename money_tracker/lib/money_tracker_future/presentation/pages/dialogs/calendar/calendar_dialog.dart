@@ -47,7 +47,7 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
               completer: completer,
           ));
           await completer.future;
-          final selectedMonth = monthBloc.monthModelData.data?.months;
+          final selectedMonth = monthBloc.modelData.data?.months;
 
           if(context.mounted){
             final monthCurrent = await showDialog<MonthCurrent?>(

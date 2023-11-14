@@ -19,6 +19,10 @@ class BlocFactory {
     )..registerLazySingleton<MonthBloc>(
           () => MonthBloc(
         monthRepository: ServiceProvider.instance.get<MonthRepository>(),
+      )
+    )..registerLazySingleton<CategoriesBloc>(
+          () => CategoriesBloc(
+        categoriesRepository: ServiceProvider.instance.get<CategoriesRepository>(),
       ),
     );
   }

@@ -65,7 +65,7 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
         completer: completer,
       ));
       await completer.future;
-      final selectedMonthSet = widget.monthBloc.monthModelData.data?.months;
+      final selectedMonthSet = widget.monthBloc.modelData.data?.months;
       //final selectedYear = widget.monthBloc.monthModelData.data?.year;
       selectedMonth = List<bool>.generate(12, (index) => false);
       //if(selectedYear==widget.monthCurrent.year)selectedMonth[_monthCurrent.month-1] = true;
