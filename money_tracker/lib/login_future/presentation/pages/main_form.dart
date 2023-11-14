@@ -218,10 +218,10 @@ class _MainFormState extends State<MainForm> {
           if (context.mounted){
             await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
               arguments: {
-                'loginUser': blocBloc.userAuthData.statusAuthorization,
-                'uuid' : blocBloc.userAuthData.uuid,
+                'loginUser': blocBloc.modelData.statusAuthorization,
+                'uuid' : blocBloc.modelData.uuid,
                 'eMail' : _emailController.text,
-                'loadImage' : blocBloc.userAuthData.loadImage,
+                'loadImage' : blocBloc.modelData.loadImage,
               },
             );
             return;
@@ -262,10 +262,10 @@ class _MainFormState extends State<MainForm> {
             if (context.mounted){
               await Navigator.of(context).pushReplacementNamed(r'\PageMoneyTracker',
                 arguments: {
-                  'loginUser':blocBloc.userAuthData.statusAuthorization,
-                  'uuid' : blocBloc.userAuthData.uuid,
+                  'loginUser':blocBloc.modelData.statusAuthorization,
+                  'uuid' : blocBloc.modelData.uuid,
                   'eMail' : _emailController.text,
-                  'loadImage' : blocBloc.userAuthData.loadImage,
+                  'loadImage' : blocBloc.modelData.loadImage,
                 },
               );
               return;

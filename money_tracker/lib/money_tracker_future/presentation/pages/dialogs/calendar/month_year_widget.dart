@@ -81,9 +81,6 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
       });
     }
 
-
-
-    var applyData = false;
     return Provider.value(
       value: this,
       child: Column(
@@ -181,8 +178,6 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
             child: Column(
               children: [
                 ElevatedButton(onPressed: () {
-                  if(applyData) return;
-                  applyData = true;
                   Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWith(
                     month: selectMonth
                   ):null);

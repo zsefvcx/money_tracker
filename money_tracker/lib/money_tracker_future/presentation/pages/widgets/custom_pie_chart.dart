@@ -1,6 +1,7 @@
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 class AppColors {
   static const Color primary = contentColorCyan;
@@ -27,7 +28,9 @@ class AppColors {
 }
 
 class CustomPieChart extends StatefulWidget {
-  const CustomPieChart({super.key});
+  const CustomPieChart({required this.categoriesExpensesModels, super.key});
+
+  final CategoriesExpensesModels categoriesExpensesModels;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -39,13 +42,14 @@ class _CustomPieChartState extends State<CustomPieChart> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final categoriesId = widget.categoriesExpensesModels.categoriesId;
     return Container(
       color: theme.colorScheme.secondary,
       height: 240,
       width: double.maxFinite,
       padding: const EdgeInsets.all(30),
       child: Center(
-        child: AspectRatio(
+        child: categoriesId.isNotEmpty?AspectRatio(
           aspectRatio: 1,
           child: PieChart(
             PieChartData(
@@ -71,52 +75,24 @@ class _CustomPieChartState extends State<CustomPieChart> {
               sections: showingSections(context),
             ),
           ),
-        ),
+        ):const Text('За октябрь нет расходов'),
       ),
     );
   }
 
   List<PieChartSectionData> showingSections(BuildContext context) {
     final theme = Theme.of(context);
-    return List.generate(4, (i) {
+    final categoriesId = widget.categoriesExpensesModels.categoriesId;
+    return List.generate(categoriesId.length, (i){
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 60.0 : 50.0;
-      switch (i) {
-        case 0:
-          return PieChartSectionData(
-            color: AppColors.contentColorBlue,
-            value: 40,
-            title: '40%',
-            radius: radius,
-            titleStyle:  theme.textTheme.displaySmall,
-          );
-        case 1:
-          return PieChartSectionData(
-            color: AppColors.contentColorYellow,
-            value: 30,
-            title: '30%',
-            radius: radius,
-            titleStyle: theme.textTheme.displaySmall,
-          );
-        case 2:
-          return PieChartSectionData(
-            color: AppColors.contentColorPurple,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: theme.textTheme.displaySmall,
-          );
-        case 3:
-          return PieChartSectionData(
-            color: AppColors.contentColorGreen,
-            value: 15,
-            title: '15%',
-            radius: radius,
-            titleStyle: theme.textTheme.displaySmall,
-          );
-        default:
-          throw Error();
-      }
+      return PieChartSectionData(
+        color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
+        value: 40,
+        title: categoriesId.elementAt(i).name,
+        radius: radius,
+        titleStyle: theme.textTheme.displaySmall,
+      );
     });
   }
 }

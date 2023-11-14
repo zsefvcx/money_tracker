@@ -1,11 +1,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({required this.index, super.key});
+  const CustomCard({required this.categoryExpenses, super.key});
 
-  final int index;
+  
+  final CategoryExpenses categoryExpenses;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,10 @@ class CustomCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Dog $index', style: theme.textTheme.titleMedium),
+                      Text(
+                          categoryExpenses.name, 
+                          style: theme.textTheme.titleMedium
+                      ),
                       9.h,
                       Text('Всего 3800', style:  theme.textTheme.bodySmall,),
                     ],
@@ -55,7 +60,10 @@ class CustomCard extends StatelessWidget {
                 ),
                 IconButton(onPressed: () {
 
-                }, icon: const Icon(Icons.arrow_forward_ios, color: Colors.deepOrange),
+                }, icon: Icon(
+                    Icons.arrow_forward_ios, 
+                    color: Color(int.parse('FF${categoryExpenses.colorHex}', radix: 16))
+                ),
                 ),
               ],
             ),

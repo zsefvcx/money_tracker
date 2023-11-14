@@ -35,42 +35,32 @@ class _MainBuilderFormState extends State<MainBuilderForm> {
         data: monthCurrent)
     );
 
-
     return SafeArea(
       child: BlocBuilder<MonthBloc, MonthBlocState>(
         builder: (context, state) {
           return state.map(
-            loading: (_)=> const Scaffold(
-              body: Padding(
-                padding: EdgeInsets.only(
-                  left: 25, right: 25, top: 10, bottom: 25,
-                ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Hero(tag: Keys.heroIdSplash, child: MainSplash(),),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
+            loading: (_)=> const Scaffold(body: CircularProgressIndicatorMod()),
+
+            error: (_)=> Scaffold(
+              body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                  uuid: widget.uuid,
+                  tCurrent: monthCurrent
               ),
             ),
-
-            error: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
-                uuid: widget.uuid,
-                tCurrent: monthCurrent
-            ),
-            timeOut: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
-                uuid: widget.uuid,
-                tCurrent: monthCurrent
+            timeOut: (_)=> Scaffold(
+              body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                  uuid: widget.uuid,
+                  tCurrent: monthCurrent
+              ),
             ),
             loaded: (value) {
               final localMonthCurrent = value.monthCurrent;
               if (localMonthCurrent == null){
-                return ErrorTimeOut<MonthBloc, MonthCurrent>(
-                    uuid: widget.uuid,
-                    tCurrent: monthCurrent
+                return Scaffold(
+                  body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                      uuid: widget.uuid,
+                      tCurrent: monthCurrent
+                  ),
                 );
               }
               return MoneyTrackerHomePage(
