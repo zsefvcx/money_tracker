@@ -20,7 +20,7 @@ class CategoriesImpl extends CategoriesRepository{
   }
 
   @override
-  Future<CategoryExpenses?> insert({required String uuid, required CategoryExpenses data}) async {
+  Future<CategoriesExpenses?> insert({required String uuid, required CategoryExpenses data}) async {
     return await categoriesData.insert(uuid: uuid, data: data);
   }
 

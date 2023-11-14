@@ -22,9 +22,7 @@ mixin _$CategoriesBlocEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
-        add,
+    required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
   }) =>
       throw _privateConstructorUsedError;
@@ -32,9 +30,7 @@ mixin _$CategoriesBlocEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
   }) =>
       throw _privateConstructorUsedError;
@@ -42,9 +38,7 @@ mixin _$CategoriesBlocEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     required TResult orElse(),
   }) =>
@@ -190,9 +184,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
-        add,
+    required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
   }) {
     return init(uuid);
@@ -203,9 +195,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
   }) {
     return init?.call(uuid);
@@ -216,9 +206,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     required TResult orElse(),
   }) {
@@ -374,9 +362,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
-        add,
+    required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
   }) {
     return read(uuid, id, completer);
@@ -387,9 +373,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
   }) {
     return read?.call(uuid, id, completer);
@@ -400,9 +384,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     required TResult orElse(),
   }) {
@@ -474,7 +456,7 @@ abstract class _$$addEventImplCopyWith<$Res>
       __$$addEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, CategoryExpenses data, Completer<dynamic> completer});
+  $Res call({String uuid, CategoryExpenses data});
 }
 
 /// @nodoc
@@ -490,7 +472,6 @@ class __$$addEventImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? data = null,
-    Object? completer = null,
   }) {
     return _then(_$addEventImpl(
       uuid: null == uuid
@@ -501,10 +482,6 @@ class __$$addEventImplCopyWithImpl<$Res>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as CategoryExpenses,
-      completer: null == completer
-          ? _value.completer
-          : completer // ignore: cast_nullable_to_non_nullable
-              as Completer<dynamic>,
     ));
   }
 }
@@ -512,19 +489,16 @@ class __$$addEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
-  const _$addEventImpl(
-      {required this.uuid, required this.data, required this.completer});
+  const _$addEventImpl({required this.uuid, required this.data});
 
   @override
   final String uuid;
   @override
   final CategoryExpenses data;
-  @override
-  final Completer<dynamic> completer;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.add(uuid: $uuid, data: $data, completer: $completer)';
+    return 'CategoriesBlocEvent.add(uuid: $uuid, data: $data)';
   }
 
   @override
@@ -533,8 +507,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     properties
       ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.add'))
       ..add(DiagnosticsProperty('uuid', uuid))
-      ..add(DiagnosticsProperty('data', data))
-      ..add(DiagnosticsProperty('completer', completer));
+      ..add(DiagnosticsProperty('data', data));
   }
 
   @override
@@ -543,13 +516,11 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         (other.runtimeType == runtimeType &&
             other is _$addEventImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.data, data) || other.data == data) &&
-            (identical(other.completer, completer) ||
-                other.completer == completer));
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, data, completer);
+  int get hashCode => Object.hash(runtimeType, uuid, data);
 
   @JsonKey(ignore: true)
   @override
@@ -563,12 +534,10 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
-        add,
+    required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
   }) {
-    return add(uuid, data, completer);
+    return add(uuid, data);
   }
 
   @override
@@ -576,12 +545,10 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
   }) {
-    return add?.call(uuid, data, completer);
+    return add?.call(uuid, data);
   }
 
   @override
@@ -589,14 +556,12 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     required TResult orElse(),
   }) {
     if (add != null) {
-      return add(uuid, data, completer);
+      return add(uuid, data);
     }
     return orElse();
   }
@@ -642,13 +607,11 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
 abstract class _addEvent implements CategoriesBlocEvent {
   const factory _addEvent(
       {required final String uuid,
-      required final CategoryExpenses data,
-      required final Completer<dynamic> completer}) = _$addEventImpl;
+      required final CategoryExpenses data}) = _$addEventImpl;
 
   @override
   String get uuid;
   CategoryExpenses get data;
-  Completer<dynamic> get completer;
   @override
   @JsonKey(ignore: true)
   _$$addEventImplCopyWith<_$addEventImpl> get copyWith =>
@@ -732,9 +695,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
-        add,
+    required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
   }) {
     return delete(uuid);
@@ -745,9 +706,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
   }) {
     return delete?.call(uuid);
@@ -758,9 +717,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
-        add,
+    TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     required TResult orElse(),
   }) {

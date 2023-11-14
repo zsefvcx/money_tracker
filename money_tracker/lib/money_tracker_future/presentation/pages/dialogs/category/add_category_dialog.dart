@@ -5,6 +5,8 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/bloc_factory.dart';
 
 class AddCategoryDialog extends StatefulWidget {
   const AddCategoryDialog({
@@ -24,6 +26,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController= TextEditingController();
   final TextEditingController _colorController= TextEditingController();
+  final TextEditingController _hexInputController = TextEditingController();
 
   final FocusNode _focusNode = FocusNode();
   final FocusNode _focusNodeSecond = FocusNode();
@@ -34,7 +37,6 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   @override
   void initState() {
     super.initState();
-    _nameController.text = '';
   }
 
   @override
@@ -45,6 +47,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
     _focusNodeSecond.dispose();
     _focusNodeThree.dispose();
     _valueNotifierColorPickerVisible.dispose();
+    _hexInputController.dispose();
     super.dispose();
   }
 
@@ -52,7 +55,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+    final categoriesBloc = BlocFactory.instance.get<CategoriesBloc>();
     return IconButton(onPressed: () => showDialog<String?>(
       context: context,
       builder: (context) => Dialog(
@@ -122,6 +125,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                               Visibility(
                                 visible: value,
                                 child: ColorPicker(
+                                  hexInputController: _hexInputController,
                                   colorPickerWidth: 200,
                                   pickerColor: Colors.white,
                                   enableAlpha: false,
@@ -153,17 +157,16 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                     ElevatedButton(onPressed: () {
                       final cSt = _formKey.currentState;
                       if(cSt != null && cSt.validate()) {
-
-
-
-                        if (kDebugMode) {
-                          print('Add');
-                        }
+                        categoriesBloc.add(CategoriesBlocEvent.add(
+                            uuid: widget.uuid,
+                            data: CategoryExpenses(
+                              name: _nameController.text,
+                              colorHex: _colorController.text,
+                            ),
+                        ));
+                        _nameController.text = '';
+                        Navigator.pop(context);
                       }
-
-
-
-
                       // if(applyData) return;
                       // applyData = true;
                       // Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWith(
@@ -183,6 +186,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                     TextButton(
                       onPressed: () {
                         Navigator.pop(context);
+                        _nameController.text = '';
                       },
                       child: Text(S.of(context).close, style: theme.dialogTheme.contentTextStyle),
                     ),

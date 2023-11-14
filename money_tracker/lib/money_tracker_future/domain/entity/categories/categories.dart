@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
 
 ///Категории
 abstract class CategoriesExpensesModels  extends Equatable{
-  final Set<int> categoriesId;
+  final Set<CategoryExpenses> categoriesId;
 
   const CategoriesExpensesModels({required this.categoriesId});
 

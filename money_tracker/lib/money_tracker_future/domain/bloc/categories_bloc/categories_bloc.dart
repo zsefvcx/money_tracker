@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 //import 'package:injectable/injectable.dart';
 
@@ -68,30 +69,18 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             //   }
           },
           add: (value) async {
-            // final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
-            //             function: () async =>
-            //             await _monthRepository.insert(uuid: value.uuid, data: value.data),
-            //           );
-            //
-            // final data =  categoriesModelData.data;
-            // final monthCurrent = res;
-            // if(!error && res !=null && data != null &&
-            //     data.year == value.data.year && data.uuid == value.uuid) {
-            //   if(res.id!=null)data.months.add(value.data.month);
-            // }
-            // categoriesModelData = categoriesModelData.copyWithData(
-            //   data: data,
-            //   monthCurrent: monthCurrent,
-            //   timeOut: timeOut,
-            //   error: error,
-            //   e: e,
-            // );
-            // if (error){
-            //   Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
-            //   value.completer.completeError(error);
-            // } else {
-            //   value.completer.complete(res?.id);
-            // }
+            emit(const CategoriesBlocState.loading());
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+                        function: () async =>
+                        await _categoriesRepository.insert(uuid: value.uuid, data: value.data),
+                      );
+            modelData = modelData.copyWithData(
+              data: res,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            await _response(emit);
           },
           delete: (value) async {
             emit(const CategoriesBlocState.loading());
@@ -99,27 +88,15 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               function: () async =>
                 await _categoriesRepository.delete(uuid: value.uuid),
               );
-
-            if(!error && res !=null && res){
-
-              final (error2, timeOut2, e2, res2) = await _runGoSData<CategoriesExpensesModels>(
-                function: () async =>
-                await _categoriesRepository.getAllId(uuid: value.uuid),
-              );
               modelData = modelData.copyWithData(
-                data: res2,
-                timeOut: timeOut2,
-                error: error2,
-                e: e2,
-              );
-            } else {
-              modelData = modelData.copyWithData(
-                data: null,
-                timeOut: timeOut,
-                error: error,
-                e: e,
-              );
-            }
+              data: (res!=null && res)?const CategoriesExpenses(
+                categoriesId: <CategoryExpenses>{}
+              ):null,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+
             await _response(emit);
           }
       );
@@ -136,7 +113,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
     } else{
       final data = modelData.data;
       if (data != null) {
-        emit(CategoriesBlocState.loaded(model: modelData.data,));
+        emit(CategoriesBlocState.loaded(model: data,));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const CategoriesBlocState.error());

@@ -111,7 +111,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     } else{
       final data = photoModelData.data;
       if (data != null) {
-        emit(PhotoBlocState.loaded(model:  photoModelData.data));
+        emit(PhotoBlocState.loaded(model:  data));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const PhotoBlocState.error());

@@ -4,10 +4,8 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
-import 'package:money_tracker/money_tracker_future/presentation/pages/error_time_out.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -90,44 +88,47 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
           BlocBuilder<CategoriesBloc, CategoriesBlocState>(
             builder: (context, state) {
               return state.map(
-                loading: (_)=> const Scaffold(
-                  body: Padding(
+                loading: (_)=> const Padding(
                     padding: EdgeInsets.only(
                       left: 25, right: 25, top: 10, bottom: 25,
                     ),
                     child: Center(
                       child: CircularProgressIndicator(),
                     ),
-                  ),
                 ),
                 loaded: (value) {
-                  return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                  final localCategories = value.model;
+                  if (localCategories == null){
+                    return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
                       uuid: widget.uuid,
-                      tCurrent: null
+                    );
+                  }
+                  final length = localCategories.categoriesId.length;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Hero(tag: Keys.heroIdSplash, child: CustomPieChart(
+                          categoriesExpensesModels: localCategories
+                      )),
+                      Expanded(
+                        child: ListView.builder(
+                          itemCount: length,
+                          itemBuilder: (_, index) {
+                            return CustomCard(
+                                categoryExpenses: localCategories.categoriesId.elementAt(index),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   );
-                  // final length = value.model?.categoriesId.length??0;
-                  // return Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     const Hero(tag: Keys.heroIdSplash, child: CustomPieChart()),
-                  //     Expanded(
-                  //       child: ListView.builder(
-                  //         itemCount: length,
-                  //         itemBuilder: (context, index) {
-                  //           return CustomCard(index: index);
-                  //         },
-                  //       ),
-                  //     ),
-                  //   ],
-                  // );
-                  return const CircularProgressIndicator();
                 },
-                error: (value) {
-                  return const CircularProgressIndicator();
-                },
-                timeOut: (value) {
-                  return const CircularProgressIndicator();
-                },
+                error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                  uuid: widget.uuid,
+                ),
+                timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                  uuid: widget.uuid,
+                ),
               );
             },
           ),

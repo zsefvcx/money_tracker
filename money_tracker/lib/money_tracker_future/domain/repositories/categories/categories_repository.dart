@@ -4,7 +4,7 @@ import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 abstract class CategoriesRepository {
 
-  Future<CategoryExpenses?> insert({required String uuid, required CategoryExpenses data});
+  Future<CategoriesExpensesModels?> insert({required String uuid, required CategoryExpenses data});
 
   Future<CategoriesExpensesModels?> getAllId({required String uuid});
 

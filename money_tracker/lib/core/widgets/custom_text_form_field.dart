@@ -14,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
     this.autofocus = false,
     this.maxLength,
     this.suffixIcon,
+    this.onChanged,
     super.key});
 
   final TextEditingController? controller;
@@ -27,6 +28,7 @@ class CustomTextFormField extends StatefulWidget {
   final TextInputType? keyboardType;
   final int? maxLength;
   final Widget? suffixIcon;
+  final ValueChanged<String>? onChanged;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -64,6 +66,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               FocusScope.of(context).requestFocus(widget.nextFocusNode);
               widget.nextFocusNode?.requestFocus();
             },
+            onChanged: widget.onChanged,
             autofocus: widget.autofocus,
             focusNode: widget.focusNode,
             style: theme.textTheme.bodyMedium,

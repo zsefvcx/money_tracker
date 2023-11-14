@@ -8,13 +8,13 @@ class MonthCurrent extends Equatable {
 
   const MonthCurrent({required this.id, required this.year, required this.month});
 
-  MonthCurrent copyWith({
-    int? id,
+  MonthCurrent copyWithId({
+    required int? id,
     int? year,
     int? month,
   }) {
     return MonthCurrent(
-      id: id ?? this.id,
+      id: id,
       year: year ?? this.year,
       month: month ?? this.month,
     );

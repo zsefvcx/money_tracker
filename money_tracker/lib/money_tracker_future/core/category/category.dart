@@ -29,11 +29,11 @@ class CategoryExpenses extends Equatable{
   @override
   List<Object?> get props => [id,name,colorHex,];
 
-  /// Connect the generated [_$CategoryExpensesFromJson] function to the `fromJson`
+  /// Connect the generated _$CategoryExpensesFromJson function to the `fromJson`
   /// factory.
   factory CategoryExpenses.fromJson(Map<String, dynamic> json) => _$CategoryExpensesFromJson(json);
 
-  /// Connect the generated [_$CategoryExpensesToJson] function to the `toJson` method.
+  /// Connect the generated _$CategoryExpensesToJson function to the `toJson` method.
   Map<String, dynamic> toJson() => _$CategoryExpensesToJson(this);
 
   @override

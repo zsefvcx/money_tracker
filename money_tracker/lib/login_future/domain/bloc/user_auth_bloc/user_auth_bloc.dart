@@ -21,7 +21,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
 
   static int timeOutV = 10;
 
-  UserAuthData userAuthData = const UserAuthData(
+  UserAuthData modelData = const UserAuthData(
     timeOut: false,
     data: null,
     e: '',
@@ -39,7 +39,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
               function: () async => await  getUserAuthRepository.loadUserData(),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               error: error,
               e: e,
@@ -61,7 +61,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
               function: () async => await setUserAuthRepository.logout(),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               error: error,
               e: e,
@@ -82,7 +82,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                     userNameHash512: value.userNameHash512
                 ),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               error: error,
               e: e,
               timeOut: timeOut,
@@ -103,7 +103,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                   userPasswordHash512: value.userPasswordHash512
               ),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               error: error,
               e: e,
@@ -123,7 +123,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                   userNameHash512: value.userNameHash512
               ),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               error: error,
               e: e,
               timeOut: timeOut,
@@ -146,7 +146,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
                   userGroup: value.userGroup
               ),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               error: error,
               e: e,
@@ -165,7 +165,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
               final (error, timeOut, e, res) = await _runGoSData<bool>(
                 function: () async => await  setUserAuthRepository.deleteUserData(),
               );
-              userAuthData = userAuthData.copyWithData(
+              modelData = modelData.copyWithData(
                 error: error,
                 e: e,
                 timeOut: timeOut,
@@ -188,7 +188,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
               function: () async => await setUserAuthRepository.changeLoadImageStatus(status: value.status),
             );
-            userAuthData = userAuthData.copyWithData(
+            modelData = modelData.copyWithData(
               data: res,
               error: error,
               e: e,
@@ -207,16 +207,16 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
   }
 
   Future<void> _response(Emitter<UserAuthState> emit) async {
-    if (userAuthData.error){
-      if(userAuthData.timeOut){
+    if (modelData.error){
+      if(modelData.timeOut){
         emit(const UserAuthState.timeOut());
       } else {
         emit(const UserAuthState.error());
       }
     } else{
-      final data = userAuthData.data;
+      final data = modelData.data;
       if (data != null) {
-        userAuthData = userAuthData.copyWithData(
+        modelData = modelData.copyWithData(
           uuid: data.uuid,
           eMail: data.eMail,
           statusAuthorization: data.statusAuthorization,
@@ -226,7 +226,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const UserAuthState.newUser());
-        userAuthData = const UserAuthData(
+        modelData = const UserAuthData(
           timeOut: false,
           data: null,
           e: '',
