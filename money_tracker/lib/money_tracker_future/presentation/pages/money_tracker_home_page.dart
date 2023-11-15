@@ -57,10 +57,8 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
 
     final theme = Theme.of(context);
     final photoBloc = context.read<PhotoBloc>();
-    final categoriesBloc = BlocFactory.instance.get<CategoriesBloc>()
-      ..add(CategoriesBlocEvent.init(
-        uuid: widget.uuid,
-      ));
+    BlocFactory.instance.get<CategoriesBloc>()
+      .add(CategoriesBlocEvent.init(uuid: widget.uuid));
 
     var logoutProcess = false;
     return Scaffold(
@@ -107,15 +105,19 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Hero(tag: Keys.heroIdSplash, child: CustomPieChart(
-                          categoriesExpensesModels: localCategories
+                      Hero(tag: Keys.heroIdSplash, child: Material(
+                        child: CustomPieChart(
+                          categoriesExpensesModels: localCategories,
+                          monthCurrent: _monthCurrent,
+                        ),
                       )),
                       Expanded(
                         child: ListView.builder(
                           itemCount: length,
                           itemBuilder: (_, index) {
                             return CustomCard(
-                                categoryExpenses: localCategories.categoriesId.elementAt(index),
+                              categoryExpenses: localCategories.categoriesId.elementAt(index),
+                              monthCurrent: _monthCurrent,
                             );
                           },
                         ),

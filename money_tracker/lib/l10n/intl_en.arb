@@ -47,10 +47,11 @@
   "close": "Close",
   "confirm": "Confirm",
   "addCategory": "Add category",
-  "errorLengthMustBe6SymbolsInHexFormat": "Error! Must be 6 symbols in Hex format",
+  "errorLengthMustBe6SymbolsInHexFormat": "Enter 6 symbols in Hex format",
   "name": "Name",
   "color": "Color",
   "fieldIsEmpty": "field is empty",
   "enterTheName": "Enter name",
-  "enterColor": "Enter color"
+  "enterColor": "Enter color",
+  "thereAreNoExpensesForMonthName": "There are no expenses for <b>{monthName}</b>"
 }

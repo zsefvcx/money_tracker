@@ -47,10 +47,11 @@
   "close": "Закрыть",
   "confirm": "Подтвердить",
   "addCategory": "Добавить категорию",
-  "errorLengthMustBe6SymbolsInHexFormat": "Ошибка! Должно быть 6 символов в Hex формате",
+  "errorLengthMustBe6SymbolsInHexFormat": "Введите 6 символов в Hex формате",
   "name": "Название",
   "color": "Цвет",
   "fieldIsEmpty": "Поле не заполнено",
   "enterTheName": "Введите название",
-  "enterColor": "Введите цвет"
+  "enterColor": "Введите цвет",
+  "thereAreNoExpensesForMonthName": "За <b>{monthName}</b> нет расходов"
 }

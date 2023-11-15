@@ -9,5 +9,4 @@ export 'theme/custom_theme_prop.dart';
 export 'widgets/circular_progress_indicator_mod.dart'; 
 export 'widgets/custom_show_snack_bar.dart';
 export 'widgets/custom_text_form_field.dart';
-export 'widgets/error_time_out.dart'; 
-
+export 'widgets/error_time_out.dart';

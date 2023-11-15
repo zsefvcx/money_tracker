@@ -77,7 +77,8 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
           }
         },
         child: Text(
-            '${NameMonth(context).toNameMonth(_monthCurrent.month)} ${_monthCurrent.year}'
+            '${NameMonth(context).toNameMonth(_monthCurrent.month)} '
+                '${_monthCurrent.year}'
         ),
       )
     );

@@ -4,9 +4,13 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({required this.categoryExpenses, super.key});
+  const CustomCard({
+    required this.monthCurrent,
+    required this.categoryExpenses,
+    super.key
+  });
 
-  
+  final MonthCurrent monthCurrent;
   final CategoryExpenses categoryExpenses;
 
   @override

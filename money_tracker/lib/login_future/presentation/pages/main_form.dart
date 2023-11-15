@@ -6,7 +6,7 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/core/core.dart';
 import 'package:money_tracker/login_future/domain/domain.dart';
-import 'package:money_tracker/login_future/presentation/presentation.dart';
+import 'package:money_tracker/login_future/presentation/pages/widgets/custom_button.dart';
 
 class MainForm extends StatefulWidget {
   const MainForm({

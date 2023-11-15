@@ -6,7 +6,6 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
-import 'package:money_tracker/money_tracker_future/domain/bloc/bloc_factory.dart';
 
 class AddCategoryDialog extends StatefulWidget {
   const AddCategoryDialog({
@@ -65,8 +64,9 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(S.of(context).addCategory, style: theme.textTheme.titleLarge?.copyWith(
-                fontSize: 20
+              Text(S.of(context).addCategory,
+                style: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 20
               ),),
               Padding(
                 padding: const EdgeInsets.only(
@@ -115,7 +115,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                                     :S.of(context).errorLengthMustBe6SymbolsInHexFormat,
                                 suffixIcon: IconButton(
                                   onPressed: () {
-                                    _valueNotifierColorPickerVisible.value = !_valueNotifierColorPickerVisible.value;
+                                     _valueNotifierColorPickerVisible.value =
+                                    !_valueNotifierColorPickerVisible.value;
                                   },
                                   icon: Icon(!value
                                       ?Icons.color_lens_outlined
@@ -131,7 +132,8 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                                   enableAlpha: false,
                                   paletteType: PaletteType.hueWheel,
                                   onColorChanged: (color){
-                                    _colorController.text = color.value.toRadixString(16).substring(2,8);
+                                    _colorController.text =
+                                        color.value.toRadixString(16).substring(2,8);
                                     if (kDebugMode) {
                                       print(color);
                                     }

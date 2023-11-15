@@ -1,14 +1,7 @@
-import 'dart:io';
-
 import 'package:money_tracker/core/logger/logger.dart';
 import 'package:money_tracker/money_tracker_future/core/month/month_current.dart';
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sqflite/sqflite.dart'
-        if(dart.library.io.Platform.isWindows)'package:sqflite_common_ffi/sqflite_ffi.dart'
-        if(dart.library.io.Platform.isLinux  )'package:sqflite_common_ffi/sqflite_ffi.dart';
-
 
 class MonthsStatusImpl extends MonthsStatus {
 
@@ -34,6 +27,7 @@ class MonthsStatusImpl extends MonthsStatus {
     try {
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       await dbSqlLiteLocal.deleteAll();
+      return true;
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
       throw ArgumentError('Error delete!');

@@ -40,8 +40,6 @@ class DataBaseSqfLiteImpl implements DataBaseSqfLite{
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-
-
   static DataBaseSqfLiteImpl db({required String uuid}) {
     if (_lastUuid != uuid){
       _database?.close();

@@ -530,10 +530,10 @@ class S {
     );
   }
 
-  /// `Error! Must be 6 symbols in Hex format`
+  /// `Enter 6 symbols in Hex format`
   String get errorLengthMustBe6SymbolsInHexFormat {
     return Intl.message(
-      'Error! Must be 6 symbols in Hex format',
+      'Enter 6 symbols in Hex format',
       name: 'errorLengthMustBe6SymbolsInHexFormat',
       desc: '',
       args: [],
@@ -587,6 +587,16 @@ class S {
       name: 'enterColor',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `There are no expenses for <b>{monthName}</b>`
+  String thereAreNoExpensesForMonthName(Object monthName) {
+    return Intl.message(
+      'There are no expenses for <b>$monthName</b>',
+      name: 'thereAreNoExpensesForMonthName',
+      desc: '',
+      args: [monthName],
     );
   }
 }

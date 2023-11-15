@@ -81,9 +81,6 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
       });
     }
 
-
-
-    var applyData = false;
     return Provider.value(
       value: this,
       child: Column(
@@ -185,10 +182,12 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
             child: Column(
               children: [
                 ElevatedButton(onPressed: () {
-                  Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWithId(
-                    id: null,
-                    month: selectMonth
-                  ):null);
+                  Navigator.pop(context, (selectMonth>0 && selectMonth<=12)
+                    ?_monthCurrent.copyWithId(
+                      id: null,
+                      month: selectMonth)
+                    :null
+                  );
                 },
                   child: Text(S.of(context).confirm),
                   style: theme.elevatedButtonTheme.style?.copyWith(
@@ -203,7 +202,9 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  child: Text(S.of(context).close, style: theme.dialogTheme.contentTextStyle),
+                  child: Text(S.of(context).close,
+                      style: theme.dialogTheme.contentTextStyle
+                  ),
                 ),
               ],
             ),

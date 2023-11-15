@@ -20,6 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(monthName) =>
+      "There are no expenses for <b>${monthName}</b>";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Add"),
@@ -48,7 +51,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "error": MessageLookupByLibrary.simpleMessage("Error!"),
         "errorLengthMustBe6SymbolsInHexFormat":
             MessageLookupByLibrary.simpleMessage(
-                "Error! Must be 6 symbols in Hex format"),
+                "Enter 6 symbols in Hex format"),
         "exit": MessageLookupByLibrary.simpleMessage("Exit"),
         "expenses": MessageLookupByLibrary.simpleMessage("Expenses"),
         "february": MessageLookupByLibrary.simpleMessage("February"),
@@ -91,6 +94,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The password must not contain spaces"),
         "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
             "The username is taken or disabled"),
+        "thereAreNoExpensesForMonthName": m0,
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "This user does not exist or there is an error in the password"),
         "timeout": MessageLookupByLibrary.simpleMessage("TimeOut"),
