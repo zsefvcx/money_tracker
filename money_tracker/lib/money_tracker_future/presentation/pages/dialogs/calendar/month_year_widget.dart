@@ -81,6 +81,9 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
       });
     }
 
+
+
+    var applyData = false;
     return Provider.value(
       value: this,
       child: Column(
@@ -128,7 +131,9 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                   children: [
                     IconButton(onPressed: () async {
                       await upOrDown(() {
-                        _monthCurrent = _monthCurrent.copyWith(
+                        final id = _monthCurrent.id;
+                        _monthCurrent = _monthCurrent.copyWithId(
+                            id: id,
                             year: _monthCurrent.year+1
                         );
                       },);
@@ -137,7 +142,9 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
                     )),
                     IconButton(onPressed: () async {
                       await upOrDown(() {
-                        _monthCurrent = _monthCurrent.copyWith(
+                        final id = _monthCurrent.id;
+                        _monthCurrent = _monthCurrent.copyWithId(
+                            id: id,
                             year: _monthCurrent.year-1
                         );
                       },);
@@ -178,7 +185,8 @@ class _MonthYearWidgetState extends State<MonthYearWidget> {
             child: Column(
               children: [
                 ElevatedButton(onPressed: () {
-                  Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWith(
+                  Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWithId(
+                    id: null,
                     month: selectMonth
                   ):null);
                 },

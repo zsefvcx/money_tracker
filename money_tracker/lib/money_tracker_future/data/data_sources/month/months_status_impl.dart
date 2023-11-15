@@ -12,52 +12,10 @@ import 'package:sqflite/sqflite.dart'
 
 class MonthsStatusImpl extends MonthsStatus {
 
-  String? lastUuid;
-  DataBaseSqfLite? _dbSqfLite;
-  Database? _database;
-
-  Future<DataBaseSqfLite> dbSqfLite({required String uuid}) async {
-    final dbSqfLite = _dbSqfLite;
-    if(lastUuid == null || lastUuid == uuid){
-      if(_database==null && dbSqfLite != null){
-        dbSqfLite.database = await database(uuid: uuid);
-        return dbSqfLite;
-      }
-      return _dbSqfLite ??= DataBaseSqfLiteImpl(
-          database: await database(uuid: uuid)
-      );
-    } else if((lastUuid != null && lastUuid != uuid)|| _database==null){
-      if (dbSqfLite != null){
-        dbSqfLite.database = await database(uuid: uuid);
-        return dbSqfLite;
-      }
-    }
-    throw ArgumentError('Error create db!');
-  }
-
-  Future<Database> database({required String uuid}) async => _database ??= await _initDB(uuid: uuid);
-
-  Future<String> localPath({required String uuid}) async {
-    final directory = await getApplicationSupportDirectory();
-    final path = '${directory.path}/${uuid}_database.db';
-    Logger.print('PathToPhoto:$path');
-    return path;
-  }
-
-  Future<File> localFile({required String uuid}) async {
-    return File(await localPath(uuid: uuid));
-  }
-
-  Future<Database> _initDB({required String uuid}) async {
-    final path = await localPath(uuid: uuid);
-    lastUuid = uuid;
-    return await openDatabase(path, version: 1, onCreate: DataBaseSqfLiteImpl.createDB);
-  }
-
   @override
   Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
       try{
-        final dbSqlLiteLocal = await dbSqfLite(uuid: uuid);
+        final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
           final data = await dbSqlLiteLocal.findAllMonthInYear(year);
           final monthsCurrentYearEntity = MonthsCurrentYearModel(
             uuid: uuid,
@@ -74,11 +32,8 @@ class MonthsStatusImpl extends MonthsStatus {
   @override
   Future<bool?> delete({required String uuid}) async {
     try {
-      await _database?.close();
-      _database = null;
-      final file = await localFile(uuid: uuid);
-      await file.delete();
-      return true;
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      await dbSqlLiteLocal.deleteAll();
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
       throw ArgumentError('Error delete!');
@@ -88,10 +43,10 @@ class MonthsStatusImpl extends MonthsStatus {
   @override
   Future<MonthCurrent?> insert({required String uuid, required MonthCurrent data}) async {
     try{
-      final dbSqlLiteLocal = await dbSqfLite(uuid: uuid);
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final id = await dbSqlLiteLocal.insert(data);
 
-      return data.copyWith(id: id);
+      return data.copyWithId(id: id);
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error insert month: $e\n$t');
@@ -101,7 +56,7 @@ class MonthsStatusImpl extends MonthsStatus {
   @override
   Future<bool?> update({required String uuid, required MonthCurrent data}) async {
     try{
-      final dbSqlLiteLocal = await dbSqfLite(uuid: uuid);
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.update(data);
 
       return res>0;

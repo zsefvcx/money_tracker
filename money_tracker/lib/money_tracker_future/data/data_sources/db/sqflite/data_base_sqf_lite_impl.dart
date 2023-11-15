@@ -1,20 +1,65 @@
+import 'dart:io';
+
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/data/data_sources/db/db.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart'
         if(dart.library.io.Platform.isWindows)'package:sqflite_common_ffi/sqflite_ffi.dart'
         if(dart.library.io.Platform.isLinux  )'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class DataBaseSqfLiteImpl extends DataBaseSqfLite{
+class DataBaseSqfLiteImpl implements DataBaseSqfLite{
 
-  DataBaseSqfLiteImpl({required super.database});
+  static String? _lastUuid;
+
+  final String _uuid;
+
+  DataBaseSqfLiteImpl._({required String uuid}): _uuid = uuid;
+
+  static DataBaseSqfLiteImpl? _db;
+  static Database? _database;
+
+  Future<String> localPath({required String uuid}) async {
+    final directory = await getApplicationSupportDirectory();
+    final path = '${directory.path}/${uuid}_database.db';
+    Logger.print('PathToPhoto:$path');
+    return path;
+  }
+
+  Future<File> localFile({required String uuid}) async {
+    return File(await localPath(uuid: uuid));
+  }
+
+  Future<Database> get database async {
+    return _database ??= await _initDB(uuid: _uuid);
+  }
+
+  Future<Database> _initDB({required String uuid}) async {
+    final path = await localPath(uuid: uuid);
+    _lastUuid = uuid;
+    return await openDatabase(path, version: 1, onCreate: _createDB);
+  }
+
+
+
+  static DataBaseSqfLiteImpl db({required String uuid}) {
+    if (_lastUuid != uuid){
+      _database?.close();
+      _database = null;
+      _db = null;
+    }
+    _lastUuid = uuid;
+    return _db ??= DataBaseSqfLiteImpl._(uuid: uuid);
+  }
+
+
 
   static const String _table = 'MonthCurrent';
   static const String _id = 'id';
   static const String _year = 'year';
   static const String _month = 'month';
 
-  static Future<void> createDB(Database db, int version) async {
+  Future<void> _createDB(Database db, int version) async {
     try {
       await db.execute(
           'CREATE TABLE "$_table" ( '
@@ -33,7 +78,7 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
   ///Пока получаем все элементы из списка
   @override
   Future<List<int>> findAllMonthInYear(int year) async {
-    final db = database;
+    final db = await database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_table,
           where: '$_year = ?',
@@ -53,7 +98,7 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
   ///INSERT findMonthById
   @override
   Future<MonthCurrent?> findMonthById(int id) async {
-    final db = database;
+    final db = await database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_table,
         where: '$_id = ?',
@@ -72,7 +117,7 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
       {
         ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
       }) async {
-    final db = database;
+    final db = await database;
 
     /// должно быть уникальное
     final query = await db.query(_table,
@@ -101,7 +146,7 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
       {
         ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
       }) async {
-    final db = database;
+    final db = await database;
 
     return await db.update(
         _table,
@@ -116,12 +161,21 @@ class DataBaseSqfLiteImpl extends DataBaseSqfLite{
   ///DELETE GID
   @override
   Future<int> delete(int gid) async {
-    final db = database;
+    final db = await database;
     return await db.delete(
             _table,
             where: '"$_id" = ?',
             whereArgs: [gid]
     );
+  }
+
+  ///DELETE ALL
+  @override
+  Future<void> deleteAll() async {
+    await _database?.close();
+    _database = null;
+    final file = await localFile(uuid: _uuid);
+    await file.delete();
   }
 
 }

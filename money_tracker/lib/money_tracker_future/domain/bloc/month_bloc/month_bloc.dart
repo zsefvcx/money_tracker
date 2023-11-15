@@ -83,9 +83,9 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
 
             final data =  modelData.data;
             final monthCurrent = res;
-            if(!error && res !=null && data != null &&
+            if(!error && res !=null && data != null && monthCurrent != null &&
                 data.year == value.data.year && data.uuid == value.uuid) {
-              if(res.id!=null)data.months.add(value.data.month);
+              if(res.id!=null)data.months.add(monthCurrent.month);
             }
             modelData = modelData.copyWithData(
               data: data,

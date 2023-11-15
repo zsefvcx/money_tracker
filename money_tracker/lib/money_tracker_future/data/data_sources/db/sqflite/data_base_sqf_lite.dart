@@ -5,10 +5,6 @@ import 'package:sqflite/sqflite.dart'
 
 abstract class DataBaseSqfLite {
 
-  Database database;
-
-  DataBaseSqfLite({required this.database});
-
   Future<List<int>> findAllMonthInYear(int year);
 
   Future<MonthCurrent?> findMonthById(int id);
@@ -22,4 +18,6 @@ abstract class DataBaseSqfLite {
   });
 
   Future<int> delete(int gid);
+
+  Future<void> deleteAll();
 }
