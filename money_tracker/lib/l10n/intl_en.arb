@@ -55,5 +55,7 @@
   "enterColor": "Enter color",
   "thereAreNoExpensesForMonthName": "There are no expenses for {monthName}",
   "delete": "Delete",
-  "dataLoaded": "Data loaded"
+  "dataLoaded": "Data loaded",
+  "modifi": "Modifi",
+  "changeCategory": "Change category"
 }

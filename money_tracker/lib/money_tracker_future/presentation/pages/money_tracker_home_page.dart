@@ -43,43 +43,32 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
   @override
   void initState() {
     _monthCurrent = widget.monthCurrent;
+    final photoBloc = context.read<PhotoBloc>();
+    final categoriesBloc = context.read<CategoriesBloc>()
+      ..add(CategoriesBlocEvent.init(uuid: widget.uuid));
+
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
-      final photoBloc = context.read<PhotoBloc>();
-      if (_tabController.indexIsChanging) {
-        // Tab Changed tapping on new tab
-        if (_tabController.index == 0) {
-          BlocFactory.instance.get<CategoriesBloc>()
-              .add(CategoriesBlocEvent.init(uuid: widget.uuid));
-        } else if (_tabController.index == 1) {
-          if (widget.loadImage) {
-            photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
-          } else {
-            photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-          }
-        }
-        setState(() {
-          _currentTabIndex = _tabController.index;
-        });
-      } else if(_tabController.index != _tabController.previousIndex) {
-        // Tab Changed swiping to a new tab
-        if (_tabController.index == 0) {
-          BlocFactory.instance.get<CategoriesBloc>()
-              .add(CategoriesBlocEvent.init(uuid: widget.uuid));
-        } else if (_tabController.index == 1) {
-          if (widget.loadImage) {
-            photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
-          } else {
-            photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-          }
-          setState(() {
-            _currentTabIndex = _tabController.index;
-          });
+      if (_tabController.index == 0) {
+        categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.uuid));
+      } else if (_tabController.index == 1) {
+        if (widget.loadImage) {
+          photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+        } else {
+          photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
         }
       }
+      setState(() {
+        _currentTabIndex = _tabController.index;
+      });
+
+      if (_tabController.indexIsChanging) {
+        // Tab Changed tapping on new tab
+
+      } else if(_tabController.index != _tabController.previousIndex) {
+        // Tab Changed swiping to a new tab
+      }
     });
-
-
 
     super.initState();
   }
@@ -96,19 +85,19 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
   Widget build(BuildContext context) {
 
     final theme = Theme.of(context);
-    final photoBloc = context.read<PhotoBloc>();
-    if(_tabController.index == 0) {
-      _currentTabIndex = 0;
-      BlocFactory.instance.get<CategoriesBloc>()
-          .add(CategoriesBlocEvent.init(uuid: widget.uuid));
-    } else if(_tabController.index == 1){
-      _currentTabIndex = 1;
-      if (widget.loadImage){
-        photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
-      } else {
-        photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-      }
-    }
+    //final photoBloc = context.read<PhotoBloc>();
+    //final categoriesBloc = context.read<CategoriesBloc>();
+    // if(_tabController.index == 0) {
+    //   _currentTabIndex = 0;
+    //   categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.uuid));
+    // } else if(_tabController.index == 1){
+    //   _currentTabIndex = 1;
+    //   if (widget.loadImage){
+    //     photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+    //   } else {
+    //     photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+    //   }
+    // }
     var logoutProcess = false;
     return Scaffold(
       appBar: AppBar(
@@ -124,7 +113,8 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
             visible: _currentTabIndex==0,
             child: AddCategoryDialog(
                 uuid: widget.uuid,
-                monthCurrent: _monthCurrent
+                monthCurrent: _monthCurrent,
+                icon: const Icon(Icons.add),
             ),
           ),
         ],

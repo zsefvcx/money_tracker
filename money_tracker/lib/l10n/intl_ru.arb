@@ -55,5 +55,7 @@
   "enterColor": "Введите цвет",
   "thereAreNoExpensesForMonthName": "За {monthName} нет расходов",
   "delete": "Удалить",
-  "dataLoaded": "Данные загружены"
+  "dataLoaded": "Данные загружены",
+  "modifi": "Изменить",
+  "changeCategory": "Изменить категорию"
 }

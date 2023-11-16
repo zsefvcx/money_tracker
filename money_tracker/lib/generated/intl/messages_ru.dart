@@ -31,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Уже есть аккаунт?"),
         "april": MessageLookupByLibrary.simpleMessage("Апрель"),
         "august": MessageLookupByLibrary.simpleMessage("Август"),
+        "changeCategory":
+            MessageLookupByLibrary.simpleMessage("Изменить категорию"),
         "close": MessageLookupByLibrary.simpleMessage("Закрыть"),
         "color": MessageLookupByLibrary.simpleMessage("Цвет"),
         "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
@@ -65,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "june": MessageLookupByLibrary.simpleMessage("Июнь"),
         "march": MessageLookupByLibrary.simpleMessage("Март"),
         "may": MessageLookupByLibrary.simpleMessage("Май"),
+        "modifi": MessageLookupByLibrary.simpleMessage("Изменить"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "noAccountYet":
             MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),

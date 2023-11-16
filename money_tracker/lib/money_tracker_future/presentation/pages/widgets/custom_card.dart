@@ -4,6 +4,7 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
@@ -24,18 +25,14 @@ class CustomCard extends StatefulWidget {
 }
 
 class _CustomCardState extends State<CustomCard> {
-  final _valueNotifierLongPress  = ValueNotifier<bool>(false);
 
-  @override
-  void dispose() {
-    super.dispose();
-    _valueNotifierLongPress.dispose();
-  }
+
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesBloc = context.read<CategoriesBloc>();
+    final valueNotifierLongPress  = ValueNotifier<bool>(false);
     final id = widget.categoryExpenses.id??0;
     final moneyTrackerHomePageState= context.read<MoneyTrackerHomePageState>();
     return Dismissible(
@@ -49,7 +46,7 @@ class _CustomCardState extends State<CustomCard> {
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onExit: (event) {
-          _valueNotifierLongPress.value = false;
+          valueNotifierLongPress.value = false;
         },
         child: GestureDetector(
           onTap: () => showDialog<String>(
@@ -75,7 +72,7 @@ class _CustomCardState extends State<CustomCard> {
             ),
           ),
           onLongPress: ()=>
-            _valueNotifierLongPress.value = !_valueNotifierLongPress.value,
+            valueNotifierLongPress.value = !valueNotifierLongPress.value,
           child: Card(
             child: Container(
               padding: const EdgeInsets.only(
@@ -98,15 +95,29 @@ class _CustomCardState extends State<CustomCard> {
                       Text('Всего 3800', style:  theme.textTheme.bodySmall,),
                     ],
                   ),
-                  ValueListenableBuilder<bool>(valueListenable: _valueNotifierLongPress, builder: (_, value, __) {
+                  ValueListenableBuilder<bool>(valueListenable: valueNotifierLongPress, builder: (_, value, __) {
                     if (!value) {
-                      return IconButton(onPressed: () {
+                      return Row(
+                        children: [
+                          AddCategoryDialog(
+                              uuid: widget.uuid,
+                              monthCurrent: widget.monthCurrent,
+                              categoryExpenses: widget.categoryExpenses,
+                              icon: Icon(Icons.edit,
+                                  color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                              ),
+                              addCategory: false,
+                            ),
+                          IconButton(
+                            onPressed: () {
 
-                      },
-                        icon: Icon(
-                            Icons.arrow_forward_ios,
-                            color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
-                        ),
+                          },
+                            icon: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                            ),
+                          ),
+                        ],
                       );
                     } else {
                       return ElevatedButton(onPressed: () {

@@ -12,11 +12,17 @@ class AddCategoryDialog extends StatefulWidget {
   const AddCategoryDialog({
     required this.monthCurrent,
     required this.uuid,
+    required this.icon,
+    this.addCategory = true,
+    this.categoryExpenses,
     super.key
   });
 
+  final bool addCategory;
   final MonthCurrent monthCurrent;
+  final Widget icon;
   final String uuid;
+  final CategoryExpenses? categoryExpenses;
 
   @override
   State<AddCategoryDialog> createState() => _AddCategoryDialogState();
@@ -56,9 +62,19 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesBloc = context.read<CategoriesBloc>();
-    return IconButton(onPressed: () => showDialog<String?>(
+    return IconButton(onPressed: () async {
+      if (!widget.addCategory){
+        final categoryExpenses = widget.categoryExpenses;
+        if(categoryExpenses != null){
+          _nameController.text = categoryExpenses.name;
+          _colorController.text = categoryExpenses.colorHex;
+          _hexInputController.text = '#${categoryExpenses.colorHex}';
+        }
+      }
+      final res = await showDialog<CategoryExpenses?>(
       context: context,
-      builder: (context) => Dialog(
+      builder: (context) {
+        return Dialog(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(8),
@@ -66,7 +82,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(S.of(context).addCategory,
+                Text(widget.addCategory?S.of(context).addCategory:S.of(context).changeCategory,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 20
                 ),),
@@ -78,7 +94,6 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                   child: Form(
                     key: _formKey,
                     child: Column(
-
                       children: [
                         CustomTextFormField(
                           controller: _nameController,
@@ -160,24 +175,27 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                     children: [
                       ElevatedButton(onPressed: () {
                         final cSt = _formKey.currentState;
+                        final categoryExpenses = widget.categoryExpenses;
+                        CategoryExpenses? localCategoryExpenses;
                         if(cSt != null && cSt.validate()) {
-                          categoriesBloc.add(CategoriesBlocEvent.add(
-                              uuid: widget.uuid,
-                              data: CategoryExpenses(
+                          localCategoryExpenses = widget.addCategory?CategoryExpenses(
                                 name: _nameController.text,
                                 colorHex: _colorController.text,
-                              ),
-                          ));
-                          _nameController.text = '';
-                          Navigator.pop(context);
+                              )
+                          :CategoryExpenses(
+                              id: categoryExpenses?.id,
+                              name: _nameController.text,
+                              colorHex: _colorController.text,
+                            );
+                          if(widget.addCategory)_nameController.text = '';
+                          Navigator.pop(context,
+                              localCategoryExpenses
+                          );
                         }
-                        // if(applyData) return;
-                        // applyData = true;
-                        // Navigator.pop(context, (selectMonth>0 && selectMonth<=12)?_monthCurrent.copyWith(
-                        //     month: selectMonth
-                        // ):null);
                       },
-                        child: Text(S.of(context).add),
+                      child: Text(widget.addCategory
+                          ?S.of(context).add
+                          :S.of(context).modifi),
                         style: theme.elevatedButtonTheme.style?.copyWith(
                           minimumSize: const MaterialStatePropertyAll(Size(
                               double.maxFinite,50
@@ -188,7 +206,7 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
                       15.h,
                       TextButton(
                         onPressed: () {
-                          Navigator.pop(context);
+                          Navigator.pop(context, null);
                           _nameController.text = '';
                         },
                         child: Text(S.of(context).close, style: theme.dialogTheme.contentTextStyle),
@@ -200,7 +218,26 @@ class _AddCategoryDialogState extends State<AddCategoryDialog> {
             ),
           ),
         ),
-      ),
-    ), icon: const Icon(Icons.add));
+      );
+      },
+    );
+      if(res != null && res != widget.categoryExpenses) {
+        if(widget.addCategory){
+          categoriesBloc.add(CategoriesBlocEvent.add(
+            uuid: widget.uuid,
+            data: res,
+          ));
+        } else {
+          categoriesBloc.add(CategoriesBlocEvent.update(
+              uuid: widget.uuid,
+              data: res,
+          ));
+          //context.read<CustomCardState>().setCategoryExpenses(res);
+        }
+        // ?
+        // :
+      }
+
+    }, icon: widget.icon);
   }
 }

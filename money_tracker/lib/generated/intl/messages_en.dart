@@ -30,6 +30,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "april": MessageLookupByLibrary.simpleMessage("April"),
         "august": MessageLookupByLibrary.simpleMessage("August"),
+        "changeCategory":
+            MessageLookupByLibrary.simpleMessage("Change category"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "color": MessageLookupByLibrary.simpleMessage("Color"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -62,6 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "june": MessageLookupByLibrary.simpleMessage("June"),
         "march": MessageLookupByLibrary.simpleMessage("March"),
         "may": MessageLookupByLibrary.simpleMessage("May"),
+        "modifi": MessageLookupByLibrary.simpleMessage("Modifi"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
         "november": MessageLookupByLibrary.simpleMessage("November"),

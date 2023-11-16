@@ -34,4 +34,9 @@ class CategoriesImpl extends CategoriesRepository{
     return await categoriesData.deleteId(uuid: uuid,id: id);
   }
 
+  @override
+  Future<CategoriesExpensesModels?> update({required String uuid, required CategoryExpenses data}) async {
+    return await categoriesData.update(uuid: uuid, data: data);
+  }
+
 }

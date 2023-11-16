@@ -30,7 +30,7 @@ class MonthsStatusImpl extends MonthsStatus {
       return true;
     } on Exception catch (e, t) {
       Logger.print('$e\n$t', name: 'err', level: 1, error: true);
-      throw ArgumentError('Error delete!');
+      throw ArgumentError('Error delete all!');
     }
   }
 

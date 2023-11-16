@@ -619,6 +619,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Modifi`
+  String get modifi {
+    return Intl.message(
+      'Modifi',
+      name: 'modifi',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change category`
+  String get changeCategory {
+    return Intl.message(
+      'Change category',
+      name: 'changeCategory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

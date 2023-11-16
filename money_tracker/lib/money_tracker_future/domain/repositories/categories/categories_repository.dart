@@ -12,6 +12,8 @@ abstract class CategoriesRepository {
 
   Future<bool?> delete({required String uuid});
 
+  Future<CategoriesExpensesModels?> update({required String uuid, required CategoryExpenses data});
+
   Future<CategoriesExpensesModels?> deleteId({required String uuid, required int id});
 
 }

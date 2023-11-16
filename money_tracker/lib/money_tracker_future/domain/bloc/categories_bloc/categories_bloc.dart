@@ -112,6 +112,19 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               e: e,
             );
             await _response(emit);
+          },
+          update: (value) async {
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+              function: () async =>
+              await _categoriesRepository.update(uuid: value.uuid, data: value.data),
+            );
+            modelData = modelData.copyWithData(
+              data: res,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            await _response(emit);
           }
       );
     });
