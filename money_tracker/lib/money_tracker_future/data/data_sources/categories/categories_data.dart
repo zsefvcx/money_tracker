@@ -8,9 +8,9 @@ abstract class CategoriesData {
 
   Future<CategoriesExpenses?> getAllId({required String uuid});
 
-  Future<CategoryExpenses?> getById({required int id});
+  Future<CategoryExpenses?> getById({required String uuid, required int id});
 
   Future<bool?> delete({required String uuid});
 
-  Future<bool?> update({required String uuid, required CategoryExpenses data});
+  Future<CategoriesExpenses?> deleteId({required String uuid, required int id});
 }

@@ -38,22 +38,9 @@ class MonthsStatusImpl extends MonthsStatus {
   Future<MonthCurrent?> insert({required String uuid, required MonthCurrent data}) async {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      final id = await dbSqlLiteLocal.insert(data);
+      final id = await dbSqlLiteLocal.insertMonth(data);
 
       return data.copyWithId(id: id);
-    } on Exception catch(e,t){
-      Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error insert month: $e\n$t');
-    }
-  }
-
-  @override
-  Future<bool?> update({required String uuid, required MonthCurrent data}) async {
-    try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      final res = await dbSqlLiteLocal.update(data);
-
-      return res>0;
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error insert month: $e\n$t');

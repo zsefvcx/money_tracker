@@ -131,7 +131,6 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(milliseconds: 50));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;

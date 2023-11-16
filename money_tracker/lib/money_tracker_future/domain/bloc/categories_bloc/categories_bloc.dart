@@ -98,6 +98,20 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             );
 
             await _response(emit);
+          },
+          deleteId: (value) async {
+            emit(const CategoriesBlocState.loading());
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+              function: () async =>
+              await _categoriesRepository.deleteId(uuid: value.uuid, id: value.id),
+            );
+            modelData = modelData.copyWithData(
+              data: res,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            await _response(emit);
           }
       );
     });
@@ -133,7 +147,6 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(milliseconds: 50));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;

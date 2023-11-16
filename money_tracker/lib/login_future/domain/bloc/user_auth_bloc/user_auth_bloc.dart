@@ -242,7 +242,6 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
     var e = '';
     T? res;
     try {
-      await Future.delayed(const Duration(milliseconds: 50));
       res = await function().timeout(Duration(seconds: timeOutV),
           onTimeout: () {
             error = true;

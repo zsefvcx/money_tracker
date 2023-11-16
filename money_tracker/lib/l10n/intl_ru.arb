@@ -53,5 +53,7 @@
   "fieldIsEmpty": "Поле не заполнено",
   "enterTheName": "Введите название",
   "enterColor": "Введите цвет",
-  "thereAreNoExpensesForMonthName": "За <b>{monthName}</b> нет расходов"
+  "thereAreNoExpensesForMonthName": "За {monthName} нет расходов",
+  "delete": "Удалить",
+  "dataLoaded": "Данные загружены"
 }

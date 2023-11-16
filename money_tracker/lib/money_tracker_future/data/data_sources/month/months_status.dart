@@ -10,6 +10,4 @@ abstract class MonthsStatus {
 
   Future<bool?> delete({required String uuid,});
 
-  Future<bool?> update({required String uuid, required MonthCurrent data});
-
 }

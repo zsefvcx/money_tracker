@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(monthName) => "За <b>${monthName}</b> нет расходов";
+  static String m0(monthName) => "За ${monthName} нет расходов";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -35,7 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "color": MessageLookupByLibrary.simpleMessage("Цвет"),
         "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
         "costAccounting": MessageLookupByLibrary.simpleMessage("Учёт расходов"),
+        "dataLoaded": MessageLookupByLibrary.simpleMessage("Данные загружены"),
         "december": MessageLookupByLibrary.simpleMessage("Декабрь"),
+        "delete": MessageLookupByLibrary.simpleMessage("Удалить"),
         "deleteUserData": MessageLookupByLibrary.simpleMessage(
             "Удалить пользовательские данные!"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),

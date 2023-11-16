@@ -32,6 +32,7 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
   int _currentTabIndex = 0;
   late TabController _tabController;
   late MonthCurrent _monthCurrent;
+  CategoriesExpensesModels? categories;
 
   void setMonthCurrent(MonthCurrent monthCurrent){
     setState(() {
@@ -41,9 +42,46 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
 
   @override
   void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
     _monthCurrent = widget.monthCurrent;
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      final photoBloc = context.read<PhotoBloc>();
+      if (_tabController.indexIsChanging) {
+        // Tab Changed tapping on new tab
+        if (_tabController.index == 0) {
+          BlocFactory.instance.get<CategoriesBloc>()
+              .add(CategoriesBlocEvent.init(uuid: widget.uuid));
+        } else if (_tabController.index == 1) {
+          if (widget.loadImage) {
+            photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+          } else {
+            photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+          }
+        }
+        setState(() {
+          _currentTabIndex = _tabController.index;
+        });
+      } else if(_tabController.index != _tabController.previousIndex) {
+        // Tab Changed swiping to a new tab
+        if (_tabController.index == 0) {
+          BlocFactory.instance.get<CategoriesBloc>()
+              .add(CategoriesBlocEvent.init(uuid: widget.uuid));
+        } else if (_tabController.index == 1) {
+          if (widget.loadImage) {
+            photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+          } else {
+            photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+          }
+          setState(() {
+            _currentTabIndex = _tabController.index;
+          });
+        }
+      }
+    });
+
+
+
+    super.initState();
   }
 
   @override
@@ -52,14 +90,25 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
     _tabController.dispose();
   }
 
+//https://dartpad.dev/?id=6ef0d738ca732aab0f45c92d3390310f&null_safety=true
+
   @override
   Widget build(BuildContext context) {
 
     final theme = Theme.of(context);
     final photoBloc = context.read<PhotoBloc>();
-    BlocFactory.instance.get<CategoriesBloc>()
-      .add(CategoriesBlocEvent.init(uuid: widget.uuid));
-
+    if(_tabController.index == 0) {
+      _currentTabIndex = 0;
+      BlocFactory.instance.get<CategoriesBloc>()
+          .add(CategoriesBlocEvent.init(uuid: widget.uuid));
+    } else if(_tabController.index == 1){
+      _currentTabIndex = 1;
+      if (widget.loadImage){
+        photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+      } else {
+        photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+      }
+    }
     var logoutProcess = false;
     return Scaffold(
       appBar: AppBar(
@@ -85,45 +134,21 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
         children: [
           BlocBuilder<CategoriesBloc, CategoriesBlocState>(
             builder: (context, state) {
-              return state.map(
-                loading: (_)=> const Padding(
-                    padding: EdgeInsets.only(
-                      left: 25, right: 25, top: 10, bottom: 25,
-                    ),
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                ),
+                           
+              final res = state.map(
+                loading: (_) {
+                  return const CircularProgressIndicatorMod();
+                },
                 loaded: (value) {
                   final localCategories = value.model;
                   if (localCategories == null){
+                    categories = null;
                     return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
                       uuid: widget.uuid,
                     );
                   }
-                  final length = localCategories.categoriesId.length;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Hero(tag: Keys.heroIdSplash, child: Material(
-                        child: CustomPieChart(
-                          categoriesExpensesModels: localCategories,
-                          monthCurrent: _monthCurrent,
-                        ),
-                      )),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: length,
-                          itemBuilder: (_, index) {
-                            return CustomCard(
-                              categoryExpenses: localCategories.categoriesId.elementAt(index),
-                              monthCurrent: _monthCurrent,
-                            );
-                          },
-                        ),
-                      ),
-                    ],
-                  );
+                  categories = localCategories;
+                  return Text(S.of(context).dataLoaded);
                 },
                 error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
                   uuid: widget.uuid,
@@ -132,6 +157,19 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
                   uuid: widget.uuid,
                 ),
               );
+
+              final localCategories = categories;
+              if(localCategories != null){
+                return Provider.value(
+                  value: this,
+                  child: MainTabWidget(
+                    uuid: widget.uuid,
+                    monthCurrent: widget.monthCurrent,
+                    categories: localCategories,
+                  ),
+                );
+              }  
+              return res;
             },
           ),
           Padding(
@@ -190,13 +228,13 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
             _currentTabIndex = currentIndex;
             _tabController.animateTo(_currentTabIndex);
           });
-          if(currentIndex == 1){
-            if (widget.loadImage){
-              photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
-            } else {
-              photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-            }
-          }
+          // if(currentIndex == 1){
+          //   if (widget.loadImage){
+          //     photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+          //   } else {
+          //     photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+          //   }
+          // }
 
         },
         currentIndex: _currentTabIndex,

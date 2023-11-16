@@ -590,13 +590,33 @@ class S {
     );
   }
 
-  /// `There are no expenses for <b>{monthName}</b>`
+  /// `There are no expenses for {monthName}`
   String thereAreNoExpensesForMonthName(Object monthName) {
     return Intl.message(
-      'There are no expenses for <b>$monthName</b>',
+      'There are no expenses for $monthName',
       name: 'thereAreNoExpensesForMonthName',
       desc: '',
       args: [monthName],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Data loaded`
+  String get dataLoaded {
+    return Intl.message(
+      'Data loaded',
+      name: 'dataLoaded',
+      desc: '',
+      args: [],
     );
   }
 }

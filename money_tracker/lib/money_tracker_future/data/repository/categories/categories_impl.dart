@@ -25,13 +25,13 @@ class CategoriesImpl extends CategoriesRepository{
   }
 
   @override
-  Future<bool?> update({required String uuid, required CategoryExpenses data}) async {
-    return await categoriesData.update(uuid: uuid, data: data);
+  Future<CategoryExpenses?> getById({required String uuid, required int id}) async {
+    return await categoriesData.getById(uuid: uuid, id: id);
   }
 
   @override
-  Future<CategoryExpenses?> getById({required int id}) async {
-    return await categoriesData.getById(id: id);
+  Future<CategoriesExpensesModels?> deleteId({required String uuid, required int id}) async {
+    return await categoriesData.deleteId(uuid: uuid,id: id);
   }
 
 }

@@ -9,6 +9,4 @@ abstract class MonthRepository {
 
   Future<bool?> delete({required String uuid});
 
-  Future<bool?> update({required String uuid, required MonthCurrent data});
-
 }

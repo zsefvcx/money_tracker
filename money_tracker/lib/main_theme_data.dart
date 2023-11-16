@@ -40,9 +40,12 @@ ColorScheme _colorScheme(ColorScheme base) {
   return base.copyWith(
     background: CustomThemeProp.white,
     primary: CustomThemeProp.violetFirm,
-    secondary: CustomThemeProp.grayLight,
     primaryContainer: CustomThemeProp.violetFirm,
+
+    secondary: CustomThemeProp.grayLight,
     secondaryContainer: CustomThemeProp.grayLight,
+
+    inversePrimary: CustomThemeProp.red,
   );
 }
 

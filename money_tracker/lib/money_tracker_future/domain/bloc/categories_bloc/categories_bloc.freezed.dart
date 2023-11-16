@@ -24,6 +24,7 @@ mixin _$CategoriesBlocEvent {
         read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +33,7 @@ mixin _$CategoriesBlocEvent {
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -40,6 +42,7 @@ mixin _$CategoriesBlocEvent {
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -49,6 +52,7 @@ mixin _$CategoriesBlocEvent {
     required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -57,6 +61,7 @@ mixin _$CategoriesBlocEvent {
     TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +70,7 @@ mixin _$CategoriesBlocEvent {
     TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -186,6 +192,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
         read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
   }) {
     return init(uuid);
   }
@@ -197,6 +204,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
   }) {
     return init?.call(uuid);
   }
@@ -208,6 +216,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -223,6 +232,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
   }) {
     return init(this);
   }
@@ -234,6 +244,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
   }) {
     return init?.call(this);
   }
@@ -245,6 +256,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
     required TResult orElse(),
   }) {
     if (init != null) {
@@ -364,6 +376,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
         read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
   }) {
     return read(uuid, id, completer);
   }
@@ -375,6 +388,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
   }) {
     return read?.call(uuid, id, completer);
   }
@@ -386,6 +400,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) {
     if (read != null) {
@@ -401,6 +416,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
   }) {
     return read(this);
   }
@@ -412,6 +428,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
   }) {
     return read?.call(this);
   }
@@ -423,6 +440,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
     required TResult orElse(),
   }) {
     if (read != null) {
@@ -536,6 +554,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
   }) {
     return add(uuid, data);
   }
@@ -547,6 +566,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
   }) {
     return add?.call(uuid, data);
   }
@@ -558,6 +578,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) {
     if (add != null) {
@@ -573,6 +594,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
   }) {
     return add(this);
   }
@@ -584,6 +606,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
   }) {
     return add?.call(this);
   }
@@ -595,6 +618,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
     required TResult orElse(),
   }) {
     if (add != null) {
@@ -697,6 +721,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
         read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
   }) {
     return delete(uuid);
   }
@@ -708,6 +733,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
   }) {
     return delete?.call(uuid);
   }
@@ -719,6 +745,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -734,6 +761,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
   }) {
     return delete(this);
   }
@@ -745,6 +773,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
   }) {
     return delete?.call(this);
   }
@@ -756,6 +785,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
     required TResult orElse(),
   }) {
     if (delete != null) {
@@ -773,6 +803,184 @@ abstract class _deleteEvent implements CategoriesBlocEvent {
   @override
   @JsonKey(ignore: true)
   _$$deleteEventImplCopyWith<_$deleteEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$deleteIdEventImplCopyWith<$Res>
+    implements $CategoriesBlocEventCopyWith<$Res> {
+  factory _$$deleteIdEventImplCopyWith(
+          _$deleteIdEventImpl value, $Res Function(_$deleteIdEventImpl) then) =
+      __$$deleteIdEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String uuid, int id});
+}
+
+/// @nodoc
+class __$$deleteIdEventImplCopyWithImpl<$Res>
+    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$deleteIdEventImpl>
+    implements _$$deleteIdEventImplCopyWith<$Res> {
+  __$$deleteIdEventImplCopyWithImpl(
+      _$deleteIdEventImpl _value, $Res Function(_$deleteIdEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uuid = null,
+    Object? id = null,
+  }) {
+    return _then(_$deleteIdEventImpl(
+      uuid: null == uuid
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$deleteIdEventImpl
+    with DiagnosticableTreeMixin
+    implements _deleteIdEvent {
+  const _$deleteIdEventImpl({required this.uuid, required this.id});
+
+  @override
+  final String uuid;
+  @override
+  final int id;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CategoriesBlocEvent.deleteId(uuid: $uuid, id: $id)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.deleteId'))
+      ..add(DiagnosticsProperty('uuid', uuid))
+      ..add(DiagnosticsProperty('id', id));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$deleteIdEventImpl &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.id, id) || other.id == id));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, uuid, id);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$deleteIdEventImplCopyWith<_$deleteIdEventImpl> get copyWith =>
+      __$$deleteIdEventImplCopyWithImpl<_$deleteIdEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uuid) init,
+    required TResult Function(String uuid, int id, Completer<dynamic> completer)
+        read,
+    required TResult Function(String uuid, CategoryExpenses data) add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, int id) deleteId,
+  }) {
+    return deleteId(uuid, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, int id)? deleteId,
+  }) {
+    return deleteId?.call(uuid, id);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uuid)? init,
+    TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
+    TResult Function(String uuid, CategoryExpenses data)? add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, int id)? deleteId,
+    required TResult orElse(),
+  }) {
+    if (deleteId != null) {
+      return deleteId(uuid, id);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
+    required TResult Function(_addEvent value) add,
+    required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_deleteIdEvent value) deleteId,
+  }) {
+    return deleteId(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
+    TResult? Function(_addEvent value)? add,
+    TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_deleteIdEvent value)? deleteId,
+  }) {
+    return deleteId?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
+    TResult Function(_addEvent value)? add,
+    TResult Function(_deleteEvent value)? delete,
+    TResult Function(_deleteIdEvent value)? deleteId,
+    required TResult orElse(),
+  }) {
+    if (deleteId != null) {
+      return deleteId(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _deleteIdEvent implements CategoriesBlocEvent {
+  const factory _deleteIdEvent(
+      {required final String uuid,
+      required final int id}) = _$deleteIdEventImpl;
+
+  @override
+  String get uuid;
+  int get id;
+  @override
+  @JsonKey(ignore: true)
+  _$$deleteIdEventImplCopyWith<_$deleteIdEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

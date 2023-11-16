@@ -53,5 +53,7 @@
   "fieldIsEmpty": "field is empty",
   "enterTheName": "Enter name",
   "enterColor": "Enter color",
-  "thereAreNoExpensesForMonthName": "There are no expenses for <b>{monthName}</b>"
+  "thereAreNoExpensesForMonthName": "There are no expenses for {monthName}",
+  "delete": "Delete",
+  "dataLoaded": "Data loaded"
 }

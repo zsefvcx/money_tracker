@@ -16,11 +16,6 @@ class MonthRepositoryImpl extends MonthRepository {
   }
 
   @override
-  Future<bool?> update({required String uuid, required MonthCurrent data}) async {
-    return await monthsStatus.update(uuid: uuid, data: data);
-  }
-
-  @override
   Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
     return await monthsStatus.findAllInYear(uuid: uuid, year: year);
   }

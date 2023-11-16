@@ -1,4 +1,5 @@
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:money_tracker/generated/l10n.dart';
@@ -14,6 +15,8 @@ class MoneyTrackerApp extends StatelessWidget {
       title: 'Money Tracker',
       debugShowCheckedModeBanner: false,
       theme: themeMainProgram,
+      scrollBehavior: const MaterialScrollBehavior()
+        .copyWith(dragDevices: {...PointerDeviceKind.values}),
       localizationsDelegates: const [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
