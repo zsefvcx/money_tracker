@@ -65,22 +65,22 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
         actions: [
           ValueListenableBuilder<int>(
             valueListenable: _valueNotifierPage,
-            builder: (_, value, __) => Padding(
+            builder: (_, value, __) {
+              return Padding(
               padding: const EdgeInsets.only(right: 25),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Visibility(
                     visible: value==0,
-                    child: AddCategory(
-                      uuid: statusUserProp.uuid,
-                      monthCurrent: _monthCurrent,
-                      icon: const Icon(Icons.add),
+                    child: const AddCategory(
+                      icon: Icon(Icons.add),
                     ),
                   ),
                 ],
               ),
-            ),
+            );
+            },
           )
         ],
       ),

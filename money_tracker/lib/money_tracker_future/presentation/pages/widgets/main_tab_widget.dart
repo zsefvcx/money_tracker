@@ -26,7 +26,6 @@ class MainTabWidget extends StatelessWidget {
         Hero(tag: Keys.heroIdSplash, child: Material(
           child: CustomPieChart(
             categoriesExpensesModels: categories,
-            monthCurrent: monthCurrent,
           ),
         )),
         Expanded(
@@ -34,9 +33,7 @@ class MainTabWidget extends StatelessWidget {
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               return CustomCard(
-                uuid: uuid,
                 categoryExpenses: categories.categoriesId.elementAt(index),
-                monthCurrent: monthCurrent,
               );
             },
           ),

@@ -3,18 +3,17 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
-import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
+import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
+import 'package:provider/provider.dart';
 
 class CustomPieChart extends StatefulWidget {
   const CustomPieChart({
-    required this.monthCurrent,
     required this.categoriesExpensesModels,
     super.key
   });
 
   final CategoriesExpensesModels categoriesExpensesModels;
-  final MonthCurrent monthCurrent;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -27,6 +26,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
+    final statusUserProp = context.read<StatusUserProp>();
     return Container(
       color: theme.colorScheme.secondary,
       height: 240,
@@ -63,7 +63,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
         )
             :Text(
                S.of(context).thereAreNoExpensesForMonthName(
-               NameMonth(context).toNameMonth(widget.monthCurrent.month))
+               NameMonth(context).toNameMonth(statusUserProp.monthCurrent.month))
             ),
       ),
     );

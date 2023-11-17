@@ -5,25 +5,16 @@ import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
+import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class CustomCard extends StatefulWidget {
+class CustomCard extends StatelessWidget {
   const CustomCard({
-    required this.uuid,
-    required this.monthCurrent,
     required this.categoryExpenses,
     super.key
   });
 
-  final String uuid;
-  final MonthCurrent monthCurrent;
   final CategoryExpenses categoryExpenses;
-
-  @override
-  State<CustomCard> createState() => _CustomCardState();
-}
-
-class _CustomCardState extends State<CustomCard> {
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +22,17 @@ class _CustomCardState extends State<CustomCard> {
     final categoriesBloc = context.read<CategoriesBloc>();
     final valueNotifierLongPress  = ValueNotifier<bool>(false);
     final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
-    final id = widget.categoryExpenses.id??0;
-
+    final id = categoryExpenses.id??(throw Exception('Error search Key'));
+    final statusUserProp = context.read<StatusUserProp>();
     var cardVisible = true;
-    //final moneyTrackerHomePageState= context.read<MoneyTrackerHomePageState>();
+
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
         categoriesBloc.add(CategoriesBlocEvent.deleteId(
-            uuid: widget.uuid,
+            uuid: statusUserProp.uuid,
             id: id));
         cardVisible = false;
-        //moneyTrackerHomePageState.categories?.categoriesId.remove(widget.categoryExpenses);
       },
       child: Visibility(
         visible: cardVisible,
@@ -93,7 +83,7 @@ class _CustomCardState extends State<CustomCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            widget.categoryExpenses.name,
+                            categoryExpenses.name,
                             style: theme.textTheme.titleMedium
                         ),
                         9.h,
@@ -111,9 +101,7 @@ class _CustomCardState extends State<CustomCard> {
                               builder: (_, value, __) => Visibility(
                                 visible: value,
                                 child: AddCategory(
-                                  uuid: widget.uuid,
-                                  monthCurrent: widget.monthCurrent,
-                                  categoryExpenses: widget.categoryExpenses,
+                                  categoryExpenses: categoryExpenses,
                                   icon: const Icon(Icons.edit),
                                   addCategory: false,
                                 ),
@@ -125,17 +113,17 @@ class _CustomCardState extends State<CustomCard> {
                             },
                               icon: Icon(
                                   Icons.arrow_forward_ios,
-                                  color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                                  color: Color(int.parse('FF${categoryExpenses.colorHex}', radix: 16))
                               ),
                             ),
                           ],
                         );
                       } else {
                         return ElevatedButton(onPressed: () {
-                            final id = widget.categoryExpenses.id;
+                            final id = categoryExpenses.id;
                             if (id != null) {
                               categoriesBloc.add(CategoriesBlocEvent.deleteId(
-                                  uuid: widget.uuid,
+                                  uuid: statusUserProp.uuid,
                                   id: id));
                             }
                           },

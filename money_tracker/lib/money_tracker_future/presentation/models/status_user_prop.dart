@@ -2,7 +2,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 
-class StatusUserProp  extends Equatable{
+class StatusUserProp extends Equatable{
 
   final String uuid;
   final String eMail;

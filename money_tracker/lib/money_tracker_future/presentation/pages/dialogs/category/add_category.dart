@@ -5,28 +5,26 @@ import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/category/dialog_category.dart';
+import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 class AddCategory extends StatelessWidget {
   const AddCategory({
-    required this.monthCurrent,
-    required this.uuid,
     required this.icon,
-    this.addCategory = true,
     this.categoryExpenses,
+    this.addCategory = true,
     super.key
   });
 
-  final bool addCategory;
-  final MonthCurrent monthCurrent;
-  final Widget icon;
-  final String uuid;
   final CategoryExpenses? categoryExpenses;
+  final bool addCategory;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {
 
     final categoriesBloc = context.read<CategoriesBloc>();
+    final statusUserProp = context.read<StatusUserProp>();
 
     return IconButton(onPressed: () async {
       if(addCategory) {
@@ -42,8 +40,6 @@ class AddCategory extends StatelessWidget {
       context: context,
       builder: (context) {
         return DialogCategory(
-          uuid: uuid,
-          monthCurrent: monthCurrent,
           categoryExpenses: categoryExpenses,
           addCategory: addCategory,
           icon: icon,
@@ -53,12 +49,12 @@ class AddCategory extends StatelessWidget {
       if(res != null && res != categoryExpenses) {
         if(addCategory){
             categoriesBloc.add(CategoriesBlocEvent.add(
-              uuid: uuid,
+              uuid: statusUserProp.uuid,
               data: res,
             ));
         } else {
           categoriesBloc.add(CategoriesBlocEvent.update(
-              uuid: uuid,
+              uuid: statusUserProp.uuid,
               data: res,
           ));
         }

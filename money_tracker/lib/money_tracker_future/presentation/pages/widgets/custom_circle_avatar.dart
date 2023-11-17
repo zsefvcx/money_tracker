@@ -31,11 +31,6 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
   final _valueNewFile = ValueNotifier<bool>(false);
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     super.dispose();
     _valueNewFile.dispose();

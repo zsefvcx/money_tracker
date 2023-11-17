@@ -7,19 +7,15 @@ import 'package:money_tracker/money_tracker_future/core/core.dart';
 
 class DialogCategory extends StatefulWidget {
   const DialogCategory({
-    required this.monthCurrent,
-    required this.uuid,
     required this.icon,
-    this.addCategory = true,
     this.categoryExpenses,
+    this.addCategory = true,
     super.key
   });
 
-  final bool addCategory;
-  final MonthCurrent monthCurrent;
-  final Widget icon;
-  final String uuid;
   final CategoryExpenses? categoryExpenses;
+  final bool addCategory;
+  final Widget icon;
 
   @override
   State<DialogCategory> createState() => _DialogCategoryState();
@@ -55,7 +51,7 @@ class _DialogCategoryState extends State<DialogCategory> {
     final theme = Theme.of(context);
     if (!widget.addCategory){
       final categoryExpenses = widget.categoryExpenses;
-      if(categoryExpenses != null){
+      if (categoryExpenses != null){
         _nameController.text = categoryExpenses.name;
         _colorController.text = categoryExpenses.colorHex;
         _hexInputController.text = '#${categoryExpenses.colorHex}';
@@ -160,6 +156,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                     ElevatedButton(onPressed: () {
                       final cSt = formKey.currentState;
                       final categoryExpenses = widget.categoryExpenses;
+                     // throw Exception('Error search Key');
                       CategoryExpenses? localCategoryExpenses;
                       if(cSt != null && cSt.validate()) {
                         localCategoryExpenses = widget.addCategory?CategoryExpenses(
