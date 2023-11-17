@@ -7,6 +7,25 @@ class CategoriesDataImpl extends CategoriesData {
 
   final Map<int, CategoryExpenses> categoriesId = {};
 
+  Set<CategoryExpenses> categoriesIdSort() {
+    try {
+      final res = categoriesId.map((key, value) => MapEntry(key, value.name));
+
+      final sortedByKeyMap = Map.fromEntries(
+          res.entries.toList()
+            ..sort((e1, e2) => e1.value.compareTo(e2.value)));
+
+      return sortedByKeyMap.map<int, CategoryExpenses>((key, value) {
+        final data = categoriesId[key] ?? (throw Exception('Error search Key'));
+        return MapEntry(key, data);
+      }).values.toSet();
+    } on Exception catch(e, t){
+      Logger.print('$e\n$t', name: 'err', level: 1, error: true);
+      throw ArgumentError('Error categoriesIdSort!');
+    }
+  }
+  
+  
   @override
   Future<bool?> delete({required String uuid}) async{
     try {
@@ -27,13 +46,15 @@ class CategoriesDataImpl extends CategoriesData {
         final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
         final res = await dbSqlLiteLocal.getAllCategoryId();
         if(res != null){
-          for (final element in res.categoriesId) {
-            final id = element.id;
-            if(id!=null)categoriesId.putIfAbsent(id, () => element);
-          }
+          categoriesId.addAll(Map.fromEntries(
+            res.categoriesId.map((e) {
+              final id = e.id ?? (throw Exception('Error id'));
+              return MapEntry(id, e);
+            })
+          )
+          );
         }
       }
-      Logger.print(categoriesId.values.toString());
       return CategoriesExpenses(
           categoriesId: categoriesId.values.toSet()
       );
@@ -55,7 +76,6 @@ class CategoriesDataImpl extends CategoriesData {
             if(id!=null)categoriesId.putIfAbsent(id, () => res);
         }
       }
-      Logger.print(categoriesId.values.toString());
       return categoriesId[id];
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
@@ -66,12 +86,17 @@ class CategoriesDataImpl extends CategoriesData {
   @override
   Future<CategoriesExpenses?> insert({required String uuid, required CategoryExpenses data}) async{
     try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      final res = await dbSqlLiteLocal.insertCategory(data);
-      categoriesId.putIfAbsent(res, () => data.copyWith(id: res));
-      Logger.print(categoriesId.values.toString());
+      if(categoriesId.length >= 20){
+        Logger.print('No more than 20 categories');
+      } {
+        final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+        final res = await dbSqlLiteLocal.insertCategory(data);
+        categoriesId.putIfAbsent(res, () => data.copyWith(id: res));
+      }
+
+
       return CategoriesExpenses(
-          categoriesId: categoriesId.values.toSet()
+          categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
@@ -85,9 +110,8 @@ class CategoriesDataImpl extends CategoriesData {
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.deleteCategory(id);
       if(res > 0) categoriesId.remove(id);
-      Logger.print(categoriesId.values.toString());
       return CategoriesExpenses(
-          categoriesId: categoriesId.values.toSet()
+          categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
@@ -102,9 +126,8 @@ class CategoriesDataImpl extends CategoriesData {
       final res = await dbSqlLiteLocal.updateCategory(data);
       final id = data.id;
       if(res > 0 && id != null) categoriesId[id] = data;
-      Logger.print(categoriesId.values.toString());
       return CategoriesExpenses(
-          categoriesId: categoriesId.values.toSet()
+          categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);

@@ -57,5 +57,6 @@
   "delete": "Удалить",
   "dataLoaded": "Данные загружены",
   "modifi": "Изменить",
-  "changeCategory": "Изменить категорию"
+  "changeCategory": "Изменить категорию",
+  "noMoreThan20Categories": "Не более 20 категорий"
 }

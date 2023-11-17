@@ -639,6 +639,16 @@ class S {
       args: [],
     );
   }
+
+  /// `No more than 20 categories`
+  String get noMoreThan20Categories {
+    return Intl.message(
+      'No more than 20 categories',
+      name: 'noMoreThan20Categories',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

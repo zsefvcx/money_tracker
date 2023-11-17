@@ -71,6 +71,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "noAccountYet":
             MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),
+        "noMoreThan20Categories":
+            MessageLookupByLibrary.simpleMessage("Не более 20 категорий"),
         "november": MessageLookupByLibrary.simpleMessage("Ноябрь"),
         "october": MessageLookupByLibrary.simpleMessage("Октябрь"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),

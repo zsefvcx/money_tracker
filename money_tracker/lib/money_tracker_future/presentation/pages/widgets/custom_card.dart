@@ -30,6 +30,7 @@ class _CustomCardState extends State<CustomCard> {
     final theme = Theme.of(context);
     final categoriesBloc = context.read<CategoriesBloc>();
     final valueNotifierLongPress  = ValueNotifier<bool>(false);
+    final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
     final id = widget.categoryExpenses.id??0;
 
     var cardVisible = true;
@@ -49,8 +50,10 @@ class _CustomCardState extends State<CustomCard> {
           cursor: SystemMouseCursors.click,
           onExit: (event) {
             valueNotifierLongPress.value = false;
+            valueNotifierPencilVisible.value = false;
           },
           child: GestureDetector(
+            onDoubleTap: () => valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
             onTap: () => showDialog<String>(
               context: context,
               builder: (context) => Dialog(
@@ -97,19 +100,25 @@ class _CustomCardState extends State<CustomCard> {
                         Text('Всего 3800', style:  theme.textTheme.bodySmall,),
                       ],
                     ),
-                    ValueListenableBuilder<bool>(valueListenable: valueNotifierLongPress, builder: (_, value, __) {
+                    ValueListenableBuilder<bool>(
+                      valueListenable: valueNotifierLongPress,
+                      builder: (_, value, __) {
                       if (!value) {
                         return Row(
                           children: [
-                            AddCategory(
-                                uuid: widget.uuid,
-                                monthCurrent: widget.monthCurrent,
-                                categoryExpenses: widget.categoryExpenses,
-                                icon: Icon(Icons.edit,
-                                    color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                            ValueListenableBuilder<bool>(
+                              valueListenable: valueNotifierPencilVisible,
+                              builder: (_, value, __) => Visibility(
+                                visible: value,
+                                child: AddCategory(
+                                  uuid: widget.uuid,
+                                  monthCurrent: widget.monthCurrent,
+                                  categoryExpenses: widget.categoryExpenses,
+                                  icon: const Icon(Icons.edit),
+                                  addCategory: false,
                                 ),
-                                addCategory: false,
                               ),
+                            ),
                             IconButton(
                               onPressed: () {
 

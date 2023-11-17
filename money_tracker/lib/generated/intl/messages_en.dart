@@ -67,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "modifi": MessageLookupByLibrary.simpleMessage("Modifi"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
+        "noMoreThan20Categories":
+            MessageLookupByLibrary.simpleMessage("No more than 20 categories"),
         "november": MessageLookupByLibrary.simpleMessage("November"),
         "october": MessageLookupByLibrary.simpleMessage("October"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),

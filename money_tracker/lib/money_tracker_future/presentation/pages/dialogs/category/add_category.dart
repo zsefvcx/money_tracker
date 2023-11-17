@@ -1,5 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/category/dialog_category.dart';
@@ -27,6 +29,15 @@ class AddCategory extends StatelessWidget {
     final categoriesBloc = context.read<CategoriesBloc>();
 
     return IconButton(onPressed: () async {
+      if(addCategory) {
+        final localLen = categoriesBloc.modelData.data?.categoriesId.length;
+        if (localLen != null && localLen >= 20 && context.mounted) {
+          Logger.print(S
+              .of(context)
+              .noMoreThan20Categories, context: context);
+          return;
+        }
+      }
       final res = await showDialog<CategoryExpenses?>(
       context: context,
       builder: (context) {
@@ -41,16 +52,15 @@ class AddCategory extends StatelessWidget {
     );
       if(res != null && res != categoryExpenses) {
         if(addCategory){
-          categoriesBloc.add(CategoriesBlocEvent.add(
-            uuid: uuid,
-            data: res,
-          ));
+            categoriesBloc.add(CategoriesBlocEvent.add(
+              uuid: uuid,
+              data: res,
+            ));
         } else {
           categoriesBloc.add(CategoriesBlocEvent.update(
               uuid: uuid,
               data: res,
           ));
-          //context.read<CustomCardState>().setCategoryExpenses(res);
         }
       }
 

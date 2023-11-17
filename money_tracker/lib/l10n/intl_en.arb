@@ -57,5 +57,6 @@
   "delete": "Delete",
   "dataLoaded": "Data loaded",
   "modifi": "Modifi",
-  "changeCategory": "Change category"
+  "changeCategory": "Change category",
+  "noMoreThan20Categories": "No more than 20 categories"
 }
