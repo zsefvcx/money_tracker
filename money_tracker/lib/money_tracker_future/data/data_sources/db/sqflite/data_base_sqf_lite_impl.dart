@@ -39,6 +39,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
     return await openDatabase(path, version: 2, onCreate: _createDB);
   }
 
+  //прееделать
   static DataBaseSqfLiteImpl db({required String uuid}) {
     if (_lastUuid != uuid){
       _database?.close();
@@ -94,7 +95,8 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_tableMonthCurrent,
           where: '$_year = ?',
-          whereArgs: [year]
+          whereArgs: [year],
+          orderBy: _month
         );
     final groupList = <int>[];
 
@@ -114,7 +116,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_tableMonthCurrent,
         where: '$_id = ?',
-        whereArgs: [id]
+        whereArgs: [id],
     );
 
     for (final element in groupsMapList) {
@@ -176,6 +178,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
     final db = await database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_tableCategories,
+            orderBy: _name
     );
     final allId = <CategoryExpenses>{};
 

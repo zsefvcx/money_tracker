@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
-import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
-import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
@@ -18,9 +16,11 @@ class MoneyTrackerHomePage extends StatefulWidget {
 }
 
 class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with TickerProviderStateMixin{
-  int _currentTabIndex = 0;
+
   late TabController _tabController;
   late MonthCurrent _monthCurrent;
+  final _valueNotifierPage = ValueNotifier<int>(0);
+
   CategoriesExpensesModels? categories;
 
   void setMonthCurrent(MonthCurrent monthCurrent){
@@ -35,9 +35,7 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
     _monthCurrent = statusUserProp.monthCurrent;
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
-      setState(() {
-        _currentTabIndex = _tabController.index;
-      });
+      _valueNotifierPage.value = _tabController.index;
     });
     super.initState();
   }
@@ -51,24 +49,35 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
   @override
   Widget build(BuildContext context) {
     final statusUserProp = context.read<StatusUserProp>();
+
     return Scaffold(
       appBar: AppBar(
-        title: _currentTabIndex==0
+        title: ValueListenableBuilder<int>(
+          valueListenable: _valueNotifierPage,
+          builder: (_, value, __) => value==0
             ? Provider.value(
-            value: this,
-            child: AppCalendarDialog(
-                uuid: statusUserProp.uuid,
-                monthCurrent: _monthCurrent))
+                value: this,
+                child: AppCalendarDialog(
+                  uuid: statusUserProp.uuid,
+                  monthCurrent: _monthCurrent))
             : Text(S.of(context).profile),
+        ),
         actions: [
-          Visibility(
-            visible: _currentTabIndex==0,
-            child: AddCategory(
-                uuid: statusUserProp.uuid,
-                monthCurrent: _monthCurrent,
-                icon: const Icon(Icons.add),
+          ValueListenableBuilder<int>(
+            valueListenable: _valueNotifierPage,
+            builder: (_, value, __) => Column(
+              children: [
+                Visibility(
+                  visible: value==0,
+                  child: AddCategory(
+                    uuid: statusUserProp.uuid,
+                    monthCurrent: _monthCurrent,
+                    icon: const Icon(Icons.add),
+                  ),
+                ),
+              ],
             ),
-          ),
+          )
         ],
       ),
       body: TabBarView(
@@ -116,31 +125,32 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
         ],
       ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (currentIndex) {
-          _tabController.index = currentIndex;
-          setState(() {
-            _currentTabIndex = currentIndex;
-            _tabController.animateTo(_currentTabIndex);
-          });
-        },
-        currentIndex: _currentTabIndex,
-        items: [
-          BottomNavigationBarItem(icon:
-            const Padding(
-              padding: EdgeInsets.only(bottom: 3),
-              child: Icon(Icons.credit_card),
+      bottomNavigationBar: ValueListenableBuilder<int>(
+        valueListenable: _valueNotifierPage,
+        builder: (_, value, __) => BottomNavigationBar(
+          onTap: (currentIndex) {
+            _tabController.index = currentIndex;
+            value = currentIndex;
+            _tabController.animateTo(value);
+          },
+          currentIndex: value,
+          items: [
+            BottomNavigationBarItem(icon:
+              const Padding(
+                padding: EdgeInsets.only(bottom: 3),
+                child: Icon(Icons.credit_card),
+              ),
+              label: S.of(context).expenses,
             ),
-            label: S.of(context).expenses,
-          ),
-          BottomNavigationBarItem(icon:
-            const Padding(
-              padding: EdgeInsets.only(bottom: 3),
-              child: Icon(Icons.person),
+            BottomNavigationBarItem(icon:
+              const Padding(
+                padding: EdgeInsets.only(bottom: 3),
+                child: Icon(Icons.person),
+              ),
+              label: S.of(context).profile,
             ),
-            label: S.of(context).profile,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
