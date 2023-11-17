@@ -75,6 +75,7 @@ class _MainFormState extends State<MainForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     FocusScope.of(context).requestFocus();
     final dataLoginUserAuth = widget.loginUserAuth;
     return (dataLoginUserAuth != null && dataLoginUserAuth)
@@ -116,6 +117,7 @@ class _MainFormState extends State<MainForm> {
                       context: context,
                       valueListenableProcess: _valueListenableProcess,
                       valueLoginProcess: _valueLoginProcess,
+                      formKey: _formKey
                     ),
                     child:
                     ValueListenableBuilder<bool>(
@@ -178,9 +180,10 @@ class _MainFormState extends State<MainForm> {
     required BuildContext context,
     required ValueNotifier<bool> valueListenableProcess,
     required ValueNotifier<bool> valueLoginProcess,
+    required GlobalKey<FormState> formKey,
   }) async {
     final blocBloc = context.read<UserAuthBloc>();
-    final cSt = _formKey.currentState;
+    final cSt = formKey.currentState;
     if(cSt != null && cSt.validate() && !valueListenableProcess.value) {
       valueListenableProcess.value = true;
       await Future.delayed(const Duration(microseconds: 500));
