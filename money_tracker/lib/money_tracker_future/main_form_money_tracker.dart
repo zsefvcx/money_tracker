@@ -1,5 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/core/widgets/circular_progress_indicator_mod.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
@@ -42,6 +45,13 @@ class MainFormMoneyTracker extends StatelessWidget {
         data: monthCurrent)
     );
 
+    final statusUserProp = StatusUserProp(
+      eMail: eMail,
+      uuid: uuid,
+      loadImage: loadImage,
+      monthCurrent: monthCurrent,
+    );
+
     return MultiProvider(
       providers: [
         Provider<PhotoBloc>(
@@ -53,16 +63,46 @@ class MainFormMoneyTracker extends StatelessWidget {
         Provider<CategoriesBloc>(
           create: (_) => categoriesBloc,
         ),
-        Provider<StatusUserProp>(
-            create: (_) => StatusUserProp(
-              eMail: eMail,
-              uuid: uuid,
-              loadImage: loadImage,
-              monthCurrent: monthCurrent,
-            ),
+        ChangeNotifierProvider<StatusUserProp>(
+            create: (_) => statusUserProp,
         ),
       ],
-      child: const MainBuilderForm(),
+      child: SafeArea(
+        child: BlocBuilder<MonthBloc, MonthBlocState>(
+          builder: (context, state) {
+            return state.map(
+              loading: (_) =>
+              const Scaffold(body: CircularProgressIndicatorMod()),
+              error: (_) =>
+                  Scaffold(
+                    body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                        uuid: statusUserProp.uuid,
+                        tCurrent: statusUserProp.monthCurrent
+                    ),
+                  ),
+              timeOut: (_) =>
+                  Scaffold(
+                    body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                        uuid: statusUserProp.uuid,
+                        tCurrent: statusUserProp.monthCurrent
+                    ),
+                  ),
+              loaded: (value) {
+                final localMonthCurrent = value.monthCurrent;
+                if (localMonthCurrent == null) {
+                  return Scaffold(
+                    body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                        uuid: statusUserProp.uuid,
+                        tCurrent: statusUserProp.monthCurrent
+                    ),
+                  );
+                }
+                return const MoneyTrackerHomePage();
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }

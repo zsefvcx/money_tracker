@@ -12,32 +12,33 @@ class MoneyTrackerHomePage extends StatefulWidget {
   const MoneyTrackerHomePage({super.key});
 
   @override
-  State<MoneyTrackerHomePage> createState() => MoneyTrackerHomePageState();
+  State<MoneyTrackerHomePage> createState() => _MoneyTrackerHomePageState();
 }
 
-class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with TickerProviderStateMixin{
+class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with TickerProviderStateMixin{
 
   late TabController _tabController;
   late MonthCurrent _monthCurrent;
   final _valueNotifierPage = ValueNotifier<int>(0);
 
-  CategoriesExpensesModels? categories;
-
-  void setMonthCurrent(MonthCurrent monthCurrent){
-    setState(() {
-      _monthCurrent = monthCurrent;
-    });
-  }
+  // CategoriesExpensesModels? categories;
+  //
+  // void setMonthCurrent(MonthCurrent monthCurrent){
+  //   setState(() {
+  //     _monthCurrent = monthCurrent;
+  //   });
+  // }
 
   @override
   void initState() {
-    final statusUserProp = context.read<StatusUserProp>();
+    super.initState();
+    final statusUserProp = context.watch<StatusUserProp>();
     _monthCurrent = statusUserProp.monthCurrent;
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       _valueNotifierPage.value = _tabController.index;
     });
-    super.initState();
+
   }
 
   @override
@@ -46,19 +47,30 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
     _tabController.dispose();
   }
 
+
+  StatusUserProp? statusUserProp;
+  
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    statusUserProp = context.read<StatusUserProp>();
+    
+  }
+
   @override
   Widget build(BuildContext context) {
-    final statusUserProp = context.read<StatusUserProp>();
+    
 
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(
           valueListenable: _valueNotifierPage,
-          builder: (_, value, __) => value==0
+          builder: (context, value, __) => value==0
             ? Provider.value(
                 value: this,
                 child: AppCalendarDialog(
-                  uuid: statusUserProp.uuid,
+                  uuid: statusUserProp?.uuid ?? (throw Exception('Error uuid')),
                   monthCurrent: _monthCurrent))
             : Text(S.of(context).profile),
         ),
@@ -89,6 +101,7 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
         children: [
           BlocBuilder<CategoriesBloc, CategoriesBlocState>(
             builder: (_, state) {
+              CategoriesExpensesModels? categories;
               final res = state.map(
                 loading: (_) {
                   return const CircularProgressIndicatorMod();
@@ -98,28 +111,23 @@ class MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticker
                   if (localCategories == null){
                     categories = null;
                     return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                      uuid: statusUserProp.uuid,
+                      uuid: statusUserProp?.uuid,
                     );
                   }
-                  categories = localCategories;
+                  // categories = localCategories;
                   return Text(S.of(context).dataLoaded);
                 },
                 error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                  uuid: statusUserProp.uuid,
+                  uuid: statusUserProp?.uuid,
                 ),
                 timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                  uuid: statusUserProp.uuid,
+                  uuid: statusUserProp?.uuid,
                 ),
               );
               final localCategories = categories;
               if(localCategories != null){
-                return Provider.value(
-                  value: this,
-                  child: MainTabWidget(
-                    uuid: statusUserProp.uuid,
-                    monthCurrent: statusUserProp.monthCurrent,
-                    categories: localCategories,
-                  ),
+                return MainTabWidget(
+                  categories: localCategories,
                 );
               }  
               return res;

@@ -1,21 +1,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
-import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 
 class MainTabWidget extends StatelessWidget {
   const MainTabWidget({
-    required this.uuid,
     required this.categories,
-    required this.monthCurrent,
     super.key
   });
 
-  final String uuid;
   final CategoriesExpensesModels categories;
-  final MonthCurrent monthCurrent;
 
 
   @override

@@ -5,7 +5,6 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/calendar/month_year_widget.dart';
-import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
 class AppCalendarDialog extends StatefulWidget {
@@ -35,7 +34,6 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
   @override
   Widget build(BuildContext context) {
     final monthBloc = context.read<MonthBloc>();
-    final moneyTrackerHomePageState= context.read<MoneyTrackerHomePageState>();
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -72,7 +70,6 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
               setState(() {
                 _monthCurrent = monthCurrent;
               });
-              moneyTrackerHomePageState.setMonthCurrent(monthCurrent);
             }
           }
         },

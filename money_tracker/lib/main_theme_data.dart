@@ -189,7 +189,6 @@ ChipThemeData _chipThemeData(ChipThemeData base){
 ThemeData _theme = CustomThemeProp.bwTheme?ThemeData.light():ThemeData.dark();
 
 ThemeData themeMainProgram = _theme.copyWith(
-  useMaterial3: true,
 
   appBarTheme: _appBarTheme(_theme.appBarTheme),
 

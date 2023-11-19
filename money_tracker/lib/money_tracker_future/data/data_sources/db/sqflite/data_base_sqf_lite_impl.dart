@@ -21,7 +21,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
   Future<String> localPath({required String uuid}) async {
     final directory = await getApplicationSupportDirectory();
     final path = '${directory.path}/${uuid}_database.db';
-    Logger.print('PathToPhoto:$path');
+    Logger.print('PathToDataBase:$path');
     return path;
   }
 
@@ -47,6 +47,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       _db = null;
     }
     _lastUuid = uuid;
+
     return _db ??= DataBaseSqfLiteImpl._(uuid: uuid);
   }
 
