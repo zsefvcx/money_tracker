@@ -23,14 +23,6 @@ class AppCalendarDialog extends StatefulWidget {
 
 class _AppCalendarDialogState extends State<AppCalendarDialog> {
 
-  late MonthCurrent _monthCurrent;
-
-  @override
-  void initState() {
-    super.initState();
-    _monthCurrent = widget.monthCurrent;
-  }
-
   @override
   Widget build(BuildContext context) {
     final monthBloc = context.read<MonthBloc>();
@@ -52,14 +44,16 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
               context: context,
               builder: (_) => Dialog(
                 child: MonthYearWidget(
-                  monthCurrent: _monthCurrent,
+                  monthCurrent: widget.monthCurrent,
                   selectedMonth: selectedMonth,
                   monthBloc: monthBloc,
                   uuid: widget.uuid,
                 ),
               ),
             );
-            if (monthCurrent !=null && _monthCurrent != monthCurrent) {
+            
+            
+            if (monthCurrent !=null && widget.monthCurrent != monthCurrent) {
               final completer = Completer();
               monthBloc.add(MonthBlocEvent.add(
                   uuid: widget.uuid,
@@ -67,15 +61,12 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
                   completer: completer)
               );
               await completer.future;
-              setState(() {
-                _monthCurrent = monthCurrent;
-              });
             }
           }
         },
         child: Text(
-            '${NameMonth(context).toNameMonth(_monthCurrent.month)} '
-                '${_monthCurrent.year}'
+            '${NameMonth(context).toNameMonth(widget.monthCurrent.month)} '
+                '${widget.monthCurrent.year}'
         ),
       )
     );

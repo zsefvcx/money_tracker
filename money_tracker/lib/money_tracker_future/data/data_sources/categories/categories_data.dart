@@ -14,5 +14,7 @@ abstract class CategoriesData {
 
   Future<CategoriesExpenses?> update({required String uuid, required CategoryExpenses data});
 
+  Future<bool?> check({required String uuid, required CategoryExpenses data});
+
   Future<CategoriesExpenses?> deleteId({required String uuid, required int id});
 }

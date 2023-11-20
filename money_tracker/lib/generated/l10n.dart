@@ -649,6 +649,16 @@ class S {
       args: [],
     );
   }
+
+  /// `The category already exists, change the details`
+  String get theCategoryAlreadyExistsChangeTheDetails {
+    return Intl.message(
+      'The category already exists, change the details',
+      name: 'theCategoryAlreadyExistsChangeTheDetails',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

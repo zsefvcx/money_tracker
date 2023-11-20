@@ -100,7 +100,6 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             await _response(emit);
           },
           deleteId: (value) async {
-            emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
               function: () async =>
               await _categoriesRepository.deleteId(uuid: value.uuid, id: value.id),
@@ -125,6 +124,18 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               e: e,
             );
             await _response(emit);
+          },
+          check: (value) async {
+            final (error, timeOut, e, res) = await _runGoSData<bool>(
+              function: () async =>
+              await _categoriesRepository.check(uuid: value.uuid, data: value.data),
+            );
+              if (error){
+                Logger.print('Error check.:$timeOut:$e', name: 'err', error: true);
+                value.completer.completeError(error);
+              } else {
+                value.completer.complete(res);
+              }
           }
       );
     });

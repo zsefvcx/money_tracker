@@ -135,4 +135,15 @@ class CategoriesDataImpl extends CategoriesData {
     }
   }
 
+  @override
+  Future<bool?> check({required String uuid, required CategoryExpenses data}) async {
+    try{
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      return await dbSqlLiteLocal.checkCategory(data);
+    } on Exception catch(e,t){
+      Logger.print('Error $e\n$t', name: 'err', error: true);
+      throw ArgumentError('Error check Categories: $e\n$t');
+    }
+  }
+
 }

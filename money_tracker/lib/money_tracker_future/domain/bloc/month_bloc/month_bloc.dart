@@ -100,6 +100,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
             } else {
               value.completer.complete(res?.id);
             }
+            await _response(emit);
           },
           delete: (value) async {
             emit(const MonthBlocState.loading());

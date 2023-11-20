@@ -9,10 +9,12 @@ import 'package:provider/provider.dart';
 
 class CustomPieChart extends StatefulWidget {
   const CustomPieChart({
+    required this.statusUserProp,
     required this.categoriesExpensesModels,
     super.key
   });
 
+  final StatusUserProp statusUserProp;
   final CategoriesExpensesModels categoriesExpensesModels;
 
   @override
@@ -26,7 +28,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
-    final statusUserProp = context.read<StatusUserProp>();
+
     return Container(
       color: theme.colorScheme.secondary,
       height: 240,
@@ -63,7 +65,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
         )
             :Text(
                S.of(context).thereAreNoExpensesForMonthName(
-               NameMonth(context).toNameMonth(statusUserProp.monthCurrent.month))
+               NameMonth(context).toNameMonth(widget.statusUserProp.monthCurrent.month))
             ),
       ),
     );

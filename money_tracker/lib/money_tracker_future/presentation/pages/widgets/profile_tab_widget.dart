@@ -7,11 +7,15 @@ import 'package:money_tracker/money_tracker_future/presentation/presentation.dar
 import 'package:provider/provider.dart';
 
 class ProfileTabWidget extends StatelessWidget {
-  const ProfileTabWidget({super.key});
+  const ProfileTabWidget({
+    required this.statusUserProp,
+    super.key});
+
+  final StatusUserProp statusUserProp;
 
   @override
   Widget build(BuildContext context) {
-    final statusUserProp = context.read<StatusUserProp>();
+
     final theme = Theme.of(context);
     var logoutProcess = false;
     return Padding(

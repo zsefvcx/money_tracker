@@ -9,7 +9,12 @@ import 'package:money_tracker/money_tracker_future/presentation/presentation.dar
 import 'package:provider/provider.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
-  const MoneyTrackerHomePage({super.key});
+  const MoneyTrackerHomePage({
+    required this.statusUserProp,
+    super.key
+  });
+
+  final StatusUserProp statusUserProp;
 
   @override
   State<MoneyTrackerHomePage> createState() => _MoneyTrackerHomePageState();
@@ -18,22 +23,11 @@ class MoneyTrackerHomePage extends StatefulWidget {
 class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with TickerProviderStateMixin{
 
   late TabController _tabController;
-  late MonthCurrent _monthCurrent;
   final _valueNotifierPage = ValueNotifier<int>(0);
-
-  // CategoriesExpensesModels? categories;
-  //
-  // void setMonthCurrent(MonthCurrent monthCurrent){
-  //   setState(() {
-  //     _monthCurrent = monthCurrent;
-  //   });
-  // }
 
   @override
   void initState() {
     super.initState();
-    final statusUserProp = context.watch<StatusUserProp>();
-    _monthCurrent = statusUserProp.monthCurrent;
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       _valueNotifierPage.value = _tabController.index;
@@ -47,21 +41,8 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
     _tabController.dispose();
   }
 
-
-  StatusUserProp? statusUserProp;
-  
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    statusUserProp = context.read<StatusUserProp>();
-    
-  }
-
   @override
   Widget build(BuildContext context) {
-    
-
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(
@@ -70,14 +51,14 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
             ? Provider.value(
                 value: this,
                 child: AppCalendarDialog(
-                  uuid: statusUserProp?.uuid ?? (throw Exception('Error uuid')),
-                  monthCurrent: _monthCurrent))
+                  uuid: widget.statusUserProp.uuid,
+                  monthCurrent: widget.statusUserProp.monthCurrent))
             : Text(S.of(context).profile),
         ),
         actions: [
           ValueListenableBuilder<int>(
             valueListenable: _valueNotifierPage,
-            builder: (_, value, __) {
+            builder: (context, value, __) {
               return Padding(
               padding: const EdgeInsets.only(right: 25),
               child: Column(
@@ -85,8 +66,10 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                 children: [
                   Visibility(
                     visible: value==0,
-                    child: const AddCategory(
-                      icon: Icon(Icons.add),
+                    child: AddCategory(
+                      contextMacro: context,
+                      statusUserProp: widget.statusUserProp,
+                      icon: const Icon(Icons.add),
                     ),
                   ),
                 ],
@@ -101,39 +84,34 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
         children: [
           BlocBuilder<CategoriesBloc, CategoriesBlocState>(
             builder: (_, state) {
-              CategoriesExpensesModels? categories;
-              final res = state.map(
+              return state.map(
                 loading: (_) {
                   return const CircularProgressIndicatorMod();
                 },
                 loaded: (value) {
                   final localCategories = value.model;
                   if (localCategories == null){
-                    categories = null;
                     return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                      uuid: statusUserProp?.uuid,
+                      uuid: widget.statusUserProp.uuid,
                     );
                   }
-                  // categories = localCategories;
-                  return Text(S.of(context).dataLoaded);
+                  return MainTabWidget(
+                    statusUserProp: widget.statusUserProp,
+                    categories: localCategories,
+                  );
                 },
                 error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                  uuid: statusUserProp?.uuid,
+                  uuid: widget.statusUserProp.uuid,
                 ),
                 timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
-                  uuid: statusUserProp?.uuid,
+                  uuid: widget.statusUserProp.uuid,
                 ),
               );
-              final localCategories = categories;
-              if(localCategories != null){
-                return MainTabWidget(
-                  categories: localCategories,
-                );
-              }  
-              return res;
             },
           ),
-          const ProfileTabWidget(),
+          ProfileTabWidget(
+            statusUserProp: widget.statusUserProp
+          ),
         ],
       ),
 

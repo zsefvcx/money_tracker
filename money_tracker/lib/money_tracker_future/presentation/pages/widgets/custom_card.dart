@@ -10,10 +10,12 @@ import 'package:provider/provider.dart';
 
 class CustomCard extends StatelessWidget {
   const CustomCard({
+    required this.statusUserProp,
     required this.categoryExpenses,
     super.key
   });
 
+  final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
 
   @override
@@ -23,7 +25,7 @@ class CustomCard extends StatelessWidget {
     final valueNotifierLongPress  = ValueNotifier<bool>(false);
     final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
     final id = categoryExpenses.id??(throw Exception('Error search Key'));
-    final statusUserProp = context.read<StatusUserProp>();
+
     var cardVisible = true;
 
     return Dismissible(
@@ -98,9 +100,11 @@ class CustomCard extends StatelessWidget {
                           children: [
                             ValueListenableBuilder<bool>(
                               valueListenable: valueNotifierPencilVisible,
-                              builder: (_, value, __) => Visibility(
+                              builder: (context, value, __) => Visibility(
                                 visible: value,
                                 child: AddCategory(
+                                  contextMacro: context,
+                                  statusUserProp: statusUserProp,
                                   categoryExpenses: categoryExpenses,
                                   icon: const Icon(Icons.edit),
                                   addCategory: false,

@@ -11,6 +11,8 @@ abstract class DataBaseCategorySqfLite {
     ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
   });
   Future<int> deleteCategory(int id);
+
+  Future<bool> checkCategory(CategoryExpenses data);
   Future<int> updateCategory(CategoryExpenses data,
       {
         ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore

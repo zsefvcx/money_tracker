@@ -6,10 +6,12 @@ import 'package:money_tracker/money_tracker_future/presentation/presentation.dar
 
 class MainTabWidget extends StatelessWidget {
   const MainTabWidget({
+    required this.statusUserProp,
     required this.categories,
     super.key
   });
 
+  final StatusUserProp statusUserProp;
   final CategoriesExpensesModels categories;
 
 
@@ -20,6 +22,7 @@ class MainTabWidget extends StatelessWidget {
       children: [
         Hero(tag: Keys.heroIdSplash, child: Material(
           child: CustomPieChart(
+            statusUserProp: statusUserProp,
             categoriesExpensesModels: categories,
           ),
         )),
@@ -28,6 +31,7 @@ class MainTabWidget extends StatelessWidget {
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               return CustomCard(
+                statusUserProp: statusUserProp,
                 categoryExpenses: categories.categoriesId.elementAt(index),
               );
             },

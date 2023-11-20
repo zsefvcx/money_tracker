@@ -39,4 +39,9 @@ class CategoriesImpl extends CategoriesRepository{
     return await categoriesData.update(uuid: uuid, data: data);
   }
 
+  @override
+  Future<bool?> check({required String uuid, required CategoryExpenses data}) async {
+    return await categoriesData.check(uuid: uuid, data: data);
+  }
+
 }

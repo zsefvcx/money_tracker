@@ -272,7 +272,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       if (query[0].isNotEmpty){///только первое вхождение
         final id = query[0][_id];
         if (id != null && id is int){
-          return id;
+          return -1;
         }
       }
     }
@@ -286,7 +286,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       if (query2[0].isNotEmpty){///только первое вхождение
         final id = query2[0][_id];
         if (id != null && id is int){
-          return id;
+          return -1;
         }
       }
     }
@@ -298,5 +298,39 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
         whereArgs: [data.id],
         conflictAlgorithm: conflictAlgorithm,
     );
+  }
+
+  @override
+  Future<bool> checkCategory(CategoryExpenses data) async {
+    final db = await database;
+
+    ///имя должно быть уникальное
+    final query = await db.query(_tableCategories,
+        where: '"$_name" = ?',
+        whereArgs: [data.name]);
+
+    if (query.isNotEmpty){
+      if (query[0].isNotEmpty){///только первое вхождение
+        final id = query[0][_id];
+        if (id != null && id is int){
+          return false;
+        }
+      }
+    }
+
+    ///имя и цвет тоже должны быть уникальными
+    final query2 = await db.query(_tableCategories,
+        where: '"$_name" = ? and "$_colorHex" = ?',
+        whereArgs: [data.name, data.colorHex]);
+
+    if (query2.isNotEmpty){
+      if (query2[0].isNotEmpty){///только первое вхождение
+        final id = query2[0][_id];
+        if (id != null && id is int){
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

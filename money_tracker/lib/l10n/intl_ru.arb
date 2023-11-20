@@ -58,5 +58,6 @@
   "dataLoaded": "Данные загружены",
   "modifi": "Изменить",
   "changeCategory": "Изменить категорию",
-  "noMoreThan20Categories": "Не более 20 категорий"
+  "noMoreThan20Categories": "Не более 20 категорий",
+  "theCategoryAlreadyExistsChangeTheDetails": "Такая катеория уже создана, измените данные"
 }

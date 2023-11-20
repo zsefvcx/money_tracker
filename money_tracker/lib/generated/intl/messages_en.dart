@@ -85,6 +85,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Something wrong happened..."),
         "suchAUserExists":
             MessageLookupByLibrary.simpleMessage("Such a user exists"),
+        "theCategoryAlreadyExistsChangeTheDetails":
+            MessageLookupByLibrary.simpleMessage(
+                "The category already exists, change the details"),
         "thePasswordMustContainCapitalLetters":
             MessageLookupByLibrary.simpleMessage(
                 "The password must contain capital letters"),
