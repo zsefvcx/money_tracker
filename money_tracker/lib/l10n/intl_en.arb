@@ -59,5 +59,8 @@
   "modifi": "Modifi",
   "changeCategory": "Change category",
   "noMoreThan20Categories": "No more than 20 categories",
-  "theCategoryAlreadyExistsChangeTheDetails": "The category already exists"
+  "theCategoryAlreadyExistsChangeTheDetails": "The category already exists",
+  "removeCategory": "Remove category",
+  "name_category": " {nameCategory} ",
+  "addExpense": "Add expense"
 }

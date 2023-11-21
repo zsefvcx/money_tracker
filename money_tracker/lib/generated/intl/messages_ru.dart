@@ -20,13 +20,16 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(monthName) => "За ${monthName} нет расходов";
+  static String m0(nameCategory) => " ${nameCategory} ";
+
+  static String m1(monthName) => "За ${monthName} нет расходов";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Добавить"),
         "addCategory":
             MessageLookupByLibrary.simpleMessage("Добавить категорию"),
+        "addExpense": MessageLookupByLibrary.simpleMessage("Добавить расход"),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Уже есть аккаунт?"),
         "april": MessageLookupByLibrary.simpleMessage("Апрель"),
@@ -69,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "may": MessageLookupByLibrary.simpleMessage("Май"),
         "modifi": MessageLookupByLibrary.simpleMessage("Изменить"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
+        "name_category": m0,
         "noAccountYet":
             MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),
         "noMoreThan20Categories":
@@ -81,6 +85,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Пароль"),
         "profile": MessageLookupByLibrary.simpleMessage("Профиль"),
         "registration": MessageLookupByLibrary.simpleMessage("Регистрация"),
+        "removeCategory":
+            MessageLookupByLibrary.simpleMessage("Удалить категорию"),
         "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Ответ получен"),
         "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
@@ -107,7 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Пароль не должен содержать пробелов"),
         "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
             "Имя пользователя занято или запрещено"),
-        "thereAreNoExpensesForMonthName": m0,
+        "thereAreNoExpensesForMonthName": m1,
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "Такого пользователя не существует или ошибка в пароле"),
         "timeout": MessageLookupByLibrary.simpleMessage("Таймаут"),

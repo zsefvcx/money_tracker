@@ -659,6 +659,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Remove category`
+  String get removeCategory {
+    return Intl.message(
+      'Remove category',
+      name: 'removeCategory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` {nameCategory} `
+  String name_category(Object nameCategory) {
+    return Intl.message(
+      ' $nameCategory ',
+      name: 'name_category',
+      desc: '',
+      args: [nameCategory],
+    );
+  }
+
+  /// `Add expense`
+  String get addExpense {
+    return Intl.message(
+      'Add expense',
+      name: 'addExpense',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

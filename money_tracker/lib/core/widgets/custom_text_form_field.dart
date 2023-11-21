@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:money_tracker/core/core.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -15,6 +16,10 @@ class CustomTextFormField extends StatefulWidget {
     this.maxLength,
     this.suffixIcon,
     this.onChanged,
+    this.border,
+    this.focusedBorder,
+    this.enabledBorder,
+    this.inputFormatters,
     super.key});
 
   final TextEditingController? controller;
@@ -29,6 +34,10 @@ class CustomTextFormField extends StatefulWidget {
   final int? maxLength;
   final Widget? suffixIcon;
   final ValueChanged<String>? onChanged;
+  final InputBorder? border;
+  final InputBorder? focusedBorder;
+  final InputBorder? enabledBorder;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -66,6 +75,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               FocusScope.of(context).requestFocus(widget.nextFocusNode);
               widget.nextFocusNode?.requestFocus();
             },
+            inputFormatters: widget.inputFormatters,
             onChanged: widget.onChanged,
             autofocus: widget.autofocus,
             focusNode: widget.focusNode,
@@ -82,6 +92,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               floatingLabelStyle: theme.inputDecorationTheme.floatingLabelStyle?.copyWith(
                 color: (widget.focusNode?.hasFocus ?? true)?CustomThemeProp.violetFirm:null,
               ),
+              border: widget.border,
+              focusedBorder: widget.focusedBorder,
+              enabledBorder: widget.enabledBorder,
               labelText: widget.labelText,
               hintText: widget.hintText,
               suffixIconColor: (widget.focusNode?.hasFocus ?? true)?CustomThemeProp.violetFirm:null,

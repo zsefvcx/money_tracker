@@ -20,12 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(monthName) => "There are no expenses for ${monthName}";
+  static String m0(nameCategory) => " ${nameCategory} ";
+
+  static String m1(monthName) => "There are no expenses for ${monthName}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
+        "addExpense": MessageLookupByLibrary.simpleMessage("Add expense"),
         "alreadyHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "april": MessageLookupByLibrary.simpleMessage("April"),
@@ -66,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "may": MessageLookupByLibrary.simpleMessage("May"),
         "modifi": MessageLookupByLibrary.simpleMessage("Modifi"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
+        "name_category": m0,
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
         "noMoreThan20Categories":
             MessageLookupByLibrary.simpleMessage("No more than 20 categories"),
@@ -76,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
+        "removeCategory":
+            MessageLookupByLibrary.simpleMessage("Remove category"),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Reply received"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
@@ -102,7 +108,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The password must not contain spaces"),
         "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
             "The username is taken or disabled"),
-        "thereAreNoExpensesForMonthName": m0,
+        "thereAreNoExpensesForMonthName": m1,
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "This user does not exist or there is an error in the password"),
         "timeout": MessageLookupByLibrary.simpleMessage("TimeOut"),
