@@ -11,6 +11,8 @@ import 'package:sqflite/sqflite.dart'
 
 class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLite{
   static String? _lastUuid;
+  static bool isBusyInit = false;
+
   final String _uuid;
 
   DataBaseSqfLiteImpl._({required String uuid}): _uuid = uuid;
@@ -30,7 +32,16 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
   }
 
   Future<Database> get database async {
-    return _database ??= await _initDB(uuid: _uuid);
+    if (isBusyInit) {
+      await Future.doWhile(() async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        return isBusyInit;
+      });
+    }
+    isBusyInit = true;
+    final resDB = _database ??= await _initDB(uuid: _uuid);
+    isBusyInit = false;
+    return resDB;
   }
 
   Future<Database> _initDB({required String uuid}) async {
@@ -41,7 +52,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
 
   //прееделать
   static DataBaseSqfLiteImpl db({required String uuid}) {
-    if (_lastUuid != uuid){
+    if (_lastUuid != null && _lastUuid != uuid){
       _database?.close();
       _database = null;
       _db = null;

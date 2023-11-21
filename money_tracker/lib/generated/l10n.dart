@@ -650,10 +650,10 @@ class S {
     );
   }
 
-  /// `The category already exists, change the details`
+  /// `The category already exists`
   String get theCategoryAlreadyExistsChangeTheDetails {
     return Intl.message(
-      'The category already exists, change the details',
+      'The category already exists',
       name: 'theCategoryAlreadyExistsChangeTheDetails',
       desc: '',
       args: [],
