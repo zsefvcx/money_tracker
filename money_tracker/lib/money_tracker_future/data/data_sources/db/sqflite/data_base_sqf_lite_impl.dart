@@ -283,7 +283,9 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       if (query[0].isNotEmpty){///только первое вхождение
         final id = query[0][_id];
         if (id != null && id is int){
-          return -1;
+          if(id != data.id) {
+            return -1;
+          }
         }
       }
     }
@@ -324,7 +326,9 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       if (query[0].isNotEmpty){///только первое вхождение
         final id = query[0][_id];
         if (id != null && id is int){
-          return false;
+          if(id != data.id) {
+            return false;
+          }
         }
       }
     }
@@ -338,7 +342,9 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
       if (query2[0].isNotEmpty){///только первое вхождение
         final id = query2[0][_id];
         if (id != null && id is int){
-          return false;
+          if(id != data.id) {
+            return false;
+          }
         }
       }
     }
