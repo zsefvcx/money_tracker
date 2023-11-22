@@ -35,7 +35,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
       await event.map<FutureOr<void>>(
           init: (value) async {
             emit(const CategoriesBlocState.loading());
-            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
               await _categoriesRepository.getAllId(uuid: value.uuid),
             );
@@ -48,29 +48,12 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             await _response(emit);
           },
           read: (value) async {
-            // final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
-            //   function: () async =>
-            //   await _monthRepository.findAllInYear(uuid: value.uuid, year: value.year),
-            // );
-            // final data =  res;
-            // final monthCurrent = categoriesModelData.monthCurrent;
-            // categoriesModelData = categoriesModelData.copyWithData(
-            //   data: data,
-            //   monthCurrent: monthCurrent,
-            //   timeOut: timeOut,
-            //   error: error,
-            //   e: e,
-            // );
-            //   if (error){
-            //     Logger.print('Error _read.:$timeOut:$e', name: 'err', error: true);
-            //     value.completer.completeError(error);
-            //   } else {
-            //     value.completer.complete(res);
-            //   }
+            // TODO: implement read
+            throw UnimplementedError();
           },
           add: (value) async {
             emit(const CategoriesBlocState.loading());
-            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
                         function: () async =>
                         await _categoriesRepository.insert(uuid: value.uuid, data: value.data),
                       );
@@ -89,7 +72,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
                 await _categoriesRepository.delete(uuid: value.uuid),
               );
               modelData = modelData.copyWithData(
-              data: (res!=null && res)?const CategoriesExpenses(
+              data: (res!=null && res)?const CategoriesExpensesModels(
                 categoriesId: <CategoryExpenses>{}
               ):null,
               timeOut: timeOut,
@@ -100,7 +83,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             await _response(emit);
           },
           deleteId: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
               await _categoriesRepository.deleteId(uuid: value.uuid, id: value.id),
             );
@@ -113,7 +96,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             await _response(emit);
           },
           update: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesModels>(
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
               await _categoriesRepository.update(uuid: value.uuid, data: value.data),
             );
@@ -151,7 +134,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
     } else{
       final data = modelData.data;
       if (data != null) {
-        emit(CategoriesBlocState.loaded(model: data,));
+        emit(CategoriesBlocState.loaded(entity: data,));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const CategoriesBlocState.error());

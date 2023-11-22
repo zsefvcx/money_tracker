@@ -12,7 +12,7 @@ class MainTabWidget extends StatelessWidget {
   });
 
   final StatusUserProp statusUserProp;
-  final CategoriesExpensesModels categories;
+  final CategoriesExpensesEntity categories;
 
 
   @override
@@ -31,6 +31,7 @@ class MainTabWidget extends StatelessWidget {
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               return CustomCard(
+                dayExpense: 0,
                 statusUserProp: statusUserProp,
                 categoryExpenses: categories.categoriesId.elementAt(index),
               );

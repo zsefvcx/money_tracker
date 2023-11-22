@@ -859,7 +859,7 @@ mixin _$MonthBlocState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)
         loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
@@ -869,7 +869,7 @@ mixin _$MonthBlocState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
@@ -879,7 +879,7 @@ mixin _$MonthBlocState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
@@ -977,7 +977,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)
         loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
@@ -990,7 +990,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
@@ -1003,7 +1003,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
@@ -1063,7 +1063,7 @@ abstract class _$$loadedStateImplCopyWith<$Res> {
           _$loadedStateImpl value, $Res Function(_$loadedStateImpl) then) =
       __$$loadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent});
+  $Res call({MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent});
 }
 
 /// @nodoc
@@ -1077,13 +1077,13 @@ class __$$loadedStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? model = freezed,
+    Object? entity = freezed,
     Object? monthCurrent = freezed,
   }) {
     return _then(_$loadedStateImpl(
-      model: freezed == model
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
+      entity: freezed == entity
+          ? _value.entity
+          : entity // ignore: cast_nullable_to_non_nullable
               as MonthsCurrentYearEntity?,
       monthCurrent: freezed == monthCurrent
           ? _value.monthCurrent
@@ -1096,16 +1096,16 @@ class __$$loadedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
-  const _$loadedStateImpl({required this.model, required this.monthCurrent});
+  const _$loadedStateImpl({required this.entity, required this.monthCurrent});
 
   @override
-  final MonthsCurrentYearEntity? model;
+  final MonthsCurrentYearEntity? entity;
   @override
   final MonthCurrent? monthCurrent;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MonthBlocState.loaded(model: $model, monthCurrent: $monthCurrent)';
+    return 'MonthBlocState.loaded(entity: $entity, monthCurrent: $monthCurrent)';
   }
 
   @override
@@ -1113,7 +1113,7 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'MonthBlocState.loaded'))
-      ..add(DiagnosticsProperty('model', model))
+      ..add(DiagnosticsProperty('entity', entity))
       ..add(DiagnosticsProperty('monthCurrent', monthCurrent));
   }
 
@@ -1122,13 +1122,13 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$loadedStateImpl &&
-            (identical(other.model, model) || other.model == model) &&
+            (identical(other.entity, entity) || other.entity == entity) &&
             (identical(other.monthCurrent, monthCurrent) ||
                 other.monthCurrent == monthCurrent));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, model, monthCurrent);
+  int get hashCode => Object.hash(runtimeType, entity, monthCurrent);
 
   @JsonKey(ignore: true)
   @override
@@ -1141,12 +1141,12 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)
         loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
-    return loaded(model, monthCurrent);
+    return loaded(entity, monthCurrent);
   }
 
   @override
@@ -1154,12 +1154,12 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
-    return loaded?.call(model, monthCurrent);
+    return loaded?.call(entity, monthCurrent);
   }
 
   @override
@@ -1167,14 +1167,14 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(model, monthCurrent);
+      return loaded(entity, monthCurrent);
     }
     return orElse();
   }
@@ -1219,10 +1219,10 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
 
 abstract class _loadedState implements MonthBlocState {
   const factory _loadedState(
-      {required final MonthsCurrentYearEntity? model,
+      {required final MonthsCurrentYearEntity? entity,
       required final MonthCurrent? monthCurrent}) = _$loadedStateImpl;
 
-  MonthsCurrentYearEntity? get model;
+  MonthsCurrentYearEntity? get entity;
   MonthCurrent? get monthCurrent;
   @JsonKey(ignore: true)
   _$$loadedStateImplCopyWith<_$loadedStateImpl> get copyWith =>
@@ -1275,7 +1275,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)
         loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
@@ -1288,7 +1288,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
@@ -1301,7 +1301,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
@@ -1401,7 +1401,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)
         loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
@@ -1414,7 +1414,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
     TResult? Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
@@ -1427,7 +1427,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(
-            MonthsCurrentYearEntity? model, MonthCurrent? monthCurrent)?
+            MonthsCurrentYearEntity? entity, MonthCurrent? monthCurrent)?
         loaded,
     TResult Function()? error,
     TResult Function()? timeOut,

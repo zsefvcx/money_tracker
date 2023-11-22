@@ -689,6 +689,36 @@ class S {
       args: [],
     );
   }
+
+  /// `total {dayExpense}`
+  String totalDayexpense(Object dayExpense) {
+    return Intl.message(
+      'total $dayExpense',
+      name: 'totalDayexpense',
+      desc: '',
+      args: [dayExpense],
+    );
+  }
+
+  /// `Enter amount`
+  String get enterAmount {
+    return Intl.message(
+      'Enter amount',
+      name: 'enterAmount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There should be only numbers`
+  String get thereShouldBeOnlyNumbers {
+    return Intl.message(
+      'There should be only numbers',
+      name: 'thereShouldBeOnlyNumbers',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

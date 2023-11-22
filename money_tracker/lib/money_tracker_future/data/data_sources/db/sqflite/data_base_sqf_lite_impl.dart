@@ -2,14 +2,15 @@ import 'dart:io';
 
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/data/data_sources/db/db.dart';
-import 'package:money_tracker/money_tracker_future/data/models/categories/categories.dart';
+import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart'
         if(dart.library.io.Platform.isWindows)'package:sqflite_common_ffi/sqflite_ffi.dart'
         if(dart.library.io.Platform.isLinux  )'package:sqflite_common_ffi/sqflite_ffi.dart';
 
-class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLite{
+class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
+                                     DataBaseCategorySqfLite,
+                                     DataBaseExpensesSqfLite {
   static String? _lastUuid;
   static bool isBusyInit = false;
 
@@ -47,7 +48,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
   Future<Database> _initDB({required String uuid}) async {
     final path = await localPath(uuid: uuid);
     _lastUuid = uuid;
-    return await openDatabase(path, version: 2, onCreate: _createDB);
+    return await openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   //переделать
@@ -71,7 +72,12 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
   static const String _tableCategories = 'Categories';
   static const String _name = 'name';
   static const String _colorHex = 'colorHex';
-
+  //v3
+  static const String _tableExpenses = 'Expenses';
+  static const String _idCategory = 'idCategory';
+  static const String _idMonth = 'idMonth';
+  static const String _dateTime = 'dateTime';
+  static const String _sum = 'sum';
 
   Future<void> _createDB(Database db, int version) async {
     try {
@@ -90,6 +96,17 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
                 '"$_id" INTEGER PRIMARY KEY AUTOINCREMENT, '
                 '"$_name" TEXT, '
                 '"$_colorHex" TEXT '
+                ')'
+        );
+      }
+      if(version >=3){
+        await db.execute(
+            'CREATE TABLE "$_tableExpenses" ( '
+                '"$_id" INTEGER PRIMARY KEY AUTOINCREMENT, '
+                '"$_idCategory" INTEGER, '
+                '"$_idMonth" INTEGER, '
+                '"$_dateTime" TEXT, '
+                '"$_sum" TEXT '
                 ')'
         );
       }
@@ -186,7 +203,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
   }
 
   @override
-  Future<CategoriesExpenses?> getAllCategoryId() async {
+  Future<CategoriesExpensesModels?> getAllCategoryId() async {
     final db = await database;
     final List<Map<String, dynamic>> groupsMapList =
         await db.query(_tableCategories,
@@ -199,7 +216,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
           CategoryExpenses.fromJson(element)
       );
     }
-    return CategoriesExpenses(
+    return CategoriesExpensesModels(
       categoriesId: allId
     );
   }
@@ -350,4 +367,57 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite, DataBaseCategorySqfLi
     }
     return true;
   }
+
+  @override
+  Future<bool?> insertExpenses(DayExpense data,{
+    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
+  }) async {
+    final db = await database;
+
+    return (await db.insert(
+      _tableExpenses,
+      data.toJson(),
+      conflictAlgorithm: conflictAlgorithm,
+    ))>0;
+  }
+
+  @override
+  Future<bool?> checkExpenses(DayExpense data) {
+    // TODO: implement checkExpenses
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<MonthlyExpensesModel?> deleteIdExpenses({required int id}) {
+    // TODO: implement deleteIdExpenses
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<MonthlyExpensesModel?> getAllByIdMonthCategory(int idMonth, int idCategory) {
+    // TODO: implement getAllByIdMonthCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DayExpense?> getExpensesById(int id) {
+    // TODO: implement getExpensesById
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<BigInt?> getTotalInMonthCategory(int idMonth, int idCategory) {
+    // TODO: implement getTotalInMonthCategory
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<MonthlyExpensesModel?> updateExpenses(DayExpense data, {
+    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
+  }) {
+    // TODO: implement updateExpenses
+    throw UnimplementedError();
+  }
+
+
 }

@@ -34,7 +34,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
           init: (value) async => await _read(value.uuid, emit),
           read: (value) async => await _read(value.uuid, emit),
           write: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<APhotosEntity>(
+            final (error, timeOut, e, res) = await _runGoSData<PhotosEntity>(
               function: () async =>
               await photoRepository.write(
                 uuid: value.uuid,
@@ -82,9 +82,9 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
   Future<void> _read(String uuid, Emitter<PhotoBlocState> emit) async {
     emit(const PhotoBlocState.loading());
     if(uuid == '') {
-      emit(const PhotoBlocState.loaded(model:  null));
+      emit(const PhotoBlocState.loaded(entity: null));
     } else {
-      final (error, timeOut, e, res) = await _runGoSData<APhotosEntity>(
+      final (error, timeOut, e, res) = await _runGoSData<PhotosEntity>(
         function: () async =>
         await photoRepository.read(
             uuid: uuid
@@ -111,7 +111,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     } else{
       final data = photoModelData.data;
       if (data != null) {
-        emit(PhotoBlocState.loaded(model:  data));
+        emit(PhotoBlocState.loaded(entity:  data));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const PhotoBlocState.error());

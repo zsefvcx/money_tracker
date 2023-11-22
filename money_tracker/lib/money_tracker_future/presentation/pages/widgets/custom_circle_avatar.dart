@@ -54,7 +54,7 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
                       return const Center(child: CircularProgressIndicator());
                     },
                     loaded: (value) {
-                      final aPhotosEntity = value.model;
+                      final aPhotosEntity = value.entity;
                       final memoryImageData = aPhotosEntity?.contents;
 
                       final path = imgXFile?.path;

@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(monthName) => "There are no expenses for ${monthName}";
 
+  static String m2(dayExpense) => "total ${dayExpense}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Add"),
@@ -48,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect": MessageLookupByLibrary.simpleMessage(
             "E-Mail format is not correct"),
+        "enterAmount": MessageLookupByLibrary.simpleMessage("Enter amount"),
         "enterColor": MessageLookupByLibrary.simpleMessage("Enter color"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("Enter your email"),
         "enterText": MessageLookupByLibrary.simpleMessage("Enter text"),
@@ -109,9 +112,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
             "The username is taken or disabled"),
         "thereAreNoExpensesForMonthName": m1,
+        "thereShouldBeOnlyNumbers": MessageLookupByLibrary.simpleMessage(
+            "There should be only numbers"),
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "This user does not exist or there is an error in the password"),
         "timeout": MessageLookupByLibrary.simpleMessage("TimeOut"),
+        "totalDayexpense": m2,
         "yourExpenseHistoryIsAlwaysAtHand":
             MessageLookupByLibrary.simpleMessage(
                 "Your expense history is always at hand")

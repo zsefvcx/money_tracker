@@ -36,13 +36,11 @@ class MonthsCurrentYearModel extends MonthsCurrentYearEntity{
     throw Exception('Error MonthsCurrentYearModel');
   }
 
-
   /// Connect the generated _$MonthsCurrentYearModelFromJson function to the `fromJson`
   /// factory.
   factory MonthsCurrentYearModel.fromJson(Map<String, dynamic> json) => _$MonthsCurrentYearModelFromJson(json);
 
   /// Connect the generated _$MonthsCurrentYearModelToJson function to the `toJson` method.
   Map<String, dynamic> toJson() => _$MonthsCurrentYearModelToJson(this);
-
 
 }

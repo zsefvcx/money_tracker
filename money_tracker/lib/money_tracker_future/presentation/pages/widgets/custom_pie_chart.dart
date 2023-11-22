@@ -14,7 +14,7 @@ class CustomPieChart extends StatefulWidget {
   });
 
   final StatusUserProp statusUserProp;
-  final CategoriesExpensesModels categoriesExpensesModels;
+  final CategoriesExpensesEntity categoriesExpensesModels;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();

@@ -5,7 +5,7 @@ part of 'categories_bloc.dart';
 class CategoriesModelData {
 
   final bool timeOut;
-  final CategoriesExpensesModels? data;
+  final CategoriesExpensesEntity? data;
   final bool error;
   final String e;
 
@@ -20,7 +20,7 @@ class CategoriesModelData {
   });
 
   CategoriesModelData copyWithData({
-    required CategoriesExpensesModels? data,
+    required CategoriesExpensesEntity? data,
     String? e,
     bool? timeOut,
     bool? error,

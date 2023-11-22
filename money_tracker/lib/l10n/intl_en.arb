@@ -62,5 +62,8 @@
   "theCategoryAlreadyExistsChangeTheDetails": "The category already exists",
   "removeCategory": "Remove category",
   "name_category": " {nameCategory} ",
-  "addExpense": "Add expense"
+  "addExpense": "Add expense",
+  "totalDayexpense": "total {dayExpense}",
+  "enterAmount": "Enter amount",
+  "thereShouldBeOnlyNumbers": "There should be only numbers"
 }

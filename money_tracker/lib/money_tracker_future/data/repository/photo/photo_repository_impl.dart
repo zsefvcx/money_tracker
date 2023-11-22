@@ -10,12 +10,12 @@ class PhotoRepositoryImpl extends PhotoRepository{
   });
 
   @override
-  Future<APhotosEntity?> read({required String uuid}) async {
+  Future<PhotosEntity?> read({required String uuid}) async {
     return await photoFromIntFile.read(uuid: uuid);
   }
 
   @override
-  Future<APhotosEntity?> write({required String uuid, required String path}) async {
+  Future<PhotosEntity?> write({required String uuid, required String path}) async {
     return await photoFromIntFile.write(uuid: uuid, path: path);
   }
 

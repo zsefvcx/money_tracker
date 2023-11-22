@@ -1,31 +1,31 @@
 
-part of 'photo_bloc.dart';
+part of 'monthly_expenses_bloc.dart';
 
 //@injectable
-class PhotoModelData {
+class MonthlyExpensesModelData {
 
   final bool timeOut;
-  final PhotosEntity? data;
+  final MonthlyExpensesModel? data;
   final bool error;
   final String e;
 
   bool get isTimeOut => timeOut;
   bool get isError => error;
 
-  const PhotoModelData({
+  const MonthlyExpensesModelData({
     required this.data,
     required this.e,
     required this.timeOut,
     required this.error,
   });
 
-  PhotoModelData copyWithData({
-    required PhotosEntity? data,
+  MonthlyExpensesModelData copyWithData({
+    required MonthlyExpensesModel? data,
     String? e,
     bool? timeOut,
     bool? error,
   }){
-    return PhotoModelData(
+    return MonthlyExpensesModelData(
       data: data,
       e: e ?? this.e,
       timeOut: timeOut ?? this.timeOut,

@@ -88,9 +88,9 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                   return const CircularProgressIndicatorMod();
                 },
                 loaded: (value) {
-                  final localCategories = value.model;
+                  final localCategories = value.entity;
                   if (localCategories == null){
-                    return ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                    return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                       uuid: widget.statusUserProp.uuid,
                     );
                   }
@@ -99,10 +99,10 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
                     categories: localCategories,
                   );
                 },
-                error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                   uuid: widget.statusUserProp.uuid,
                 ),
-                timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesModels?>(
+                timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                   uuid: widget.statusUserProp.uuid,
                 ),
               );

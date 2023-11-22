@@ -23,7 +23,7 @@ class DialogCategory extends StatefulWidget {
 
 class _DialogCategoryState extends State<DialogCategory> {
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>(debugLabel: '');
+  GlobalKey<FormState> formKey = GlobalKey<FormState>(debugLabel: '0');
 
   final TextEditingController _nameController= TextEditingController();
   final TextEditingController _colorController= TextEditingController();

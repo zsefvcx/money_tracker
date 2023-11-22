@@ -40,7 +40,7 @@ class CategoriesDataImpl extends CategoriesData {
   }
 
   @override
-  Future<CategoriesExpenses?> getAllId({required String uuid}) async {
+  Future<CategoriesExpensesModels?> getAllId({required String uuid}) async {
     try{
       if(categoriesId.isEmpty){
         final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
@@ -55,7 +55,7 @@ class CategoriesDataImpl extends CategoriesData {
           );
         }
       }
-      return CategoriesExpenses(
+      return CategoriesExpensesModels(
           categoriesId: categoriesId.values.toSet()
       );
     } on Exception catch(e,t){
@@ -84,7 +84,7 @@ class CategoriesDataImpl extends CategoriesData {
   }
 
   @override
-  Future<CategoriesExpenses?> insert({required String uuid, required CategoryExpenses data}) async{
+  Future<CategoriesExpensesModels?> insert({required String uuid, required CategoryExpenses data}) async{
     try{
       if(categoriesId.length >= 20){
         Logger.print('No more than 20 categories');
@@ -95,7 +95,7 @@ class CategoriesDataImpl extends CategoriesData {
       }
 
 
-      return CategoriesExpenses(
+      return CategoriesExpensesModels(
           categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){
@@ -105,12 +105,12 @@ class CategoriesDataImpl extends CategoriesData {
   }
 
   @override
-  Future<CategoriesExpenses?> deleteId({required String uuid, required int id}) async{
+  Future<CategoriesExpensesModels?> deleteId({required String uuid, required int id}) async{
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.deleteCategory(id);
       if(res > 0) categoriesId.remove(id);
-      return CategoriesExpenses(
+      return CategoriesExpensesModels(
           categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){
@@ -120,13 +120,13 @@ class CategoriesDataImpl extends CategoriesData {
   }
 
   @override
-  Future<CategoriesExpenses?> update({required String uuid, required CategoryExpenses data}) async {
+  Future<CategoriesExpensesModels?> update({required String uuid, required CategoryExpenses data}) async {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.updateCategory(data);
       final id = data.id;
       if(res > 0 && id != null) categoriesId[id] = data;
-      return CategoriesExpenses(
+      return CategoriesExpensesModels(
           categoriesId: categoriesIdSort()
       );
     } on Exception catch(e,t){

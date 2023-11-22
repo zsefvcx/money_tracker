@@ -62,5 +62,8 @@
   "theCategoryAlreadyExistsChangeTheDetails": "Такая катеория уже создана",
   "removeCategory": "Удалить категорию",
   "name_category": " {nameCategory} ",
-  "addExpense": "Добавить расход"
+  "addExpense": "Добавить расход",
+  "totalDayexpense": "Всего {dayExpense}",
+  "enterAmount": "Введите сумму",
+  "thereShouldBeOnlyNumbers": "Должны быть только цифры"
 }

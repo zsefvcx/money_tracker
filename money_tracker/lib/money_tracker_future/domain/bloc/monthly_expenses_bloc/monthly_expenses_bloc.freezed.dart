@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'categories_bloc.dart';
+part of 'monthly_expenses_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,18 +15,20 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$CategoriesBlocEvent {
+mixin _$MonthlyExpensesBlocEvent {
   String get uuid => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) =>
@@ -35,11 +37,13 @@ mixin _$CategoriesBlocEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) =>
@@ -48,11 +52,13 @@ mixin _$CategoriesBlocEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -94,23 +100,24 @@ mixin _$CategoriesBlocEvent {
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $CategoriesBlocEventCopyWith<CategoriesBlocEvent> get copyWith =>
+  $MonthlyExpensesBlocEventCopyWith<MonthlyExpensesBlocEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CategoriesBlocEventCopyWith<$Res> {
-  factory $CategoriesBlocEventCopyWith(
-          CategoriesBlocEvent value, $Res Function(CategoriesBlocEvent) then) =
-      _$CategoriesBlocEventCopyWithImpl<$Res, CategoriesBlocEvent>;
+abstract class $MonthlyExpensesBlocEventCopyWith<$Res> {
+  factory $MonthlyExpensesBlocEventCopyWith(MonthlyExpensesBlocEvent value,
+          $Res Function(MonthlyExpensesBlocEvent) then) =
+      _$MonthlyExpensesBlocEventCopyWithImpl<$Res, MonthlyExpensesBlocEvent>;
   @useResult
   $Res call({String uuid});
 }
 
 /// @nodoc
-class _$CategoriesBlocEventCopyWithImpl<$Res, $Val extends CategoriesBlocEvent>
-    implements $CategoriesBlocEventCopyWith<$Res> {
-  _$CategoriesBlocEventCopyWithImpl(this._value, this._then);
+class _$MonthlyExpensesBlocEventCopyWithImpl<$Res,
+        $Val extends MonthlyExpensesBlocEvent>
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
+  _$MonthlyExpensesBlocEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -133,7 +140,7 @@ class _$CategoriesBlocEventCopyWithImpl<$Res, $Val extends CategoriesBlocEvent>
 
 /// @nodoc
 abstract class _$$initEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$initEventImplCopyWith(
           _$initEventImpl value, $Res Function(_$initEventImpl) then) =
       __$$initEventImplCopyWithImpl<$Res>;
@@ -144,7 +151,7 @@ abstract class _$$initEventImplCopyWith<$Res>
 
 /// @nodoc
 class __$$initEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$initEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$initEventImpl>
     implements _$$initEventImplCopyWith<$Res> {
   __$$initEventImplCopyWithImpl(
       _$initEventImpl _value, $Res Function(_$initEventImpl) _then)
@@ -174,14 +181,14 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.init(uuid: $uuid)';
+    return 'MonthlyExpensesBlocEvent.init(uuid: $uuid)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.init'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.init'))
       ..add(DiagnosticsProperty('uuid', uuid));
   }
 
@@ -208,11 +215,13 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -224,11 +233,13 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -240,11 +251,13 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -302,7 +315,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   }
 }
 
-abstract class _initEvent implements CategoriesBlocEvent {
+abstract class _initEvent implements MonthlyExpensesBlocEvent {
   const factory _initEvent({required final String uuid}) = _$initEventImpl;
 
   @override
@@ -315,7 +328,7 @@ abstract class _initEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$readEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$readEventImplCopyWith(
           _$readEventImpl value, $Res Function(_$readEventImpl) then) =
       __$$readEventImplCopyWithImpl<$Res>;
@@ -326,7 +339,7 @@ abstract class _$$readEventImplCopyWith<$Res>
 
 /// @nodoc
 class __$$readEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$readEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$readEventImpl>
     implements _$$readEventImplCopyWith<$Res> {
   __$$readEventImplCopyWithImpl(
       _$readEventImpl _value, $Res Function(_$readEventImpl) _then)
@@ -371,14 +384,14 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.read(uuid: $uuid, id: $id, completer: $completer)';
+    return 'MonthlyExpensesBlocEvent.read(uuid: $uuid, id: $id, completer: $completer)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.read'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.read'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('completer', completer));
@@ -410,11 +423,13 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -426,11 +441,13 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -442,11 +459,13 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -504,7 +523,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   }
 }
 
-abstract class _readEvent implements CategoriesBlocEvent {
+abstract class _readEvent implements MonthlyExpensesBlocEvent {
   const factory _readEvent(
       {required final String uuid,
       required final int id,
@@ -522,18 +541,18 @@ abstract class _readEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$addEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$addEventImplCopyWith(
           _$addEventImpl value, $Res Function(_$addEventImpl) then) =
       __$$addEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, CategoryExpenses data});
+  $Res call({String uuid, DayExpense data, Completer<dynamic> completer});
 }
 
 /// @nodoc
 class __$$addEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$addEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$addEventImpl>
     implements _$$addEventImplCopyWith<$Res> {
   __$$addEventImplCopyWithImpl(
       _$addEventImpl _value, $Res Function(_$addEventImpl) _then)
@@ -544,6 +563,7 @@ class __$$addEventImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? data = null,
+    Object? completer = null,
   }) {
     return _then(_$addEventImpl(
       uuid: null == uuid
@@ -553,7 +573,11 @@ class __$$addEventImplCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CategoryExpenses,
+              as DayExpense,
+      completer: null == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>,
     ));
   }
 }
@@ -561,25 +585,29 @@ class __$$addEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
-  const _$addEventImpl({required this.uuid, required this.data});
+  const _$addEventImpl(
+      {required this.uuid, required this.data, required this.completer});
 
   @override
   final String uuid;
   @override
-  final CategoryExpenses data;
+  final DayExpense data;
+  @override
+  final Completer<dynamic> completer;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.add(uuid: $uuid, data: $data)';
+    return 'MonthlyExpensesBlocEvent.add(uuid: $uuid, data: $data, completer: $completer)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.add'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.add'))
       ..add(DiagnosticsProperty('uuid', uuid))
-      ..add(DiagnosticsProperty('data', data));
+      ..add(DiagnosticsProperty('data', data))
+      ..add(DiagnosticsProperty('completer', completer));
   }
 
   @override
@@ -588,11 +616,13 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         (other.runtimeType == runtimeType &&
             other is _$addEventImpl &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, data);
+  int get hashCode => Object.hash(runtimeType, uuid, data, completer);
 
   @JsonKey(ignore: true)
   @override
@@ -606,15 +636,17 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
-    return add(uuid, data);
+    return add(uuid, data, completer);
   }
 
   @override
@@ -622,15 +654,17 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
-    return add?.call(uuid, data);
+    return add?.call(uuid, data, completer);
   }
 
   @override
@@ -638,17 +672,19 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
   }) {
     if (add != null) {
-      return add(uuid, data);
+      return add(uuid, data, completer);
     }
     return orElse();
   }
@@ -700,14 +736,16 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   }
 }
 
-abstract class _addEvent implements CategoriesBlocEvent {
+abstract class _addEvent implements MonthlyExpensesBlocEvent {
   const factory _addEvent(
       {required final String uuid,
-      required final CategoryExpenses data}) = _$addEventImpl;
+      required final DayExpense data,
+      required final Completer<dynamic> completer}) = _$addEventImpl;
 
   @override
   String get uuid;
-  CategoryExpenses get data;
+  DayExpense get data;
+  Completer<dynamic> get completer;
   @override
   @JsonKey(ignore: true)
   _$$addEventImplCopyWith<_$addEventImpl> get copyWith =>
@@ -716,7 +754,7 @@ abstract class _addEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$deleteEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$deleteEventImplCopyWith(
           _$deleteEventImpl value, $Res Function(_$deleteEventImpl) then) =
       __$$deleteEventImplCopyWithImpl<$Res>;
@@ -727,7 +765,7 @@ abstract class _$$deleteEventImplCopyWith<$Res>
 
 /// @nodoc
 class __$$deleteEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$deleteEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$deleteEventImpl>
     implements _$$deleteEventImplCopyWith<$Res> {
   __$$deleteEventImplCopyWithImpl(
       _$deleteEventImpl _value, $Res Function(_$deleteEventImpl) _then)
@@ -757,14 +795,14 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.delete(uuid: $uuid)';
+    return 'MonthlyExpensesBlocEvent.delete(uuid: $uuid)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.delete'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.delete'))
       ..add(DiagnosticsProperty('uuid', uuid));
   }
 
@@ -791,11 +829,13 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -807,11 +847,13 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -823,11 +865,13 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -885,7 +929,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   }
 }
 
-abstract class _deleteEvent implements CategoriesBlocEvent {
+abstract class _deleteEvent implements MonthlyExpensesBlocEvent {
   const factory _deleteEvent({required final String uuid}) = _$deleteEventImpl;
 
   @override
@@ -898,18 +942,18 @@ abstract class _deleteEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$updateEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$updateEventImplCopyWith(
           _$updateEventImpl value, $Res Function(_$updateEventImpl) then) =
       __$$updateEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, CategoryExpenses data});
+  $Res call({String uuid, DayExpense data});
 }
 
 /// @nodoc
 class __$$updateEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$updateEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$updateEventImpl>
     implements _$$updateEventImplCopyWith<$Res> {
   __$$updateEventImplCopyWithImpl(
       _$updateEventImpl _value, $Res Function(_$updateEventImpl) _then)
@@ -929,7 +973,7 @@ class __$$updateEventImplCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CategoryExpenses,
+              as DayExpense,
     ));
   }
 }
@@ -942,18 +986,18 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @override
   final String uuid;
   @override
-  final CategoryExpenses data;
+  final DayExpense data;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.update(uuid: $uuid, data: $data)';
+    return 'MonthlyExpensesBlocEvent.update(uuid: $uuid, data: $data)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.update'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.update'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('data', data));
   }
@@ -982,11 +1026,13 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -998,11 +1044,13 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -1014,11 +1062,13 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -1076,14 +1126,14 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   }
 }
 
-abstract class _updateEvent implements CategoriesBlocEvent {
+abstract class _updateEvent implements MonthlyExpensesBlocEvent {
   const factory _updateEvent(
       {required final String uuid,
-      required final CategoryExpenses data}) = _$updateEventImpl;
+      required final DayExpense data}) = _$updateEventImpl;
 
   @override
   String get uuid;
-  CategoryExpenses get data;
+  DayExpense get data;
   @override
   @JsonKey(ignore: true)
   _$$updateEventImplCopyWith<_$updateEventImpl> get copyWith =>
@@ -1092,18 +1142,18 @@ abstract class _updateEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$checkEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$checkEventImplCopyWith(
           _$checkEventImpl value, $Res Function(_$checkEventImpl) then) =
       __$$checkEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, CategoryExpenses data, Completer<dynamic> completer});
+  $Res call({String uuid, DayExpense data, Completer<dynamic> completer});
 }
 
 /// @nodoc
 class __$$checkEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$checkEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$checkEventImpl>
     implements _$$checkEventImplCopyWith<$Res> {
   __$$checkEventImplCopyWithImpl(
       _$checkEventImpl _value, $Res Function(_$checkEventImpl) _then)
@@ -1124,7 +1174,7 @@ class __$$checkEventImplCopyWithImpl<$Res>
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as CategoryExpenses,
+              as DayExpense,
       completer: null == completer
           ? _value.completer
           : completer // ignore: cast_nullable_to_non_nullable
@@ -1142,20 +1192,20 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @override
   final String uuid;
   @override
-  final CategoryExpenses data;
+  final DayExpense data;
   @override
   final Completer<dynamic> completer;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.check(uuid: $uuid, data: $data, completer: $completer)';
+    return 'MonthlyExpensesBlocEvent.check(uuid: $uuid, data: $data, completer: $completer)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.check'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.check'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('data', data))
       ..add(DiagnosticsProperty('completer', completer));
@@ -1187,11 +1237,13 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -1203,11 +1255,13 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -1219,11 +1273,13 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -1281,15 +1337,15 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   }
 }
 
-abstract class _checkEvent implements CategoriesBlocEvent {
+abstract class _checkEvent implements MonthlyExpensesBlocEvent {
   const factory _checkEvent(
       {required final String uuid,
-      required final CategoryExpenses data,
+      required final DayExpense data,
       required final Completer<dynamic> completer}) = _$checkEventImpl;
 
   @override
   String get uuid;
-  CategoryExpenses get data;
+  DayExpense get data;
   Completer<dynamic> get completer;
   @override
   @JsonKey(ignore: true)
@@ -1299,7 +1355,7 @@ abstract class _checkEvent implements CategoriesBlocEvent {
 
 /// @nodoc
 abstract class _$$deleteIdEventImplCopyWith<$Res>
-    implements $CategoriesBlocEventCopyWith<$Res> {
+    implements $MonthlyExpensesBlocEventCopyWith<$Res> {
   factory _$$deleteIdEventImplCopyWith(
           _$deleteIdEventImpl value, $Res Function(_$deleteIdEventImpl) then) =
       __$$deleteIdEventImplCopyWithImpl<$Res>;
@@ -1310,7 +1366,7 @@ abstract class _$$deleteIdEventImplCopyWith<$Res>
 
 /// @nodoc
 class __$$deleteIdEventImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$deleteIdEventImpl>
+    extends _$MonthlyExpensesBlocEventCopyWithImpl<$Res, _$deleteIdEventImpl>
     implements _$$deleteIdEventImplCopyWith<$Res> {
   __$$deleteIdEventImplCopyWithImpl(
       _$deleteIdEventImpl _value, $Res Function(_$deleteIdEventImpl) _then)
@@ -1349,14 +1405,14 @@ class _$deleteIdEventImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocEvent.deleteId(uuid: $uuid, id: $id)';
+    return 'MonthlyExpensesBlocEvent.deleteId(uuid: $uuid, id: $id)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.deleteId'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.deleteId'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('id', id));
   }
@@ -1385,11 +1441,13 @@ class _$deleteIdEventImpl
     required TResult Function(String uuid) init,
     required TResult Function(String uuid, int id, Completer<dynamic> completer)
         read,
-    required TResult Function(String uuid, CategoryExpenses data) add,
-    required TResult Function(String uuid) delete,
-    required TResult Function(String uuid, CategoryExpenses data) update,
     required TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+            String uuid, DayExpense data, Completer<dynamic> completer)
+        add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, DayExpense data) update,
+    required TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)
         check,
     required TResult Function(String uuid, int id) deleteId,
   }) {
@@ -1401,11 +1459,13 @@ class _$deleteIdEventImpl
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
     TResult? Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult? Function(String uuid, CategoryExpenses data)? add,
-    TResult? Function(String uuid)? delete,
-    TResult? Function(String uuid, CategoryExpenses data)? update,
     TResult? Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, DayExpense data)? update,
+    TResult? Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult? Function(String uuid, int id)? deleteId,
   }) {
@@ -1417,11 +1477,13 @@ class _$deleteIdEventImpl
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
     TResult Function(String uuid, int id, Completer<dynamic> completer)? read,
-    TResult Function(String uuid, CategoryExpenses data)? add,
-    TResult Function(String uuid)? delete,
-    TResult Function(String uuid, CategoryExpenses data)? update,
     TResult Function(
-            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+            String uuid, DayExpense data, Completer<dynamic> completer)?
+        add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, DayExpense data)? update,
+    TResult Function(
+            String uuid, DayExpense data, Completer<dynamic> completer)?
         check,
     TResult Function(String uuid, int id)? deleteId,
     required TResult orElse(),
@@ -1479,7 +1541,7 @@ class _$deleteIdEventImpl
   }
 }
 
-abstract class _deleteIdEvent implements CategoriesBlocEvent {
+abstract class _deleteIdEvent implements MonthlyExpensesBlocEvent {
   const factory _deleteIdEvent(
       {required final String uuid,
       required final int id}) = _$deleteIdEventImpl;
@@ -1494,11 +1556,11 @@ abstract class _deleteIdEvent implements CategoriesBlocEvent {
 }
 
 /// @nodoc
-mixin _$CategoriesBlocState {
+mixin _$MonthlyExpensesBlocState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(CategoriesExpensesEntity? entity) loaded,
+    required TResult Function(MonthlyExpensesEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) =>
@@ -1506,7 +1568,7 @@ mixin _$CategoriesBlocState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult? Function(MonthlyExpensesEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) =>
@@ -1514,7 +1576,7 @@ mixin _$CategoriesBlocState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult Function(MonthlyExpensesEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1548,16 +1610,17 @@ mixin _$CategoriesBlocState {
 }
 
 /// @nodoc
-abstract class $CategoriesBlocStateCopyWith<$Res> {
-  factory $CategoriesBlocStateCopyWith(
-          CategoriesBlocState value, $Res Function(CategoriesBlocState) then) =
-      _$CategoriesBlocStateCopyWithImpl<$Res, CategoriesBlocState>;
+abstract class $MonthlyExpensesBlocStateCopyWith<$Res> {
+  factory $MonthlyExpensesBlocStateCopyWith(MonthlyExpensesBlocState value,
+          $Res Function(MonthlyExpensesBlocState) then) =
+      _$MonthlyExpensesBlocStateCopyWithImpl<$Res, MonthlyExpensesBlocState>;
 }
 
 /// @nodoc
-class _$CategoriesBlocStateCopyWithImpl<$Res, $Val extends CategoriesBlocState>
-    implements $CategoriesBlocStateCopyWith<$Res> {
-  _$CategoriesBlocStateCopyWithImpl(this._value, this._then);
+class _$MonthlyExpensesBlocStateCopyWithImpl<$Res,
+        $Val extends MonthlyExpensesBlocState>
+    implements $MonthlyExpensesBlocStateCopyWith<$Res> {
+  _$MonthlyExpensesBlocStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -1574,7 +1637,7 @@ abstract class _$$loadingStateImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$loadingStateImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocStateCopyWithImpl<$Res, _$loadingStateImpl>
+    extends _$MonthlyExpensesBlocStateCopyWithImpl<$Res, _$loadingStateImpl>
     implements _$$loadingStateImplCopyWith<$Res> {
   __$$loadingStateImplCopyWithImpl(
       _$loadingStateImpl _value, $Res Function(_$loadingStateImpl) _then)
@@ -1588,13 +1651,14 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocState.loading()';
+    return 'MonthlyExpensesBlocState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CategoriesBlocState.loading'));
+    properties
+        .add(DiagnosticsProperty('type', 'MonthlyExpensesBlocState.loading'));
   }
 
   @override
@@ -1610,7 +1674,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(CategoriesExpensesEntity? entity) loaded,
+    required TResult Function(MonthlyExpensesEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1621,7 +1685,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult? Function(MonthlyExpensesEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1632,7 +1696,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult Function(MonthlyExpensesEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1681,7 +1745,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   }
 }
 
-abstract class _loadingState implements CategoriesBlocState {
+abstract class _loadingState implements MonthlyExpensesBlocState {
   const factory _loadingState() = _$loadingStateImpl;
 }
 
@@ -1691,12 +1755,12 @@ abstract class _$$loadedStateImplCopyWith<$Res> {
           _$loadedStateImpl value, $Res Function(_$loadedStateImpl) then) =
       __$$loadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({CategoriesExpensesEntity? entity});
+  $Res call({MonthlyExpensesEntity? entity});
 }
 
 /// @nodoc
 class __$$loadedStateImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocStateCopyWithImpl<$Res, _$loadedStateImpl>
+    extends _$MonthlyExpensesBlocStateCopyWithImpl<$Res, _$loadedStateImpl>
     implements _$$loadedStateImplCopyWith<$Res> {
   __$$loadedStateImplCopyWithImpl(
       _$loadedStateImpl _value, $Res Function(_$loadedStateImpl) _then)
@@ -1711,7 +1775,7 @@ class __$$loadedStateImplCopyWithImpl<$Res>
       entity: freezed == entity
           ? _value.entity
           : entity // ignore: cast_nullable_to_non_nullable
-              as CategoriesExpensesEntity?,
+              as MonthlyExpensesEntity?,
     ));
   }
 }
@@ -1722,18 +1786,18 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   const _$loadedStateImpl({required this.entity});
 
   @override
-  final CategoriesExpensesEntity? entity;
+  final MonthlyExpensesEntity? entity;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocState.loaded(entity: $entity)';
+    return 'MonthlyExpensesBlocState.loaded(entity: $entity)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'CategoriesBlocState.loaded'))
+      ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocState.loaded'))
       ..add(DiagnosticsProperty('entity', entity));
   }
 
@@ -1758,7 +1822,7 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(CategoriesExpensesEntity? entity) loaded,
+    required TResult Function(MonthlyExpensesEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1769,7 +1833,7 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult? Function(MonthlyExpensesEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1780,7 +1844,7 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult Function(MonthlyExpensesEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1829,11 +1893,11 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   }
 }
 
-abstract class _loadedState implements CategoriesBlocState {
-  const factory _loadedState(
-      {required final CategoriesExpensesEntity? entity}) = _$loadedStateImpl;
+abstract class _loadedState implements MonthlyExpensesBlocState {
+  const factory _loadedState({required final MonthlyExpensesEntity? entity}) =
+      _$loadedStateImpl;
 
-  CategoriesExpensesEntity? get entity;
+  MonthlyExpensesEntity? get entity;
   @JsonKey(ignore: true)
   _$$loadedStateImplCopyWith<_$loadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1848,7 +1912,7 @@ abstract class _$$errorStateImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$errorStateImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocStateCopyWithImpl<$Res, _$errorStateImpl>
+    extends _$MonthlyExpensesBlocStateCopyWithImpl<$Res, _$errorStateImpl>
     implements _$$errorStateImplCopyWith<$Res> {
   __$$errorStateImplCopyWithImpl(
       _$errorStateImpl _value, $Res Function(_$errorStateImpl) _then)
@@ -1862,13 +1926,14 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocState.error()';
+    return 'MonthlyExpensesBlocState.error()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CategoriesBlocState.error'));
+    properties
+        .add(DiagnosticsProperty('type', 'MonthlyExpensesBlocState.error'));
   }
 
   @override
@@ -1884,7 +1949,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(CategoriesExpensesEntity? entity) loaded,
+    required TResult Function(MonthlyExpensesEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1895,7 +1960,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult? Function(MonthlyExpensesEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1906,7 +1971,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult Function(MonthlyExpensesEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1955,7 +2020,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   }
 }
 
-abstract class _errorState implements CategoriesBlocState {
+abstract class _errorState implements MonthlyExpensesBlocState {
   const factory _errorState() = _$errorStateImpl;
 }
 
@@ -1968,7 +2033,7 @@ abstract class _$$timeOutImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$timeOutImplCopyWithImpl<$Res>
-    extends _$CategoriesBlocStateCopyWithImpl<$Res, _$timeOutImpl>
+    extends _$MonthlyExpensesBlocStateCopyWithImpl<$Res, _$timeOutImpl>
     implements _$$timeOutImplCopyWith<$Res> {
   __$$timeOutImplCopyWithImpl(
       _$timeOutImpl _value, $Res Function(_$timeOutImpl) _then)
@@ -1982,13 +2047,14 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CategoriesBlocState.timeOut()';
+    return 'MonthlyExpensesBlocState.timeOut()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'CategoriesBlocState.timeOut'));
+    properties
+        .add(DiagnosticsProperty('type', 'MonthlyExpensesBlocState.timeOut'));
   }
 
   @override
@@ -2004,7 +2070,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(CategoriesExpensesEntity? entity) loaded,
+    required TResult Function(MonthlyExpensesEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -2015,7 +2081,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult? Function(MonthlyExpensesEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -2026,7 +2092,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(CategoriesExpensesEntity? entity)? loaded,
+    TResult Function(MonthlyExpensesEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -2075,6 +2141,6 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   }
 }
 
-abstract class _timeOut implements CategoriesBlocState {
+abstract class _timeOut implements MonthlyExpensesBlocState {
   const factory _timeOut() = _$timeOutImpl;
 }

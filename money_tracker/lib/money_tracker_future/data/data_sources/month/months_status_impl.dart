@@ -1,21 +1,20 @@
 import 'package:money_tracker/core/logger/logger.dart';
 import 'package:money_tracker/money_tracker_future/core/month/month_current.dart';
 import 'package:money_tracker/money_tracker_future/data/data.dart';
-import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 class MonthsStatusImpl extends MonthsStatus {
 
   @override
-  Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
+  Future<MonthsCurrentYearModel?> findAllInYear({required String uuid, required int year}) async {
       try{
         final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
           final data = await dbSqlLiteLocal.findAllMonthInYear(year);
-          final monthsCurrentYearEntity = MonthsCurrentYearModel(
+          final monthsCurrentYear = MonthsCurrentYearModel(
             uuid: uuid,
             year: year,
             months: data.toSet(),
           );
-          return monthsCurrentYearEntity;
+          return monthsCurrentYear;
       } on Exception catch(e,t){
         Logger.print('Error $e\n$t', name: 'err', error: true);
         throw ArgumentError('Error findAllInYear month: $e\n$t');

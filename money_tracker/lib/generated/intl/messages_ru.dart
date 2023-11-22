@@ -24,6 +24,8 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m1(monthName) => "За ${monthName} нет расходов";
 
+  static String m2(dayExpense) => "Всего ${dayExpense}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "add": MessageLookupByLibrary.simpleMessage("Добавить"),
@@ -48,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect":
             MessageLookupByLibrary.simpleMessage("Формат E-Mail не правильный"),
+        "enterAmount": MessageLookupByLibrary.simpleMessage("Введите сумму"),
         "enterColor": MessageLookupByLibrary.simpleMessage("Введите цвет"),
         "enterEmail":
             MessageLookupByLibrary.simpleMessage("Введите свою почту"),
@@ -114,9 +117,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "theUsernameIsTakenOrDisabled": MessageLookupByLibrary.simpleMessage(
             "Имя пользователя занято или запрещено"),
         "thereAreNoExpensesForMonthName": m1,
+        "thereShouldBeOnlyNumbers":
+            MessageLookupByLibrary.simpleMessage("Должны быть только цифры"),
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "Такого пользователя не существует или ошибка в пароле"),
         "timeout": MessageLookupByLibrary.simpleMessage("Таймаут"),
+        "totalDayexpense": m2,
         "yourExpenseHistoryIsAlwaysAtHand":
             MessageLookupByLibrary.simpleMessage(
                 "Ваша история расходов всегда под рукой")

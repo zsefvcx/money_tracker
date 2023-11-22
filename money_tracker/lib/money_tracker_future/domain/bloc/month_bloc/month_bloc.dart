@@ -41,10 +41,6 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
             );
             final data =  modelData.data;
             final monthCurrent = res;
-            if(!error && res !=null && data != null &&
-                data.year == value.data.year && data.uuid == value.uuid) {
-              if(res.id!=null)data.months.add(value.data.month);
-            }
             modelData = modelData.copyWithData(
               data: data,
               monthCurrent: monthCurrent,
@@ -83,10 +79,6 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
 
             final data =  modelData.data;
             final monthCurrent = res;
-            if(!error && res !=null && data != null && monthCurrent != null &&
-                data.year == value.data.year && data.uuid == value.uuid) {
-              if(res.id!=null)data.months.add(monthCurrent.month);
-            }
             modelData = modelData.copyWithData(
               data: data,
               monthCurrent: monthCurrent,
@@ -148,7 +140,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
       final data = modelData.data;
       final monthCurrent = modelData.monthCurrent;
       if (data != null || monthCurrent != null) {
-        emit(MonthBlocState.loaded(model:  data, monthCurrent: monthCurrent));
+        emit(MonthBlocState.loaded(entity: data, monthCurrent: monthCurrent));
       } else {
         Logger.print('Data not loaded.', name: 'err', error: true);
         emit(const MonthBlocState.error());

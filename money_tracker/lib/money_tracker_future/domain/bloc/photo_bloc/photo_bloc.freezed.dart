@@ -797,7 +797,7 @@ mixin _$PhotoBlocState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(APhotosEntity? model) loaded,
+    required TResult Function(PhotosEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) =>
@@ -805,7 +805,7 @@ mixin _$PhotoBlocState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(APhotosEntity? model)? loaded,
+    TResult? Function(PhotosEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) =>
@@ -813,7 +813,7 @@ mixin _$PhotoBlocState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(APhotosEntity? model)? loaded,
+    TResult Function(PhotosEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -909,7 +909,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(APhotosEntity? model) loaded,
+    required TResult Function(PhotosEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -920,7 +920,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(APhotosEntity? model)? loaded,
+    TResult? Function(PhotosEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -931,7 +931,7 @@ class _$loadingStateImpl with DiagnosticableTreeMixin implements _loadingState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(APhotosEntity? model)? loaded,
+    TResult Function(PhotosEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -990,7 +990,7 @@ abstract class _$$loadedStateImplCopyWith<$Res> {
           _$loadedStateImpl value, $Res Function(_$loadedStateImpl) then) =
       __$$loadedStateImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({APhotosEntity? model});
+  $Res call({PhotosEntity? entity});
 }
 
 /// @nodoc
@@ -1004,13 +1004,13 @@ class __$$loadedStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? model = freezed,
+    Object? entity = freezed,
   }) {
     return _then(_$loadedStateImpl(
-      model: freezed == model
-          ? _value.model
-          : model // ignore: cast_nullable_to_non_nullable
-              as APhotosEntity?,
+      entity: freezed == entity
+          ? _value.entity
+          : entity // ignore: cast_nullable_to_non_nullable
+              as PhotosEntity?,
     ));
   }
 }
@@ -1018,14 +1018,14 @@ class __$$loadedStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
-  const _$loadedStateImpl({required this.model});
+  const _$loadedStateImpl({required this.entity});
 
   @override
-  final APhotosEntity? model;
+  final PhotosEntity? entity;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'PhotoBlocState.loaded(model: $model)';
+    return 'PhotoBlocState.loaded(entity: $entity)';
   }
 
   @override
@@ -1033,7 +1033,7 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'PhotoBlocState.loaded'))
-      ..add(DiagnosticsProperty('model', model));
+      ..add(DiagnosticsProperty('entity', entity));
   }
 
   @override
@@ -1041,11 +1041,11 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$loadedStateImpl &&
-            (identical(other.model, model) || other.model == model));
+            (identical(other.entity, entity) || other.entity == entity));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, model);
+  int get hashCode => Object.hash(runtimeType, entity);
 
   @JsonKey(ignore: true)
   @override
@@ -1057,35 +1057,35 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(APhotosEntity? model) loaded,
+    required TResult Function(PhotosEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
-    return loaded(model);
+    return loaded(entity);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(APhotosEntity? model)? loaded,
+    TResult? Function(PhotosEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
-    return loaded?.call(model);
+    return loaded?.call(entity);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(APhotosEntity? model)? loaded,
+    TResult Function(PhotosEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(model);
+      return loaded(entity);
     }
     return orElse();
   }
@@ -1129,10 +1129,10 @@ class _$loadedStateImpl with DiagnosticableTreeMixin implements _loadedState {
 }
 
 abstract class _loadedState implements PhotoBlocState {
-  const factory _loadedState({required final APhotosEntity? model}) =
+  const factory _loadedState({required final PhotosEntity? entity}) =
       _$loadedStateImpl;
 
-  APhotosEntity? get model;
+  PhotosEntity? get entity;
   @JsonKey(ignore: true)
   _$$loadedStateImplCopyWith<_$loadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1183,7 +1183,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(APhotosEntity? model) loaded,
+    required TResult Function(PhotosEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1194,7 +1194,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(APhotosEntity? model)? loaded,
+    TResult? Function(PhotosEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1205,7 +1205,7 @@ class _$errorStateImpl with DiagnosticableTreeMixin implements _errorState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(APhotosEntity? model)? loaded,
+    TResult Function(PhotosEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),
@@ -1303,7 +1303,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(APhotosEntity? model) loaded,
+    required TResult Function(PhotosEntity? entity) loaded,
     required TResult Function() error,
     required TResult Function() timeOut,
   }) {
@@ -1314,7 +1314,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? loading,
-    TResult? Function(APhotosEntity? model)? loaded,
+    TResult? Function(PhotosEntity? entity)? loaded,
     TResult? Function()? error,
     TResult? Function()? timeOut,
   }) {
@@ -1325,7 +1325,7 @@ class _$timeOutImpl with DiagnosticableTreeMixin implements _timeOut {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(APhotosEntity? model)? loaded,
+    TResult Function(PhotosEntity? entity)? loaded,
     TResult Function()? error,
     TResult Function()? timeOut,
     required TResult orElse(),

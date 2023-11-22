@@ -9,6 +9,7 @@ class ServiceProvider{
   final PhotoFromIntFile photoFromIntFile = PhotoFromIntFileImpl();
   final MonthsStatus     monthsStatus     = MonthsStatusImpl();
   final CategoriesData   categoriesData   = CategoriesDataImpl();
+  final ExpensesData     expensesData     = ExpensesDataImpl();
 
   T get<T extends Object>() => _getIt.get<T>();
 
@@ -22,8 +23,11 @@ class ServiceProvider{
                 () => MonthRepositoryImpl(
               monthsStatus: monthsStatus,
       ))..registerLazySingleton<CategoriesRepository>(
-            () => CategoriesImpl(
+            () => CategoriesRepositoryImpl(
               categoriesData: categoriesData
+      ))..registerLazySingleton<MonthlyExpensesRepository>(
+            () => MonthlyExpensesRepositoryImpl(
+            expensesData: expensesData
       ));
   }
 }

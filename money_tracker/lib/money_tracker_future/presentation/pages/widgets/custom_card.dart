@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
@@ -9,8 +8,9 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/di
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class CustomCard extends StatelessWidget {
+class CustomCard extends StatefulWidget {
   const CustomCard({
+    required this.dayExpense,
     required this.statusUserProp,
     required this.categoryExpenses,
     super.key
@@ -18,8 +18,39 @@ class CustomCard extends StatelessWidget {
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
+  final int dayExpense;
 
-  Future<bool> _delete(CategoriesBloc categoriesBloc, int id, String name, BuildContext context) async {
+  @override
+  State<CustomCard> createState() => _CustomCardState();
+}
+
+class _CustomCardState extends State<CustomCard> {
+
+  final valueNotifierDayExpense  = ValueNotifier<int>(0);
+  final valueNotifierLongPress  = ValueNotifier<bool>(false);
+  final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    valueNotifierDayExpense.value = widget.dayExpense;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    valueNotifierDayExpense.dispose();
+    valueNotifierLongPress.dispose();
+    valueNotifierPencilVisible.dispose();
+  }
+
+
+
+
+
+
+
+  Future<bool> _deleteCategory(CategoriesBloc categoriesBloc, int id, String name, BuildContext context) async {
     final res = await showDialog<bool>(
       context: context,
       builder: (context) => Dialog(
@@ -29,106 +60,42 @@ class CustomCard extends StatelessWidget {
 
     if (res != null && res) {
       categoriesBloc.add(CategoriesBlocEvent.deleteId(
-          uuid: statusUserProp.uuid,
+          uuid: widget.statusUserProp.uuid,
           id: id));
       return true;
     }
     return false;
   }
 
-  void addDayExpense(int id, BuildContext context){
-    final theme = Theme.of(context);
+  Future<void> _addDayExpense(int id, BuildContext context) async {
 
-    showDialog<String>(
+    final res = await showDialog<int>(
       context: context,
       builder: (context) => Dialog(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(25, 30, 25, 30),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(S.of(context).addExpense),
-                  const Text('1 дек 2023'),
-                ],
-              ),
-              30.h,
-              CustomTextFormField(
-                //controller: _colorController,
-                //focusNode: _focusNodeSecond,
-                //nextFocusNode: _focusNodeThree,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                labelText: 'Введите сумму',
-                hintText: 'Введите сумму',
-                validator: (value) =>
-                (   value != null &&
-                    RegExp('^[0-9]').hasMatch(value)
-                )
-                    ?null
-                    :'Должны быть только цифры',
-                border: OutlineInputBorder(borderSide: BorderSide(
-                    color: theme.colorScheme.secondaryContainer,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                focusedBorder: OutlineInputBorder(borderSide: BorderSide(
-                  color: theme.colorScheme.primary,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                enabledBorder: OutlineInputBorder(borderSide: BorderSide(
-                    color: theme.colorScheme.secondary,
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-              30.h,
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context, 'true');
-                  },
-                  child: const Text('Добавить'),
-                  style: theme.elevatedButtonTheme.style?.copyWith(
-                    minimumSize: const MaterialStatePropertyAll(Size(
-                        double.maxFinite,50
-                    )),
-                  )
-              ),
-              15.h,
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context, 'false');
-                },
-                child: Text(S.of(context).close,
-                    style: theme.dialogTheme.contentTextStyle
-                ),
-              ),
-            ],
-          ),
-        ),
+        child: AddDayExpense(id: id),
       ),
     );
 
+    final total = valueNotifierDayExpense.value;
+    valueNotifierDayExpense.value = total + (res??0);
+
+    //Послать на сохранение дата + трата
+
+    //изменить количество только для текущего месяца
+
+    //Дату брать текущий месяц календарны = текущая дата, иначяе первое число месяца
   }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesBloc = context.read<CategoriesBloc>();
-    final valueNotifierLongPress  = ValueNotifier<bool>(false);
-    final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
-    final id = categoryExpenses.id??(throw Exception('Error search Key'));
+
+    final id = widget.categoryExpenses.id??(throw Exception('Error search Key'));
 
     return Dismissible(
       key: UniqueKey(),
-      confirmDismiss: (direction) => _delete(categoriesBloc, id, categoryExpenses.name, context),
+      confirmDismiss: (direction) => _deleteCategory(categoriesBloc, id, widget.categoryExpenses.name, context),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onExit: (event) {
@@ -137,10 +104,10 @@ class CustomCard extends StatelessWidget {
         },
         child: GestureDetector(
           onDoubleTap: () => valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
-          onTap: () => addDayExpense(id, context),
+          onTap: () => _addDayExpense(id, context),
           onLongPress: ()=>
           valueNotifierLongPress.value = !valueNotifierLongPress.value,
-          onSecondaryLongPress: ()=> _delete(categoriesBloc, id, categoryExpenses.name, context),
+          onSecondaryLongPress: ()=> _deleteCategory(categoriesBloc, id, widget.categoryExpenses.name, context),
           child: Card(
             child: Container(
               padding: const EdgeInsets.only(
@@ -158,12 +125,19 @@ class CustomCard extends StatelessWidget {
                       children: [
                         13.h,
                         Text(
-                          categoryExpenses.name,
+                          widget.categoryExpenses.name,
                           style: theme.textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                         9.h,
-                        Text('Всего 3800', style:  theme.textTheme.bodySmall,),
+                        ValueListenableBuilder(
+                            valueListenable: valueNotifierDayExpense,
+                            builder: (_, value, __) {
+                              return  Text(S.of(context).totalDayexpense(value),
+                                style:  theme.textTheme.bodySmall,
+                              );
+                            },
+                        ),
                         20.h,
                       ],
                     ),
@@ -180,8 +154,8 @@ class CustomCard extends StatelessWidget {
                               visible: value,
                               child: AddCategory(
                                 contextMacro: context,
-                                statusUserProp: statusUserProp,
-                                categoryExpenses: categoryExpenses,
+                                statusUserProp: widget.statusUserProp,
+                                categoryExpenses: widget.categoryExpenses,
                                 icon: const Icon(Icons.edit),
                                 addCategory: false,
                               ),
@@ -193,13 +167,13 @@ class CustomCard extends StatelessWidget {
                           },
                             icon: Icon(
                                 Icons.arrow_forward_ios,
-                                color: Color(int.parse('FF${categoryExpenses.colorHex}', radix: 16))
+                                color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
                             ),
                           ),
                         ],
                       );
                     } else {
-                      return ElevatedButton(onPressed: () => _delete(categoriesBloc, id, categoryExpenses.name, context),
+                      return ElevatedButton(onPressed: () => _deleteCategory(categoriesBloc, id, widget.categoryExpenses.name, context),
                         child: Text(S.of(context).delete,
                           style: theme.textTheme.titleMedium?.copyWith(
                               color: theme.colorScheme.background
