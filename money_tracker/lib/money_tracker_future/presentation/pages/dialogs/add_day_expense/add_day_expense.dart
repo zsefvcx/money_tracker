@@ -41,13 +41,13 @@ class AddDayExpense extends StatelessWidget {
               autofocus: true,
               focusNode: focusNode,
               nextFocusNode: focusNodeSecond,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('^[-0-9]{0,15}'))],
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('^[-0-9]{0,100}'))],
               labelText: S.of(context).enterAmount,
               hintText: S.of(context).enterAmount,
               validator: (value) =>
               (   value != null &&
                   RegExp('[-0-9]').hasMatch(value) &&
-                  int.tryParse(textController.text) != null
+                  BigInt.tryParse(textController.text) != null
               )
                   ?null
                   :S.of(context).thereShouldBeOnlyNumbers,
@@ -76,7 +76,7 @@ class AddDayExpense extends StatelessWidget {
             focusNode: focusNodeSecond,
             onPressed: () {
               final cSt = formKey.currentState;
-              final res = int.tryParse(textController.text);
+              final res = BigInt.tryParse(textController.text);
               if (cSt != null && cSt.validate() && res != null){
                 Navigator.pop(context, res);
               }

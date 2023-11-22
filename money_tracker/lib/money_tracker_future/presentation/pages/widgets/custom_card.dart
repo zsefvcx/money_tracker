@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
@@ -18,7 +20,7 @@ class CustomCard extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
-  final int dayExpense;
+  final BigInt dayExpense;
 
   @override
   State<CustomCard> createState() => _CustomCardState();
@@ -26,7 +28,7 @@ class CustomCard extends StatefulWidget {
 
 class _CustomCardState extends State<CustomCard> {
 
-  final valueNotifierDayExpense  = ValueNotifier<int>(0);
+  final valueNotifierDayExpense  = ValueNotifier<BigInt>(BigInt.from(0));
   final valueNotifierLongPress  = ValueNotifier<bool>(false);
   final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
 
@@ -34,6 +36,25 @@ class _CustomCardState extends State<CustomCard> {
   void initState() {
     valueNotifierDayExpense.value = widget.dayExpense;
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+
+      final idMonth = widget.statusUserProp.monthCurrent.id;
+      final idCategory = widget.categoryExpenses.id;
+      if(idMonth !=null && idCategory != null){
+        final completer = Completer<BigInt>();
+        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
+            uuid: widget.statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+            completer: completer,
+        ));
+        final res = await completer.future;
+        valueNotifierDayExpense.value = res;
+      }
+    },);
+
+
   }
 
   @override
@@ -67,9 +88,11 @@ class _CustomCardState extends State<CustomCard> {
     return false;
   }
 
-  Future<void> _addDayExpense(int id, BuildContext context) async {
+  Future<void> _addDayExpense(MonthlyExpensesBloc monthlyExpensesBloc, int id, BuildContext context) async {
 
-    final res = await showDialog<int>(
+    final dateTime = DateTime.now();
+
+    final res = await showDialog<BigInt>(
       context: context,
       builder: (context) => Dialog(
         child: AddDayExpense(id: id),
@@ -77,7 +100,25 @@ class _CustomCardState extends State<CustomCard> {
     );
 
     final total = valueNotifierDayExpense.value;
-    valueNotifierDayExpense.value = total + (res??0);
+    valueNotifierDayExpense.value = total + (res??BigInt.from(0));
+
+    final idMonth = widget.statusUserProp.monthCurrent.id;
+    final idCategory = widget.categoryExpenses.id;
+
+    if(idMonth!=null && idCategory!=null && res!=null) {
+      final completer = Completer();
+      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
+          uuid: widget.statusUserProp.uuid,
+          data: DayExpense(
+            idMonth: idMonth,
+            idCategory: idCategory,
+            dateTime: dateTime,
+            sum: total,
+          ),
+          completer: completer
+      ));
+      await completer.future;
+    }
 
     //Послать на сохранение дата + трата
 
@@ -90,7 +131,7 @@ class _CustomCardState extends State<CustomCard> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesBloc = context.read<CategoriesBloc>();
-
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final id = widget.categoryExpenses.id??(throw Exception('Error search Key'));
 
     return Dismissible(
@@ -104,7 +145,7 @@ class _CustomCardState extends State<CustomCard> {
         },
         child: GestureDetector(
           onDoubleTap: () => valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
-          onTap: () => _addDayExpense(id, context),
+          onTap: () => _addDayExpense(monthlyExpensesBloc, id, context),
           onLongPress: ()=>
           valueNotifierLongPress.value = !valueNotifierLongPress.value,
           onSecondaryLongPress: ()=> _deleteCategory(categoriesBloc, id, widget.categoryExpenses.name, context),

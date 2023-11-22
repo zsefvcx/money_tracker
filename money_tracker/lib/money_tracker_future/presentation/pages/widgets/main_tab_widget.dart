@@ -31,7 +31,7 @@ class MainTabWidget extends StatelessWidget {
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               return CustomCard(
-                dayExpense: 0,
+                dayExpense: BigInt.from(0),
                 statusUserProp: statusUserProp,
                 categoryExpenses: categories.categoriesId.elementAt(index),
               );

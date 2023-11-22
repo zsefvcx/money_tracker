@@ -11,6 +11,12 @@ class MonthlyExpensesBlocEvent with _$MonthlyExpensesBlocEvent{
     required int id,
     required Completer<dynamic> completer,
   }) = _readEvent;
+  const factory MonthlyExpensesBlocEvent.readTotal({
+    required String uuid,
+    required int idMonth,
+    required int idCategory,
+    required Completer<dynamic> completer,
+  }) = _readTotalEvent;
   const factory MonthlyExpensesBlocEvent.add({
     required String uuid,
     required DayExpense data,

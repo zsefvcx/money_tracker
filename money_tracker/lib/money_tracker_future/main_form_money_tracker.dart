@@ -38,6 +38,7 @@ class MainFormMoneyTracker extends StatelessWidget {
       loadImage: loadImage,
       monthCurrent: monthCurrent,
     );
+    final monthlyExpensesBloc = MoneyTrackerBlocsInit.monthlyExpensesBloc;
 
       monthBloc.add(MonthBlocEvent.init(
           uuid: uuid,
@@ -52,6 +53,8 @@ class MainFormMoneyTracker extends StatelessWidget {
 
       categoriesBloc.add(CategoriesBlocEvent.init(uuid: uuid));
 
+
+
     return MultiProvider(
       providers: [
         Provider<PhotoBloc>(
@@ -62,6 +65,9 @@ class MainFormMoneyTracker extends StatelessWidget {
         ),
         Provider<CategoriesBloc>(
           create: (_) => categoriesBloc,
+        ),
+        Provider<MonthlyExpensesBloc>(
+          create: (_) => monthlyExpensesBloc,
         ),
       ],
       child: MainBuilderForm(

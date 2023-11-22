@@ -406,9 +406,23 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<BigInt?> getTotalInMonthCategory(int idMonth, int idCategory) {
-    // TODO: implement getTotalInMonthCategory
-    throw UnimplementedError();
+  Future<BigInt?> getTotalInMonthCategory(int idMonth, int idCategory) async {
+    final db = await database;
+
+    final query = await db.query(_tableExpenses,
+        where: '"$_idMonth" = ? and "$_idCategory" = ?',
+        whereArgs: [idMonth, idCategory]);
+
+    var res = BigInt.from(0);
+
+    if (query.isNotEmpty){
+      for(final elem in query){
+        final sum = elem[_sum] as String?;
+        res += BigInt.parse(sum??'0');
+      }
+    }
+
+    return res;
   }
 
   @override

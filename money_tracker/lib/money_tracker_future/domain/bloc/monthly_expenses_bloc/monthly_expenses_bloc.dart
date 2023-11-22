@@ -41,14 +41,34 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             // TODO: implement read
             throw UnimplementedError();
           },
+          readTotal: (value) async {
+            final (error, timeOut, e, res) = await _runGoSData<BigInt>(
+              function: () async =>
+              await _monthlyExpensesRepository.getTotalInMonthCategory(
+                  uuid: value.uuid,
+                  idMonth: value.idMonth,
+                  idCategory: value.idCategory),
+            );
+            modelData = modelData.copyWithData(
+              data: null,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            if (error){
+              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
+          },
           add: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async =>
                 await _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
             );
-            final data = modelData.data;
             modelData = modelData.copyWithData(
-              data: data,
+              data: null,
               timeOut: timeOut,
               error: error,
               e: e,
@@ -75,7 +95,8 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           deleteId: (value) {
             // TODO: implement read
             throw UnimplementedError();
-          }
+          },
+
 
 
     //       init: (value) async {
