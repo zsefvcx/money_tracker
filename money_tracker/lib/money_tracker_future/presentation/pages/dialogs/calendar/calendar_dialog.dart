@@ -26,6 +26,7 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
   @override
   Widget build(BuildContext context) {
     final monthBloc = context.read<MonthBloc>();
+    final categoriesBloc = context.read<CategoriesBloc>();
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
@@ -43,6 +44,7 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
             final monthCurrent = await showDialog<MonthCurrent?>(
               context: context,
               builder: (_) => Dialog(
+                insetPadding: const EdgeInsets.only(left: 25, right: 25),
                 child: MonthYearWidget(
                   monthCurrent: widget.monthCurrent,
                   selectedMonth: selectedMonth,
@@ -54,13 +56,12 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
             
             
             if (monthCurrent !=null && widget.monthCurrent != monthCurrent) {
-              final completer = Completer();
               monthBloc.add(MonthBlocEvent.add(
                   uuid: widget.uuid,
                   data: monthCurrent,
                   completer: completer)
               );
-              await completer.future;
+              categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.uuid));
             }
           }
         },

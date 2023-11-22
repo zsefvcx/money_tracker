@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:money_tracker/core/core.dart';
 
 ///Трата за день
 class DayExpense extends Equatable{
@@ -33,6 +34,7 @@ class DayExpense extends Equatable{
   }
 
   Map<String, dynamic> toJson() {
+    Logger.print('BigInt toJson $sum');
     return {
       'id': id,
       'idCategory': idCategory,
@@ -43,6 +45,7 @@ class DayExpense extends Equatable{
   }
 
   factory DayExpense.fromJson(Map<String, dynamic> map) {
+    Logger.print('BigInt from Json ${map['sum'] as String}');
     return DayExpense(
       id: map['id'] as int,
       idCategory: map['idCategory'] as int,

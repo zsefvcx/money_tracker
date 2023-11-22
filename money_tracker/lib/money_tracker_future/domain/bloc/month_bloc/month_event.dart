@@ -15,7 +15,7 @@ class MonthBlocEvent with _$MonthBlocEvent{
   const factory MonthBlocEvent.add({
     required String uuid,
     required MonthCurrent data,
-    required Completer<dynamic> completer,
+    Completer<dynamic>? completer,
   }) = _addEvent;
   const factory MonthBlocEvent.delete({
     required String uuid,

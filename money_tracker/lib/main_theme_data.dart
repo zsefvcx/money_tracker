@@ -128,8 +128,6 @@ IconThemeData _iconTheme(IconThemeData base){
   );
 }
 
-
-
 ProgressIndicatorThemeData _progressIndicatorThemeData(ProgressIndicatorThemeData base){
   return base.copyWith(
     //color: Colors.black54,
@@ -148,6 +146,7 @@ DialogTheme _dialogTheme(DialogTheme base){
     contentTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
       color: CustomThemeProp.redDialog
     ),
+
   );
 }
 

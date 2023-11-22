@@ -388,9 +388,13 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<MonthlyExpensesModel?> deleteIdExpenses({required int id}) {
-    // TODO: implement deleteIdExpenses
-    throw UnimplementedError();
+  Future<int> deleteIdExpenses({required int id}) async {
+    final db = await database;
+    return await db.delete(
+        _tableExpenses,
+        where: '"$_id" = ?',
+        whereArgs: [id]
+    );
   }
 
   @override
@@ -431,6 +435,16 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }) {
     // TODO: implement updateExpenses
     throw UnimplementedError();
+  }
+
+  @override
+  Future<int> deleteWithCategory(int idCategory) async {
+    final db = await database;
+    return await db.delete(
+        _tableExpenses,
+        where: '"$_idCategory" = ?',
+        whereArgs: [idCategory]
+    );
   }
 
 

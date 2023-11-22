@@ -60,10 +60,19 @@
   "changeCategory": "Изменить категорию",
   "noMoreThan20Categories": "Не более 20 категорий",
   "theCategoryAlreadyExistsChangeTheDetails": "Такая катеория уже создана",
-  "removeCategory": "Удалить категорию",
-  "name_category": " {nameCategory} ",
+  "removeCategory": "Удалить категорию ",
+  "name_category": "{nameCategory}",
   "addExpense": "Добавить расход",
   "totalDayexpense": "Всего {dayExpense}",
   "enterAmount": "Введите сумму",
-  "thereShouldBeOnlyNumbers": "Должны быть только цифры"
+  "thereShouldBeOnlyNumbers": "Должны быть только цифры",
+  "enterDate": "Введите дату",
+  "selectDate": "Выберите дату",
+  "monday": "Пн",
+  "tuesday": "Вт",
+  "wednesday": "Ср",
+  "thursday": "Чт",
+  "friday": "Пт",
+  "saturday": "Сб",
+  "sunday": "Вс"
 }

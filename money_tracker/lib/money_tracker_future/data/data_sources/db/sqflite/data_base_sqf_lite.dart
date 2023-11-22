@@ -16,7 +16,10 @@ abstract class DataBaseExpensesSqfLite {
     int idMonth,
     int idCategory,
   );
-  Future<MonthlyExpensesModel?> deleteIdExpenses({required int id});
+  Future<int> deleteWithCategory(
+    int idCategory,
+  );
+  Future<int> deleteIdExpenses({required int id});
   Future<MonthlyExpensesModel?> updateExpenses(DayExpense data, {
     ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
   });

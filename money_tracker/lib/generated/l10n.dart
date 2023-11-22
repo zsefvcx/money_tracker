@@ -660,20 +660,20 @@ class S {
     );
   }
 
-  /// `Remove category`
+  /// `Remove category `
   String get removeCategory {
     return Intl.message(
-      'Remove category',
+      'Remove category ',
       name: 'removeCategory',
       desc: '',
       args: [],
     );
   }
 
-  /// ` {nameCategory} `
+  /// `{nameCategory}`
   String name_category(Object nameCategory) {
     return Intl.message(
-      ' $nameCategory ',
+      '$nameCategory',
       name: 'name_category',
       desc: '',
       args: [nameCategory],
@@ -715,6 +715,96 @@ class S {
     return Intl.message(
       'There should be only numbers',
       name: 'thereShouldBeOnlyNumbers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter date`
+  String get enterDate {
+    return Intl.message(
+      'Enter date',
+      name: 'enterDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select date`
+  String get selectDate {
+    return Intl.message(
+      'Select date',
+      name: 'selectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mo`
+  String get monday {
+    return Intl.message(
+      'Mo',
+      name: 'monday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tu`
+  String get tuesday {
+    return Intl.message(
+      'Tu',
+      name: 'tuesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We`
+  String get wednesday {
+    return Intl.message(
+      'We',
+      name: 'wednesday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Th`
+  String get thursday {
+    return Intl.message(
+      'Th',
+      name: 'thursday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fr`
+  String get friday {
+    return Intl.message(
+      'Fr',
+      name: 'friday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sa`
+  String get saturday {
+    return Intl.message(
+      'Sa',
+      name: 'saturday',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Su`
+  String get sunday {
+    return Intl.message(
+      'Su',
+      name: 'sunday',
       desc: '',
       args: [],
     );

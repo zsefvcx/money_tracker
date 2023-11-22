@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(nameCategory) => " ${nameCategory} ";
+  static String m0(nameCategory) => "${nameCategory}";
 
   static String m1(monthName) => "There are no expenses for ${monthName}";
 
@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "E-Mail format is not correct"),
         "enterAmount": MessageLookupByLibrary.simpleMessage("Enter amount"),
         "enterColor": MessageLookupByLibrary.simpleMessage("Enter color"),
+        "enterDate": MessageLookupByLibrary.simpleMessage("Enter date"),
         "enterEmail": MessageLookupByLibrary.simpleMessage("Enter your email"),
         "enterText": MessageLookupByLibrary.simpleMessage("Enter text"),
         "enterTheName": MessageLookupByLibrary.simpleMessage("Enter name"),
@@ -65,12 +66,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "expenses": MessageLookupByLibrary.simpleMessage("Expenses"),
         "february": MessageLookupByLibrary.simpleMessage("February"),
         "fieldIsEmpty": MessageLookupByLibrary.simpleMessage("field is empty"),
+        "friday": MessageLookupByLibrary.simpleMessage("Fr"),
         "january": MessageLookupByLibrary.simpleMessage("January"),
         "july": MessageLookupByLibrary.simpleMessage("July"),
         "june": MessageLookupByLibrary.simpleMessage("June"),
         "march": MessageLookupByLibrary.simpleMessage("March"),
         "may": MessageLookupByLibrary.simpleMessage("May"),
         "modifi": MessageLookupByLibrary.simpleMessage("Modifi"),
+        "monday": MessageLookupByLibrary.simpleMessage("Mo"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "name_category": m0,
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
@@ -84,16 +87,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "registration": MessageLookupByLibrary.simpleMessage("Registration"),
         "removeCategory":
-            MessageLookupByLibrary.simpleMessage("Remove category"),
+            MessageLookupByLibrary.simpleMessage("Remove category "),
         "repeat": MessageLookupByLibrary.simpleMessage("Repeat"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Reply received"),
+        "saturday": MessageLookupByLibrary.simpleMessage("Sa"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("Select date"),
         "september": MessageLookupByLibrary.simpleMessage("September"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "somethingWrongHappened":
             MessageLookupByLibrary.simpleMessage("Something wrong happened..."),
         "suchAUserExists":
             MessageLookupByLibrary.simpleMessage("Such a user exists"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Su"),
         "theCategoryAlreadyExistsChangeTheDetails":
             MessageLookupByLibrary.simpleMessage("The category already exists"),
         "thePasswordMustContainCapitalLetters":
@@ -116,8 +122,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "There should be only numbers"),
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "This user does not exist or there is an error in the password"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Th"),
         "timeout": MessageLookupByLibrary.simpleMessage("TimeOut"),
         "totalDayexpense": m2,
+        "tuesday": MessageLookupByLibrary.simpleMessage("Tu"),
+        "wednesday": MessageLookupByLibrary.simpleMessage("We"),
         "yourExpenseHistoryIsAlwaysAtHand":
             MessageLookupByLibrary.simpleMessage(
                 "Your expense history is always at hand")

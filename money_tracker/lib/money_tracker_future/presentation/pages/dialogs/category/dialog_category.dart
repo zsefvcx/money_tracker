@@ -58,6 +58,7 @@ class _DialogCategoryState extends State<DialogCategory> {
       }
     }
     return Dialog(
+      insetPadding: const EdgeInsets.only(left: 25, right: 25),
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8),

@@ -15,6 +15,11 @@ abstract class MonthlyExpensesRepository {
     required int idCategory,
   });
 
+  Future<bool?> deleteWithCategory({
+    required String uuid,
+    required int idCategory,
+  });
+
   Future<MonthlyExpensesEntity?> getAllByIdMonthCategory({
     required String uuid,
     required int idMonth,

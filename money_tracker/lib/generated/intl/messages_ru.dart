@@ -20,7 +20,7 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ru';
 
-  static String m0(nameCategory) => " ${nameCategory} ";
+  static String m0(nameCategory) => "${nameCategory}";
 
   static String m1(monthName) => "За ${monthName} нет расходов";
 
@@ -52,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Формат E-Mail не правильный"),
         "enterAmount": MessageLookupByLibrary.simpleMessage("Введите сумму"),
         "enterColor": MessageLookupByLibrary.simpleMessage("Введите цвет"),
+        "enterDate": MessageLookupByLibrary.simpleMessage("Введите дату"),
         "enterEmail":
             MessageLookupByLibrary.simpleMessage("Введите свою почту"),
         "enterText": MessageLookupByLibrary.simpleMessage("Введите текст"),
@@ -68,12 +69,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "february": MessageLookupByLibrary.simpleMessage("Февраль"),
         "fieldIsEmpty":
             MessageLookupByLibrary.simpleMessage("Поле не заполнено"),
+        "friday": MessageLookupByLibrary.simpleMessage("Пт"),
         "january": MessageLookupByLibrary.simpleMessage("Январь"),
         "july": MessageLookupByLibrary.simpleMessage("Июль"),
         "june": MessageLookupByLibrary.simpleMessage("Июнь"),
         "march": MessageLookupByLibrary.simpleMessage("Март"),
         "may": MessageLookupByLibrary.simpleMessage("Май"),
         "modifi": MessageLookupByLibrary.simpleMessage("Изменить"),
+        "monday": MessageLookupByLibrary.simpleMessage("Пн"),
         "name": MessageLookupByLibrary.simpleMessage("Название"),
         "name_category": m0,
         "noAccountYet":
@@ -89,16 +92,19 @@ class MessageLookup extends MessageLookupByLibrary {
         "profile": MessageLookupByLibrary.simpleMessage("Профиль"),
         "registration": MessageLookupByLibrary.simpleMessage("Регистрация"),
         "removeCategory":
-            MessageLookupByLibrary.simpleMessage("Удалить категорию"),
+            MessageLookupByLibrary.simpleMessage("Удалить категорию "),
         "repeat": MessageLookupByLibrary.simpleMessage("Повторить"),
         "replyReceived": MessageLookupByLibrary.simpleMessage("Ответ получен"),
+        "saturday": MessageLookupByLibrary.simpleMessage("Сб"),
         "save": MessageLookupByLibrary.simpleMessage("Сохранить"),
+        "selectDate": MessageLookupByLibrary.simpleMessage("Выберите дату"),
         "september": MessageLookupByLibrary.simpleMessage("Сентябрь"),
         "signIn": MessageLookupByLibrary.simpleMessage("Войти"),
         "somethingWrongHappened":
             MessageLookupByLibrary.simpleMessage("Случилось что-то не то..."),
         "suchAUserExists": MessageLookupByLibrary.simpleMessage(
             "Такой пользователь существует"),
+        "sunday": MessageLookupByLibrary.simpleMessage("Вс"),
         "theCategoryAlreadyExistsChangeTheDetails":
             MessageLookupByLibrary.simpleMessage("Такая катеория уже создана"),
         "thePasswordMustContainCapitalLetters":
@@ -121,8 +127,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Должны быть только цифры"),
         "thisUserDoesNotExist": MessageLookupByLibrary.simpleMessage(
             "Такого пользователя не существует или ошибка в пароле"),
+        "thursday": MessageLookupByLibrary.simpleMessage("Чт"),
         "timeout": MessageLookupByLibrary.simpleMessage("Таймаут"),
         "totalDayexpense": m2,
+        "tuesday": MessageLookupByLibrary.simpleMessage("Вт"),
+        "wednesday": MessageLookupByLibrary.simpleMessage("Ср"),
         "yourExpenseHistoryIsAlwaysAtHand":
             MessageLookupByLibrary.simpleMessage(
                 "Ваша история расходов всегда под рукой")

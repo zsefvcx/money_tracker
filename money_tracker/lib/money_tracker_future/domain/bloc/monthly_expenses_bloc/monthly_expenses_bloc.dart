@@ -33,6 +33,60 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
   }) : _monthlyExpensesRepository = monthlyExpensesRepository, super(const MonthlyExpensesBlocState.loading()) {
     on<MonthlyExpensesBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
+        readTotal: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<BigInt>(
+            function: () async =>
+            await _monthlyExpensesRepository.getTotalInMonthCategory(
+                uuid: value.uuid,
+                idMonth: value.idMonth,
+                idCategory: value.idCategory),
+          );
+          modelData = modelData.copyWithData(
+            data: null,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          if (error){
+            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            value.completer.completeError(error);
+          } else {
+            value.completer.complete(res);
+          }
+        },
+        add: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<bool>(
+            function: () async =>
+            await _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
+          );
+          modelData = modelData.copyWithData(
+            data: null,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          if (error){
+            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            value.completer.completeError(error);
+          } else {
+            value.completer.complete(res);
+          }
+        },
+        deleteWithCategory: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<bool>(
+            function: () async =>
+            await _monthlyExpensesRepository.deleteWithCategory(uuid: value.uuid, idCategory: value.idCategory),
+          );
+          modelData = modelData.copyWithData(
+            data: null,
+            timeOut: timeOut,
+            error: (res!=null && !res) || error || res==null,
+            e: e,
+          );
+          await _response(emit);
+        },
+
+
           init: (value) {
             // TODO: implement read
             throw UnimplementedError();
@@ -41,45 +95,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             // TODO: implement read
             throw UnimplementedError();
           },
-          readTotal: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<BigInt>(
-              function: () async =>
-              await _monthlyExpensesRepository.getTotalInMonthCategory(
-                  uuid: value.uuid,
-                  idMonth: value.idMonth,
-                  idCategory: value.idCategory),
-            );
-            modelData = modelData.copyWithData(
-              data: null,
-              timeOut: timeOut,
-              error: error,
-              e: e,
-            );
-            if (error){
-              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
-              value.completer.completeError(error);
-            } else {
-              value.completer.complete(res);
-            }
-          },
-          add: (value) async {
-            final (error, timeOut, e, res) = await _runGoSData<bool>(
-              function: () async =>
-                await _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
-            );
-            modelData = modelData.copyWithData(
-              data: null,
-              timeOut: timeOut,
-              error: error,
-              e: e,
-            );
-            if (error){
-              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
-              value.completer.completeError(error);
-            } else {
-              value.completer.complete(res);
-            }
-          },
+
           delete: (value) {
             // TODO: implement read
             throw UnimplementedError();

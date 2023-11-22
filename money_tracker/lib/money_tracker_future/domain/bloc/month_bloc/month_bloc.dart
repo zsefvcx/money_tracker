@@ -86,13 +86,17 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
               error: error,
               e: e,
             );
-            if (error){
-              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
-              value.completer.completeError(error);
+            final completer = value.completer;
+            if(completer != null){
+              if (error){
+                Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+                completer.completeError(error);
+              } else {
+                completer.complete(res?.id);
+              }
             } else {
-              value.completer.complete(res?.id);
+              await _response(emit);
             }
-            await _response(emit);
           },
           delete: (value) async {
             emit(const MonthBlocState.loading());

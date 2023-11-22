@@ -25,22 +25,16 @@ class DeleteCategoryDialog extends StatelessWidget {
               Text(S.of(context).removeCategory, style: theme.textTheme.titleLarge?.copyWith(
                   fontSize: 20
               )),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(S.of(context).name_category(name),
-                      style: theme.textTheme.titleLarge?.copyWith(
-                          fontSize: 20,
-                          color: theme.colorScheme.primary
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Text('?', style: theme.textTheme.titleLarge?.copyWith(
-                      fontSize: 20
-                  )),
-                ],
+              Text(S.of(context).name_category(name),
+                style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 20,
+                    color: theme.colorScheme.primary
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
+              Text('?', style: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 20
+              )),
             ],
           ),
           30.h,

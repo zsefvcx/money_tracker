@@ -20,6 +20,11 @@ abstract class ExpensesData {
     required int idCategory,
   });
 
+  Future<bool?> deleteWithCategory({
+    required String uuid,
+    required int idCategory,
+  });
+
   Future<bool?> delete({required String uuid});
 
   Future<MonthlyExpensesModel?> deleteId({required String uuid, required int id});

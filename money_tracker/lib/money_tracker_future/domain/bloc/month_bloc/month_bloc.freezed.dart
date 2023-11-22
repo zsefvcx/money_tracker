@@ -24,7 +24,7 @@ mixin _$MonthBlocEvent {
             String uuid, int year, Completer<dynamic> completer)
         read,
     required TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)
         add,
     required TResult Function(String uuid, MonthCurrent data) delete,
   }) =>
@@ -35,7 +35,7 @@ mixin _$MonthBlocEvent {
     TResult? Function(String uuid, int year, Completer<dynamic> completer)?
         read,
     TResult? Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult? Function(String uuid, MonthCurrent data)? delete,
   }) =>
@@ -45,7 +45,7 @@ mixin _$MonthBlocEvent {
     TResult Function(String uuid, MonthCurrent data)? init,
     TResult Function(String uuid, int year, Completer<dynamic> completer)? read,
     TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult Function(String uuid, MonthCurrent data)? delete,
     required TResult orElse(),
@@ -203,7 +203,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
             String uuid, int year, Completer<dynamic> completer)
         read,
     required TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)
         add,
     required TResult Function(String uuid, MonthCurrent data) delete,
   }) {
@@ -217,7 +217,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult? Function(String uuid, int year, Completer<dynamic> completer)?
         read,
     TResult? Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult? Function(String uuid, MonthCurrent data)? delete,
   }) {
@@ -230,7 +230,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
     TResult Function(String uuid, MonthCurrent data)? init,
     TResult Function(String uuid, int year, Completer<dynamic> completer)? read,
     TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult Function(String uuid, MonthCurrent data)? delete,
     required TResult orElse(),
@@ -392,7 +392,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
             String uuid, int year, Completer<dynamic> completer)
         read,
     required TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)
         add,
     required TResult Function(String uuid, MonthCurrent data) delete,
   }) {
@@ -406,7 +406,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult? Function(String uuid, int year, Completer<dynamic> completer)?
         read,
     TResult? Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult? Function(String uuid, MonthCurrent data)? delete,
   }) {
@@ -419,7 +419,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult Function(String uuid, MonthCurrent data)? init,
     TResult Function(String uuid, int year, Completer<dynamic> completer)? read,
     TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult Function(String uuid, MonthCurrent data)? delete,
     required TResult orElse(),
@@ -492,7 +492,7 @@ abstract class _$$addEventImplCopyWith<$Res>
       __$$addEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, MonthCurrent data, Completer<dynamic> completer});
+  $Res call({String uuid, MonthCurrent data, Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -508,7 +508,7 @@ class __$$addEventImplCopyWithImpl<$Res>
   $Res call({
     Object? uuid = null,
     Object? data = null,
-    Object? completer = null,
+    Object? completer = freezed,
   }) {
     return _then(_$addEventImpl(
       uuid: null == uuid
@@ -519,10 +519,10 @@ class __$$addEventImplCopyWithImpl<$Res>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as MonthCurrent,
-      completer: null == completer
+      completer: freezed == completer
           ? _value.completer
           : completer // ignore: cast_nullable_to_non_nullable
-              as Completer<dynamic>,
+              as Completer<dynamic>?,
     ));
   }
 }
@@ -531,14 +531,14 @@ class __$$addEventImplCopyWithImpl<$Res>
 
 class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   const _$addEventImpl(
-      {required this.uuid, required this.data, required this.completer});
+      {required this.uuid, required this.data, this.completer});
 
   @override
   final String uuid;
   @override
   final MonthCurrent data;
   @override
-  final Completer<dynamic> completer;
+  final Completer<dynamic>? completer;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -583,7 +583,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
             String uuid, int year, Completer<dynamic> completer)
         read,
     required TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)
         add,
     required TResult Function(String uuid, MonthCurrent data) delete,
   }) {
@@ -597,7 +597,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult? Function(String uuid, int year, Completer<dynamic> completer)?
         read,
     TResult? Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult? Function(String uuid, MonthCurrent data)? delete,
   }) {
@@ -610,7 +610,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
     TResult Function(String uuid, MonthCurrent data)? init,
     TResult Function(String uuid, int year, Completer<dynamic> completer)? read,
     TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult Function(String uuid, MonthCurrent data)? delete,
     required TResult orElse(),
@@ -663,12 +663,12 @@ abstract class _addEvent implements MonthBlocEvent {
   const factory _addEvent(
       {required final String uuid,
       required final MonthCurrent data,
-      required final Completer<dynamic> completer}) = _$addEventImpl;
+      final Completer<dynamic>? completer}) = _$addEventImpl;
 
   @override
   String get uuid;
   MonthCurrent get data;
-  Completer<dynamic> get completer;
+  Completer<dynamic>? get completer;
   @override
   @JsonKey(ignore: true)
   _$$addEventImplCopyWith<_$addEventImpl> get copyWith =>
@@ -763,7 +763,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
             String uuid, int year, Completer<dynamic> completer)
         read,
     required TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)
         add,
     required TResult Function(String uuid, MonthCurrent data) delete,
   }) {
@@ -777,7 +777,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult? Function(String uuid, int year, Completer<dynamic> completer)?
         read,
     TResult? Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult? Function(String uuid, MonthCurrent data)? delete,
   }) {
@@ -790,7 +790,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
     TResult Function(String uuid, MonthCurrent data)? init,
     TResult Function(String uuid, int year, Completer<dynamic> completer)? read,
     TResult Function(
-            String uuid, MonthCurrent data, Completer<dynamic> completer)?
+            String uuid, MonthCurrent data, Completer<dynamic>? completer)?
         add,
     TResult Function(String uuid, MonthCurrent data)? delete,
     required TResult orElse(),

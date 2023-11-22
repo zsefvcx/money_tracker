@@ -60,10 +60,19 @@
   "changeCategory": "Change category",
   "noMoreThan20Categories": "No more than 20 categories",
   "theCategoryAlreadyExistsChangeTheDetails": "The category already exists",
-  "removeCategory": "Remove category",
-  "name_category": " {nameCategory} ",
+  "removeCategory": "Remove category ",
+  "name_category": "{nameCategory}",
   "addExpense": "Add expense",
   "totalDayexpense": "total {dayExpense}",
   "enterAmount": "Enter amount",
-  "thereShouldBeOnlyNumbers": "There should be only numbers"
+  "thereShouldBeOnlyNumbers": "There should be only numbers",
+  "enterDate": "Enter date",
+  "selectDate": "Select date",
+  "monday": "Mo",
+  "tuesday": "Tu",
+  "wednesday": "We",
+  "thursday": "Th",
+  "friday": "Fr",
+  "saturday": "Sa",
+  "sunday": "Su"
 }

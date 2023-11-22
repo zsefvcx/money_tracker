@@ -49,4 +49,10 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
     return await expensesData.update(uuid: uuid, data: data);
   }
 
+  @override
+  Future<bool?> deleteWithCategory({required String uuid, required int idCategory}) async {
+    return await expensesData.deleteWithCategory(uuid: uuid, idCategory: idCategory);
+  }
+
+
 }

@@ -2,6 +2,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:money_tracker/generated/l10n.dart';
 
+class NameWeekday{
+  late Map<int, String> _weekday;
+
+  BuildContext context;
+
+  NameWeekday(this.context){
+    _weekday = <int, String>{
+      1: S.of(context).monday,
+      2: S.of(context).tuesday,
+      3: S.of(context).wednesday,
+      4: S.of(context).thursday,
+      5: S.of(context).friday,
+      6: S.of(context).saturday,
+      7: S.of(context).sunday,
+    };
+  }
+
+
+  String toNameWeekday(int weekday) => _weekday[weekday]??'none';
+}
+
+
 class NameMonth{
   late Map<int, String> _monthName;
 
@@ -23,6 +45,7 @@ class NameMonth{
       12: S.of(context).december,
     };
   }
+
 
   String toNameMonth(int month) => _monthName[month]??'none';
 }

@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 
 class AddDayExpense extends StatelessWidget {
   const AddDayExpense({
+    required this.dateTimeStart,
     required this.id,
     super.key
   });
 
   final int id;
+  final DateTime dateTimeStart;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,14 @@ class AddDayExpense extends StatelessWidget {
     final focusNode = FocusNode();
     final focusNodeSecond = FocusNode();
     final formKey = GlobalKey<FormState>(debugLabel: '1');
+    final dateTimeNow = DateTime.now();
+
+    final dateTime = (
+      dateTimeNow.year == dateTimeStart.year &&
+      dateTimeNow.month == dateTimeStart.month
+    )? dateTimeNow : dateTimeStart;
+
+    final valueNotifierDateTime  = ValueNotifier<DateTime>(dateTime);
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(25, 30, 25, 30),
@@ -29,8 +40,40 @@ class AddDayExpense extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(S.of(context).addExpense),
-              const Text('1 дек 2023'),
+              Text(S.of(context).addExpense,
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    fontSize: 20
+                  )
+              ),
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () async {
+                    final localDateTime = await showDialog<DateTime>(
+                      context: context,
+                      builder: (_) => Dialog(
+                        insetPadding: const EdgeInsets.only(left: 25, right: 25),
+                        child: SelectDateTime(
+                          dateTime: dateTime
+                        ),
+                      ),
+                    );
+                    Logger.print('localDateTime $localDateTime');
+                    if(localDateTime != null)valueNotifierDateTime.value = localDateTime;
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8, bottom: 8),
+                    child: ValueListenableBuilder(
+                      valueListenable: valueNotifierDateTime,
+                      builder: (context, value, _) {
+                        return Text(' ${value.day} ${NameMonth(context).toNameMonth(value.month).substring(0,3)} ${value.year}',
+                            style: theme.textTheme.displayLarge
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
           30.h,
@@ -41,12 +84,12 @@ class AddDayExpense extends StatelessWidget {
               autofocus: true,
               focusNode: focusNode,
               nextFocusNode: focusNodeSecond,
-              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('^[-0-9]{0,100}'))],
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[-0-9]{1,100}$'))],
               labelText: S.of(context).enterAmount,
               hintText: S.of(context).enterAmount,
               validator: (value) =>
               (   value != null &&
-                  RegExp('[-0-9]').hasMatch(value) &&
+                  RegExp(r'^(\-)?\d').hasMatch(value) &&
                   BigInt.tryParse(textController.text) != null
               )
                   ?null
@@ -77,8 +120,9 @@ class AddDayExpense extends StatelessWidget {
             onPressed: () {
               final cSt = formKey.currentState;
               final res = BigInt.tryParse(textController.text);
+              final dateTime = valueNotifierDateTime.value;
               if (cSt != null && cSt.validate() && res != null){
-                Navigator.pop(context, res);
+                Navigator.pop(context, (res, dateTime));
               }
             },
             child: Text(S.of(context).add),
