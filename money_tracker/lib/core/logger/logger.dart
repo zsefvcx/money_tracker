@@ -10,7 +10,7 @@ abstract class Logger {
   /// - [name] (optional) is the name of the source of the log message
   /// - [level] (optional) is the severity level (a value between 0 and 2000);
   /// - [error] (optional) an error bool associated with this log event
-  @Deprecated('Print status message')
+  ///@Deprecated('Print status message')
   static void print(String message, {
       String name = 'log',
       int level = 0,

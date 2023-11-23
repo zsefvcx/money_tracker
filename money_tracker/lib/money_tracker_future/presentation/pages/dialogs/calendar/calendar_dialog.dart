@@ -58,8 +58,7 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
             if (monthCurrent !=null && widget.monthCurrent != monthCurrent) {
               monthBloc.add(MonthBlocEvent.add(
                   uuid: widget.uuid,
-                  data: monthCurrent,
-                  completer: completer)
+                  data: monthCurrent)
               );
               categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.uuid));
             }

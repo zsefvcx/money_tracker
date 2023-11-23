@@ -1,7 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:money_tracker/core/logger/logger.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/src.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
 
 
@@ -61,21 +64,23 @@ class RouteGenerator {
           pageBuilder: (context, animation, secondaryAnimation) =>
           MainFormAuthorization(loginUser: loginUser),
         );
-    //case HotelView.routeName:
-    // if(args != null && args is Map<String, HotelPreview>){
-    //   if(args['hotel']!=null){
-    //     HotelPreview data = args['hotel'] as HotelPreview;
-    //     return PageRouteBuilder(
-    //       pageBuilder:(context, animation, secondaryAnimation) =>
-    //           HotelView(hotel: data,),
-    //     );
-    //   } else {
-    //     return _errorRoute();
-    //   }
-    // } else {
-    //   return _errorRoute();
-    // }
-    //  return _errorRoute();
+        case HomeDetailPage.routeName:
+          if (args != null && args is Map<String, dynamic>)  {
+            final statusUserProp = args['statusUserProp'] as StatusUserProp?;
+            final categoryExpenses = args['categoryExpenses'] as CategoryExpenses?;
+            if(statusUserProp != null && categoryExpenses != null){
+              Logger.print('$statusUserProp',);
+              Logger.print('$categoryExpenses',);
+              return PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                HomeDetailPage(
+                  categoryExpenses: categoryExpenses,
+                  statusUserProp: statusUserProp,
+                ),
+              );
+            }
+          }
+          return _errorRoute();
       default:
         return _errorRoute();
     }

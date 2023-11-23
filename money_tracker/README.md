@@ -15,5 +15,5 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-1. Ошибка удаления
-2. 
+1. Ошибка удаления. Решено.
+2. Повторное открытие базы, недолжно быть такого.

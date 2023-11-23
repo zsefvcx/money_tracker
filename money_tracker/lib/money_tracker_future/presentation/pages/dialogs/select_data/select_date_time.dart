@@ -107,10 +107,7 @@ class SelectDateTime extends StatelessWidget {
                       '-${month.length==1?'0$month':month}'
                       '-${date.length==1?'0$date':date}'
                       ' 00:00:00.000000';
-                  Logger.print('stringSelectedDateTime:$stringSelectedDateTime');
                   final dateTime = DateTime.tryParse(stringSelectedDateTime);
-
-                  Logger.print('localDateTime $dateTime');
                   Navigator.pop(context, dateTime);
                 } else {
                   Navigator.pop(context, null);

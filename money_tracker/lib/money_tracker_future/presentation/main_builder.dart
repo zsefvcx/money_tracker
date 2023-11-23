@@ -21,7 +21,6 @@ class MainBuilderForm extends StatelessWidget {
         builder: (context, state) {
           return state.map(
             loading: (_)=> const Scaffold(body: CircularProgressIndicatorMod()),
-
             error: (_)=> Scaffold(
               body: ErrorTimeOut<MonthBloc, MonthCurrent>(
                   uuid: statusUserProp.uuid,

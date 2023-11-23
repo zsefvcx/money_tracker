@@ -30,7 +30,7 @@ class ExpensesDataImpl extends ExpensesData {
   @override
   Future<MonthlyExpensesModel?> deleteId({required String uuid, required int id}) async {
     try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      //final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       // TODO: implement deleteId
       throw UnimplementedError();
       //return await dbSqlLiteLocal.deleteIdExpenses(id: id);

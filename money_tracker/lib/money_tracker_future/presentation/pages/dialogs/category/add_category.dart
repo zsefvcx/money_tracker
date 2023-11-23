@@ -45,7 +45,7 @@ class AddCategory extends StatelessWidget {
       final res = await showDialog<CategoryExpenses?>(
 
         context: context,
-        builder: (context) {
+        builder: (_) {
           return DialogCategory(
             categoryExpenses: categoryExpenses,
             addCategory: addCategory,

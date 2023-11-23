@@ -58,7 +58,6 @@ class AddDayExpense extends StatelessWidget {
                         ),
                       ),
                     );
-                    Logger.print('localDateTime $localDateTime');
                     if(localDateTime != null)valueNotifierDateTime.value = localDateTime;
                   },
                   child: Padding(

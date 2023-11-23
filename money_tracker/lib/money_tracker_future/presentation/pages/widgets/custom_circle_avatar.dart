@@ -48,7 +48,7 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
           child: GestureDetector(
             onTap: getImageFromGallery,
             child: BlocBuilder<PhotoBloc, PhotoBlocState>(
-              builder: (context, state) {
+              builder: (_, state) {
                 return state.map(
                     loading: (_) {
                       return const Center(child: CircularProgressIndicator());

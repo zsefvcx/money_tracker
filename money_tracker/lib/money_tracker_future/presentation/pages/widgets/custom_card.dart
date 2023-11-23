@@ -22,6 +22,7 @@ class CustomCard extends StatefulWidget {
   final CategoryExpenses categoryExpenses;
   final BigInt dayExpense;
 
+
   @override
   State<CustomCard> createState() => _CustomCardState();
 }
@@ -77,17 +78,13 @@ class _CustomCardState extends State<CustomCard> {
   Future<void> _addDayExpense(MonthBloc monthBloc,MonthlyExpensesBloc monthlyExpensesBloc, int id, BuildContext context) async {
 
     final locStat = widget.statusUserProp;
-    Logger.print('$locStat');
-
-    final stringDateTime = '${locStat.monthCurrent.year}'
-                     '-${     locStat.monthCurrent.month<10
+    final stringDateTime =  '${locStat.monthCurrent.year}'
+                     '-${      locStat.monthCurrent.month<10
                           ?'0${locStat.monthCurrent.month}'
-                          : '${locStat.monthCurrent.month}'}'
+                          :'${locStat.monthCurrent.month}'}'
                      '-01 00:00:00.000000';
-    Logger.print(stringDateTime);
     final dateTime = DateTime.tryParse(stringDateTime);
     if(dateTime == null) return;
-    Logger.print('$dateTime');
 
     final res = await showDialog<(BigInt, DateTime)>(
       context: context,
@@ -107,15 +104,14 @@ class _CustomCardState extends State<CustomCard> {
       var otherMonth = false;
       int? idMonthOther;
 
-      if(resDateTime.year == locStat.monthCurrent.year &&
-         resDateTime.month == locStat.monthCurrent.month
+      if(resDateTime.year == dateTime.year &&
+         resDateTime.month == dateTime.month
       ){
         final total = valueNotifierDayExpense.value;
         valueNotifierDayExpense.value = total + res.$1;
-        Logger.print('BigInt total $total');
       } else {
         otherMonth = true;
-        final completer = Completer();
+        final completer = Completer<int>();
         monthBloc.add(MonthBlocEvent.add(
           uuid: widget.statusUserProp.uuid,
           data: MonthCurrent(
@@ -125,12 +121,8 @@ class _CustomCardState extends State<CustomCard> {
           ),
           completer: completer
         ));
-        await completer.future;
+        idMonthOther = await completer.future;
       }
-      Logger.print('BigInt && DateTime res $res');
-
-
-
 
       final completer = Completer();
       monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
@@ -243,8 +235,13 @@ class _CustomCardState extends State<CustomCard> {
                           ),
                           IconButton(
                             onPressed: () {
-
-                          },
+                              Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
+                                arguments: {
+                                  'statusUserProp': widget.statusUserProp,
+                                  'categoryExpenses': widget.categoryExpenses,
+                                },
+                              );
+                            },
                             icon: Icon(
                                 Icons.arrow_forward_ios,
                                 color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
