@@ -18,24 +18,29 @@ class MonthlyExpensesBlocEvent with _$MonthlyExpensesBlocEvent{
     required String uuid,
     required int idCategory,
   }) = _deleteWithCategoryEvent;
-
-
-
-
-
   const factory MonthlyExpensesBlocEvent.init({
     required String uuid,
+    required int idMonth,
+    required int idCategory,
   }) = _initEvent;
   const factory MonthlyExpensesBlocEvent.read({
     required String uuid,
-    required int id,
-    required Completer<dynamic> completer,
+    required int idMonth,
+    required int idCategory,
   }) = _readEvent;
-
-
   const factory MonthlyExpensesBlocEvent.delete({
     required String uuid,
   }) = _deleteEvent;
+  const factory MonthlyExpensesBlocEvent.deleteId({
+    required String uuid,
+    required int id
+  }) = _deleteIdEvent;
+  const factory MonthlyExpensesBlocEvent.readWithMonth({
+    required String uuid,
+    required int idMonth,
+    required Completer<dynamic> completer,
+  }) = _readWithMonthEvent;
+
   const factory MonthlyExpensesBlocEvent.update({
     required String uuid,
     required DayExpense data,
@@ -45,8 +50,5 @@ class MonthlyExpensesBlocEvent with _$MonthlyExpensesBlocEvent{
     required DayExpense data,
     required Completer<dynamic> completer,
   }) = _checkEvent;
-  const factory MonthlyExpensesBlocEvent.deleteId({
-    required String uuid,
-    required int id
-  }) = _deleteIdEvent;
+
 }

@@ -25,9 +25,14 @@ abstract class ExpensesData {
     required int idCategory,
   });
 
+  Future<MonthlyExpensesModel?> readWithMonth({
+    required String uuid,
+    required int idMonth,
+  });
+
   Future<bool?> delete({required String uuid});
 
-  Future<MonthlyExpensesModel?> deleteId({required String uuid, required int id});
+  Future<bool?> deleteId({required String uuid, required int id});
 
   Future<MonthlyExpensesModel?> update({
     required String uuid,

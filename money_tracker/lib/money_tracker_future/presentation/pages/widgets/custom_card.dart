@@ -10,7 +10,7 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/di
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class CustomCard extends StatefulWidget {
+class CustomCard<T> extends StatefulWidget {
   const CustomCard({
     required this.dayExpense,
     required this.statusUserProp,
@@ -20,14 +20,14 @@ class CustomCard extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
-  final BigInt dayExpense;
+  final T dayExpense;
 
 
   @override
-  State<CustomCard> createState() => _CustomCardState();
+  State<CustomCard<T>> createState() => _CustomCardState<T>();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class _CustomCardState<T> extends State<CustomCard<T>> {
 
   final valueNotifierDayExpense  = ValueNotifier<BigInt>(BigInt.from(0));
   final valueNotifierLongPress  = ValueNotifier<bool>(false);
@@ -35,7 +35,10 @@ class _CustomCardState extends State<CustomCard> {
 
   @override
   void initState() {
-    valueNotifierDayExpense.value = widget.dayExpense;
+    final dayExpense = widget.dayExpense;
+    if(dayExpense is BigInt) {
+      valueNotifierDayExpense.value = dayExpense;
+    }
     super.initState();
   }
 
@@ -47,22 +50,21 @@ class _CustomCardState extends State<CustomCard> {
     valueNotifierPencilVisible.dispose();
   }
 
-  Future<bool> _deleteCategory(
-      CategoriesBloc categoriesBloc,
-      MonthlyExpensesBloc monthlyExpensesBloc,
-      int id,
-      String name,
-      BuildContext context
-  ) async {
+  Future<bool> _deleteCategory(BuildContext context) async {
+    final categoriesBloc = context.read<CategoriesBloc>();
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final res = await showDialog<bool>(
             context: context,
-      builder: (context) => Dialog(
+      builder: (_) => Dialog(
         insetPadding: const EdgeInsets.only(left: 25, right: 25),
-        child: DeleteCategoryDialog(name: name,),
+        child: DeleteDialog(
+          description: S.of(context).removeCategory,
+          name: widget.categoryExpenses.name,
+        ),
       ),
     );
-
-    if (res != null && res) {
+    final id = widget.categoryExpenses.id;
+    if (res != null && res && id !=null) {
       categoriesBloc.add(CategoriesBlocEvent.deleteId(
           uuid: widget.statusUserProp.uuid,
           id: id));
@@ -75,7 +77,10 @@ class _CustomCardState extends State<CustomCard> {
     return false;
   }
 
-  Future<void> _addDayExpense(MonthBloc monthBloc,MonthlyExpensesBloc monthlyExpensesBloc, int id, BuildContext context) async {
+  Future<void> _addDayExpense(BuildContext context) async {
+    final monthBloc = context.read<MonthBloc>();
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final id = widget.categoryExpenses.id;
 
     final locStat = widget.statusUserProp;
     final stringDateTime =  '${locStat.monthCurrent.year}'
@@ -85,10 +90,10 @@ class _CustomCardState extends State<CustomCard> {
                      '-01 00:00:00.000000';
     final dateTime = DateTime.tryParse(stringDateTime);
     if(dateTime == null) return;
-
+    if(id == null) return;
     final res = await showDialog<(BigInt, DateTime)>(
       context: context,
-      builder: (context) => Dialog(
+      builder: (_) => Dialog(
         insetPadding: const EdgeInsets.only(left: 25, right: 25),
         child: AddDayExpense(id: id, dateTimeStart: dateTime),
       ),
@@ -139,35 +144,83 @@ class _CustomCardState extends State<CustomCard> {
     }
   }
 
+  Future<bool> _deleteDayExpense(
+      BuildContext context
+      ) async {
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final res = await showDialog<bool>(
+      context: context,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.only(left: 25, right: 25),
+        child: DeleteDialog(description: S.of(context).deleteConsumptionData),
+      ),
+    );
+    final dayExpense = widget.dayExpense;
+    if (res != null && res && dayExpense is DayExpense) {
+      final id = dayExpense.id;
+      final idMonth = widget.statusUserProp.monthCurrent.id;
+      final idCategory = widget.categoryExpenses.id;
+      if (id != null && idMonth != null && idCategory != null) {
+        monthlyExpensesBloc..add(MonthlyExpensesBlocEvent.deleteId(
+            uuid: widget.statusUserProp.uuid,
+            id: id))
+        ..add(MonthlyExpensesBlocEvent.read(
+            uuid: widget.statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+          ));
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<bool> _delete(
+      BuildContext context
+  ) async {
+    final dayExpense = widget.dayExpense;
+    if(dayExpense is BigInt ){
+      return await _deleteCategory(context);
+    }
+    if(dayExpense is DayExpense){
+      return await _deleteDayExpense(context);
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final categoriesBloc = context.read<CategoriesBloc>();
-    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final monthBloc = context.read<MonthBloc>();
-    final id = widget.categoryExpenses.id??(throw Exception('Error search Key'));
+    final dayExpense = widget.dayExpense;
+    final description = (dayExpense is BigInt)
+        ?widget.categoryExpenses.name
+        :(dayExpense is DayExpense)
+        ?dayExpense.sum.toString()
+        :S.of(context).notImplemented;
 
-    Future.delayed(Duration.zero, () async {
-      final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    if(dayExpense is BigInt) {
+      Future.delayed(Duration.zero, () async {
+        final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
 
-      final idMonth = widget.statusUserProp.monthCurrent.id;
-      final idCategory = widget.categoryExpenses.id;
-      if(idMonth !=null && idCategory != null){
-        final completer = Completer<BigInt>();
-        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
-          uuid: widget.statusUserProp.uuid,
-          idMonth: idMonth,
-          idCategory: idCategory,
-          completer: completer,
-        ));
-        final res = await completer.future;
-        valueNotifierDayExpense.value = res;
-      }
-    },);
+        final idMonth = widget.statusUserProp.monthCurrent.id;
+        final idCategory = widget.categoryExpenses.id;
+        if (idMonth != null && idCategory != null) {
+          final completer = Completer<BigInt>();
+          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
+            uuid: widget.statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+            completer: completer,
+          ));
+          final res = await completer.future;
+          valueNotifierDayExpense.value = res;
+        }
+      },);
+    }
 
     return Dismissible(
       key: UniqueKey(),
-      confirmDismiss: (direction) => _deleteCategory(categoriesBloc, monthlyExpensesBloc, id, widget.categoryExpenses.name, context),
+      confirmDismiss: (_) => _delete(context),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onExit: (event) {
@@ -175,11 +228,13 @@ class _CustomCardState extends State<CustomCard> {
           valueNotifierPencilVisible.value = false;
         },
         child: GestureDetector(
-          onDoubleTap: () => valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
-          onTap: () => _addDayExpense(monthBloc, monthlyExpensesBloc, id, context),
+          onDoubleTap: () =>
+          valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
+          onTap: () => (dayExpense is BigInt)
+              ?_addDayExpense(context):null,
           onLongPress: ()=>
           valueNotifierLongPress.value = !valueNotifierLongPress.value,
-          onSecondaryLongPress: ()=> _deleteCategory(categoriesBloc, monthlyExpensesBloc, id, widget.categoryExpenses.name, context),
+          onSecondaryLongPress: ()=> _delete(context),
           child: Card(
             child: Container(
               padding: const EdgeInsets.only(
@@ -197,18 +252,25 @@ class _CustomCardState extends State<CustomCard> {
                       children: <Widget>[
                         13.h,
                         Text(
-                          widget.categoryExpenses.name,
+                          description,
                           style: theme.textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
                         9.h,
-                        ValueListenableBuilder(
+                        if(dayExpense is BigInt)ValueListenableBuilder(
                             valueListenable: valueNotifierDayExpense,
                             builder: (_, value, __) {
                               return  Text(S.of(context).totalDayexpense(value),
                                 style:  theme.textTheme.bodySmall,
                               );
                             },
+                        ),
+                        if(dayExpense is DayExpense)Text('${dayExpense.dateTime.year} '
+                            '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
+                            '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
+                            '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
+                            '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
+                          style:  theme.textTheme.bodySmall,
                         ),
                         20.h,
                       ],
@@ -218,39 +280,42 @@ class _CustomCardState extends State<CustomCard> {
                     valueListenable: valueNotifierLongPress,
                     builder: (_, value, __) {
                     if (!value) {
-                      return Row(
-                        children: [
-                          ValueListenableBuilder<bool>(
-                            valueListenable: valueNotifierPencilVisible,
-                            builder: (context, value, __) => Visibility(
-                              visible: value,
-                              child: AddCategory(
-                                contextMacro: context,
-                                statusUserProp: widget.statusUserProp,
-                                categoryExpenses: widget.categoryExpenses,
-                                icon: const Icon(Icons.edit),
-                                addCategory: false,
+                      return Visibility(
+                        visible: dayExpense is BigInt,
+                        child: Row(
+                          children: [
+                            ValueListenableBuilder<bool>(
+                              valueListenable: valueNotifierPencilVisible,
+                              builder: (context, value, __) => Visibility(
+                                visible: value,
+                                child: AddCategory(
+                                  contextMacro: context,
+                                  statusUserProp: widget.statusUserProp,
+                                  categoryExpenses: widget.categoryExpenses,
+                                  icon: const Icon(Icons.edit),
+                                  addCategory: false,
+                                ),
                               ),
                             ),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
-                                arguments: {
-                                  'statusUserProp': widget.statusUserProp,
-                                  'categoryExpenses': widget.categoryExpenses,
-                                },
-                              );
-                            },
-                            icon: Icon(
-                                Icons.arrow_forward_ios,
-                                color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                            IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
+                                  arguments: {
+                                    'statusUserProp': widget.statusUserProp,
+                                    'categoryExpenses': widget.categoryExpenses,
+                                  },
+                                );
+                              },
+                              icon: Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       );
                     } else {
-                      return ElevatedButton(onPressed: () => _deleteCategory(categoriesBloc, monthlyExpensesBloc, id, widget.categoryExpenses.name, context),
+                      return ElevatedButton(onPressed: () => _delete(context),
                         child: Text(S.of(context).delete,
                           style: theme.textTheme.titleMedium?.copyWith(
                               color: theme.colorScheme.background

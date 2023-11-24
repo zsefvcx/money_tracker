@@ -74,5 +74,8 @@
   "thursday": "Th",
   "friday": "Fr",
   "saturday": "Sa",
-  "sunday": "Su"
+  "sunday": "Su",
+  "deleteConsumptionData": "Delete consumption data?",
+  "notImplemented": "Not implemented",
+  "changeExpense": "Change expense"
 }

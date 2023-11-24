@@ -40,7 +40,13 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final photoBloc = context.read<PhotoBloc>();
-
+    if(!photoBloc.photoModelData.isLoaded) {
+      if (widget.loadImage) {
+        photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
+      } else {
+        photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
+      }
+    }
     return Column(
       children: [
         MouseRegion(

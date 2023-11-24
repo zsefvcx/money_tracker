@@ -42,6 +42,10 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with Ticke
 
   @override
   Widget build(BuildContext context) {
+    final categoriesBloc = context.read<CategoriesBloc>();
+    if(!categoriesBloc.modelData.isLoaded) {
+      categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
+    }
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(

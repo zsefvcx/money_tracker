@@ -398,9 +398,25 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<MonthlyExpensesModel?> getAllByIdMonthCategory(int idMonth, int idCategory) {
-    // TODO: implement getAllByIdMonthCategory
-    throw UnimplementedError();
+  Future<MonthlyExpensesModel?> getAllByIdMonthCategory(int idMonth, int idCategory) async {
+    final db = await database;
+
+    final query = await db.query(_tableExpenses,
+        where: '"$_idMonth" = ? and "$_idCategory" = ?',
+        whereArgs: [idMonth, idCategory]);
+
+    final completeExpenses = <DayExpense>{};
+
+    if (query.isNotEmpty){
+      for(final elem in query){
+        final dayExpense  =DayExpense.fromJson(elem);
+        completeExpenses.add(dayExpense);
+      }
+    }
+
+    return MonthlyExpensesModel(
+      completeExpenses: completeExpenses
+    );
   }
 
   @override
@@ -444,6 +460,28 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
         _tableExpenses,
         where: '"$_idCategory" = ?',
         whereArgs: [idCategory]
+    );
+  }
+
+  @override
+  Future<MonthlyExpensesModel?> readWithMonth(int idMonth) async {
+    final db = await database;
+
+    final query = await db.query(_tableExpenses,
+        where: '"$_idMonth" = ?',
+        whereArgs: [idMonth]);
+
+    final completeExpenses = <DayExpense>{};
+
+    if (query.isNotEmpty){
+      for(final elem in query){
+        final dayExpense  =DayExpense.fromJson(elem);
+        completeExpenses.add(dayExpense);
+      }
+    }
+
+    return MonthlyExpensesModel(
+        completeExpenses: completeExpenses
     );
   }
 

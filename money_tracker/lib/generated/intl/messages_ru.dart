@@ -38,6 +38,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "august": MessageLookupByLibrary.simpleMessage("Август"),
         "changeCategory":
             MessageLookupByLibrary.simpleMessage("Изменить категорию"),
+        "changeExpense":
+            MessageLookupByLibrary.simpleMessage("Изменить расход"),
         "close": MessageLookupByLibrary.simpleMessage("Закрыть"),
         "color": MessageLookupByLibrary.simpleMessage("Цвет"),
         "confirm": MessageLookupByLibrary.simpleMessage("Подтвердить"),
@@ -45,6 +47,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataLoaded": MessageLookupByLibrary.simpleMessage("Данные загружены"),
         "december": MessageLookupByLibrary.simpleMessage("Декабрь"),
         "delete": MessageLookupByLibrary.simpleMessage("Удалить"),
+        "deleteConsumptionData":
+            MessageLookupByLibrary.simpleMessage("Удалить данные о расходе?"),
         "deleteUserData": MessageLookupByLibrary.simpleMessage(
             "Удалить пользовательские данные!"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
@@ -83,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Еще нет аккаунта?"),
         "noMoreThan20Categories":
             MessageLookupByLibrary.simpleMessage("Не более 20 категорий"),
+        "notImplemented":
+            MessageLookupByLibrary.simpleMessage("Не реализовано"),
         "november": MessageLookupByLibrary.simpleMessage("Ноябрь"),
         "october": MessageLookupByLibrary.simpleMessage("Октябрь"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),

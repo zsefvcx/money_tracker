@@ -30,7 +30,7 @@ class MainTabWidget extends StatelessWidget {
           child: ListView.builder(
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
-              return CustomCard(
+              return CustomCard<BigInt>(
                 dayExpense: BigInt.from(0),
                 statusUserProp: statusUserProp,
                 categoryExpenses: categories.categoriesId.elementAt(index),

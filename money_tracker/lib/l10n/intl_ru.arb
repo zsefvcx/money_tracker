@@ -74,5 +74,8 @@
   "thursday": "Чт",
   "friday": "Пт",
   "saturday": "Сб",
-  "sunday": "Вс"
+  "sunday": "Вс",
+  "deleteConsumptionData": "Удалить данные о расходе?",
+  "notImplemented": "Не реализовано",
+  "changeExpense": "Изменить расход"
 }

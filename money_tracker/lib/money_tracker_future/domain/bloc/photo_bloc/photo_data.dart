@@ -9,6 +9,10 @@ class PhotoModelData {
   final bool error;
   final String e;
 
+  bool get isLoaded {
+    final localData = data;
+    return localData!=null&&localData.contents.isNotEmpty;
+  }
   bool get isTimeOut => timeOut;
   bool get isError => error;
 

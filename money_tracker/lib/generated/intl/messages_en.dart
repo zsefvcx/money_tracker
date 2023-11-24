@@ -37,6 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "august": MessageLookupByLibrary.simpleMessage("August"),
         "changeCategory":
             MessageLookupByLibrary.simpleMessage("Change category"),
+        "changeExpense": MessageLookupByLibrary.simpleMessage("Change expense"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "color": MessageLookupByLibrary.simpleMessage("Color"),
         "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
@@ -45,6 +46,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dataLoaded": MessageLookupByLibrary.simpleMessage("Data loaded"),
         "december": MessageLookupByLibrary.simpleMessage("December"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
+        "deleteConsumptionData":
+            MessageLookupByLibrary.simpleMessage("Delete consumption data?"),
         "deleteUserData":
             MessageLookupByLibrary.simpleMessage("Delete user data!"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
@@ -79,6 +82,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noAccountYet": MessageLookupByLibrary.simpleMessage("No account yet?"),
         "noMoreThan20Categories":
             MessageLookupByLibrary.simpleMessage("No more than 20 categories"),
+        "notImplemented":
+            MessageLookupByLibrary.simpleMessage("Not implemented"),
         "november": MessageLookupByLibrary.simpleMessage("November"),
         "october": MessageLookupByLibrary.simpleMessage("October"),
         "ok": MessageLookupByLibrary.simpleMessage("Ok"),

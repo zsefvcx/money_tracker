@@ -20,59 +20,28 @@ class MainFormMoneyTracker extends StatelessWidget {
   final String eMail;
   final bool loadImage;
 
-
   @override
   Widget build(BuildContext context) {
-    final photoBloc = MoneyTrackerBlocsInit.photoBloc;
+    final monthBloc = context.read<MonthBloc>();
     final dataTimeNow = DateTime.now();
     final monthCurrent = MonthCurrent(
         id: null,
         year: dataTimeNow.year,
         month: dataTimeNow.month
     );
-    final monthBloc = MoneyTrackerBlocsInit.monthBloc;
-    final categoriesBloc = MoneyTrackerBlocsInit.categoriesBloc;
     final statusUserProp = StatusUserProp(
       eMail: eMail,
       uuid: uuid,
       loadImage: loadImage,
       monthCurrent: monthCurrent,
     );
-    final monthlyExpensesBloc = MoneyTrackerBlocsInit.monthlyExpensesBloc;
+    monthBloc.add(MonthBlocEvent.init(
+      uuid: uuid,
+      data: monthCurrent)
+    );
 
-      monthBloc.add(MonthBlocEvent.init(
-          uuid: uuid,
-          data: monthCurrent)
-      );
-
-      if (loadImage){
-        photoBloc.add(PhotoBlocEvent.init(uuid: uuid));
-      } else {
-        photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-      }
-
-      categoriesBloc.add(CategoriesBlocEvent.init(uuid: uuid));
-
-
-
-    return MultiProvider(
-      providers: [
-        Provider<PhotoBloc>(
-            create: (_) => photoBloc,
-        ),
-        Provider<MonthBloc>(
-          create: (_) => monthBloc,
-        ),
-        Provider<CategoriesBloc>(
-          create: (_) => categoriesBloc,
-        ),
-        Provider<MonthlyExpensesBloc>(
-          create: (_) => monthlyExpensesBloc,
-        ),
-      ],
-      child: MainBuilderForm(
-        statusUserProp: statusUserProp,
-      ),
+    return MainBuilderForm(
+      statusUserProp: statusUserProp,
     );
   }
 }

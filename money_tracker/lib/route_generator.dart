@@ -42,15 +42,16 @@ class RouteGenerator {
             loadImage = dataLoadImage;
           }
           //'loadImage' : blocBloc.userAuthData.loadImage,
-        }
-        return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              MainFormMoneyTracker(
-                eMail: eMail,
-                uuid: uuid,
-                loadImage: loadImage,
-              ),
-        );
+          return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                MainFormMoneyTracker(
+                  eMail: eMail,
+                  uuid: uuid,
+                  loadImage: loadImage,
+                ),
+          );
+       }
+       return _errorRoute();
       case MainFormAuthorization.routeName:
         var loginUser = false;
         if (args != null && args is Map<String, bool>)  {
@@ -59,28 +60,26 @@ class RouteGenerator {
             loginUser = data ?? false;
           }
         }
-
         return PageRouteBuilder(
           pageBuilder: (context, animation, secondaryAnimation) =>
           MainFormAuthorization(loginUser: loginUser),
         );
-        case HomeDetailPage.routeName:
-          if (args != null && args is Map<String, dynamic>)  {
-            final statusUserProp = args['statusUserProp'] as StatusUserProp?;
-            final categoryExpenses = args['categoryExpenses'] as CategoryExpenses?;
-            if(statusUserProp != null && categoryExpenses != null){
-              Logger.print('$statusUserProp',);
-              Logger.print('$categoryExpenses',);
-              return PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>
-                HomeDetailPage(
-                  categoryExpenses: categoryExpenses,
-                  statusUserProp: statusUserProp,
-                ),
-              );
-            }
+      case HomeDetailPage.routeName:
+        if (args != null && args is Map<String, dynamic>)  {
+          final statusUserProp = args['statusUserProp'];
+          final categoryExpenses = args['categoryExpenses'];
+          if(statusUserProp != null && statusUserProp is StatusUserProp
+          && categoryExpenses != null && categoryExpenses is CategoryExpenses){
+            return PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+              HomeDetailPage(
+                categoryExpenses: categoryExpenses,
+                statusUserProp: statusUserProp,
+              ),
+            );
           }
-          return _errorRoute();
+        }
+        return _errorRoute();
       default:
         return _errorRoute();
     }

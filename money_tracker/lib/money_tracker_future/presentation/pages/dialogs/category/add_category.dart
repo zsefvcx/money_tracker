@@ -28,9 +28,7 @@ class AddCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final categoriesBloc = context.read<CategoriesBloc>();
-
     return IconButton(onPressed: () async {
       if(addCategory) {
         final localLen = categoriesBloc.modelData.data?.categoriesId.length;

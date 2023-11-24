@@ -28,12 +28,10 @@ class ExpensesDataImpl extends ExpensesData {
   }
 
   @override
-  Future<MonthlyExpensesModel?> deleteId({required String uuid, required int id}) async {
+  Future<bool?> deleteId({required String uuid, required int id}) async {
     try{
-      //final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      // TODO: implement deleteId
-      throw UnimplementedError();
-      //return await dbSqlLiteLocal.deleteIdExpenses(id: id);
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      return (await dbSqlLiteLocal.deleteIdExpenses(id: id))>0;
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error deleteId Expenses: $e\n$t');
@@ -100,6 +98,17 @@ class ExpensesDataImpl extends ExpensesData {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       return (await dbSqlLiteLocal.deleteWithCategory(idCategory))>0;
+    } on Exception catch(e,t){
+      Logger.print('Error $e\n$t', name: 'err', error: true);
+      throw ArgumentError('Error update Expenses: $e\n$t');
+    }
+  }
+
+  @override
+  Future<MonthlyExpensesModel?> readWithMonth({required String uuid, required int idMonth}) async {
+    try{
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      return await dbSqlLiteLocal.readWithMonth(idMonth);
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error update Expenses: $e\n$t');

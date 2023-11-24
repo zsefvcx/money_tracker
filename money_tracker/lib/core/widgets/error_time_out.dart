@@ -11,28 +11,42 @@ class ErrorTimeOut<B, T> extends StatelessWidget {
   const ErrorTimeOut({
     this.uuid,
     this.tCurrent,
+    this.idMonth,
+    this.idCategory,
     super.key,
   });
 
   final String? uuid;
   final T? tCurrent;
+  final int? idMonth;
+  final int? idCategory;
+
 
   @override
   Widget build(BuildContext context) {
     final blocBloc = context.read<B>();
     final tCurrentLocal = tCurrent;
     final localUuid = uuid;
+    final localIdMonth = idMonth;
+    final localIdCategory = idCategory;
     if(blocBloc is MonthBloc
         || blocBloc is CategoriesBloc
-        || blocBloc is UserAuthBloc) {
+        || blocBloc is UserAuthBloc
+        || blocBloc is MonthlyExpensesBloc) {
       var isError = true;
       var isTimeOut = false;
       if(blocBloc is MonthBloc){
         isError = blocBloc.modelData.isError;
+        isTimeOut = blocBloc.modelData.isTimeOut;
       } else if(blocBloc is CategoriesBloc){
-        isTimeOut = blocBloc.modelData.isError;
+        isError = blocBloc.modelData.isError;
+        isTimeOut = blocBloc.modelData.isTimeOut;
       } else if(blocBloc is UserAuthBloc){
-        isTimeOut = blocBloc.modelData.isError;
+        isError = blocBloc.modelData.isError;
+        isTimeOut = blocBloc.modelData.isTimeOut;
+      } else if(blocBloc is MonthlyExpensesBloc){
+        isError = blocBloc.modelData.isError;
+        isTimeOut = blocBloc.modelData.isTimeOut;
       }
 
       return Padding(
@@ -70,6 +84,12 @@ class ErrorTimeOut<B, T> extends StatelessWidget {
                         blocBloc.add(
                             const UserAuthEvent.init()
                         );
+                      } else if (blocBloc is MonthlyExpensesBloc && localUuid != null && localIdMonth != null && localIdCategory != null){
+                        blocBloc.add(MonthlyExpensesBlocEvent.init(
+                          uuid: localUuid,
+                          idMonth: localIdMonth,
+                          idCategory: localIdCategory,
+                        ));
                       } else {
                         throw Exception('Error build ErrorTimeOut pages');
                       }
@@ -88,7 +108,11 @@ class ErrorTimeOut<B, T> extends StatelessWidget {
                       } else if(blocBloc is UserAuthBloc){
                         blocBloc..add(const UserAuthEvent.delete())
                           ..add(const UserAuthEvent.init());
-                      } else {
+                      } else if(blocBloc is MonthlyExpensesBloc && localUuid != null){
+                        blocBloc.add(
+                            MonthlyExpensesBlocEvent.delete(uuid: localUuid)
+                        );
+                      }else {
                         throw Exception('Error build ErrorTimeOut pages');
                       }
                     },

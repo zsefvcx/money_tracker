@@ -5,7 +5,7 @@ part of 'monthly_expenses_bloc.dart';
 class MonthlyExpensesModelData {
 
   final bool timeOut;
-  final MonthlyExpensesModel? data;
+  final MonthlyExpensesEntity? data;
   final bool error;
   final String e;
 
@@ -20,7 +20,7 @@ class MonthlyExpensesModelData {
   });
 
   MonthlyExpensesModelData copyWithData({
-    required MonthlyExpensesModel? data,
+    required MonthlyExpensesEntity? data,
     String? e,
     bool? timeOut,
     bool? error,

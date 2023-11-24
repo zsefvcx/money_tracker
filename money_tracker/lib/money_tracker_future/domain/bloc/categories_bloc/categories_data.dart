@@ -9,6 +9,10 @@ class CategoriesModelData {
   final bool error;
   final String e;
 
+  bool get isLoaded {
+    final localData = data;
+    return localData!=null && localData.categoriesId.isNotEmpty;
+  }
   bool get isTimeOut => timeOut;
   bool get isError => error;
 

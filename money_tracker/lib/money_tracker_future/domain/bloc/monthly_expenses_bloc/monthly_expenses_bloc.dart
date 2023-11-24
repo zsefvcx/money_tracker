@@ -33,6 +33,41 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
   }) : _monthlyExpensesRepository = monthlyExpensesRepository, super(const MonthlyExpensesBlocState.loading()) {
     on<MonthlyExpensesBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
+        init: (value) async {
+          emit(const MonthlyExpensesBlocState.loading());
+          final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
+            function: () async =>
+            await _monthlyExpensesRepository.getAllByIdMonthCategory(
+                uuid: value.uuid,
+                idCategory: value.idCategory,
+                idMonth: value.idMonth,
+            ),
+          );
+          modelData = modelData.copyWithData(
+            data: res,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          await _response(emit);
+        },
+        read: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
+            function: () async =>
+            await _monthlyExpensesRepository.getAllByIdMonthCategory(
+              uuid: value.uuid,
+              idCategory: value.idCategory,
+              idMonth: value.idMonth,
+            ),
+          );
+          modelData = modelData.copyWithData(
+            data: res,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          await _response(emit);
+        },
         readTotal: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<BigInt>(
             function: () async =>
@@ -85,21 +120,58 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           );
           await _response(emit);
         },
+        delete: (value) async {
+          emit(const MonthlyExpensesBlocState.loading());
+          final (error, timeOut, e, res) = await _runGoSData<bool>(
+            function: () async =>
+            await _monthlyExpensesRepository.delete(uuid: value.uuid),
+          );
+          modelData = modelData.copyWithData(
+            data: (res!=null && res)?const MonthlyExpensesEntity(
+                completeExpenses: <DayExpense>{}
+            ):null,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          await _response(emit);
+        },
+        deleteId: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<bool>(
+            function: () async =>
+            await _monthlyExpensesRepository.deleteId(uuid: value.uuid, id: value.id),
+          );
+          modelData = modelData.copyWithData(
+            data: null,
+            timeOut: timeOut,
+            error: error || (res != null && !res) || (res == null),
+            e: e,
+          );
+          await _response(emit);
+        },
+        readWithMonth: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
+            function: () async =>
+            await _monthlyExpensesRepository.readWithMonth(
+                uuid: value.uuid,
+                idMonth: value.idMonth),
+          );
+          modelData = modelData.copyWithData(
+            data: res,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          if (error){
+            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            value.completer.completeError(error);
+          } else {
+            value.completer.complete(res);
+          }
+        },
 
 
-          init: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
-          read: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
 
-          delete: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
           update: (value) {
             // TODO: implement read
             throw UnimplementedError();
@@ -108,10 +180,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             // TODO: implement read
             throw UnimplementedError();
           },
-          deleteId: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
+
        );
     });
   }

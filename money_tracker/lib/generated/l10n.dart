@@ -809,6 +809,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete consumption data?`
+  String get deleteConsumptionData {
+    return Intl.message(
+      'Delete consumption data?',
+      name: 'deleteConsumptionData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not implemented`
+  String get notImplemented {
+    return Intl.message(
+      'Not implemented',
+      name: 'notImplemented',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change expense`
+  String get changeExpense {
+    return Intl.message(
+      'Change expense',
+      name: 'changeExpense',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

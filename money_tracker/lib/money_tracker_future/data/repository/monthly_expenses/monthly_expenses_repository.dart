@@ -20,7 +20,7 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
   }
 
   @override
-  Future<MonthlyExpensesEntity?> deleteId({required String uuid, required int id}) async {
+  Future<bool?> deleteId({required String uuid, required int id}) async {
     return await expensesData.deleteId(uuid: uuid, id: id);
   }
 
@@ -52,6 +52,11 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
   @override
   Future<bool?> deleteWithCategory({required String uuid, required int idCategory}) async {
     return await expensesData.deleteWithCategory(uuid: uuid, idCategory: idCategory);
+  }
+
+  @override
+  Future<MonthlyExpensesEntity?> readWithMonth({required String uuid, required int idMonth}) async {
+    return await expensesData.readWithMonth(uuid: uuid, idMonth: idMonth);
   }
 
 

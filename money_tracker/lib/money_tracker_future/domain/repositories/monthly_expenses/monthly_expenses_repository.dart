@@ -26,9 +26,14 @@ abstract class MonthlyExpensesRepository {
     required int idCategory,
   });
 
+  Future<MonthlyExpensesEntity?> readWithMonth({
+    required String uuid,
+    required int idMonth,
+  });
+
   Future<bool?> delete({required String uuid});
 
-  Future<MonthlyExpensesEntity?> deleteId({required String uuid, required int id});
+  Future<bool?> deleteId({required String uuid, required int id});
 
   Future<MonthlyExpensesEntity?> update({
     required String uuid,
