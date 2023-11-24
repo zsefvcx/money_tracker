@@ -40,15 +40,4 @@ class MonthlyExpensesBlocEvent with _$MonthlyExpensesBlocEvent{
     required int idMonth,
     required Completer<dynamic> completer,
   }) = _readWithMonthEvent;
-
-  const factory MonthlyExpensesBlocEvent.update({
-    required String uuid,
-    required DayExpense data,
-  }) = _updateEvent;
-  const factory MonthlyExpensesBlocEvent.check({
-    required String uuid,
-    required DayExpense data,
-    required Completer<dynamic> completer,
-  }) = _checkEvent;
-
 }

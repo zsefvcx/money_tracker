@@ -88,7 +88,7 @@ class AddDayExpense extends StatelessWidget {
               hintText: S.of(context).enterAmount,
               validator: (value) =>
               (   value != null &&
-                  RegExp(r'^(\-)?\d').hasMatch(value) &&
+                  RegExp(r'^(-)?\d').hasMatch(value) &&
                   BigInt.tryParse(textController.text) != null
               )
                   ?null

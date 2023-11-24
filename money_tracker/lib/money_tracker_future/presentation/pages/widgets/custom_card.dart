@@ -80,6 +80,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   Future<void> _addDayExpense(BuildContext context) async {
     final monthBloc = context.read<MonthBloc>();
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final categoriesBloc = context.read<CategoriesBloc>();
     final id = widget.categoryExpenses.id;
 
     final locStat = widget.statusUserProp;
@@ -141,12 +142,13 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
           completer: completer
       ));
       await completer.future;
+      if(!otherMonth) {
+          categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
+      }
     }
   }
 
-  Future<bool> _deleteDayExpense(
-      BuildContext context
-      ) async {
+  Future<bool> _deleteDayExpense(BuildContext context) async {
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final res = await showDialog<bool>(
       context: context,
@@ -175,9 +177,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
     return false;
   }
 
-  Future<bool> _delete(
-      BuildContext context
-  ) async {
+  Future<bool> _delete(BuildContext context) async {
     final dayExpense = widget.dayExpense;
     if(dayExpense is BigInt ){
       return await _deleteCategory(context);

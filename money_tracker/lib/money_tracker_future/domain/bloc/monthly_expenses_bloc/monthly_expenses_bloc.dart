@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 //import 'package:injectable/injectable.dart';
 
@@ -169,18 +168,6 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             value.completer.complete(res);
           }
         },
-
-
-
-          update: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
-          check: (value) {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
-
        );
     });
   }

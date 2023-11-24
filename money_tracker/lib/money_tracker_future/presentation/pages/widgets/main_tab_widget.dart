@@ -1,8 +1,13 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/generated/l10n.dart';
+import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
+import 'package:provider/provider.dart';
 
 class MainTabWidget extends StatelessWidget {
   const MainTabWidget({
@@ -17,13 +22,69 @@ class MainTabWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final idMonth = statusUserProp.monthCurrent.id;
+    final completer = Completer<MonthlyExpensesEntity>();
+
+    if (idMonth != null) {
+      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
+        uuid: statusUserProp.uuid,
+        idMonth: idMonth,
+        completer: completer,
+      ));
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Hero(tag: Keys.heroIdSplash, child: Material(
-          child: CustomPieChart(
-            statusUserProp: statusUserProp,
-            categoriesExpensesModels: categories,
+          child: FutureBuilder<MonthlyExpensesEntity>(
+          future:  completer.future,
+          builder: (_, snapshot) {
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                    S.of(context).thereAreNoExpensesForMonthName(
+                        NameMonth(context).toNameMonth(
+                            statusUserProp.monthCurrent.month))
+                ),
+              );
+            }
+            if (!snapshot.hasData) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            final data = snapshot.data;
+            final completeExpenses = <DayExpense>{};
+            if (data != null) {
+              completeExpenses
+                ..clear()
+                ..addAll(data.completeExpenses);
+            }
+            final total = completeExpenses.fold(
+                BigInt.zero, (previousValue, element) => previousValue +
+                element.sum);
+            final totalCategoriesPercent = <int, double>{};
+            final categoriesId = categories.categoriesId;
+            for (final value in categoriesId) {
+              final idCategory = value.id;
+              if (idCategory != null) {
+                totalCategoriesPercent[idCategory] = 0;
+                var val = BigInt.zero;
+                for(final elem in completeExpenses){
+                  final id = elem.idCategory;
+                  if(id == idCategory){
+                    val += elem.sum;
+                  }
+                }
+                totalCategoriesPercent[idCategory] = 100*(val/total);
+              }
+            }
+            return CustomPieChart(
+              statusUserProp: statusUserProp,
+              categoriesExpensesModels: categories,
+              data: totalCategoriesPercent,
+            );
+          },
           ),
         )),
         Expanded(

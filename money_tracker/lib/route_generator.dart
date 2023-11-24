@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:money_tracker/core/logger/logger.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';

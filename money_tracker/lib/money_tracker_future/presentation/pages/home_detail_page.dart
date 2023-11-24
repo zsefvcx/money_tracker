@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
-import 'package:money_tracker/core/widgets/circular_progress_indicator_mod.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/domain/entity/categories/categories_entity.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
-import 'package:provider/provider.dart';
 
 class HomeDetailPage extends StatelessWidget {
   static const routeName = r'\PageHomeDetailPage';

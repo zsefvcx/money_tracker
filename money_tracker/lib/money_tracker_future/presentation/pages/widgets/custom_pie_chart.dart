@@ -1,24 +1,21 @@
-
-import 'dart:async';
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
-import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
-import 'package:provider/provider.dart';
 
 class CustomPieChart extends StatefulWidget {
   const CustomPieChart({
     required this.statusUserProp,
+    required this.data,
     required this.categoriesExpensesModels,
     super.key
   });
 
   final StatusUserProp statusUserProp;
   final CategoriesExpensesEntity categoriesExpensesModels;
+  final Map<int, double> data;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -26,46 +23,11 @@ class CustomPieChart extends StatefulWidget {
 
 class _CustomPieChartState extends State<CustomPieChart> {
   int touchedIndex = -1;
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
-    final completeExpenses = <DayExpense>{};
-    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final idMonth = widget.statusUserProp.monthCurrent.id;
-    final completer = Completer<MonthlyExpensesEntity>();
-
-    if (idMonth != null) {
-        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
-          uuid: widget.statusUserProp.uuid,
-          idMonth: idMonth,
-          completer: completer,
-        ));
-    }
-
-
-    return FutureBuilder<MonthlyExpensesEntity>(
-      future:  completer.future,
-      builder: (_, snapshot) {
-        if(snapshot.hasError){
-          return Center(
-            child: Text(
-                S.of(context).thereAreNoExpensesForMonthName(
-                    NameMonth(context).toNameMonth(widget.statusUserProp.monthCurrent.month))
-            ),
-          );
-        }
-        if (!snapshot.hasData) {
-          return const Center(child: CircularProgressIndicator());
-        }
-        final data = snapshot.data;
-        if (data != null) {
-          completeExpenses
-            ..clear()
-            ..addAll(data.completeExpenses);
-        }
-        return Container(
+    return Container(
           color: theme.colorScheme.secondary,
           height: 240,
           width: double.maxFinite,
@@ -95,7 +57,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
                   ),
                   sectionsSpace: 1,
                   centerSpaceRadius: 30,
-                  sections: showingSections(context),
+                  sections: showingSections(context, widget.data),
                 ),
               ),
             )
@@ -105,26 +67,22 @@ class _CustomPieChartState extends State<CustomPieChart> {
             ),
           ),
         );
-      },
-    );
   }
 
-  List<PieChartSectionData> showingSections(BuildContext context) {
+  List<PieChartSectionData> showingSections(BuildContext context, Map<int, double> data) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
-
-    //final expensesMap = Map.fromIterable(completeExpenses, key: );
-
     return List.generate(categoriesId.length, (i){
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 60.0 : 50.0;
-
+      final value = data[categoriesId.elementAt(i).id]??0;
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
-        value: 40,
+        value: value,
         title: categoriesId.elementAt(i).name,
         radius: radius,
         titleStyle: theme.textTheme.displaySmall,
+        badgePositionPercentageOffset: 0.98,
       );
     });
   }

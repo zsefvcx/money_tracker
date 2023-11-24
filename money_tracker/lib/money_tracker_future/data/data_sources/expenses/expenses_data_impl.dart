@@ -4,16 +4,6 @@ import 'package:money_tracker/money_tracker_future/core/day_expense/day_expense.
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 class ExpensesDataImpl extends ExpensesData {
-  @override
-  Future<bool?> check({required String uuid, required DayExpense data}) async {
-    try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      return await dbSqlLiteLocal.checkExpenses(data);
-    } on Exception catch(e,t){
-      Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error check Expenses: $e\n$t');
-    }
-  }
 
   @override
   Future<bool?> delete({required String uuid}) async {
@@ -50,17 +40,6 @@ class ExpensesDataImpl extends ExpensesData {
   }
 
   @override
-  Future<DayExpense?> getById({required String uuid, required int id}) async {
-    try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      return await dbSqlLiteLocal.getExpensesById(id);
-    } on Exception catch(e,t){
-      Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error getById Expenses: $e\n$t');
-    }
-  }
-
-  @override
   Future<BigInt?> getTotalInMonthCategory({required String uuid, required int idMonth, required int idCategory}) async {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
@@ -79,17 +58,6 @@ class ExpensesDataImpl extends ExpensesData {
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error insert Expenses: $e\n$t');
-    }
-  }
-
-  @override
-  Future<MonthlyExpensesModel?> update({required String uuid, required DayExpense data}) async {
-    try{
-      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-      return await dbSqlLiteLocal.updateExpenses(data);
-    } on Exception catch(e,t){
-      Logger.print('Error $e\n$t', name: 'err', error: true);
-      throw ArgumentError('Error update Expenses: $e\n$t');
     }
   }
 

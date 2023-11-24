@@ -45,7 +45,6 @@ class DayExpense extends Equatable{
   }
 
   factory DayExpense.fromJson(Map<String, dynamic> map) {
-    Logger.print('BigInt from Json ${map['sum'] as String}');
     return DayExpense(
       id: map['id'] as int,
       idCategory: map['idCategory'] as int,

@@ -47,10 +47,6 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             );
             await _response(emit);
           },
-          read: (value) async {
-            // TODO: implement read
-            throw UnimplementedError();
-          },
           add: (value) async {
             emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(

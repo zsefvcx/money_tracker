@@ -382,12 +382,6 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<bool?> checkExpenses(DayExpense data) {
-    // TODO: implement checkExpenses
-    throw UnimplementedError();
-  }
-
-  @override
   Future<int> deleteIdExpenses({required int id}) async {
     final db = await database;
     return await db.delete(
@@ -420,12 +414,6 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<DayExpense?> getExpensesById(int id) {
-    // TODO: implement getExpensesById
-    throw UnimplementedError();
-  }
-
-  @override
   Future<BigInt?> getTotalInMonthCategory(int idMonth, int idCategory) async {
     final db = await database;
 
@@ -443,14 +431,6 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
     }
 
     return res;
-  }
-
-  @override
-  Future<MonthlyExpensesModel?> updateExpenses(DayExpense data, {
-    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
-  }) {
-    // TODO: implement updateExpenses
-    throw UnimplementedError();
   }
 
   @override
@@ -478,6 +458,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
         final dayExpense  =DayExpense.fromJson(elem);
         completeExpenses.add(dayExpense);
       }
+
     }
 
     return MonthlyExpensesModel(

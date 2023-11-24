@@ -33,13 +33,4 @@ abstract class ExpensesData {
   Future<bool?> delete({required String uuid});
 
   Future<bool?> deleteId({required String uuid, required int id});
-
-  Future<MonthlyExpensesModel?> update({
-    required String uuid,
-    required DayExpense data
-  });
-
-  Future<bool?> check({required String uuid, required DayExpense data});
-
-  Future<DayExpense?> getById({required String uuid, required int id});
 }
