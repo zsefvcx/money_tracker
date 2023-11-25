@@ -306,9 +306,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   },
                                 );
                               },
-                              icon: Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                              icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
+                                child: Icon(
+                                    Icons.arrow_forward_ios,
+                                    color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                                ),
                               ),
                             ),
                           ],

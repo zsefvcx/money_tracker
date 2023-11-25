@@ -47,7 +47,9 @@ class HomeDetailPage extends StatelessWidget {
               },
               icon: const Icon(Icons.arrow_back_ios),
             ),
-            title: Text(categoryExpenses.name),
+            title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
+                child: Text(categoryExpenses.name)
+            ),
             backgroundColor: Color(
                 int.parse('FF${categoryExpenses.colorHex}', radix: 16)),
           ),
