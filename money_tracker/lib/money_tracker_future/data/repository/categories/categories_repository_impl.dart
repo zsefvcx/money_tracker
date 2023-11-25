@@ -11,37 +11,37 @@ class CategoriesRepositoryImpl extends CategoriesRepository{
 
   @override
   Future<bool?> delete({required String uuid}) async {
-    return await categoriesData.delete(uuid: uuid);
+    return categoriesData.delete(uuid: uuid);
   }
 
   @override
   Future<CategoriesExpensesEntity?> getAllId({required String uuid}) async {
-    return await categoriesData.getAllId(uuid: uuid);
+    return categoriesData.getAllId(uuid: uuid);
   }
 
   @override
   Future<CategoriesExpensesEntity?> insert({required String uuid, required CategoryExpenses data}) async {
-    return await categoriesData.insert(uuid: uuid, data: data);
+    return categoriesData.insert(uuid: uuid, data: data);
   }
 
   @override
   Future<CategoryExpenses?> getById({required String uuid, required int id}) async {
-    return await categoriesData.getById(uuid: uuid, id: id);
+    return categoriesData.getById(uuid: uuid, id: id);
   }
 
   @override
   Future<CategoriesExpensesEntity?> deleteId({required String uuid, required int id}) async {
-    return await categoriesData.deleteId(uuid: uuid,id: id);
+    return categoriesData.deleteId(uuid: uuid,id: id);
   }
 
   @override
   Future<CategoriesExpensesEntity?> update({required String uuid, required CategoryExpenses data}) async {
-    return await categoriesData.update(uuid: uuid, data: data);
+    return categoriesData.update(uuid: uuid, data: data);
   }
 
   @override
   Future<bool?> check({required String uuid, required CategoryExpenses data}) async {
-    return await categoriesData.check(uuid: uuid, data: data);
+    return categoriesData.check(uuid: uuid, data: data);
   }
 
 }

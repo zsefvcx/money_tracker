@@ -37,7 +37,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
-              await _categoriesRepository.getAllId(uuid: value.uuid),
+              _categoriesRepository.getAllId(uuid: value.uuid),
             );
             modelData = modelData.copyWithData(
               data: res,
@@ -51,7 +51,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
                         function: () async =>
-                        await _categoriesRepository.insert(uuid: value.uuid, data: value.data),
+                        _categoriesRepository.insert(uuid: value.uuid, data: value.data),
                       );
             modelData = modelData.copyWithData(
               data: res,
@@ -65,7 +65,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async =>
-                await _categoriesRepository.delete(uuid: value.uuid),
+                _categoriesRepository.delete(uuid: value.uuid),
               );
               modelData = modelData.copyWithData(
               data: (res!=null && res)?const CategoriesExpensesModels(
@@ -81,7 +81,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
           deleteId: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
-              await _categoriesRepository.deleteId(uuid: value.uuid, id: value.id),
+              _categoriesRepository.deleteId(uuid: value.uuid, id: value.id),
             );
             modelData = modelData.copyWithData(
               data: res,
@@ -94,7 +94,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
           update: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
               function: () async =>
-              await _categoriesRepository.update(uuid: value.uuid, data: value.data),
+              _categoriesRepository.update(uuid: value.uuid, data: value.data),
             );
             modelData = modelData.copyWithData(
               data: res,
@@ -107,7 +107,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
           check: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async =>
-              await _categoriesRepository.check(uuid: value.uuid, data: value.data),
+              _categoriesRepository.check(uuid: value.uuid, data: value.data),
             );
               if (error){
                 Logger.print('Error check.:$timeOut:$e', name: 'err', error: true);

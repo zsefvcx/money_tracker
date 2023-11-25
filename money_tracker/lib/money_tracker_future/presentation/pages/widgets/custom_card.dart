@@ -180,10 +180,10 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   Future<bool> _delete(BuildContext context) async {
     final dayExpense = widget.dayExpense;
     if(dayExpense is BigInt ){
-      return await _deleteCategory(context);
+      return _deleteCategory(context);
     }
     if(dayExpense is DayExpense){
-      return await _deleteDayExpense(context);
+      return _deleteDayExpense(context);
     }
     return false;
   }

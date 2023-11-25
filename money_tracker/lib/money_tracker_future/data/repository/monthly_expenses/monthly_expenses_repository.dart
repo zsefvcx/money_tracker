@@ -11,37 +11,37 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
 
   @override
   Future<bool?> delete({required String uuid}) async {
-    return await expensesData.delete(uuid: uuid);
+    return expensesData.delete(uuid: uuid);
   }
 
   @override
   Future<bool?> deleteId({required String uuid, required int id}) async {
-    return await expensesData.deleteId(uuid: uuid, id: id);
+    return expensesData.deleteId(uuid: uuid, id: id);
   }
 
   @override
   Future<MonthlyExpensesEntity?> getAllByIdMonthCategory({required String uuid, required int idMonth, required int idCategory}) async {
-    return await expensesData.getAllByIdMonthCategory(uuid: uuid, idMonth: idMonth, idCategory: idCategory);
+    return expensesData.getAllByIdMonthCategory(uuid: uuid, idMonth: idMonth, idCategory: idCategory);
   }
 
   @override
   Future<BigInt?> getTotalInMonthCategory({required String uuid, required int idMonth, required int idCategory}) async {
-    return await expensesData.getTotalInMonthCategory(uuid: uuid, idMonth: idMonth, idCategory: idCategory);
+    return expensesData.getTotalInMonthCategory(uuid: uuid, idMonth: idMonth, idCategory: idCategory);
   }
 
   @override
   Future<bool?> insert({required String uuid, required DayExpense data}) async {
-    return await expensesData.insert(uuid: uuid, data: data);
+    return expensesData.insert(uuid: uuid, data: data);
   }
 
   @override
   Future<bool?> deleteWithCategory({required String uuid, required int idCategory}) async {
-    return await expensesData.deleteWithCategory(uuid: uuid, idCategory: idCategory);
+    return expensesData.deleteWithCategory(uuid: uuid, idCategory: idCategory);
   }
 
   @override
   Future<MonthlyExpensesEntity?> readWithMonth({required String uuid, required int idMonth}) async {
-    return await expensesData.readWithMonth(uuid: uuid, idMonth: idMonth);
+    return expensesData.readWithMonth(uuid: uuid, idMonth: idMonth);
   }
 
 

@@ -48,7 +48,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   Future<Database> _initDB({required String uuid}) async {
     final path = await localPath(uuid: uuid);
     _lastUuid = uuid;
-    return await openDatabase(path, version: 3, onCreate: _createDB);
+    return openDatabase(path, version: 3, onCreate: _createDB);
   }
 
   //переделать
@@ -176,7 +176,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
       }
     }
 
-    return await db.insert(
+    return db.insert(
       _tableMonthCurrent,
       data.toJson(),
       conflictAlgorithm: conflictAlgorithm,
@@ -187,7 +187,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   @override
   Future<int> deleteMonth(int gid) async {
     final db = await database;
-    return await db.delete(
+    return db.delete(
             _tableMonthCurrent,
             where: '"$_id" = ?',
             whereArgs: [gid]
@@ -239,7 +239,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   @override
   Future<int> deleteCategory(int id) async {
     final db = await database;
-    return await db.delete(
+    return db.delete(
         _tableCategories,
         where: '"$_id" = ?',
         whereArgs: [id]
@@ -280,7 +280,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
       }
     }
 
-    return await db.insert(
+    return db.insert(
       _tableCategories,
       data.toJson(),
       conflictAlgorithm: conflictAlgorithm,
@@ -321,7 +321,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
       }
     }
 
-    return await db.update(
+    return db.update(
         _tableCategories,
         data.toJson(),
         where: '"$_id" = ?',
@@ -384,7 +384,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   @override
   Future<int> deleteIdExpenses({required int id}) async {
     final db = await database;
-    return await db.delete(
+    return db.delete(
         _tableExpenses,
         where: '"$_id" = ?',
         whereArgs: [id]
@@ -436,7 +436,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   @override
   Future<int> deleteWithCategory(int idCategory) async {
     final db = await database;
-    return await db.delete(
+    return db.delete(
         _tableExpenses,
         where: '"$_idCategory" = ?',
         whereArgs: [idCategory]

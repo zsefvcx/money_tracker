@@ -37,7 +37,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
             emit(const MonthBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
               function: () async =>
-              await _monthRepository.insert(uuid: value.uuid, data: value.data),
+              _monthRepository.insert(uuid: value.uuid, data: value.data),
             );
             final data =  modelData.data;
             final monthCurrent = res;
@@ -53,7 +53,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
           read: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
               function: () async =>
-              await _monthRepository.findAllInYear(uuid: value.uuid, year: value.year),
+              _monthRepository.findAllInYear(uuid: value.uuid, year: value.year),
             );
             final data =  res;
             final monthCurrent = modelData.monthCurrent;
@@ -74,7 +74,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
           add: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<MonthCurrent>(
                         function: () async =>
-                        await _monthRepository.insert(uuid: value.uuid, data: value.data),
+                        _monthRepository.insert(uuid: value.uuid, data: value.data),
                       );
 
             final data =  modelData.data;
@@ -102,14 +102,14 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
             emit(const MonthBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<bool>(
               function: () async =>
-                await _monthRepository.delete(uuid: value.uuid),
+                _monthRepository.delete(uuid: value.uuid),
               );
 
             if(!error && res !=null && res){
 
               final (error2, timeOut2, e2, res2) = await _runGoSData<MonthCurrent>(
                 function: () async =>
-                await _monthRepository.insert(uuid: value.uuid, data: value.data),
+                _monthRepository.insert(uuid: value.uuid, data: value.data),
               );
               modelData = modelData.copyWithData(
                 data: null,

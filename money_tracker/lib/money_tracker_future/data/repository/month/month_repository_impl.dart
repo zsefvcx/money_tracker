@@ -12,16 +12,16 @@ class MonthRepositoryImpl extends MonthRepository {
 
   @override
   Future<bool?> delete({required String uuid}) async {
-    return await monthsStatus.delete(uuid: uuid);
+    return monthsStatus.delete(uuid: uuid);
   }
 
   @override
   Future<MonthsCurrentYearEntity?> findAllInYear({required String uuid, required int year}) async {
-    return await monthsStatus.findAllInYear(uuid: uuid, year: year);
+    return monthsStatus.findAllInYear(uuid: uuid, year: year);
   }
 
   @override
   Future<MonthCurrent?> insert({required String uuid, required MonthCurrent data}) async {
-    return await monthsStatus.insert(uuid: uuid, data: data);
+    return monthsStatus.insert(uuid: uuid, data: data);
   }
 }

@@ -15,7 +15,7 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
 
   @override
   Future<bool?> setUserName({required String userNameHash512}) async {
-    return await setUserAuthService.setUserName(
+    return setUserAuthService.setUserName(
         userNameHash512: userNameHash512,
         internet: await networkInfo.isConnected,
     );
@@ -28,7 +28,7 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
     required String eMail,
     required UserGroup userGroup,
   }) async {
-    return await setUserAuthService.setPasswordAndUserGroup(
+    return setUserAuthService.setPasswordAndUserGroup(
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
         eMail: eMail,
@@ -39,18 +39,18 @@ class SetUserAuthRepositoryImpl implements SetUserAuthRepository {
 
   @override
   Future<bool?> deleteUserData() async {
-    return await setUserAuthService.deleteUserData(
+    return setUserAuthService.deleteUserData(
       internet: await networkInfo.isConnected,
     );
   }
 
   @override
   Future<UserAuthorizationPasswordEntity?> logout() async {
-    return await setUserAuthService.logout();
+    return setUserAuthService.logout();
   }
 
   @override
   Future<UserAuthorizationPasswordEntity?> changeLoadImageStatus({required bool status}) async {
-    return await setUserAuthService.changeLoadImageStatus(status: status);
+    return setUserAuthService.changeLoadImageStatus(status: status);
   }
 }

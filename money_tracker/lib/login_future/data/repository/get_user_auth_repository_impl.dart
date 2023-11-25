@@ -15,7 +15,7 @@ class GetUserAuthRepositoryImpl implements GetUserAuthRepository {
 
   @override
   Future<bool?> checkUserName({required String userNameHash512}) async {
-    return await getUserAuthService.checkUserName(
+    return getUserAuthService.checkUserName(
         userNameHash512: userNameHash512,
         internet: await networkInfo.isConnected,
     );
@@ -26,7 +26,7 @@ class GetUserAuthRepositoryImpl implements GetUserAuthRepository {
     required String userNameHash512,
     required String userPasswordHash512
   }) async {
-    return await getUserAuthService.checkPassword(
+    return getUserAuthService.checkPassword(
         userNameHash512: userNameHash512,
         userPasswordHash512: userPasswordHash512,
         internet: await networkInfo.isConnected,
@@ -35,6 +35,6 @@ class GetUserAuthRepositoryImpl implements GetUserAuthRepository {
 
   @override
   Future<UserAuthorizationPasswordEntity?> loadUserData() async {
-    return await getUserAuthService.loadUserData();
+    return getUserAuthService.loadUserData();
   }
 }

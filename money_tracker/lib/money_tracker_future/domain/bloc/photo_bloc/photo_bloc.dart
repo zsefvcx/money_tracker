@@ -31,12 +31,12 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
   }) : super(const PhotoBlocState.loading()) {
     on<PhotoBlocEvent>((event, emit) async {
       await event.map<FutureOr<void>>(
-          init: (value) async => await _read(value.uuid, emit),
-          read: (value) async => await _read(value.uuid, emit),
+          init: (value) async => _read(value.uuid, emit),
+          read: (value) async => _read(value.uuid, emit),
           write: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<PhotosEntity>(
               function: () async =>
-              await photoRepository.write(
+              photoRepository.write(
                 uuid: value.uuid,
                 path: value.path,
               ),
@@ -58,7 +58,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
           delete: (value) async {
               final (error, timeOut, e, res) = await _runGoSData<bool>(
                 function: () async =>
-                await photoRepository.delete(
+                photoRepository.delete(
                     uuid: value.uuid
                 ),
               );
@@ -86,7 +86,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
     } else {
       final (error, timeOut, e, res) = await _runGoSData<PhotosEntity>(
         function: () async =>
-        await photoRepository.read(
+        photoRepository.read(
             uuid: uuid
         ),
       );

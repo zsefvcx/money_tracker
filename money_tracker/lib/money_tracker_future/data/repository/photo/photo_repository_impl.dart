@@ -11,17 +11,17 @@ class PhotoRepositoryImpl extends PhotoRepository{
 
   @override
   Future<PhotosEntity?> read({required String uuid}) async {
-    return await photoFromIntFile.read(uuid: uuid);
+    return photoFromIntFile.read(uuid: uuid);
   }
 
   @override
   Future<PhotosEntity?> write({required String uuid, required String path}) async {
-    return await photoFromIntFile.write(uuid: uuid, path: path);
+    return photoFromIntFile.write(uuid: uuid, path: path);
   }
 
   @override
   Future<bool?> delete({required String uuid}) async {
-    return await photoFromIntFile.delete(uuid: uuid);
+    return photoFromIntFile.delete(uuid: uuid);
   }
 
 

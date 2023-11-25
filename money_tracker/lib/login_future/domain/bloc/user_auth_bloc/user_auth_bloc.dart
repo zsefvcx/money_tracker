@@ -37,7 +37,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           init: (value) async {
             emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
-              function: () async => await  getUserAuthRepository.loadUserData(),
+              function: () async =>  getUserAuthRepository.loadUserData(),
             );
             modelData = modelData.copyWithData(
               data: res,
@@ -59,7 +59,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           logout: (value) async {
             emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
-              function: () async => await setUserAuthRepository.logout(),
+              function: () async => setUserAuthRepository.logout(),
             );
             modelData = modelData.copyWithData(
               data: res,
@@ -78,7 +78,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           },
           checkUserName: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
-                function: () async => await  getUserAuthRepository.checkUserName(
+                function: () async => getUserAuthRepository.checkUserName(
                     userNameHash512: value.userNameHash512
                 ),
             );
@@ -98,7 +98,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           },
           checkPassword: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
-              function: () async => await  getUserAuthRepository.checkPassword(
+              function: () async => getUserAuthRepository.checkPassword(
                   userNameHash512: value.userNameHash512,
                   userPasswordHash512: value.userPasswordHash512
               ),
@@ -119,7 +119,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           },
           setUserName: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<bool>(
-              function: () async => await setUserAuthRepository.setUserName(
+              function: () async => setUserAuthRepository.setUserName(
                   userNameHash512: value.userNameHash512
               ),
             );
@@ -139,7 +139,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           },
           setPassword: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
-              function: () async => await  setUserAuthRepository.setPasswordAndUserGroup(
+              function: () async => setUserAuthRepository.setPasswordAndUserGroup(
                   userNameHash512: value.userNameHash512,
                   userPasswordHash512: value.userPasswordHash512,
                   eMail: value.eMail,
@@ -163,7 +163,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           delete: (value) async {
               emit(const UserAuthState.loading());
               final (error, timeOut, e, res) = await _runGoSData<bool>(
-                function: () async => await  setUserAuthRepository.deleteUserData(),
+                function: () async => setUserAuthRepository.deleteUserData(),
               );
               modelData = modelData.copyWithData(
                 error: error,
@@ -186,7 +186,7 @@ class UserAuthBloc extends Bloc<UserAuthEvent, UserAuthState> {
           changeLoadImageStatus: (value) async {
             emit(const UserAuthState.loading());
             final (error, timeOut, e, res) = await _runGoSData<UserAuthorizationPasswordEntity>(
-              function: () async => await setUserAuthRepository.changeLoadImageStatus(status: value.status),
+              function: () async => setUserAuthRepository.changeLoadImageStatus(status: value.status),
             );
             modelData = modelData.copyWithData(
               data: res,

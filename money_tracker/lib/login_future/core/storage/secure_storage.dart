@@ -34,6 +34,6 @@ class SecureStorageImpl extends SecureStorage {
 
   @override
   Future<String?> read({required String key}) async {
-    return await storage.read(key: key);
+    return storage.read(key: key);
   }
 }

@@ -36,7 +36,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           emit(const MonthlyExpensesBlocState.loading());
           final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
             function: () async =>
-            await _monthlyExpensesRepository.getAllByIdMonthCategory(
+            _monthlyExpensesRepository.getAllByIdMonthCategory(
                 uuid: value.uuid,
                 idCategory: value.idCategory,
                 idMonth: value.idMonth,
@@ -53,7 +53,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         read: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
             function: () async =>
-            await _monthlyExpensesRepository.getAllByIdMonthCategory(
+            _monthlyExpensesRepository.getAllByIdMonthCategory(
               uuid: value.uuid,
               idCategory: value.idCategory,
               idMonth: value.idMonth,
@@ -70,7 +70,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         readTotal: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<BigInt>(
             function: () async =>
-            await _monthlyExpensesRepository.getTotalInMonthCategory(
+            _monthlyExpensesRepository.getTotalInMonthCategory(
                 uuid: value.uuid,
                 idMonth: value.idMonth,
                 idCategory: value.idCategory),
@@ -91,7 +91,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         add: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(
             function: () async =>
-            await _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
+            _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
           );
           modelData = modelData.copyWithData(
             data: null,
@@ -109,7 +109,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         deleteWithCategory: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(
             function: () async =>
-            await _monthlyExpensesRepository.deleteWithCategory(uuid: value.uuid, idCategory: value.idCategory),
+            _monthlyExpensesRepository.deleteWithCategory(uuid: value.uuid, idCategory: value.idCategory),
           );
           modelData = modelData.copyWithData(
             data: null,
@@ -123,7 +123,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           emit(const MonthlyExpensesBlocState.loading());
           final (error, timeOut, e, res) = await _runGoSData<bool>(
             function: () async =>
-            await _monthlyExpensesRepository.delete(uuid: value.uuid),
+            _monthlyExpensesRepository.delete(uuid: value.uuid),
           );
           modelData = modelData.copyWithData(
             data: (res!=null && res)?const MonthlyExpensesEntity(
@@ -138,7 +138,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         deleteId: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(
             function: () async =>
-            await _monthlyExpensesRepository.deleteId(uuid: value.uuid, id: value.id),
+            _monthlyExpensesRepository.deleteId(uuid: value.uuid, id: value.id),
           );
           modelData = modelData.copyWithData(
             data: null,
@@ -151,7 +151,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         readWithMonth: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
             function: () async =>
-            await _monthlyExpensesRepository.readWithMonth(
+            _monthlyExpensesRepository.readWithMonth(
                 uuid: value.uuid,
                 idMonth: value.idMonth),
           );
