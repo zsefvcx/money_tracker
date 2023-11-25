@@ -12,11 +12,12 @@ class HomeDetailPage extends StatelessWidget {
   const HomeDetailPage({
     required this.categoryExpenses,
     required this.statusUserProp,
+    required this.dateTime,
     super.key});
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
-
+  final DateTime dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +43,7 @@ class HomeDetailPage extends StatelessWidget {
                     'uuid': statusUserProp.uuid,
                     'eMail': statusUserProp.eMail,
                     'loadImage': statusUserProp.loadImage,
+                    'dateTime': dateTime,
                   },
                 );
               },

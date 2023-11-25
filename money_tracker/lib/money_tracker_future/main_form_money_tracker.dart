@@ -13,17 +13,19 @@ class MainFormMoneyTracker extends StatelessWidget {
     required this.loadImage,
     required this.uuid,
     required this.eMail,
+    required this.dateTime,
     super.key
   });
 
   final String uuid;
   final String eMail;
   final bool loadImage;
+  final DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
     final monthBloc = context.read<MonthBloc>();
-    final dataTimeNow = DateTime.now();
+    final dataTimeNow = dateTime??DateTime.now();
     final monthCurrent = MonthCurrent(
         id: null,
         year: dataTimeNow.year,

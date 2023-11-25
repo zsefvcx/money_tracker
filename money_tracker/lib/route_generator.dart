@@ -23,11 +23,12 @@ class RouteGenerator {
         var eMail = '';
         var uuid = '';
         var loadImage = false;
+        DateTime? dateTime;
         if (args != null && args is Map<String, dynamic>)  {
-          // final dataLoginUser = args['loginUser'];
-          // if(dataLoginUser!=null && dataLoginUser is bool ){
-          //   loginUser = dataLoginUser;
-          // }
+          final dataDateTime = args['dateTime'];
+          if(dataDateTime != null && dataDateTime is DateTime){
+            dateTime = dataDateTime;
+          }
           final dataUuid = args['uuid'];
           if(dataUuid!=null && dataUuid is String){
             uuid = dataUuid;
@@ -40,13 +41,13 @@ class RouteGenerator {
           if(dataLoadImage!=null && dataLoadImage is bool){
             loadImage = dataLoadImage;
           }
-          //'loadImage' : blocBloc.userAuthData.loadImage,
           return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 MainFormMoneyTracker(
                   eMail: eMail,
                   uuid: uuid,
                   loadImage: loadImage,
+                  dateTime: dateTime,
                 ),
           );
        }
@@ -67,13 +68,17 @@ class RouteGenerator {
         if (args != null && args is Map<String, dynamic>)  {
           final statusUserProp = args['statusUserProp'];
           final categoryExpenses = args['categoryExpenses'];
+          final dateTime = args['dateTime'];
           if(statusUserProp != null && statusUserProp is StatusUserProp
-          && categoryExpenses != null && categoryExpenses is CategoryExpenses){
+          && categoryExpenses != null && categoryExpenses is CategoryExpenses
+          && dateTime != null && dateTime is DateTime
+          ){
             return PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
               HomeDetailPage(
                 categoryExpenses: categoryExpenses,
                 statusUserProp: statusUserProp,
+                dateTime: dateTime,
               ),
             );
           }

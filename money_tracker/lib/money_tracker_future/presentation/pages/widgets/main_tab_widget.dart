@@ -19,7 +19,6 @@ class MainTabWidget extends StatelessWidget {
   final StatusUserProp statusUserProp;
   final CategoriesExpensesEntity categories;
 
-
   @override
   Widget build(BuildContext context) {
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
@@ -97,10 +96,19 @@ class MainTabWidget extends StatelessWidget {
           child: ListView.builder(
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
+              const date = 1;
+              final month= statusUserProp.monthCurrent.year;
+              final year = statusUserProp.monthCurrent.year;
+              final stringSelectedDateTime =
+                  '$year'
+                  '-${month<10?'0$month':month}'
+                  '-${date<10?'0$date':date}'
+                  ' 00:00:00.000000';
               return CustomCard<BigInt>(
                 dayExpense: BigInt.from(0),
                 statusUserProp: statusUserProp,
                 categoryExpenses: categories.categoriesId.elementAt(index),
+                dateTime: DateTime.tryParse(stringSelectedDateTime),
               );
             },
           ),

@@ -15,13 +15,14 @@ class CustomCard<T> extends StatefulWidget {
     required this.dayExpense,
     required this.statusUserProp,
     required this.categoryExpenses,
+    this.dateTime,
     super.key
   });
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
   final T dayExpense;
-
+  final DateTime? dateTime;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -303,6 +304,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   arguments: {
                                     'statusUserProp': widget.statusUserProp,
                                     'categoryExpenses': widget.categoryExpenses,
+                                    'dateTime': widget.dateTime,
                                   },
                                 );
                               },
