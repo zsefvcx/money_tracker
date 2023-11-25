@@ -69,14 +69,20 @@ class MainTabWidget extends StatelessWidget {
               final idCategory = value.id;
               if (idCategory != null) {
                 totalCategoriesPercent[idCategory] = 0;
-                var val = BigInt.zero;
-                for(final elem in completeExpenses){
-                  final id = elem.idCategory;
-                  if(id == idCategory){
-                    val += elem.sum;
+                if(total != BigInt.zero) {
+                  var val = BigInt.zero;
+                  for (final elem in completeExpenses) {
+                    final id = elem.idCategory;
+                    if (id == idCategory) {
+                      val += elem.sum;
+                    }
                   }
+                  totalCategoriesPercent[idCategory] = 100 * (val / total);
+                } else{
+                  totalCategoriesPercent[idCategory] = 100/categoriesId.length;
                 }
-                totalCategoriesPercent[idCategory] = 100*(val/total);
+              } else {
+                throw Exception('Error id Category');
               }
             }
             return CustomPieChart(
