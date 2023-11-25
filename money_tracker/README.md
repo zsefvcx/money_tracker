@@ -4,16 +4,8 @@ Money Tracker.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
+Баги:
 1. Ошибка удаления. Решено.
-2. Повторное открытие базы, недолжно быть такого.
+2. Повторное открытие базы, недолжно быть такого. Решено.
+3. При возврате с страницы детал переходит на стартовую страницу и текущий месяц, даже если был месяц был другой.
+4. Пичарт глючит когда все по нулям
