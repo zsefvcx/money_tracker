@@ -97,7 +97,7 @@ class RouteGenerator {
           automaticallyImplyLeading: false,
           leading: IconButton(icon: const Icon(Icons.close),
             onPressed: ()=>Navigator.of(context).
-            pushReplacementNamed(MainFormMoneyTracker.routeName,
+            pushReplacementNamed(MainFormAuthorization.routeName,
               // arguments: {
               //   'TabIndex':currentIndex.index,
               // },

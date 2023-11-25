@@ -97,7 +97,7 @@ class MainTabWidget extends StatelessWidget {
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               const date = 1;
-              final month= statusUserProp.monthCurrent.year;
+              final month= statusUserProp.monthCurrent.month;
               final year = statusUserProp.monthCurrent.year;
               final stringSelectedDateTime =
                   '$year'
