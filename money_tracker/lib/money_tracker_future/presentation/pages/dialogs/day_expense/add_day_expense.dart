@@ -45,32 +45,25 @@ class AddDayExpense extends StatelessWidget {
                     fontSize: 20
                   )
               ),
-              MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: GestureDetector(
-                  onTap: () async {
-                    final localDateTime = await showDialog<DateTime>(
-                      context: context,
-                      builder: (_) => Dialog(
-                        insetPadding: const EdgeInsets.only(left: 25, right: 25),
-                        child: SelectDateTime(
+              IconButton(onPressed: () async {
+                  final localDateTime = await showDialog<DateTime>(
+                    context: context,
+                    builder: (_) => Dialog(
+                      insetPadding: const EdgeInsets.only(left: 25, right: 25),
+                      child: SelectDateTime(
                           dateTime: dateTime
-                        ),
                       ),
-                    );
-                    if(localDateTime != null)valueNotifierDateTime.value = localDateTime;
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: ValueListenableBuilder(
-                      valueListenable: valueNotifierDateTime,
-                      builder: (context, value, _) {
-                        return Text(' ${value.day} ${NameMonth(context).toNameMonth(value.month).substring(0,3)} ${value.year}',
-                            style: theme.textTheme.displayLarge
-                        );
-                      },
                     ),
-                  ),
+                  );
+                  if(localDateTime != null)valueNotifierDateTime.value = localDateTime;
+                },
+                icon: ValueListenableBuilder(
+                  valueListenable: valueNotifierDateTime,
+                  builder: (context, value, _) {
+                    return Text(' ${value.day} ${NameMonth(context).toNameMonth(value.month).substring(0,3)} ${value.year}',
+                        style: theme.textTheme.displayLarge
+                    );
+                  },
                 ),
               ),
             ],
@@ -111,6 +104,7 @@ class AddDayExpense extends StatelessWidget {
               ),
                 borderRadius: BorderRadius.circular(15),
               ),
+              keyboardType: TextInputType.number,
             ),
           ),
           30.h,

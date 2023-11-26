@@ -73,6 +73,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
           uuid: widget.statusUserProp.uuid,
           idCategory: id
       ));
+      valueNotifierLongPress.value = false;
+      valueNotifierPencilVisible.value = false;
       return true;
     }
     return false;
@@ -172,6 +174,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
             idMonth: idMonth,
             idCategory: idCategory,
           ));
+        valueNotifierLongPress.value = false;
+        valueNotifierPencilVisible.value = false;
         return true;
       }
     }
@@ -221,7 +225,13 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
 
     return Dismissible(
       key: UniqueKey(),
-      confirmDismiss: (_) => _delete(context),
+      confirmDismiss: (_) async {
+        if (dayExpense is BigInt) {
+          return false;
+        } else {
+          return _delete(context);
+        }
+      },
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onExit: (event) {
@@ -309,9 +319,27 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                 );
                               },
                               icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
-                                child: Icon(
-                                    Icons.arrow_forward_ios,
-                                    color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16))
+                                child: Stack(
+                                  children: [
+                                    SizedBox(
+                                      height: 28,
+                                      width: 28,
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color(0xFF000000+(~int.parse(widget.categoryExpenses.colorHex, radix: 16))),
+                                        size: theme.iconTheme.size??24+8,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 28,
+                                      width: 28,
+                                      child: Icon(
+                                        Icons.arrow_forward_ios,
+                                        color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
+                                        size: theme.iconTheme.size??24-8,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

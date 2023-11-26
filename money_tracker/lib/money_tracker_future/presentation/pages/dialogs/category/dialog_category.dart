@@ -116,6 +116,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                                     :S.of(context).errorLengthMustBe6SymbolsInHexFormat,
                                 suffixIcon: IconButton(
                                   onPressed: () {
+                                    FocusScope.of(context).requestFocus(FocusNode());
                                     _valueNotifierColorPickerVisible.value =
                                     !_valueNotifierColorPickerVisible.value;
                                   },

@@ -21,6 +21,7 @@ class HomeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final idMonth = statusUserProp.monthCurrent.id;
     final idCategory = categoryExpenses.id;
     if (idMonth != null && idCategory != null) {
@@ -47,13 +48,26 @@ class HomeDetailPage extends StatelessWidget {
                   },
                 );
               },
-              icon: const Icon(Icons.arrow_back_ios),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Color(0xFF000000+(~int.parse(categoryExpenses.colorHex, radix: 16))),
+              ),
             ),
             title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
-                child: Text(categoryExpenses.name)
+                child: Material(child: Text(categoryExpenses.name,
+                  style: theme.appBarTheme.titleTextStyle?.copyWith(
+                    color: Color(0xFF000000+(~int.parse(categoryExpenses.colorHex, radix: 16))),
+                  backgroundColor: Color(int.parse('FF${categoryExpenses.colorHex}', radix: 16)),
+                  ),
+
+                  overflow: TextOverflow.ellipsis,
+                ),
+                elevation: 0.5,
+                )
             ),
             backgroundColor: Color(
                 int.parse('FF${categoryExpenses.colorHex}', radix: 16)),
+
           ),
           body: BlocBuilder<MonthlyExpensesBloc, MonthlyExpensesBlocState>(
             builder: (context, state) {

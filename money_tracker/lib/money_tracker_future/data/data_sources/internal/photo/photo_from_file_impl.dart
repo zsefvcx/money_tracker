@@ -2,6 +2,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/data/data.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,6 +48,8 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
       if(res == null) { //еще не разу не грузили за сессию
         final file = await localFile(uuid: uuid);
         final contents = await file.readAsBytes();
+        Logger.print(file.path);
+        Logger.print('${contents.length}');
         return mapPhotosModelAdd(uuid, contents);
       } else {
         return res;
@@ -57,12 +60,35 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
     }
   }
 
+  Future<Uint8List?> compressWithImageCompress(
+      {required String path, required int quality}) async {
+
+    final response = await FlutterImageCompress.compressWithFile(
+      path,
+      minWidth: 320~/4,
+      minHeight: 240~/4,
+      quality: quality,
+    );
+    Logger.print(path);
+    Logger.print('${response?.length}');
+    return response;
+
+  }
+
   @override
   Future<PhotosModel?> write({required String uuid, required String path}) async {
     try {
       final file = await localFile(uuid: uuid);
 
-      final filePathContent = await File(path).readAsBytes();
+      Uint8List filePathContent;
+      if (!(Platform.isMacOS   || Platform.isLinux || Platform.isWindows)) {
+        filePathContent = (await compressWithImageCompress(
+          path: path,
+          quality: 80,
+        ))??(await File(path).readAsBytes());
+      } else {
+        filePathContent = await File(path).readAsBytes();
+      }
 
       final fileWrite = await file.writeAsBytes(filePathContent);
 

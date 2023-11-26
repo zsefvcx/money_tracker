@@ -36,62 +36,62 @@ class MainTabWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Hero(tag: Keys.heroIdSplash, child: Material(
-          child: FutureBuilder<MonthlyExpensesEntity>(
-          future:  completer.future,
-          builder: (_, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                    S.of(context).thereAreNoExpensesForMonthName(
-                        NameMonth(context).toNameMonth(
-                            statusUserProp.monthCurrent.month))
-                ),
-              );
-            }
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final data = snapshot.data;
-            final completeExpenses = <DayExpense>{};
-            if (data != null) {
-              completeExpenses
-                ..clear()
-                ..addAll(data.completeExpenses);
-            }
-            final total = completeExpenses.fold(
-                BigInt.zero, (previousValue, element) => previousValue +
-                element.sum);
-            final totalCategoriesPercent = <int, double>{};
-            final categoriesId = categories.categoriesId;
-            for (final value in categoriesId) {
-              final idCategory = value.id;
-              if (idCategory != null) {
-                totalCategoriesPercent[idCategory] = 0;
-                if(total != BigInt.zero) {
-                  var val = BigInt.zero;
-                  for (final elem in completeExpenses) {
-                    final id = elem.idCategory;
-                    if (id == idCategory) {
-                      val += elem.sum;
-                    }
+        FutureBuilder<MonthlyExpensesEntity>(
+        future:  completer.future,
+        builder: (_, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  S.of(context).thereAreNoExpensesForMonthName(
+                      NameMonth(context).toNameMonth(
+                          statusUserProp.monthCurrent.month))
+              ),
+            );
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final data = snapshot.data;
+          final completeExpenses = <DayExpense>{};
+          if (data != null) {
+            completeExpenses
+              ..clear()
+              ..addAll(data.completeExpenses);
+          }
+          final total = completeExpenses.fold(
+              BigInt.zero, (previousValue, element) => previousValue +
+              element.sum);
+          final totalCategoriesPercent = <int, double>{};
+          final categoriesId = categories.categoriesId;
+          for (final value in categoriesId) {
+            final idCategory = value.id;
+            if (idCategory != null) {
+              totalCategoriesPercent[idCategory] = 0;
+              if(total != BigInt.zero) {
+                var val = BigInt.zero;
+                for (final elem in completeExpenses) {
+                  final id = elem.idCategory;
+                  if (id == idCategory) {
+                    val += elem.sum;
                   }
-                  totalCategoriesPercent[idCategory] = 100 * (val / total);
-                } else{
-                  totalCategoriesPercent[idCategory] = 100/categoriesId.length;
                 }
-              } else {
-                throw Exception('Error id Category');
+                totalCategoriesPercent[idCategory] = 100 * (val / total);
+              } else{
+                totalCategoriesPercent[idCategory] = 100/categoriesId.length;
               }
+            } else {
+              throw Exception('Error id Category');
             }
-            return CustomPieChart(
+          }
+          return Hero(tag: Keys.heroIdSplash,
+            child: CustomPieChart(
               statusUserProp: statusUserProp,
               categoriesExpensesModels: categories,
               data: totalCategoriesPercent,
-            );
-          },
-          ),
-        )),
+            ),
+          );
+        },
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: categories.categoriesId.length,

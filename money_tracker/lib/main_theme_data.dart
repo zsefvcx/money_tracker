@@ -90,6 +90,7 @@ AppBarTheme _appBarTheme(AppBarTheme base) {
     centerTitle: true,
     iconTheme: IconThemeData(color: CustomThemeProp.white, size: 24),
     titleTextStyle: CustomThemeProp.appBarTypographyWhite.style,
+
   );
 }
 
