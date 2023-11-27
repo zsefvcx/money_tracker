@@ -79,13 +79,13 @@ class _CustomPieChartState extends State<CustomPieChart> {
       final value = data[categoriesId.elementAt(i).id]??0;
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
+        borderSide: const BorderSide(),
         value: value,
         title: categoriesId.elementAt(i).name,
         radius: radius,
         titleStyle: theme.textTheme.displaySmall?.copyWith(
           shadows: CustomThemeProp.shadows,
         ),
-
       );
     });
   }
