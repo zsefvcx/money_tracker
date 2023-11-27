@@ -82,8 +82,10 @@ class _CustomPieChartState extends State<CustomPieChart> {
         value: value,
         title: categoriesId.elementAt(i).name,
         radius: radius,
-        titleStyle: theme.textTheme.displaySmall,
-        badgePositionPercentageOffset: 0.98,
+        titleStyle: theme.textTheme.displaySmall?.copyWith(
+          shadows: CustomThemeProp.shadows,
+        ),
+
       );
     });
   }

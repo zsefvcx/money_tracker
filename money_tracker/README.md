@@ -27,3 +27,22 @@ Money Tracker.
 
 Второстепенное:
 1. https://pub.dev/packages/firebase_auth/example Авторизацию через фиребазе
+
+Добавить релиз: --release
+Android
+Open AndroidManifest.xml (located at android/app/src/main)
+<application
+android:label="App Name" ...> // Your app name here
+iOS
+Open info.plist (located at ios/Runner)
+<key>CFBundleDisplayName</key>
+<string>App Name</string> // Your app name here
+
+assert(() {
+// ...debug-only code here...
+return true;
+}())
+
+if (kDebugMode) {  
+// ...debug-only code here...
+}

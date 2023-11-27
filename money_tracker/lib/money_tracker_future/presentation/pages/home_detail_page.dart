@@ -23,7 +23,6 @@ class HomeDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final idMonth = statusUserProp.monthCurrent.id;
     final idCategory = categoryExpenses.id;
     if (idMonth != null && idCategory != null) {
@@ -57,25 +56,11 @@ class HomeDetailPage extends StatelessWidget {
               ),
             ),
             title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
-                child: Material(child: Stack(
-                  children: [
-                    Text(categoryExpenses.name,
-                      style: theme.appBarTheme.titleTextStyle?.copyWith(
-                        foreground: Paint()
-                          ..style = PaintingStyle.stroke
-                          ..strokeWidth = 1
-                          ..color = Colors.black,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(categoryExpenses.name,
-                      style: theme.appBarTheme.titleTextStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+                //StackTextTwice
+                child: StackTextTwice(
+                    text: categoryExpenses.name,
+                    color: categoryExpensesColor,
                 ),
-                  color: categoryExpensesColor,
-                )
             ),
             backgroundColor: categoryExpensesColor,
           ),

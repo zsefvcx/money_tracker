@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:money_tracker/core/core.dart';
 
 class StackContainerIconTwice extends StatelessWidget {
   const StackContainerIconTwice({
@@ -24,6 +25,7 @@ class StackContainerIconTwice extends StatelessWidget {
             icon,
             color: const Color(0xFF000000),
             size: (theme.iconTheme.size??24)+2,
+            shadows: CustomThemeProp.shadows,
           ),
         ),
         Container(

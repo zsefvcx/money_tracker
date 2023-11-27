@@ -273,4 +273,17 @@ line-height: 17px; /* 141.667% */*/
 
   static const buttonSize = Size(double.maxFinite, 50);
 
+  static const List<Shadow> shadows = <Shadow>[
+    Shadow(
+      offset: Offset(1, 1),
+      blurRadius: 1,
+      color: Color.fromARGB(255, 1, 1, 0),
+    ),
+    Shadow(
+      offset: Offset(1, 1),
+      blurRadius: 2,
+      color: Color.fromARGB(125, 0, 0, 255),
+    ),
+  ];
+
 }

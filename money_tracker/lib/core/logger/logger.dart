@@ -1,5 +1,6 @@
 import 'dart:developer' as dev;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:money_tracker/core/core.dart';
@@ -18,12 +19,14 @@ abstract class Logger {
       BuildContext? context,
     }) {
     final msg = message;
-    dev.log(
-      '|:${error?'E':'N'}:|$msg',
-      time: DateTime.now(),
-      name: name,
-      level: level,
-    );
+    if (kDebugMode) {
+      dev.log(
+        '|:${error?'E':'N'}:|$msg',
+        time: DateTime.now(),
+        name: name,
+        level: level,
+      );
+    }
     if (context != null)  CustomShowSnackBar.showSnackBar(msg, context);
   }
 }
