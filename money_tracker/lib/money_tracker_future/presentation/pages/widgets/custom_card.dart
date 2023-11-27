@@ -107,7 +107,6 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
               left: 25,
             ),
             height: 65,
-            //width: double.maxFinite,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -131,11 +130,12 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                             );
                           },
                       ),
-                      if(dayExpense is DayExpense)Text('${dayExpense.dateTime.year} '
-                          '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
-                          '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
-                          '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
-                          '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
+                      if(dayExpense is DayExpense)Text(
+                        '${dayExpense.dateTime.year} '
+                        '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
+                        '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
+                        '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
+                        '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
                         style:  theme.textTheme.bodySmall,
                       ),
                       20.h,
@@ -174,29 +174,9 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                               );
                             },
                             icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    height: (theme.iconTheme.size??24)+2,
-                                    width: (theme.iconTheme.size??24)+2,
-                                    alignment: Alignment.center,
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: const Color(0xFF000000),
-                                      size: (theme.iconTheme.size??24)+2,
-                                    ),
-                                  ),
-                                  Container(
-                                    height: (theme.iconTheme.size??24)+2,
-                                    width: (theme.iconTheme.size??24)+2,
-                                    alignment: Alignment.center,
-                                    child: Icon(
-                                      Icons.arrow_forward_ios,
-                                      color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
-                                      size: theme.iconTheme.size??24,
-                                    ),
-                                  ),
-                                ],
+                              child: StackContainerIconTwice(
+                                icon: Icons.arrow_forward_ios,
+                                color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
                               ),
                             ),
                           ),
@@ -306,7 +286,9 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       ));
       await completer.future;
       if(!otherMonth) {
-        categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
+        categoriesBloc.add(
+            CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid
+        ));
       }
     }
   }

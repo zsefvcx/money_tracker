@@ -52,28 +52,8 @@ class HomeDetailPage extends StatelessWidget {
                   },
                 );
               },
-              icon: Stack(
-                children: [
-                  Container(
-                    height: (theme.iconTheme.size??24)+2,
-                    width: (theme.iconTheme.size??24)+2,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      color: const Color(0xFF000000),
-                      size: (theme.iconTheme.size??24)+2,
-                    ),
-                  ),
-                  Container(
-                    height: (theme.iconTheme.size??24)+2,
-                    width: (theme.iconTheme.size??24)+2,
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.arrow_back_ios,
-                      size: theme.iconTheme.size??24,
-                    ),
-                  ),
-                ],
+              icon: const StackContainerIconTwice(
+                icon: Icons.arrow_back_ios,
               ),
             ),
             title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
@@ -147,7 +127,10 @@ class HomeDetailPage extends StatelessWidget {
     );
   }
 
-  Future<bool> _deleteDayExpense(BuildContext context, DayExpense dayExpense) async {
+  Future<bool> _deleteDayExpense(
+      BuildContext context,
+      DayExpense dayExpense
+  ) async {
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final res = await showDialog<bool>(
       context: context,

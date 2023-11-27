@@ -33,43 +33,44 @@ class _CustomPieChartState extends State<CustomPieChart> {
           width: double.maxFinite,
           padding: const EdgeInsets.all(30),
           child: Center(
-            child: categoriesId.isNotEmpty
-                ?AspectRatio(
+            child: categoriesId.isNotEmpty?AspectRatio(
               aspectRatio: 1,
-              child: PieChart(
-                PieChartData(
-                  pieTouchData: PieTouchData(
-                    touchCallback: (event, pieTouchResponse) {
-                      setState(() {
-                        if (!event.isInterestedForInteractions ||
-                            pieTouchResponse == null ||
-                            pieTouchResponse.touchedSection == null) {
-                          touchedIndex = -1;
-                          return;
-                        }
-                        touchedIndex = pieTouchResponse
-                            .touchedSection!.touchedSectionIndex;
-                      });
-                    },
+                child: PieChart(
+                  PieChartData(
+                    pieTouchData: PieTouchData(
+                      touchCallback: (event, pieTouchResponse) {
+                        setState(() {
+                          if (!event.isInterestedForInteractions ||
+                              pieTouchResponse == null ||
+                              pieTouchResponse.touchedSection == null) {
+                            touchedIndex = -1;
+                            return;
+                          }
+                          touchedIndex = pieTouchResponse
+                              .touchedSection!.touchedSectionIndex;
+                        });
+                      },
+                    ),
+                    borderData: FlBorderData(
+                      show: false,
+                    ),
+                    sectionsSpace: 1,
+                    centerSpaceRadius: 30,
+                    sections: showingSections(context, widget.data),
                   ),
-                  borderData: FlBorderData(
-                    show: false,
-                  ),
-                  sectionsSpace: 1,
-                  centerSpaceRadius: 30,
-                  sections: showingSections(context, widget.data),
                 ),
-              ),
-            )
-                :Text(
-                S.of(context).thereAreNoExpensesForMonthName(
-                    NameMonth(context).toNameMonth(widget.statusUserProp.monthCurrent.month))
-            ),
+            ):Text(S.of(context).thereAreNoExpensesForMonthName(
+              NameMonth(context).toNameMonth(
+                  widget.statusUserProp.monthCurrent.month
+              ))),
           ),
         );
   }
 
-  List<PieChartSectionData> showingSections(BuildContext context, Map<int, double> data) {
+  List<PieChartSectionData> showingSections(
+      BuildContext context,
+      Map<int, double> data,
+  ) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
     return List.generate(categoriesId.length, (i){

@@ -115,7 +115,6 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
         ValueListenableBuilder(
             valueListenable: _valueNewFile,
             builder: (_, value, __) {
-
               return Visibility(
                 visible: value,
                 child: Column(children: [
@@ -132,7 +131,10 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
                     if (!await completer.future) return;
                     await LoginBlocInit.changeLoadImageStatus(status: true);
                     _valueNewFile.value = false;
-                  }, child: Text(S.of(context).save, style: theme.textTheme.bodyLarge,)),
+                  },
+                  child: Text(S.of(context).save,
+                    style: theme.textTheme.bodyLarge,
+                  )),
                 ],),
               );
             },),

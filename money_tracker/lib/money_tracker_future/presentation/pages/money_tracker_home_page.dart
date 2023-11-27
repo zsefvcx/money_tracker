@@ -19,7 +19,8 @@ class MoneyTrackerHomePage extends StatefulWidget {
   State<MoneyTrackerHomePage> createState() => _MoneyTrackerHomePageState();
 }
 
-class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>  with TickerProviderStateMixin{
+class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
+    with TickerProviderStateMixin {
 
   late TabController _tabController;
   final _valueNotifierPage = ValueNotifier<int>(0);

@@ -77,7 +77,7 @@ class MainTabWidget extends StatelessWidget {
                 statusUserProp: statusUserProp,
                 categoryExpenses: categoryExpenses,
                 dateTime: DateTime.tryParse(stringSelectedDateTime),
-                deleteCard: (context) => _deleteCategory(context, categoryExpenses),
+                deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
               );
             },
           ),
@@ -121,7 +121,10 @@ class MainTabWidget extends StatelessWidget {
     return totalCategoriesPercent;
   }
 
-  Future<bool> _deleteCategory(BuildContext context, CategoryExpenses categoryExpenses) async {
+  Future<bool> _deleteCategory(
+      BuildContext context,
+      CategoryExpenses categoryExpenses
+  ) async {
     final categoriesBloc = context.read<CategoriesBloc>();
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final res = await showDialog<bool>(
