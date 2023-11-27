@@ -59,15 +59,11 @@ dev_dependencies:
   floor_generator: ^1.4.2
 
 flutter_launcher_icons:
+  android: "launcher_icon"
   ios: true
-  android: true
+  image_path: "assets/launcher/icon.png"
   remove_alpha_ios: true
   min_sdk_android: 21
-  image_path: assets/launcher/icon.png
-#  image_path_android: "assets/launcher/icon.png"
-#  image_path_ios: "assets/launcher/icon.png"
-#  adaptive_icon_background: "assets/launcher/icon.png"
-#  adaptive_icon_foreground: "assets/launcher/icon.png"
   windows:
     generate: true
     image_path: assets/launcher/icon.png.ico

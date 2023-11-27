@@ -5,6 +5,7 @@ import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/calendar/month_year_widget.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class AppCalendarDialog extends StatefulWidget {
@@ -25,6 +26,7 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final monthBloc = context.read<MonthBloc>();
     final categoriesBloc = context.read<CategoriesBloc>();
     return MouseRegion(
@@ -64,9 +66,10 @@ class _AppCalendarDialogState extends State<AppCalendarDialog> {
             }
           }
         },
-        child: Text(
-            '${NameMonth(context).toNameMonth(widget.monthCurrent.month)} '
-                '${widget.monthCurrent.year}'
+        child: StackTextTwice(
+          text: '${NameMonth(context).toNameMonth(widget.monthCurrent.month)} '
+              '${widget.monthCurrent.year}',
+          color: theme.appBarTheme.backgroundColor,
         ),
       )
     );

@@ -5,12 +5,12 @@ import 'package:money_tracker/core/core.dart';
 class StackTextTwice extends StatelessWidget {
   const StackTextTwice({
     required this.text,
-    required this.color,
+    this.color,
     super.key,
   });
 
   final String text;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {

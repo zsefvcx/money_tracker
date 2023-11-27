@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
-import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
-import 'package:provider/provider.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
   const MoneyTrackerHomePage({
@@ -44,44 +42,16 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = context.read<CategoriesBloc>();
+
     if(!categoriesBloc.modelData.isLoaded) {
       categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
     }
     return Scaffold(
-      appBar: AppBar(
-        title: ValueListenableBuilder<int>(
-          valueListenable: _valueNotifierPage,
-          builder: (context, value, __) => value==0
-            ? Provider.value(
-                value: this,
-                child: AppCalendarDialog(
-                  uuid: widget.statusUserProp.uuid,
-                  monthCurrent: widget.statusUserProp.monthCurrent))
-            : Text(S.of(context).profile),
-        ),
-        actions: [
-          ValueListenableBuilder<int>(
+      appBar: AddonCustomAppBar(
+        child: ValueListenableBuilder<int>(
             valueListenable: _valueNotifierPage,
-            builder: (context, value, __) {
-              return Padding(
-              padding: const EdgeInsets.only(right: 25),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Visibility(
-                    visible: value==0,
-                    child: AddCategory(
-                      contextMacro: context,
-                      statusUserProp: widget.statusUserProp,
-                      icon: const Icon(Icons.add),
-                    ),
-                  ),
-                ],
-              ),
-            );
-            },
-          )
-        ],
+            builder: (_, value, __) => CustomAppBarStatic(
+                value: value, statusUserProp: widget.statusUserProp)),
       ),
       body: TabBarView(
         controller: _tabController,

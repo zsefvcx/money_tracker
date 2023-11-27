@@ -18,8 +18,8 @@ class StackContainerIconTwice extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: (theme.iconTheme.size??24)+2,
-          width: (theme.iconTheme.size??24)+2,
+          height: (theme.iconTheme.size??24)+1,
+          width: (theme.iconTheme.size??24)+1,
           alignment: Alignment.center,
           child: Icon(
             icon,
@@ -29,8 +29,8 @@ class StackContainerIconTwice extends StatelessWidget {
           ),
         ),
         Container(
-          height: (theme.iconTheme.size??24)+2,
-          width: (theme.iconTheme.size??24)+2,
+          height: (theme.iconTheme.size??24)+1,
+          width: (theme.iconTheme.size??24)+1,
           alignment: Alignment.center,
           child: Icon(
             icon,

@@ -105,6 +105,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           } else {
             value.completer.complete(res);
           }
+          await _response(emit);
         },
         deleteWithCategory: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(

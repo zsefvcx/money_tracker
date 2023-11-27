@@ -10,8 +10,8 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/ca
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class AddCategory extends StatelessWidget {
-  const AddCategory({
+class AddEditCategory extends StatelessWidget {
+  const AddEditCategory({
     required this.icon,
     required this.statusUserProp,
     required this.contextMacro,

@@ -1,4 +1,6 @@
 //GENERATED BARREL FILE
+export 'addon_custom_app_bar.dart'; 
+export 'custom_app_bar_static.dart';
 export 'custom_card.dart';
 export 'custom_circle_avatar.dart';
 export 'custom_pie_chart.dart';

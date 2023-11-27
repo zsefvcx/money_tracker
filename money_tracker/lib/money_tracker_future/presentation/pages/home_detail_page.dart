@@ -108,8 +108,16 @@ class HomeDetailPage extends StatelessWidget {
                     idCategory: idCategory,
                   ),);
             },
-          )),
+          ),
+        floatingActionButton: AddDayExpense(
+            statusUserProp: statusUserProp,
+            categoryExpenses: categoryExpenses,
+            child: const StackContainerIconTwice(
+              icon: Icons.add
+        )),
+      ),
     );
+
   }
 
   Future<bool> _deleteDayExpense(
