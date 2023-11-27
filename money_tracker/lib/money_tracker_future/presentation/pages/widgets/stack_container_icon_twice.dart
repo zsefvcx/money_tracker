@@ -24,7 +24,7 @@ class StackContainerIconTwice extends StatelessWidget {
           child: Icon(
             icon,
             color: const Color(0xFF000000),
-            size: (theme.iconTheme.size??24)+2,
+            size: (theme.iconTheme.size??24)+1,
             shadows: CustomThemeProp.shadows,
           ),
         ),
