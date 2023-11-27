@@ -13,19 +13,6 @@ class MoneyTrackerBlocsInit {
     monthBloc = BlocFactory.instance.get<MonthBloc>();
     categoriesBloc = BlocFactory.instance.get<CategoriesBloc>();
     monthlyExpensesBloc = BlocFactory.instance.get<MonthlyExpensesBloc>();
-    //final photoBloc = context.read<PhotoBloc>();
-    //final categoriesBloc = context.read<CategoriesBloc>();
-    // if(_tabController.index == 0) {
-    //   _currentTabIndex = 0;
-    //   categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.uuid));
-    // } else if(_tabController.index == 1){
-    //   _currentTabIndex = 1;
-    //   if (widget.loadImage){
-    //     photoBloc.add(PhotoBlocEvent.init(uuid: widget.uuid));
-    //   } else {
-    //     photoBloc.add(const PhotoBlocEvent.init(uuid: ''));
-    //   }
-    // }
   }
 
 }

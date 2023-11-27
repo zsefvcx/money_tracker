@@ -41,13 +41,23 @@ class RouteGenerator {
           if(dataLoadImage!=null && dataLoadImage is bool){
             loadImage = dataLoadImage;
           }
+          final dataTimeNow = dateTime??DateTime.now();
+          final monthCurrent = MonthCurrent(
+              id: null,
+              year: dataTimeNow.year,
+              month: dataTimeNow.month
+          );
+          final statusUserProp = StatusUserProp(
+            eMail: eMail,
+            uuid: uuid,
+            loadImage: loadImage,
+            monthCurrent: monthCurrent,
+          );
+
           return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
                 MainFormMoneyTracker(
-                  eMail: eMail,
-                  uuid: uuid,
-                  loadImage: loadImage,
-                  dateTime: dateTime,
+                    statusUserProp: statusUserProp
                 ),
           );
        }

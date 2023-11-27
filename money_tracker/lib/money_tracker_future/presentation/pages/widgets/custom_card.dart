@@ -15,6 +15,7 @@ class CustomCard<T> extends StatefulWidget {
     required this.dayExpense,
     required this.statusUserProp,
     required this.categoryExpenses,
+    required this.deleteCard,
     this.dateTime,
     super.key
   });
@@ -23,6 +24,7 @@ class CustomCard<T> extends StatefulWidget {
   final CategoryExpenses categoryExpenses;
   final T dayExpense;
   final DateTime? dateTime;
+  final Future<bool> Function(BuildContext context) deleteCard;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -49,148 +51,6 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
     valueNotifierDayExpense.dispose();
     valueNotifierLongPress.dispose();
     valueNotifierPencilVisible.dispose();
-  }
-
-  Future<bool> _deleteCategory(BuildContext context) async {
-    final categoriesBloc = context.read<CategoriesBloc>();
-    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final res = await showDialog<bool>(
-            context: context,
-      builder: (_) => Dialog(
-        insetPadding: const EdgeInsets.only(left: 25, right: 25),
-        child: DeleteDialog(
-          description: S.of(context).removeCategory,
-          name: widget.categoryExpenses.name,
-        ),
-      ),
-    );
-    final id = widget.categoryExpenses.id;
-    if (res != null && res && id !=null) {
-      categoriesBloc.add(CategoriesBlocEvent.deleteId(
-          uuid: widget.statusUserProp.uuid,
-          id: id));
-      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.deleteWithCategory(
-          uuid: widget.statusUserProp.uuid,
-          idCategory: id
-      ));
-      valueNotifierLongPress.value = false;
-      valueNotifierPencilVisible.value = false;
-      return true;
-    }
-    return false;
-  }
-
-  Future<void> _addDayExpense(BuildContext context) async {
-    final monthBloc = context.read<MonthBloc>();
-    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final categoriesBloc = context.read<CategoriesBloc>();
-    final id = widget.categoryExpenses.id;
-
-    final locStat = widget.statusUserProp;
-    final stringDateTime =  '${locStat.monthCurrent.year}'
-                     '-${      locStat.monthCurrent.month<10
-                          ?'0${locStat.monthCurrent.month}'
-                          :'${locStat.monthCurrent.month}'}'
-                     '-01 00:00:00.000000';
-    final dateTime = DateTime.tryParse(stringDateTime);
-    if(dateTime == null) return;
-    if(id == null) return;
-    final res = await showDialog<(BigInt, DateTime)>(
-      context: context,
-      builder: (_) => Dialog(
-        insetPadding: const EdgeInsets.only(left: 25, right: 25),
-        child: AddDayExpense(id: id, dateTimeStart: dateTime),
-      ),
-    );
-
-    final idMonth = widget.statusUserProp.monthCurrent.id;
-    final idCategory = widget.categoryExpenses.id;
-
-    if(idMonth!=null && idCategory!=null && res!=null) {
-
-      final resDateTime = res.$2;
-
-      var otherMonth = false;
-      int? idMonthOther;
-
-      if(resDateTime.year == dateTime.year &&
-         resDateTime.month == dateTime.month
-      ){
-        final total = valueNotifierDayExpense.value;
-        valueNotifierDayExpense.value = total + res.$1;
-      } else {
-        otherMonth = true;
-        final completer = Completer<int>();
-        monthBloc.add(MonthBlocEvent.add(
-          uuid: widget.statusUserProp.uuid,
-          data: MonthCurrent(
-            id: null,
-            year: resDateTime.year,
-            month: resDateTime.month,
-          ),
-          completer: completer
-        ));
-        idMonthOther = await completer.future;
-      }
-
-      final completer = Completer();
-      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
-          uuid: widget.statusUserProp.uuid,
-          data: DayExpense(
-            idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
-            idCategory: idCategory,
-            dateTime: resDateTime,
-            sum: res.$1,
-          ),
-          completer: completer
-      ));
-      await completer.future;
-      if(!otherMonth) {
-          categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
-      }
-    }
-  }
-
-  Future<bool> _deleteDayExpense(BuildContext context) async {
-    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final res = await showDialog<bool>(
-      context: context,
-      builder: (_) => Dialog(
-        insetPadding: const EdgeInsets.only(left: 25, right: 25),
-        child: DeleteDialog(description: S.of(context).deleteConsumptionData),
-      ),
-    );
-    final dayExpense = widget.dayExpense;
-    if (res != null && res && dayExpense is DayExpense) {
-      final id = dayExpense.id;
-      final idMonth = widget.statusUserProp.monthCurrent.id;
-      final idCategory = widget.categoryExpenses.id;
-      if (id != null && idMonth != null && idCategory != null) {
-        monthlyExpensesBloc..add(MonthlyExpensesBlocEvent.deleteId(
-            uuid: widget.statusUserProp.uuid,
-            id: id))
-        ..add(MonthlyExpensesBlocEvent.read(
-            uuid: widget.statusUserProp.uuid,
-            idMonth: idMonth,
-            idCategory: idCategory,
-          ));
-        valueNotifierLongPress.value = false;
-        valueNotifierPencilVisible.value = false;
-        return true;
-      }
-    }
-    return false;
-  }
-
-  Future<bool> _delete(BuildContext context) async {
-    final dayExpense = widget.dayExpense;
-    if(dayExpense is BigInt ){
-      return _deleteCategory(context);
-    }
-    if(dayExpense is DayExpense){
-      return _deleteDayExpense(context);
-    }
-    return false;
   }
 
   @override
@@ -223,160 +83,231 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       },);
     }
 
-    return Dismissible(
-      key: UniqueKey(),
-      confirmDismiss: (_) async {
-        if (dayExpense is BigInt) {
-          return false;
-        } else {
-          return _delete(context);
-        }
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onExit: (event) {
+        valueNotifierLongPress.value = false;
+        valueNotifierPencilVisible.value = false;
       },
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onExit: (event) {
+      child: GestureDetector(
+        onDoubleTap: () =>
+        valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
+        onTap: () => (dayExpense is BigInt)
+            ?_addDayExpense(context):null,
+        onLongPress: ()=>
+        valueNotifierLongPress.value = !valueNotifierLongPress.value,
+        onSecondaryLongPress: () {
+          widget.deleteCard(context);
           valueNotifierLongPress.value = false;
           valueNotifierPencilVisible.value = false;
         },
-        child: GestureDetector(
-          onDoubleTap: () =>
-          valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
-          onTap: () => (dayExpense is BigInt)
-              ?_addDayExpense(context):null,
-          onLongPress: ()=>
-          valueNotifierLongPress.value = !valueNotifierLongPress.value,
-          onSecondaryLongPress: ()=> _delete(context),
-          child: Card(
-            child: Container(
-              padding: const EdgeInsets.only(
-                left: 25,
-              ),
-              height: 65,
-              //width: double.maxFinite,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        13.h,
-                        Text(
-                          description,
-                          style: theme.textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        9.h,
-                        if(dayExpense is BigInt)ValueListenableBuilder(
-                            valueListenable: valueNotifierDayExpense,
-                            builder: (_, value, __) {
-                              return  Text(S.of(context).totalDayexpense(value),
-                                style:  theme.textTheme.bodySmall,
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.only(
+              left: 25,
+            ),
+            height: 65,
+            //width: double.maxFinite,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      13.h,
+                      Text(
+                        description,
+                        style: theme.textTheme.titleMedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      9.h,
+                      if(dayExpense is BigInt)ValueListenableBuilder(
+                          valueListenable: valueNotifierDayExpense,
+                          builder: (_, value, __) {
+                            return  Text(S.of(context).totalDayexpense(value),
+                              style:  theme.textTheme.bodySmall,
+                            );
+                          },
+                      ),
+                      if(dayExpense is DayExpense)Text('${dayExpense.dateTime.year} '
+                          '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
+                          '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
+                          '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
+                          '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
+                        style:  theme.textTheme.bodySmall,
+                      ),
+                      20.h,
+                    ],
+                  ),
+                ),
+                ValueListenableBuilder<bool>(
+                  valueListenable: valueNotifierLongPress,
+                  builder: (_, value, __) {
+                  if (!value) {
+                    return Visibility(
+                      visible: dayExpense is BigInt,
+                      child: Row(
+                        children: [
+                          ValueListenableBuilder<bool>(
+                            valueListenable: valueNotifierPencilVisible,
+                            builder: (context, value, __) => Visibility(
+                              visible: value,
+                              child: AddCategory(
+                                contextMacro: context,
+                                statusUserProp: widget.statusUserProp,
+                                categoryExpenses: widget.categoryExpenses,
+                                icon: const Icon(Icons.edit),
+                                addCategory: false,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
+                                arguments: {
+                                  'statusUserProp': widget.statusUserProp,
+                                  'categoryExpenses': widget.categoryExpenses,
+                                  'dateTime': widget.dateTime,
+                                },
                               );
                             },
-                        ),
-                        if(dayExpense is DayExpense)Text('${dayExpense.dateTime.year} '
-                            '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
-                            '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
-                            '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
-                            '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
-                          style:  theme.textTheme.bodySmall,
-                        ),
-                        20.h,
-                      ],
-                    ),
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: valueNotifierLongPress,
-                    builder: (_, value, __) {
-                    if (!value) {
-                      return Visibility(
-                        visible: dayExpense is BigInt,
-                        child: Row(
-                          children: [
-                            ValueListenableBuilder<bool>(
-                              valueListenable: valueNotifierPencilVisible,
-                              builder: (context, value, __) => Visibility(
-                                visible: value,
-                                child: AddCategory(
-                                  contextMacro: context,
-                                  statusUserProp: widget.statusUserProp,
-                                  categoryExpenses: widget.categoryExpenses,
-                                  icon: const Icon(Icons.edit),
-                                  addCategory: false,
-                                ),
+                            icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: (theme.iconTheme.size??24)+2,
+                                    width: (theme.iconTheme.size??24)+2,
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: const Color(0xFF000000),
+                                      size: (theme.iconTheme.size??24)+2,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: (theme.iconTheme.size??24)+2,
+                                    width: (theme.iconTheme.size??24)+2,
+                                    alignment: Alignment.center,
+                                    child: Icon(
+                                      Icons.arrow_forward_ios,
+                                      color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
+                                      size: theme.iconTheme.size??24,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
-                                  arguments: {
-                                    'statusUserProp': widget.statusUserProp,
-                                    'categoryExpenses': widget.categoryExpenses,
-                                    'dateTime': widget.dateTime,
-                                  },
-                                );
-                              },
-                              icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
-                                child: Stack(
-                                  children: [
-                                    SizedBox(
-                                      height: 28,
-                                      width: 28,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Color(0xFF000000+(~int.parse(widget.categoryExpenses.colorHex, radix: 16))),
-                                        size: theme.iconTheme.size??24+8,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 28,
-                                      width: 28,
-                                      child: Icon(
-                                        Icons.arrow_forward_ios,
-                                        color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
-                                        size: theme.iconTheme.size??24-8,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return ElevatedButton(onPressed: () => _delete(context),
-                        child: Text(S.of(context).delete,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                              color: theme.colorScheme.background
                           ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ElevatedButton(onPressed: () {
+                      widget.deleteCard(context);
+                      valueNotifierLongPress.value = false;
+                      valueNotifierPencilVisible.value = false;
+                    },
+                      child: Text(S.of(context).delete,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.background
                         ),
-                        style: theme.elevatedButtonTheme.style?.copyWith(
-                          surfaceTintColor: MaterialStatePropertyAll(
-                              theme.colorScheme.inversePrimary),
-                          backgroundColor: MaterialStatePropertyAll(
-                              theme.colorScheme.inversePrimary),
-                          shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            ),
-                          )),
-                          minimumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
-                          maximumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
-                          padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-                        ),
-                      );
-                    }
-                  }),
-                ],
-              ),
-            ) ,
-          ),
+                      ),
+                      style: theme.elevatedButtonTheme.style?.copyWith(
+                        surfaceTintColor: MaterialStatePropertyAll(
+                            theme.colorScheme.inversePrimary),
+                        backgroundColor: MaterialStatePropertyAll(
+                            theme.colorScheme.inversePrimary),
+                        shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        )),
+                        minimumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
+                        maximumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
+                        padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                      ),
+                    );
+                  }
+                }),
+              ],
+            ),
+          ) ,
         ),
       ),
     );
+  }
+
+  Future<void> _addDayExpense(BuildContext context) async {
+    final monthBloc = context.read<MonthBloc>();
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final categoriesBloc = context.read<CategoriesBloc>();
+    final id = widget.categoryExpenses.id;
+
+    final locStat = widget.statusUserProp;
+    final stringDateTime =  '${locStat.monthCurrent.year}'
+        '-${      locStat.monthCurrent.month<10
+        ?'0${locStat.monthCurrent.month}'
+        :'${locStat.monthCurrent.month}'}'
+        '-01 00:00:00.000000';
+    final dateTime = DateTime.tryParse(stringDateTime);
+    if(dateTime == null) return;
+    if(id == null) return;
+    final res = await showDialog<(BigInt, DateTime)>(
+      context: context,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.only(left: 25, right: 25),
+        child: AddDayExpense(id: id, dateTimeStart: dateTime),
+      ),
+    );
+
+    final idMonth = widget.statusUserProp.monthCurrent.id;
+    final idCategory = widget.categoryExpenses.id;
+
+    if(idMonth!=null && idCategory!=null && res!=null) {
+
+      final resDateTime = res.$2;
+
+      var otherMonth = false;
+      int? idMonthOther;
+
+      if(resDateTime.year == dateTime.year &&
+          resDateTime.month == dateTime.month
+      ){
+        final total = valueNotifierDayExpense.value;
+        valueNotifierDayExpense.value = total + res.$1;
+      } else {
+        otherMonth = true;
+        final completer = Completer<int>();
+        monthBloc.add(MonthBlocEvent.add(
+            uuid: widget.statusUserProp.uuid,
+            data: MonthCurrent(
+              id: null,
+              year: resDateTime.year,
+              month: resDateTime.month,
+            ),
+            completer: completer
+        ));
+        idMonthOther = await completer.future;
+      }
+
+      final completer = Completer();
+      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
+          uuid: widget.statusUserProp.uuid,
+          data: DayExpense(
+            idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+            idCategory: idCategory,
+            dateTime: resDateTime,
+            sum: res.$1,
+          ),
+          completer: completer
+      ));
+      await completer.future;
+      if(!otherMonth) {
+        categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
+      }
+    }
   }
 }

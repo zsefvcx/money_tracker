@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
+import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/entity/categories/categories_entity.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
 
@@ -32,7 +34,9 @@ class HomeDetailPage extends StatelessWidget {
           idCategory: idCategory,
         ));
     }
-
+    final categoryExpensesColor = Color(
+        int.parse('FF${categoryExpenses.colorHex}', radix: 16)
+    );
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
@@ -48,26 +52,52 @@ class HomeDetailPage extends StatelessWidget {
                   },
                 );
               },
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xFF000000+(~int.parse(categoryExpenses.colorHex, radix: 16))),
+              icon: Stack(
+                children: [
+                  Container(
+                    height: (theme.iconTheme.size??24)+2,
+                    width: (theme.iconTheme.size??24)+2,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      color: const Color(0xFF000000),
+                      size: (theme.iconTheme.size??24)+2,
+                    ),
+                  ),
+                  Container(
+                    height: (theme.iconTheme.size??24)+2,
+                    width: (theme.iconTheme.size??24)+2,
+                    alignment: Alignment.center,
+                    child: Icon(
+                      Icons.arrow_back_ios,
+                      size: theme.iconTheme.size??24,
+                    ),
+                  ),
+                ],
               ),
             ),
             title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
-                child: Material(child: Text(categoryExpenses.name,
-                  style: theme.appBarTheme.titleTextStyle?.copyWith(
-                    color: Color(0xFF000000+(~int.parse(categoryExpenses.colorHex, radix: 16))),
-                  backgroundColor: Color(int.parse('FF${categoryExpenses.colorHex}', radix: 16)),
-                  ),
-
-                  overflow: TextOverflow.ellipsis,
+                child: Material(child: Stack(
+                  children: [
+                    Text(categoryExpenses.name,
+                      style: theme.appBarTheme.titleTextStyle?.copyWith(
+                        foreground: Paint()
+                          ..style = PaintingStyle.stroke
+                          ..strokeWidth = 1
+                          ..color = Colors.black,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(categoryExpenses.name,
+                      style: theme.appBarTheme.titleTextStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
-                elevation: 0.5,
+                  color: categoryExpensesColor,
                 )
             ),
-            backgroundColor: Color(
-                int.parse('FF${categoryExpenses.colorHex}', radix: 16)),
-
+            backgroundColor: categoryExpensesColor,
           ),
           body: BlocBuilder<MonthlyExpensesBloc, MonthlyExpensesBlocState>(
             builder: (context, state) {
@@ -82,10 +112,17 @@ class HomeDetailPage extends StatelessWidget {
                         itemCount: localCompleteExpenses.length,
                         itemBuilder: (_, index) {
                           final dayExpense = localCompleteExpenses.elementAt(index);
-                          return CustomCard<DayExpense>(
-                            dayExpense:dayExpense,
-                            statusUserProp: statusUserProp,
-                            categoryExpenses: categoryExpenses,
+                          return Dismissible(
+                            key: UniqueKey(),
+                            confirmDismiss: (_) async {
+                                return _deleteDayExpense(context, dayExpense);
+                            },
+                            child: CustomCard<DayExpense>(
+                              dayExpense:dayExpense,
+                              statusUserProp: statusUserProp,
+                              categoryExpenses: categoryExpenses,
+                              deleteCard: (context) => _deleteDayExpense(context, dayExpense),
+                            ),
                           );
                         });
                     }
@@ -109,4 +146,34 @@ class HomeDetailPage extends StatelessWidget {
           )),
     );
   }
+
+  Future<bool> _deleteDayExpense(BuildContext context, DayExpense dayExpense) async {
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final res = await showDialog<bool>(
+      context: context,
+      builder: (_) => Dialog(
+        insetPadding: const EdgeInsets.only(left: 25, right: 25),
+        child: DeleteDialog(description: S.of(context).deleteConsumptionData),
+      ),
+    );
+    if (res != null && res) {
+      final id = dayExpense.id;
+      final idMonth = statusUserProp.monthCurrent.id;
+      final idCategory = categoryExpenses.id;
+      if (id != null && idMonth != null && idCategory != null) {
+        monthlyExpensesBloc..add(MonthlyExpensesBlocEvent.deleteId(
+            uuid: statusUserProp.uuid,
+            id: id))
+          ..add(MonthlyExpensesBlocEvent.read(
+            uuid: statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+          ));
+
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

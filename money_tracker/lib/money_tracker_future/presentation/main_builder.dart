@@ -6,7 +6,6 @@ import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 
 class MainBuilderForm extends StatelessWidget {
-  static const routeName = r'\PageMainBuilderForm';
   const MainBuilderForm({
     required this.statusUserProp,
     super.key,
