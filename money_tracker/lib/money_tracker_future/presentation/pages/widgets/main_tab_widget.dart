@@ -55,7 +55,7 @@ class MainTabWidget extends StatelessWidget {
             child: CustomPieChart(
               statusUserProp: statusUserProp,
               categoriesExpensesModels: categories,
-              data: completeExpensesForPieChart(snapshot.data),
+              data: _completeExpensesForPieChart(snapshot.data),
             ),
           );
         },
@@ -92,7 +92,7 @@ class MainTabWidget extends StatelessWidget {
     );
   }
 
-  Map<int, double> completeExpensesForPieChart(MonthlyExpensesEntity? data) {
+  Map<int, double> _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
     final completeExpenses = <DayExpense>{};
      if (data != null) {
       completeExpenses

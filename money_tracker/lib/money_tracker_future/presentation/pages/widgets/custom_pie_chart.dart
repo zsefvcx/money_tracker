@@ -56,7 +56,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
                     ),
                     sectionsSpace: 1,
                     centerSpaceRadius: 30,
-                    sections: showingSections(context, widget.data),
+                    sections: _showingSections(context, widget.data),
                   ),
                 ),
             ):Text(S.of(context).thereAreNoExpensesForMonthName(
@@ -67,7 +67,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
         );
   }
 
-  List<PieChartSectionData> showingSections(
+  List<PieChartSectionData> _showingSections(
       BuildContext context,
       Map<int, double> data,
   ) {
@@ -79,7 +79,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
       final value = data[categoriesId.elementAt(i).id]??0;
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
-        borderSide: const BorderSide(),
+        borderSide: const BorderSide(width: 0.2),
         value: value,
         title: categoriesId.elementAt(i).name,
         radius: radius,
