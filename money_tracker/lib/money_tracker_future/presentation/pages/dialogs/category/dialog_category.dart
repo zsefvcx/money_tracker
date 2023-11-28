@@ -124,6 +124,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                                       ?Icons.color_lens_outlined
                                       :Icons.color_lens_rounded),
                                 ),
+                                onEditingComplete: () => onPressed(context),
                               ),
                               Visibility(
                                 visible: value,
@@ -155,27 +156,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                 ),
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () {
-                      final cSt = formKey.currentState;
-                      final categoryExpenses = widget.categoryExpenses;
-                     // throw Exception('Error search Key');
-                      CategoryExpenses? localCategoryExpenses;
-                      if(cSt != null && cSt.validate()) {
-                        localCategoryExpenses = widget.addCategory?CategoryExpenses(
-                          name: _nameController.text,
-                          colorHex: _colorController.text,
-                        )
-                            :CategoryExpenses(
-                          id: categoryExpenses?.id,
-                          name: _nameController.text,
-                          colorHex: _colorController.text,
-                        );
-                        if(widget.addCategory)_nameController.text = '';
-                        Navigator.pop(context,
-                            localCategoryExpenses
-                        );
-                      }
-                    },
+                    ElevatedButton(onPressed: () => onPressed(context),
                       child: Text(widget.addCategory
                           ?S.of(context).add
                           :S.of(context).modifi),
@@ -202,5 +183,27 @@ class _DialogCategoryState extends State<DialogCategory> {
         ),
       ),
     );
+  }
+
+  void onPressed(BuildContext context) {
+    final cSt = formKey.currentState;
+    final categoryExpenses = widget.categoryExpenses;
+                         // throw Exception('Error search Key');
+    CategoryExpenses? localCategoryExpenses;
+    if(cSt != null && cSt.validate()) {
+      localCategoryExpenses = widget.addCategory?CategoryExpenses(
+        name: _nameController.text,
+        colorHex: _colorController.text,
+      )
+          :CategoryExpenses(
+        id: categoryExpenses?.id,
+        name: _nameController.text,
+        colorHex: _colorController.text,
+      );
+      if(widget.addCategory)_nameController.text = '';
+      Navigator.pop(context,
+          localCategoryExpenses
+      );
+    }
   }
 }

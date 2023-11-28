@@ -114,10 +114,12 @@ CardTheme _cardTheme(CardTheme base) {
   return base.copyWith(
     color: CustomThemeProp.white,
     surfaceTintColor: CustomThemeProp.whiteWithOpacity(),
-    margin: const EdgeInsets.only(left: 25, right: 25, bottom: 12.5, top: 12.5),
+    margin: const EdgeInsets.all(12.5),
     shadowColor: CustomThemeProp.grayLight,
     elevation: 13,
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),
+        side: const BorderSide(width: 0.2)
+    ),
     clipBehavior: Clip.antiAliasWithSaveLayer
   );
 }
@@ -142,10 +144,10 @@ DialogTheme _dialogTheme(DialogTheme base){
     surfaceTintColor: CustomThemeProp.white,
     iconColor: CustomThemeProp.redDialog,
     titleTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
-      color: CustomThemeProp.redDialog
+      color: CustomThemeProp.redDialog,
     ),
     contentTextStyle: CustomThemeProp.bodyMediumTypography.style.copyWith(
-      color: CustomThemeProp.redDialog
+      color: CustomThemeProp.redDialog,
     ),
 
   );
@@ -219,9 +221,6 @@ ThemeData themeMainProgram = _theme.copyWith(
       _theme.elevatedButtonTheme.style??const ButtonStyle(),
     ),
   ),
-
-
-
 
   chipTheme: _chipThemeData(_theme.chipTheme),
 

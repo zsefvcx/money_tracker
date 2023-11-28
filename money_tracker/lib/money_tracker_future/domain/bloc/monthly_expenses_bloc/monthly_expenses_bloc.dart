@@ -91,7 +91,10 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
         add: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(
             function: () async =>
-            _monthlyExpensesRepository.insert(uuid: value.uuid, data: value.data),
+              _monthlyExpensesRepository.insert(
+                  uuid: value.uuid,
+                  data: value.data
+              ),
           );
           modelData = modelData.copyWithData(
             data: null,
@@ -105,7 +108,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           } else {
             value.completer.complete(res);
           }
-          await _response(emit);
+         // await _response(emit);
         },
         deleteWithCategory: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(

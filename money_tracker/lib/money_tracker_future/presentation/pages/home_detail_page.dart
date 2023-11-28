@@ -39,20 +39,23 @@ class HomeDetailPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pushReplacementNamed(
-                  MainFormMoneyTracker.routeName,
-                  arguments: {
-                    'uuid': statusUserProp.uuid,
-                    'eMail': statusUserProp.eMail,
-                    'loadImage': statusUserProp.loadImage,
-                    'dateTime': dateTime,
-                  },
-                );
-              },
-              icon: const StackContainerIconTwice(
-                icon: Icons.arrow_back_ios,
+            leading: Padding(
+              padding: const EdgeInsets.only(left: 25),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacementNamed(
+                    MainFormMoneyTracker.routeName,
+                    arguments: {
+                      'uuid': statusUserProp.uuid,
+                      'eMail': statusUserProp.eMail,
+                      'loadImage': statusUserProp.loadImage,
+                      'dateTime': dateTime,
+                    },
+                  );
+                },
+                icon: const StackContainerIconTwice(
+                  icon: Icons.arrow_back_ios,
+                ),
               ),
             ),
             title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
@@ -63,6 +66,18 @@ class HomeDetailPage extends StatelessWidget {
                 ),
             ),
             backgroundColor: categoryExpensesColor,
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 25),
+                child: AddDayExpense(
+                    typeWidget: 1,
+                    statusUserProp: statusUserProp,
+                    categoryExpenses: categoryExpenses,
+                    child: const StackContainerIconTwice(
+                        icon: Icons.add
+                )),
+              ),
+            ],
           ),
           body: BlocBuilder<MonthlyExpensesBloc, MonthlyExpensesBlocState>(
             builder: (context, state) {
@@ -74,6 +89,7 @@ class HomeDetailPage extends StatelessWidget {
                     final localCompleteExpenses = value.entity?.completeExpenses;
                     if(localCompleteExpenses !=null){
                       return ListView.builder(
+                        padding: const EdgeInsets.all(12.5),
                         itemCount: localCompleteExpenses.length,
                         itemBuilder: (_, index) {
                           final dayExpense = localCompleteExpenses.elementAt(index);
@@ -109,12 +125,6 @@ class HomeDetailPage extends StatelessWidget {
                   ),);
             },
           ),
-        floatingActionButton: AddDayExpense(
-            statusUserProp: statusUserProp,
-            categoryExpenses: categoryExpenses,
-            child: const StackContainerIconTwice(
-              icon: Icons.add
-        )),
       ),
     );
 

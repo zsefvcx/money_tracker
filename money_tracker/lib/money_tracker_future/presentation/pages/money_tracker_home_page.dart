@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_launcher_icons/web/web_icon_generator.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
@@ -43,7 +42,6 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = context.read<CategoriesBloc>();
-    final theme = Theme.of(context);
     if(!categoriesBloc.modelData.isLoaded) {
       categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
     }
@@ -99,20 +97,23 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
             _tabController.animateTo(value);
           },
           currentIndex: value,
-
           items: [
             BottomNavigationBarItem(icon:
               const Padding(
                 padding: EdgeInsets.only(bottom: 3),
-                child: Icon(Icons.credit_card),
+                child: StackContainerIconTwice(
+                  icon: Icons.credit_card,
+                ),
               ),
               label: S.of(context).expenses,
             ),
             BottomNavigationBarItem(icon:
-              const Padding(
-                padding: EdgeInsets.only(bottom: 3),
-                child: Icon(Icons.person),
+            const Padding(
+              padding: EdgeInsets.only(bottom: 3),
+              child: StackContainerIconTwice(
+                icon: Icons.person,
               ),
+            ),
               label: S.of(context).profile,
 
             ),

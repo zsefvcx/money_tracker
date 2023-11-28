@@ -99,124 +99,120 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
           valueNotifierLongPress.value = false;
           valueNotifierPencilVisible.value = false;
         },
-        child: AddDayExpense(
-          statusUserProp: widget.statusUserProp,
-          categoryExpenses: widget.categoryExpenses,
-          child: Card(
-            child: Container(
-              padding: const EdgeInsets.only(
-                left: 25,
-              ),
-              height: 65,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        13.h,
-                        Text(
-                          description,
-                          style: theme.textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        9.h,
-                        if(dayExpense is BigInt)ValueListenableBuilder(
-                            valueListenable: valueNotifierDayExpense,
-                            builder: (_, value, __) {
-                              return  Text(S.of(context).totalDayexpense(value),
-                                style:  theme.textTheme.bodySmall,
+        child: Card(
+          child: Container(
+            padding: const EdgeInsets.only(
+              left: 25,
+            ),
+            height: 65,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      13.h,
+                      Text(
+                        description,
+                        style: theme.textTheme.titleMedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      9.h,
+                      if(dayExpense is BigInt)ValueListenableBuilder(
+                          valueListenable: valueNotifierDayExpense,
+                          builder: (_, value, __) {
+                            return  Text(S.of(context).totalDayexpense(value),
+                              style:  theme.textTheme.bodySmall,
+                            );
+                          },
+                      ),
+                      if(dayExpense is DayExpense)Text(
+                        '${dayExpense.dateTime.year} '
+                        '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
+                        '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
+                        '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
+                        '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
+                        style:  theme.textTheme.bodySmall,
+                      ),
+                      20.h,
+                    ],
+                  ),
+                ),
+                ValueListenableBuilder<bool>(
+                  valueListenable: valueNotifierLongPress,
+                  builder: (_, value, __) {
+                  if (!value) {
+                    return Visibility(
+                      visible: dayExpense is BigInt,
+                      child: Row(
+                        children: [
+                          ValueListenableBuilder<bool>(
+                            valueListenable: valueNotifierPencilVisible,
+                            builder: (context, value, __) => Visibility(
+                              visible: value,
+                              child: AddEditCategory(
+                                contextMacro: context,
+                                statusUserProp: widget.statusUserProp,
+                                categoryExpenses: widget.categoryExpenses,
+                                icon: const Icon(Icons.edit),
+                                addCategory: false,
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
+                                arguments: {
+                                  'statusUserProp': widget.statusUserProp,
+                                  'categoryExpenses': widget.categoryExpenses,
+                                  'dateTime': widget.dateTime,
+                                },
                               );
                             },
-                        ),
-                        if(dayExpense is DayExpense)Text(
-                          '${dayExpense.dateTime.year} '
-                          '${NameMonth(context).toNameMonth(dayExpense.dateTime.month)} '
-                          '${dayExpense.dateTime.day<10?'0${dayExpense.dateTime.day}':dayExpense.dateTime.day} / '
-                          '${dayExpense.dateTime.hour<10?'0${dayExpense.dateTime.hour}':dayExpense.dateTime.hour}:'
-                          '${dayExpense.dateTime.minute<10?'0${dayExpense.dateTime.minute}':dayExpense.dateTime.minute}',
-                          style:  theme.textTheme.bodySmall,
-                        ),
-                        20.h,
-                      ],
-                    ),
-                  ),
-                  ValueListenableBuilder<bool>(
-                    valueListenable: valueNotifierLongPress,
-                    builder: (_, value, __) {
-                    if (!value) {
-                      return Visibility(
-                        visible: dayExpense is BigInt,
-                        child: Row(
-                          children: [
-                            ValueListenableBuilder<bool>(
-                              valueListenable: valueNotifierPencilVisible,
-                              builder: (context, value, __) => Visibility(
-                                visible: value,
-                                child: AddEditCategory(
-                                  contextMacro: context,
-                                  statusUserProp: widget.statusUserProp,
-                                  categoryExpenses: widget.categoryExpenses,
-                                  icon: const Icon(Icons.edit),
-                                  addCategory: false,
-                                ),
+                            icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
+                              child: StackContainerIconTwice(
+                                icon: Icons.arrow_forward_ios,
+                                color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
                               ),
                             ),
-                            IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
-                                  arguments: {
-                                    'statusUserProp': widget.statusUserProp,
-                                    'categoryExpenses': widget.categoryExpenses,
-                                    'dateTime': widget.dateTime,
-                                  },
-                                );
-                              },
-                              icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
-                                child: StackContainerIconTwice(
-                                  icon: Icons.arrow_forward_ios,
-                                  color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    } else {
-                      return ElevatedButton(onPressed: () {
-                        widget.deleteCard(context);
-                        valueNotifierLongPress.value = false;
-                        valueNotifierPencilVisible.value = false;
-                      },
-                        child: Text(S.of(context).delete,
-                          style: theme.textTheme.titleMedium?.copyWith(
-                              color: theme.colorScheme.background
                           ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return ElevatedButton(onPressed: () {
+                      widget.deleteCard(context);
+                      valueNotifierLongPress.value = false;
+                      valueNotifierPencilVisible.value = false;
+                    },
+                      child: Text(S.of(context).delete,
+                        style: theme.textTheme.titleMedium?.copyWith(
+                            color: theme.colorScheme.background
                         ),
-                        style: theme.elevatedButtonTheme.style?.copyWith(
-                          surfaceTintColor: MaterialStatePropertyAll(
-                              theme.colorScheme.inversePrimary),
-                          backgroundColor: MaterialStatePropertyAll(
-                              theme.colorScheme.inversePrimary),
-                          shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(10),
-                              bottomRight: Radius.circular(10),
-                            ),
-                          )),
-                          minimumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
-                          maximumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
-                          padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-                        ),
-                      );
-                    }
-                  }),
-                ],
-              ),
-            ) ,
-          ),
+                      ),
+                      style: theme.elevatedButtonTheme.style?.copyWith(
+                        surfaceTintColor: MaterialStatePropertyAll(
+                            theme.colorScheme.inversePrimary),
+                        backgroundColor: MaterialStatePropertyAll(
+                            theme.colorScheme.inversePrimary),
+                        shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        )),
+                        minimumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
+                        maximumSize: const MaterialStatePropertyAll(Size(80, double.maxFinite)),
+                        padding: const MaterialStatePropertyAll(EdgeInsets.zero),
+                      ),
+                    );
+                  }
+                }),
+              ],
+            ),
+          ) ,
         ),
       ),
     );

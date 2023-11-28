@@ -45,6 +45,7 @@ class DeleteDialog extends StatelessWidget {
           ),
           30.h,
           ElevatedButton(
+            autofocus: true,
               onPressed: () {
                 Navigator.pop(context, true);
               },

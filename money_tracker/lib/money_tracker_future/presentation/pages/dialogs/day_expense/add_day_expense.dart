@@ -13,18 +13,23 @@ class AddDayExpense extends StatelessWidget {
     required this.child,
     required this.statusUserProp,
     required this.categoryExpenses,
+    required this.typeWidget,
     super.key,
   });
 
   final CategoryExpenses categoryExpenses;
   final StatusUserProp statusUserProp;
+  final int typeWidget;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return typeWidget==0?GestureDetector(
        onTap: () => _addDayExpense(context),
        child: child,
+    ): IconButton(
+        onPressed: () => _addDayExpense(context),
+        icon: child
     );
   }
 
@@ -61,12 +66,9 @@ class AddDayExpense extends StatelessWidget {
       var otherMonth = false;
       int? idMonthOther;
 
-      if(resDateTime.year == dateTime.year &&
+      if(!(resDateTime.year == dateTime.year &&
           resDateTime.month == dateTime.month
-      ){
-        //final total = valueNotifierDayExpense.value;
-        //valueNotifierDayExpense.value = total + res.$1;
-      } else {
+      )){
         otherMonth = true;
         final completer = Completer<int>();
         monthBloc.add(MonthBlocEvent.add(
@@ -96,7 +98,17 @@ class AddDayExpense extends StatelessWidget {
       if(!otherMonth) {
         categoriesBloc.add(
             CategoriesBlocEvent.init(uuid: statusUserProp.uuid
-            ));
+        ));
+
+        final idMonth = statusUserProp.monthCurrent.id;
+        final idCategory = categoryExpenses.id;
+        if (idMonth != null && idCategory != null && typeWidget == 1) {
+          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
+            uuid: statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+          ));
+        }
       }
     }
   }

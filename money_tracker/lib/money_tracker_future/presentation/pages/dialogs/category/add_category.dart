@@ -36,7 +36,6 @@ class AddEditCategory extends StatelessWidget {
             Logger.print(S
               .of(context)
               .noMoreThan20Categories, context: contextMacro);
-
           return;
         }
       }

@@ -66,45 +66,65 @@ class _CustomCircleAvatarState extends State<CustomCircleAvatar> {
                       final path = imgXFile?.path;
                       if(path != null){
                         return CircleAvatar(
-                          backgroundColor: theme.colorScheme.secondary,
-                          backgroundImage: FileImage(File(path)),
-                          radius: 40,
+                          backgroundColor: Colors.black,
+                          radius: 40.2,
+                          child: CircleAvatar(
+                            backgroundColor: theme.colorScheme.secondary,
+                            backgroundImage: FileImage(File(path)),
+                            radius: 40,
+                          ),
                         );
                       } else if(memoryImageData != null){
                         return CircleAvatar(
-                          backgroundColor: theme.colorScheme.secondary,
-                          backgroundImage: MemoryImage(memoryImageData),
-                          radius: 40,
+                          backgroundColor: Colors.black,
+                          radius: 40.2,
+                          child: CircleAvatar(
+                            backgroundColor: theme.colorScheme.secondary,
+                            backgroundImage: MemoryImage(memoryImageData),
+                            radius: 40,
+                          ),
                         );
                       } else {
                         return CircleAvatar(
-                          backgroundColor: theme.colorScheme.secondary,
-                          child: const Center(child: Icon(
-                            Icons.photo_camera, size: 36, color: Colors.grey,)),
-                          radius: 40,
+                          backgroundColor: Colors.black,
+                          radius: 40.2,
+                          child: CircleAvatar(
+                            backgroundColor: theme.colorScheme.secondary,
+                            child: const Center(child: Icon(
+                              Icons.photo_camera, size: 36, color: Colors.grey,)),
+                            radius: 40,
+                          ),
                         );
                       }
                     },
                     error: (_) {
                       return CircleAvatar(
-                        backgroundColor: theme.colorScheme.secondary,
-                        child: const Center(
-                          child: Icon(
-                            Icons.error,
+                        backgroundColor: Colors.black,
+                        radius: 40.2,
+                        child: CircleAvatar(
+                          backgroundColor: theme.colorScheme.secondary,
+                          child: const Center(
+                            child: Icon(
+                              Icons.error,
+                            ),
                           ),
+                          radius: 40,
                         ),
-                        radius: 40,
                       );
                     },
                     timeOut: (_) {
                       return CircleAvatar(
-                        backgroundColor: theme.colorScheme.secondary,
-                        child: const Center(
-                          child: Icon(
-                            Icons.bedtime_off_outlined,
+                        backgroundColor: Colors.black,
+                        radius: 40.2,
+                        child: CircleAvatar(
+                          backgroundColor: theme.colorScheme.secondary,
+                          child: const Center(
+                            child: Icon(
+                              Icons.bedtime_off_outlined,
+                            ),
                           ),
+                          radius: 40,
                         ),
-                        radius: 40,
                       );
                     }
                 );

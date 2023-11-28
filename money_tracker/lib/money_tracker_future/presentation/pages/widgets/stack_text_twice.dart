@@ -6,19 +6,21 @@ class StackTextTwice extends StatelessWidget {
   const StackTextTwice({
     required this.text,
     this.color,
+    this.style,
     super.key,
   });
 
   final String text;
   final Color? color;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final localStyle = style??Theme.of(context).appBarTheme.titleTextStyle;
     return Material(child: Stack(
       children: [
         Text(text,
-          style: theme.appBarTheme.titleTextStyle?.copyWith(
+          style: localStyle?.copyWith(
             foreground: Paint()
               ..style = PaintingStyle.stroke
               ..strokeWidth = 1
@@ -28,7 +30,7 @@ class StackTextTwice extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         Text(text,
-          style: theme.appBarTheme.titleTextStyle,
+          style: localStyle,
           overflow: TextOverflow.ellipsis,
         ),
       ],

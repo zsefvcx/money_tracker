@@ -20,6 +20,7 @@ class CustomTextFormField extends StatefulWidget {
     this.focusedBorder,
     this.enabledBorder,
     this.inputFormatters,
+    this.onEditingComplete,
     super.key});
 
   final TextEditingController? controller;
@@ -38,6 +39,7 @@ class CustomTextFormField extends StatefulWidget {
   final InputBorder? focusedBorder;
   final InputBorder? enabledBorder;
   final List<TextInputFormatter>? inputFormatters;
+  final void Function()? onEditingComplete;
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();
@@ -74,6 +76,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             onEditingComplete: () {
               FocusScope.of(context).requestFocus(widget.nextFocusNode);
               widget.nextFocusNode?.requestFocus();
+              final function = widget.onEditingComplete;
+              if(function != null) {
+                function();
+              }
             },
             inputFormatters: widget.inputFormatters,
             onChanged: widget.onChanged,

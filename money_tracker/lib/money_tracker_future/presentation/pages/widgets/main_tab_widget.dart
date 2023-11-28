@@ -62,6 +62,7 @@ class MainTabWidget extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
+            padding: const EdgeInsets.all(12.5),
             itemCount: categories.categoriesId.length,
             itemBuilder: (_, index) {
               const date = 1;
@@ -72,12 +73,17 @@ class MainTabWidget extends StatelessWidget {
                   '-${date<10?'0$date':date}'
                   ' 00:00:00.000000';
               final categoryExpenses = categories.categoriesId.elementAt(index);
-              return CustomCard<BigInt>(
-                dayExpense: BigInt.from(0),
+              return AddDayExpense(
+                typeWidget: 0,
                 statusUserProp: statusUserProp,
                 categoryExpenses: categoryExpenses,
-                dateTime: DateTime.tryParse(stringSelectedDateTime),
-                deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
+                child: CustomCard<BigInt>(
+                  dayExpense: BigInt.from(0),
+                  statusUserProp: statusUserProp,
+                  categoryExpenses: categoryExpenses,
+                  dateTime: DateTime.tryParse(stringSelectedDateTime),
+                  deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
+                ),
               );
             },
           ),

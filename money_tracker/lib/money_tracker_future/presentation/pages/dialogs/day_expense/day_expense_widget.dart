@@ -105,19 +105,15 @@ class DayExpenseWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15),
               ),
               keyboardType: TextInputType.number,
+              onEditingComplete: () =>
+                onPressed(formKey, textController, valueNotifierDateTime, context),
             ),
           ),
           30.h,
           ElevatedButton(
             focusNode: focusNodeSecond,
-            onPressed: () {
-              final cSt = formKey.currentState;
-              final res = BigInt.tryParse(textController.text);
-              final dateTime = valueNotifierDateTime.value;
-              if (cSt != null && cSt.validate() && res != null){
-                Navigator.pop(context, (res, dateTime));
-              }
-            },
+            onPressed: () =>
+              onPressed(formKey, textController, valueNotifierDateTime, context),
             child: Text(S.of(context).add),
             style: theme.elevatedButtonTheme.style?.copyWith(
               minimumSize: const MaterialStatePropertyAll(Size(
@@ -137,5 +133,14 @@ class DayExpenseWidget extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  void onPressed(GlobalKey<FormState> formKey, TextEditingController textController, ValueNotifier<DateTime> valueNotifierDateTime, BuildContext context) {
+    final cSt = formKey.currentState;
+    final res = BigInt.tryParse(textController.text);
+    final dateTime = valueNotifierDateTime.value;
+    if (cSt != null && cSt.validate() && res != null){
+      Navigator.pop(context, (res, dateTime));
+    }
   }
 }
