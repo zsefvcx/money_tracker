@@ -10,6 +10,8 @@ Money Tracker.
 3. + При возврате с страницы детал переходит на стартовую страницу и текущий месяц, даже если был месяц был другой. Решено.
 4. + Пичарт глючит когда все по нулям. Решено.
 5. + Ошибка роутера. Исправить кнопку перехода. Решено.
+6. - Трабл 2
+7. - Трабл 13
 
 
 Траблы разные:
@@ -24,26 +26,27 @@ Money Tracker.
 9. + С главной страницы убрать удаление свайпом 1
 10. + Переделать card.
 11. + Проверить сортировку.
-12. + Картинку поправить а лаунчере
+12. + Картинку поправить а лаунчере.
+13. - Добавить редактирвание карточки.
+14. - Протестировать за ново
 
 Второстепенное:
 1. https://pub.dev/packages/firebase_auth/example Авторизацию через фиребазе
+2. Добавить релиз: --release
+   Android
+   Open AndroidManifest.xml (located at android/app/src/main)
+   <application
+   android:label="App Name" ...> // Your app name here
+   iOS
+   Open info.plist (located at ios/Runner)
+   <key>CFBundleDisplayName</key>
+   <string>App Name</string> // Your app name here
 
-Добавить релиз: --release
-Android
-Open AndroidManifest.xml (located at android/app/src/main)
-<application
-android:label="App Name" ...> // Your app name here
-iOS
-Open info.plist (located at ios/Runner)
-<key>CFBundleDisplayName</key>
-<string>App Name</string> // Your app name here
-
-assert(() {
-// ...debug-only code here...
-return true;
-}())
-
-if (kDebugMode) {  
-// ...debug-only code here...
-}
+    assert(() {
+        // ...debug-only code here...
+        return true;
+    }())
+    
+    if (kDebugMode) {  
+        // ...debug-only code here...
+    }
