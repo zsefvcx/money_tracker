@@ -34,7 +34,6 @@ class DayExpense extends Equatable{
   }
 
   Map<String, dynamic> toJson() {
-    Logger.print('BigInt toJson $sum');
     return {
       'id': id,
       'idCategory': idCategory,

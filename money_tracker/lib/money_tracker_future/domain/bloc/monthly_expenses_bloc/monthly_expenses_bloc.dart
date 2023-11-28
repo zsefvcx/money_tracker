@@ -108,7 +108,6 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           } else {
             value.completer.complete(res);
           }
-         // await _response(emit);
         },
         deleteWithCategory: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<bool>(
@@ -171,6 +170,28 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           } else {
             value.completer.complete(res);
           }
+        },
+        update: (value) async {
+          final (error, timeOut, e, res) = await _runGoSData<bool>(
+            function: () async =>
+                _monthlyExpensesRepository.update(
+                    uuid: value.uuid,
+                    data: value.data
+                ),
+          );
+          modelData = modelData.copyWithData(
+            data: null,
+            timeOut: timeOut,
+            error: error,
+            e: e,
+          );
+          if (error){
+            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            value.completer.completeError(error);
+          } else {
+            value.completer.complete(res);
+          }
+          // await _response(emit);
         },
        );
     });

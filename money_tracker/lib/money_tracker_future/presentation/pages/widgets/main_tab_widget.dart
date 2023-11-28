@@ -99,16 +99,12 @@ class MainTabWidget extends StatelessWidget {
         ..clear()
         ..addAll(data.completeExpenses);
     }
-    final total = completeExpenses.fold(
-        BigInt.zero, (previousValue, element) => previousValue +
-        element.sum);
     final totalCategoriesPercent = <int, double>{};
     final categoriesId = categories.categoriesId;
     for (final value in categoriesId) {
       final idCategory = value.id;
       if (idCategory != null) {
         totalCategoriesPercent[idCategory] = 0;
-        if(total != BigInt.zero) {
           var val = BigInt.zero;
           for (final elem in completeExpenses) {
             final id = elem.idCategory;
@@ -116,14 +112,12 @@ class MainTabWidget extends StatelessWidget {
               val += elem.sum;
             }
           }
-          totalCategoriesPercent[idCategory] = 100 * (val / total);
-        } else{
-          totalCategoriesPercent[idCategory] = 100/categoriesId.length;
-        }
+          totalCategoriesPercent[idCategory] = val/BigInt.from(1000);
       } else {
         throw Exception('Error id Category');
       }
     }
+    Logger.print('ChartData:$totalCategoriesPercent');
     return totalCategoriesPercent;
   }
 

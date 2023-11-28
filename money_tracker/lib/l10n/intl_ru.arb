@@ -77,5 +77,6 @@
   "sunday": "Вс",
   "deleteConsumptionData": "Удалить данные о расходе?",
   "notImplemented": "Не реализовано",
-  "changeExpense": "Изменить расход"
+  "changeExpense": "Изменить расход",
+  "editExpense": "Изменить расход"
 }

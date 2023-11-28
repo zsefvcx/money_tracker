@@ -144,24 +144,37 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                   valueListenable: valueNotifierLongPress,
                   builder: (_, value, __) {
                   if (!value) {
-                    return Visibility(
-                      visible: dayExpense is BigInt,
-                      child: Row(
-                        children: [
-                          ValueListenableBuilder<bool>(
-                            valueListenable: valueNotifierPencilVisible,
-                            builder: (context, value, __) => Visibility(
-                              visible: value,
-                              child: AddEditCategory(
-                                contextMacro: context,
-                                statusUserProp: widget.statusUserProp,
-                                categoryExpenses: widget.categoryExpenses,
-                                icon: const Icon(Icons.edit),
-                                addCategory: false,
+                    return Row(
+                      children: [
+                        ValueListenableBuilder<bool>(
+                          valueListenable: valueNotifierPencilVisible,
+                          builder: (context, value, __) => Visibility(
+                            visible: value,
+                            child: (dayExpense is BigInt)?AddEditCategory(
+                              contextMacro: context,
+                              statusUserProp: widget.statusUserProp,
+                              categoryExpenses: widget.categoryExpenses,
+                              icon: const StackContainerIconTwice(
+                                  icon: Icons.edit
                               ),
-                            ),
+                              addCategory: false,
+                            ):(dayExpense is DayExpense)?Padding(
+                              padding: const EdgeInsets.only(right: 25),
+                              child: AddDayExpense(
+                                  typeWidget: 3,
+                                  idDayExpense: dayExpense.id,
+                                  statusUserProp: widget.statusUserProp,
+                                  categoryExpenses: widget.categoryExpenses,
+                                  child: const StackContainerIconTwice(
+                                      icon: Icons.edit
+                                  ),
+                              ),
+                            ):Text(S.of(context).notImplemented),
                           ),
-                          IconButton(
+                        ),
+                        Visibility(
+                          visible: dayExpense is BigInt,
+                          child: IconButton(
                             onPressed: () {
                               Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
                                 arguments: {
@@ -178,8 +191,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                               ),
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     );
                   } else {
                     return ElevatedButton(onPressed: () {

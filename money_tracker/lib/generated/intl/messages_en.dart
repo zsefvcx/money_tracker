@@ -50,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delete consumption data?"),
         "deleteUserData":
             MessageLookupByLibrary.simpleMessage("Delete user data!"),
+        "editExpense": MessageLookupByLibrary.simpleMessage("Edit Expense"),
         "email": MessageLookupByLibrary.simpleMessage("E-mail"),
         "emailFormatIsNotCorrect": MessageLookupByLibrary.simpleMessage(
             "E-Mail format is not correct"),

@@ -83,6 +83,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
         value: value,
         title: categoriesId.elementAt(i).name,
         radius: radius,
+        showTitle: true,
         titleStyle: theme.textTheme.displaySmall?.copyWith(
           shadows: CustomThemeProp.shadows,
         ),

@@ -22,7 +22,11 @@ abstract class DataBaseExpensesSqfLite {
   Future<MonthlyExpensesModel?> readWithMonth(
     int idMonth,
   );
-  Future<int> deleteIdExpenses({required int id});
+  Future<int> deleteIdExpenses(int id);
+  Future<int> updateExpenses(DayExpense data, {
+        ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
+      }
+  );
 }
 
 abstract class DataBaseCategorySqfLite {

@@ -33,4 +33,9 @@ abstract class ExpensesData {
   Future<bool?> delete({required String uuid});
 
   Future<bool?> deleteId({required String uuid, required int id});
+
+  Future<bool?> update({
+    required String uuid,
+    required DayExpense data,
+  });
 }

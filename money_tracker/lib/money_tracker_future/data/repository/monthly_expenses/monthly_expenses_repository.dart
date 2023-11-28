@@ -44,5 +44,8 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
     return expensesData.readWithMonth(uuid: uuid, idMonth: idMonth);
   }
 
-
+  @override
+  Future<bool?> update({required String uuid, required DayExpense data}) async {
+    return expensesData.update(uuid: uuid, data: data);
+  }
 }

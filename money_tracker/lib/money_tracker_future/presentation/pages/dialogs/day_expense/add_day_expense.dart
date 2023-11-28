@@ -14,12 +14,14 @@ class AddDayExpense extends StatelessWidget {
     required this.statusUserProp,
     required this.categoryExpenses,
     required this.typeWidget,
+    this.idDayExpense,
     super.key,
   });
 
   final CategoryExpenses categoryExpenses;
   final StatusUserProp statusUserProp;
   final int typeWidget;
+  final int? idDayExpense;
   final Widget child;
 
   @override
@@ -52,7 +54,11 @@ class AddDayExpense extends StatelessWidget {
       context: context,
       builder: (_) => Dialog(
         insetPadding: const EdgeInsets.only(left: 25, right: 25),
-        child: DayExpenseWidget(id: id, dateTimeStart: dateTime),
+        child: DayExpenseWidget(
+          id: id,
+          dateTimeStart: dateTime,
+          typeWidget: typeWidget,
+        ),
       ),
     );
 
@@ -84,7 +90,18 @@ class AddDayExpense extends StatelessWidget {
       }
 
       final completer = Completer();
-      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
+
+      monthlyExpensesBloc.add(typeWidget==3?MonthlyExpensesBlocEvent.update(
+          uuid: statusUserProp.uuid,
+          data: DayExpense(
+            id: idDayExpense,
+            idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+            idCategory: idCategory,
+            dateTime: resDateTime,
+            sum: res.$1,
+          ),
+          completer: completer
+      ):MonthlyExpensesBlocEvent.add(
           uuid: statusUserProp.uuid,
           data: DayExpense(
             idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
@@ -93,16 +110,25 @@ class AddDayExpense extends StatelessWidget {
             sum: res.$1,
           ),
           completer: completer
-      ));
+        ),
+      );
       await completer.future;
-      if(!otherMonth) {
-        categoriesBloc.add(
-            CategoriesBlocEvent.init(uuid: statusUserProp.uuid
-        ));
 
-        final idMonth = statusUserProp.monthCurrent.id;
-        final idCategory = categoryExpenses.id;
-        if (idMonth != null && idCategory != null && typeWidget == 1) {
+      if(!otherMonth) {
+        if(typeWidget == 0) {
+          categoriesBloc.add(
+              CategoriesBlocEvent.init(uuid: statusUserProp.uuid
+              ));
+        }
+        if (typeWidget != 0) {
+          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
+            uuid: statusUserProp.uuid,
+            idMonth: idMonth,
+            idCategory: idCategory,
+          ));
+        }
+      } else {
+        if (typeWidget == 3) {
           monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
             uuid: statusUserProp.uuid,
             idMonth: idMonth,

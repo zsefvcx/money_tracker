@@ -77,5 +77,6 @@
   "sunday": "Su",
   "deleteConsumptionData": "Delete consumption data?",
   "notImplemented": "Not implemented",
-  "changeExpense": "Change expense"
+  "changeExpense": "Change expense",
+  "editExpense": "Edit Expense"
 }

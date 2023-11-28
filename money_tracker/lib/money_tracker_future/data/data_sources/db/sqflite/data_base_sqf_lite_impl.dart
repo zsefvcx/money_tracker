@@ -382,7 +382,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<int> deleteIdExpenses({required int id}) async {
+  Future<int> deleteIdExpenses(int id) async {
     final db = await database;
     return db.delete(
         _tableExpenses,
@@ -466,5 +466,18 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
     );
   }
 
+  @override
+  Future<int> updateExpenses(DayExpense data, {
+    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
+  }) async {
+    final db = await database;
+    return db.update(
+      _tableExpenses,
+      data.toJson(),
+      where: '"$_id" = ?',
+      whereArgs: [data.id],
+      conflictAlgorithm: conflictAlgorithm,
+    );
+  }
 
 }
