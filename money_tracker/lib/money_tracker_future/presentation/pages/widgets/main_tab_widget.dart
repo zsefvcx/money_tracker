@@ -92,19 +92,24 @@ class MainTabWidget extends StatelessWidget {
     );
   }
 
-  Map<int, double> _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
+  Map<int, (double, String)> _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
     final completeExpenses = <DayExpense>{};
      if (data != null) {
       completeExpenses
         ..clear()
         ..addAll(data.completeExpenses);
     }
-    final totalCategoriesPercent = <int, double>{};
+    final total = completeExpenses.fold(
+      BigInt.zero, (previousValue, element) => previousValue +
+      _abs(element.sum)
+    );
+    final totalCategoriesPercent = <int, (double, String)>{};
     final categoriesId = categories.categoriesId;
     for (final value in categoriesId) {
       final idCategory = value.id;
       if (idCategory != null) {
-        totalCategoriesPercent[idCategory] = 0;
+        totalCategoriesPercent[idCategory] = (0, '');
+        if(total != BigInt.zero) {
           var val = BigInt.zero;
           for (final elem in completeExpenses) {
             final id = elem.idCategory;
@@ -112,7 +117,10 @@ class MainTabWidget extends StatelessWidget {
               val += elem.sum;
             }
           }
-          totalCategoriesPercent[idCategory] = val/BigInt.from(1000);
+          totalCategoriesPercent[idCategory] = (_abs(val)/BigInt.from(1000), val<BigInt.zero?'-':'');
+        } else{
+          totalCategoriesPercent[idCategory] = (100/categoriesId.length, '');
+        }
       } else {
         throw Exception('Error id Category');
       }
@@ -120,6 +128,8 @@ class MainTabWidget extends StatelessWidget {
     Logger.print('ChartData:$totalCategoriesPercent');
     return totalCategoriesPercent;
   }
+
+  BigInt _abs(BigInt val) => val<BigInt.zero?-val:val;
 
   Future<bool> _deleteCategory(
       BuildContext context,

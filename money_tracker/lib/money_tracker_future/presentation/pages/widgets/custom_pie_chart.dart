@@ -15,7 +15,7 @@ class CustomPieChart extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoriesExpensesEntity categoriesExpensesModels;
-  final Map<int, double> data;
+  final Map<int, (double, String)> data;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -69,19 +69,19 @@ class _CustomPieChartState extends State<CustomPieChart> {
 
   List<PieChartSectionData> _showingSections(
       BuildContext context,
-      Map<int, double> data,
+      Map<int, (double, String)> data,
   ) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
     return List.generate(categoriesId.length, (i){
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 60.0 : 50.0;
-      final value = data[categoriesId.elementAt(i).id]??0;
+      final value = data[categoriesId.elementAt(i).id]??(0,'');
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
         borderSide: const BorderSide(width: 0.2),
-        value: value,
-        title: categoriesId.elementAt(i).name,
+        value: value.$1,
+        title: '${value.$2}${categoriesId.elementAt(i).name}',
         radius: radius,
         showTitle: true,
         titleStyle: theme.textTheme.displaySmall?.copyWith(
