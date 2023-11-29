@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
+import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
@@ -46,15 +47,40 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
   @override
   Widget build(BuildContext context) {
     final categoriesBloc = context.read<CategoriesBloc>();
+    final theme = Theme.of(context);
     if(!categoriesBloc.modelData.isLoaded) {
       categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
     }
     return Scaffold(
-      appBar: AddonCustomAppBar(
-        child: ValueListenableBuilder<int>(
+      appBar: AppBar(
+        title: ValueListenableBuilder<int>(
+          valueListenable: _valueNotifierPage,
+          builder: (_, value, __) => value==0
+            ? AppCalendarDialog(
+            uuid: widget.statusUserProp.uuid,
+            monthCurrent: widget.statusUserProp.monthCurrent)
+            : StackTextTwice(
+             text: S.of(context).profile,
+             color: theme.appBarTheme.backgroundColor,
+            )
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 25),
+            child: ValueListenableBuilder<int>(
             valueListenable: _valueNotifierPage,
-            builder: (_, value, __) => CustomAppBarStatic(
-                value: value, statusUserProp: widget.statusUserProp)),
+               builder: (_, value, __) => Visibility(
+               visible: value==0,
+               child: AddEditCategory(
+                 contextMacro: context,
+                 statusUserProp: widget.statusUserProp,
+                 icon: const ContainerIconShadow(
+                     icon: Icons.add
+                 ),
+               )),
+            ),
+          ),
+        ],
       ),
       body: SafeArea(
         child: TabBarView(

@@ -68,7 +68,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           final completer = value.completer;
           if (completer != null){
             if (error){
-              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+              Logger.print('Error read monthly expenses.:$timeOut:$e', name: 'err', error: true);
               completer.completeError(error);
             } else {
               completer.complete(res);
@@ -92,7 +92,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             e: e,
           );
           if (error){
-            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            Logger.print('Error readTotal monthly expenses.:$timeOut:$e', name: 'err', error: true);
             value.completer.completeError(error);
           } else {
             value.completer.complete(res);
@@ -113,7 +113,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             e: e,
           );
           if (error){
-            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            Logger.print('Error add monthly expenses.:$timeOut:$e', name: 'err', error: true);
             value.completer.completeError(error);
           } else {
             value.completer.complete(res);
@@ -175,7 +175,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             e: e,
           );
           if (error){
-            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            Logger.print('Error readWithMonth monthly expenses.:$timeOut:$e', name: 'err', error: true);
             value.completer.completeError(error);
           } else {
             value.completer.complete(res);
@@ -196,7 +196,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             e: e,
           );
           if (error){
-            Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+            Logger.print('Error update monthly expenses.:$timeOut:$e', name: 'err', error: true);
             value.completer.completeError(error);
           } else {
             value.completer.complete(res);

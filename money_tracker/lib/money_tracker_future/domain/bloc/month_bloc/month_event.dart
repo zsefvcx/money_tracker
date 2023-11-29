@@ -6,6 +6,7 @@ class MonthBlocEvent with _$MonthBlocEvent{
   const factory MonthBlocEvent.init({
     required String uuid,
     required MonthCurrent data,
+    Completer<dynamic>? completer,
   }) = _initEvent;
   const factory MonthBlocEvent.read({
     required String uuid,

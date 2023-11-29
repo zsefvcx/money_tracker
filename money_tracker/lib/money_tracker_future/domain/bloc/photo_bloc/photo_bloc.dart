@@ -49,7 +49,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
             );
             await _response(emit);
             if (error){
-              Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
+              Logger.print('Error write photo.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
               value.completer.complete(res!=null);
@@ -69,7 +69,7 @@ class PhotoBloc extends Bloc<PhotoBlocEvent, PhotoBlocState>{
                 e: e,
               );
               if (error){
-                Logger.print('Error checkUserName.:$timeOut:$e', name: 'err', error: true);
+                Logger.print('Error delete photo.:$timeOut:$e', name: 'err', error: true);
                 value.completer.completeError(error);
               } else {
                 value.completer.complete(res);

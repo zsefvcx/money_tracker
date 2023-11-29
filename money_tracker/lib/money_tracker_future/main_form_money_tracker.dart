@@ -24,27 +24,30 @@ class MainFormMoneyTracker extends StatelessWidget {
       data: statusUserProp.monthCurrent)
     );
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: SafeArea(
-        child: BlocBuilder<MonthBloc, MonthBlocState>(
+    return BlocBuilder<MonthBloc, MonthBlocState>(
           builder: (context, state) {
             return state.map(
-              loading: (_)=> const CircularProgressIndicatorMod(),
-              error: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
-                    uuid: statusUserProp.uuid,
-                    tCurrent: statusUserProp.monthCurrent
+              loading: (_)=> const Scaffold(body: CircularProgressIndicatorMod()),
+              error: (_)=> Scaffold(
+                body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                      uuid: statusUserProp.uuid,
+                      tCurrent: statusUserProp.monthCurrent
+                ),
               ),
-              timeOut: (_)=> ErrorTimeOut<MonthBloc, MonthCurrent>(
-                    uuid: statusUserProp.uuid,
-                    tCurrent: statusUserProp.monthCurrent
+              timeOut: (_)=> Scaffold(
+                body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                      uuid: statusUserProp.uuid,
+                      tCurrent: statusUserProp.monthCurrent
+                ),
               ),
               loaded: (value) {
                 final localMonthCurrent = value.monthCurrent;
                 if (localMonthCurrent == null){
-                  return ErrorTimeOut<MonthBloc, MonthCurrent>(
-                        uuid: statusUserProp.uuid,
-                        tCurrent: statusUserProp.monthCurrent
+                  return Scaffold(
+                    body: ErrorTimeOut<MonthBloc, MonthCurrent>(
+                          uuid: statusUserProp.uuid,
+                          tCurrent: statusUserProp.monthCurrent
+                    ),
                   );
                 }
                 final localStatusUserProp = statusUserProp.copyWith(
@@ -57,8 +60,6 @@ class MainFormMoneyTracker extends StatelessWidget {
               },
             );
           },
-        ),
-      ),
     );
   }
 }

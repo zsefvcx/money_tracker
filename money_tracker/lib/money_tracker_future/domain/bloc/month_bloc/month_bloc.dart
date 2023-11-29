@@ -48,7 +48,17 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
               error: error,
               e: e,
             );
-            await _response(emit);
+            final completer = value.completer;
+            if(completer != null){
+              if (error){
+                Logger.print('Error init month.:$timeOut:$e', name: 'err', error: true);
+                completer.completeError(error);
+              } else {
+                completer.complete(res?.id);
+              }
+            } else {
+              await _response(emit);
+            }
           },
           read: (value) async {
             final (error, timeOut, e, res) = await _runGoSData<MonthsCurrentYearEntity>(
@@ -65,7 +75,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
               e: e,
             );
               if (error){
-                Logger.print('Error _read.:$timeOut:$e', name: 'err', error: true);
+                Logger.print('Error read month.:$timeOut:$e', name: 'err', error: true);
                 value.completer.completeError(error);
               } else {
                 value.completer.complete(res);
@@ -89,7 +99,7 @@ class MonthBloc extends Bloc<MonthBlocEvent, MonthBlocState>{
             final completer = value.completer;
             if(completer != null){
               if (error){
-                Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+                Logger.print('Error add month.:$timeOut:$e', name: 'err', error: true);
                 completer.completeError(error);
               } else {
                 completer.complete(res?.id);

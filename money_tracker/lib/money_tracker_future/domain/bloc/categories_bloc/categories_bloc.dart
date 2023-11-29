@@ -59,7 +59,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               e: e,
             );
             if (error){
-              Logger.print('Error check.:$timeOut:$e', name: 'err', error: true);
+              Logger.print('Error read categories.:$timeOut:$e', name: 'err', error: true);
               value.completer.completeError(error);
             } else {
               value.completer.complete(res);
@@ -128,7 +128,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               _categoriesRepository.check(uuid: value.uuid, data: value.data),
             );
               if (error){
-                Logger.print('Error check.:$timeOut:$e', name: 'err', error: true);
+                Logger.print('Error check categories.:$timeOut:$e', name: 'err', error: true);
                 value.completer.completeError(error);
               } else {
                 value.completer.complete(res);

@@ -25,6 +25,9 @@ class MainFormAuthorization extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: theme.appBarTheme.systemOverlayStyle?.copyWith(
+            statusBarColor: theme.scaffoldBackgroundColor,
+          ),
           backgroundColor: theme.scaffoldBackgroundColor,
         ),
         body: SafeArea(
