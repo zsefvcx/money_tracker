@@ -27,7 +27,9 @@ mixin _$MonthlyExpensesBlocEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -48,7 +50,9 @@ mixin _$MonthlyExpensesBlocEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -68,7 +72,9 @@ mixin _$MonthlyExpensesBlocEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -262,7 +268,9 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -286,7 +294,9 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -309,7 +319,9 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -515,7 +527,9 @@ class _$readTotalEventImpl
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -539,7 +553,9 @@ class _$readTotalEventImpl
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -562,7 +578,9 @@ class _$readTotalEventImpl
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -750,7 +768,9 @@ class _$deleteWithCategoryEventImpl
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -774,7 +794,9 @@ class _$deleteWithCategoryEventImpl
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -797,7 +819,9 @@ class _$deleteWithCategoryEventImpl
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -983,7 +1007,9 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -1007,7 +1033,9 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -1030,7 +1058,9 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -1124,7 +1154,11 @@ abstract class _$$readEventImplCopyWith<$Res>
       __$$readEventImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uuid, int idMonth, int idCategory});
+  $Res call(
+      {String uuid,
+      int idMonth,
+      int idCategory,
+      Completer<dynamic>? completer});
 }
 
 /// @nodoc
@@ -1141,6 +1175,7 @@ class __$$readEventImplCopyWithImpl<$Res>
     Object? uuid = null,
     Object? idMonth = null,
     Object? idCategory = null,
+    Object? completer = freezed,
   }) {
     return _then(_$readEventImpl(
       uuid: null == uuid
@@ -1155,6 +1190,10 @@ class __$$readEventImplCopyWithImpl<$Res>
           ? _value.idCategory
           : idCategory // ignore: cast_nullable_to_non_nullable
               as int,
+      completer: freezed == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>?,
     ));
   }
 }
@@ -1163,7 +1202,10 @@ class __$$readEventImplCopyWithImpl<$Res>
 
 class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   const _$readEventImpl(
-      {required this.uuid, required this.idMonth, required this.idCategory});
+      {required this.uuid,
+      required this.idMonth,
+      required this.idCategory,
+      this.completer});
 
   @override
   final String uuid;
@@ -1171,10 +1213,12 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
   final int idMonth;
   @override
   final int idCategory;
+  @override
+  final Completer<dynamic>? completer;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'MonthlyExpensesBlocEvent.read(uuid: $uuid, idMonth: $idMonth, idCategory: $idCategory)';
+    return 'MonthlyExpensesBlocEvent.read(uuid: $uuid, idMonth: $idMonth, idCategory: $idCategory, completer: $completer)';
   }
 
   @override
@@ -1184,7 +1228,8 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
       ..add(DiagnosticsProperty('type', 'MonthlyExpensesBlocEvent.read'))
       ..add(DiagnosticsProperty('uuid', uuid))
       ..add(DiagnosticsProperty('idMonth', idMonth))
-      ..add(DiagnosticsProperty('idCategory', idCategory));
+      ..add(DiagnosticsProperty('idCategory', idCategory))
+      ..add(DiagnosticsProperty('completer', completer));
   }
 
   @override
@@ -1195,11 +1240,14 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
             (identical(other.idMonth, idMonth) || other.idMonth == idMonth) &&
             (identical(other.idCategory, idCategory) ||
-                other.idCategory == idCategory));
+                other.idCategory == idCategory) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, uuid, idMonth, idCategory);
+  int get hashCode =>
+      Object.hash(runtimeType, uuid, idMonth, idCategory, completer);
 
   @JsonKey(ignore: true)
   @override
@@ -1218,7 +1266,9 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -1228,7 +1278,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
             String uuid, int idMonth, Completer<dynamic> completer)
         readWithMonth,
   }) {
-    return read(uuid, idMonth, idCategory);
+    return read(uuid, idMonth, idCategory, completer);
   }
 
   @override
@@ -1242,7 +1292,9 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -1251,7 +1303,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     TResult? Function(String uuid, int idMonth, Completer<dynamic> completer)?
         readWithMonth,
   }) {
-    return read?.call(uuid, idMonth, idCategory);
+    return read?.call(uuid, idMonth, idCategory, completer);
   }
 
   @override
@@ -1265,7 +1317,9 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -1276,7 +1330,7 @@ class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
     required TResult orElse(),
   }) {
     if (read != null) {
-      return read(uuid, idMonth, idCategory);
+      return read(uuid, idMonth, idCategory, completer);
     }
     return orElse();
   }
@@ -1339,12 +1393,14 @@ abstract class _readEvent implements MonthlyExpensesBlocEvent {
   const factory _readEvent(
       {required final String uuid,
       required final int idMonth,
-      required final int idCategory}) = _$readEventImpl;
+      required final int idCategory,
+      final Completer<dynamic>? completer}) = _$readEventImpl;
 
   @override
   String get uuid;
   int get idMonth;
   int get idCategory;
+  Completer<dynamic>? get completer;
   @override
   @JsonKey(ignore: true)
   _$$readEventImplCopyWith<_$readEventImpl> get copyWith =>
@@ -1433,7 +1489,9 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -1457,7 +1515,9 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -1480,7 +1540,9 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -1654,7 +1716,9 @@ class _$deleteIdEventImpl
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -1678,7 +1742,9 @@ class _$deleteIdEventImpl
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -1701,7 +1767,9 @@ class _$deleteIdEventImpl
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -1887,7 +1955,9 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -1911,7 +1981,9 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -1934,7 +2006,9 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(
@@ -2127,7 +2201,9 @@ class _$readWithMonthEventImpl
         readTotal,
     required TResult Function(String uuid, int idCategory) deleteWithCategory,
     required TResult Function(String uuid, int idMonth, int idCategory) init,
-    required TResult Function(String uuid, int idMonth, int idCategory) read,
+    required TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)
+        read,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, int id) deleteId,
     required TResult Function(
@@ -2151,7 +2227,9 @@ class _$readWithMonthEventImpl
         readTotal,
     TResult? Function(String uuid, int idCategory)? deleteWithCategory,
     TResult? Function(String uuid, int idMonth, int idCategory)? init,
-    TResult? Function(String uuid, int idMonth, int idCategory)? read,
+    TResult? Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, int id)? deleteId,
     TResult? Function(
@@ -2174,7 +2252,9 @@ class _$readWithMonthEventImpl
         readTotal,
     TResult Function(String uuid, int idCategory)? deleteWithCategory,
     TResult Function(String uuid, int idMonth, int idCategory)? init,
-    TResult Function(String uuid, int idMonth, int idCategory)? read,
+    TResult Function(String uuid, int idMonth, int idCategory,
+            Completer<dynamic>? completer)?
+        read,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, int id)? deleteId,
     TResult Function(

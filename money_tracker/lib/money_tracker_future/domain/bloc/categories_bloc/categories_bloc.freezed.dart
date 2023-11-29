@@ -20,6 +20,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -32,6 +33,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -44,6 +46,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -57,6 +60,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -67,6 +71,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -77,6 +82,7 @@ mixin _$CategoriesBlocEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -199,6 +205,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -214,6 +221,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -229,6 +237,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -248,6 +257,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -261,6 +271,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -274,6 +285,7 @@ class _$initEventImpl with DiagnosticableTreeMixin implements _initEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -296,6 +308,200 @@ abstract class _initEvent implements CategoriesBlocEvent {
   @override
   @JsonKey(ignore: true)
   _$$initEventImplCopyWith<_$initEventImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$readEventImplCopyWith<$Res>
+    implements $CategoriesBlocEventCopyWith<$Res> {
+  factory _$$readEventImplCopyWith(
+          _$readEventImpl value, $Res Function(_$readEventImpl) then) =
+      __$$readEventImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String uuid, Completer<dynamic> completer});
+}
+
+/// @nodoc
+class __$$readEventImplCopyWithImpl<$Res>
+    extends _$CategoriesBlocEventCopyWithImpl<$Res, _$readEventImpl>
+    implements _$$readEventImplCopyWith<$Res> {
+  __$$readEventImplCopyWithImpl(
+      _$readEventImpl _value, $Res Function(_$readEventImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? uuid = null,
+    Object? completer = null,
+  }) {
+    return _then(_$readEventImpl(
+      uuid: null == uuid
+          ? _value.uuid
+          : uuid // ignore: cast_nullable_to_non_nullable
+              as String,
+      completer: null == completer
+          ? _value.completer
+          : completer // ignore: cast_nullable_to_non_nullable
+              as Completer<dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$readEventImpl with DiagnosticableTreeMixin implements _readEvent {
+  const _$readEventImpl({required this.uuid, required this.completer});
+
+  @override
+  final String uuid;
+  @override
+  final Completer<dynamic> completer;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CategoriesBlocEvent.read(uuid: $uuid, completer: $completer)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CategoriesBlocEvent.read'))
+      ..add(DiagnosticsProperty('uuid', uuid))
+      ..add(DiagnosticsProperty('completer', completer));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$readEventImpl &&
+            (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.completer, completer) ||
+                other.completer == completer));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, uuid, completer);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$readEventImplCopyWith<_$readEventImpl> get copyWith =>
+      __$$readEventImplCopyWithImpl<_$readEventImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
+    required TResult Function(String uuid, CategoryExpenses data) add,
+    required TResult Function(String uuid) delete,
+    required TResult Function(String uuid, CategoryExpenses data) update,
+    required TResult Function(
+            String uuid, CategoryExpenses data, Completer<dynamic> completer)
+        check,
+    required TResult Function(String uuid, int id) deleteId,
+  }) {
+    return read(uuid, completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
+    TResult? Function(String uuid, CategoryExpenses data)? add,
+    TResult? Function(String uuid)? delete,
+    TResult? Function(String uuid, CategoryExpenses data)? update,
+    TResult? Function(
+            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+        check,
+    TResult? Function(String uuid, int id)? deleteId,
+  }) {
+    return read?.call(uuid, completer);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
+    TResult Function(String uuid, CategoryExpenses data)? add,
+    TResult Function(String uuid)? delete,
+    TResult Function(String uuid, CategoryExpenses data)? update,
+    TResult Function(
+            String uuid, CategoryExpenses data, Completer<dynamic> completer)?
+        check,
+    TResult Function(String uuid, int id)? deleteId,
+    required TResult orElse(),
+  }) {
+    if (read != null) {
+      return read(uuid, completer);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
+    required TResult Function(_addEvent value) add,
+    required TResult Function(_deleteEvent value) delete,
+    required TResult Function(_updateEvent value) update,
+    required TResult Function(_checkEvent value) check,
+    required TResult Function(_deleteIdEvent value) deleteId,
+  }) {
+    return read(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
+    TResult? Function(_addEvent value)? add,
+    TResult? Function(_deleteEvent value)? delete,
+    TResult? Function(_updateEvent value)? update,
+    TResult? Function(_checkEvent value)? check,
+    TResult? Function(_deleteIdEvent value)? deleteId,
+  }) {
+    return read?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
+    TResult Function(_addEvent value)? add,
+    TResult Function(_deleteEvent value)? delete,
+    TResult Function(_updateEvent value)? update,
+    TResult Function(_checkEvent value)? check,
+    TResult Function(_deleteIdEvent value)? deleteId,
+    required TResult orElse(),
+  }) {
+    if (read != null) {
+      return read(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _readEvent implements CategoriesBlocEvent {
+  const factory _readEvent(
+      {required final String uuid,
+      required final Completer<dynamic> completer}) = _$readEventImpl;
+
+  @override
+  String get uuid;
+  Completer<dynamic> get completer;
+  @override
+  @JsonKey(ignore: true)
+  _$$readEventImplCopyWith<_$readEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -383,6 +589,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -398,6 +605,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -413,6 +621,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -432,6 +641,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -445,6 +655,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -458,6 +669,7 @@ class _$addEventImpl with DiagnosticableTreeMixin implements _addEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -561,6 +773,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -576,6 +789,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -591,6 +805,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -610,6 +825,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -623,6 +839,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -636,6 +853,7 @@ class _$deleteEventImpl with DiagnosticableTreeMixin implements _deleteEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -745,6 +963,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -760,6 +979,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -775,6 +995,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -794,6 +1015,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -807,6 +1029,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -820,6 +1043,7 @@ class _$updateEventImpl with DiagnosticableTreeMixin implements _updateEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -943,6 +1167,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -958,6 +1183,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -973,6 +1199,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -992,6 +1219,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -1005,6 +1233,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -1018,6 +1247,7 @@ class _$checkEventImpl with DiagnosticableTreeMixin implements _checkEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,
@@ -1134,6 +1364,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(String uuid) init,
+    required TResult Function(String uuid, Completer<dynamic> completer) read,
     required TResult Function(String uuid, CategoryExpenses data) add,
     required TResult Function(String uuid) delete,
     required TResult Function(String uuid, CategoryExpenses data) update,
@@ -1149,6 +1380,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String uuid)? init,
+    TResult? Function(String uuid, Completer<dynamic> completer)? read,
     TResult? Function(String uuid, CategoryExpenses data)? add,
     TResult? Function(String uuid)? delete,
     TResult? Function(String uuid, CategoryExpenses data)? update,
@@ -1164,6 +1396,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String uuid)? init,
+    TResult Function(String uuid, Completer<dynamic> completer)? read,
     TResult Function(String uuid, CategoryExpenses data)? add,
     TResult Function(String uuid)? delete,
     TResult Function(String uuid, CategoryExpenses data)? update,
@@ -1183,6 +1416,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_initEvent value) init,
+    required TResult Function(_readEvent value) read,
     required TResult Function(_addEvent value) add,
     required TResult Function(_deleteEvent value) delete,
     required TResult Function(_updateEvent value) update,
@@ -1196,6 +1430,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_initEvent value)? init,
+    TResult? Function(_readEvent value)? read,
     TResult? Function(_addEvent value)? add,
     TResult? Function(_deleteEvent value)? delete,
     TResult? Function(_updateEvent value)? update,
@@ -1209,6 +1444,7 @@ class _$deleteIdEventImpl
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_initEvent value)? init,
+    TResult Function(_readEvent value)? read,
     TResult Function(_addEvent value)? add,
     TResult Function(_deleteEvent value)? delete,
     TResult Function(_updateEvent value)? update,

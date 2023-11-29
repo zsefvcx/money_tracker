@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:money_tracker/core/core.dart';
 
 ///Трата за день
 class DayExpense extends Equatable{

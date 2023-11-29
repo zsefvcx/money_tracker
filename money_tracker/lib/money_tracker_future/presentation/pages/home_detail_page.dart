@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/domain/entity/categories/categories_entity.dart';
+import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
@@ -86,32 +88,43 @@ class HomeDetailPage extends StatelessWidget {
                     return const CircularProgressIndicatorMod();
                   },
                   loaded: (value) {
-                    final localCompleteExpenses = value.entity?.completeExpenses;
-                    if(localCompleteExpenses !=null){
-                      return ListView.builder(
-                        padding: const EdgeInsets.all(12.5),
-                        itemCount: localCompleteExpenses.length,
-                        itemBuilder: (_, index) {
-                          final dayExpense = localCompleteExpenses.elementAt(index);
-                          return Dismissible(
-                            key: UniqueKey(),
-                            confirmDismiss: (_) async {
-                                return _deleteDayExpense(context, dayExpense);
-                            },
-                            child: CustomCard<DayExpense>(
-                              dayExpense:dayExpense,
-                              statusUserProp: statusUserProp,
-                              categoryExpenses: categoryExpenses,
-                              deleteCard: (context) => _deleteDayExpense(context, dayExpense),
-                            ),
-                          );
-                        });
-                    }
-                    return ErrorTimeOut<MonthlyExpensesBloc, CategoriesExpensesEntity?>(
-                      uuid: statusUserProp.uuid,
-                      idMonth: idMonth,
-                      idCategory: idCategory,
-                    );
+                    var localCompleteExpenses = value.entity?.completeExpenses;
+
+                      return RefreshIndicator(
+                        onRefresh: () async {
+                          final completer = Completer<MonthlyExpensesEntity>();
+                          if (idMonth != null && idCategory != null) {
+                            context.read<MonthlyExpensesBloc>()
+                                .add(MonthlyExpensesBlocEvent.read(
+                              uuid: statusUserProp.uuid,
+                              idMonth: idMonth,
+                              idCategory: idCategory,
+                              completer: completer,
+                            ));
+                            localCompleteExpenses = (await completer.future).completeExpenses;
+                          }
+
+                        },
+                        child: ListView.builder(
+                          padding: const EdgeInsets.all(12.5),
+                          itemCount: localCompleteExpenses?.length,
+                          itemBuilder: (_, index) {
+                            final data = localCompleteExpenses ??= <DayExpense>{};
+                            final dayExpense = data.elementAt(index);
+                            return Dismissible(
+                              key: UniqueKey(),
+                              confirmDismiss: (_) async {
+                                  return _deleteDayExpense(context, dayExpense);
+                              },
+                              child: CustomCard<DayExpense>(
+                                dayExpense:dayExpense,
+                                statusUserProp: statusUserProp,
+                                categoryExpenses: categoryExpenses,
+                                deleteCard: (context) => _deleteDayExpense(context, dayExpense),
+                              ),
+                            );
+                          }),
+                      );
                   },
                   error: (_) => ErrorTimeOut<MonthlyExpensesBloc, CategoriesExpensesEntity?>(
                     uuid: statusUserProp.uuid,

@@ -47,6 +47,24 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
             );
             await _response(emit);
           },
+          read: (value) async {
+            final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
+              function: () async =>
+                  _categoriesRepository.getAllId(uuid: value.uuid),
+            );
+            modelData = modelData.copyWithData(
+              data: res,
+              timeOut: timeOut,
+              error: error,
+              e: e,
+            );
+            if (error){
+              Logger.print('Error check.:$timeOut:$e', name: 'err', error: true);
+              value.completer.completeError(error);
+            } else {
+              value.completer.complete(res);
+            }
+          },
           add: (value) async {
             emit(const CategoriesBlocState.loading());
             final (error, timeOut, e, res) = await _runGoSData<CategoriesExpensesEntity>(
@@ -115,7 +133,7 @@ class CategoriesBloc extends Bloc<CategoriesBlocEvent, CategoriesBlocState>{
               } else {
                 value.completer.complete(res);
               }
-          }
+          },
       );
     });
   }

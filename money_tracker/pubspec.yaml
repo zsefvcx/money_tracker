@@ -45,18 +45,18 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.1
+
   #flutter clean
   #flutter pub cache repair
   #flutter pub run build_runner clean
-  #Then run,
+  #Then run:
   #
   # flutter pub run build_runner build
   #
   #flutter clean && flutter pub cache repair && flutter pub run build_runner clean && flutter pub run build_runner build --delete-conflicting-outputs
   #
-  build_runner: ^2.4.6
+  build_runner: ^2.4.7
   json_serializable: ^6.7.1
-  floor_generator: ^1.4.2
 
 flutter_launcher_icons:
   android: "launcher_icon"

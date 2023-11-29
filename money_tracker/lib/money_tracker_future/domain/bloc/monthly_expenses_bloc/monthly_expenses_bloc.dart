@@ -65,7 +65,17 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
             error: error,
             e: e,
           );
-          await _response(emit);
+          final completer = value.completer;
+          if (completer != null){
+            if (error){
+              Logger.print('Error add.:$timeOut:$e', name: 'err', error: true);
+              completer.completeError(error);
+            } else {
+              completer.complete(res);
+            }
+          } else {
+            await _response(emit);
+          }
         },
         readTotal: (value) async {
           final (error, timeOut, e, res) = await _runGoSData<BigInt>(
