@@ -108,14 +108,14 @@ class DayExpenseWidget extends StatelessWidget {
               ),
               keyboardType: TextInputType.number,
               onEditingComplete: () =>
-                onPressed(formKey, textController, valueNotifierDateTime, context),
+                _onPressed(formKey, textController, valueNotifierDateTime, context),
             ),
           ),
           30.h,
           ElevatedButton(
             focusNode: focusNodeSecond,
             onPressed: () =>
-              onPressed(formKey, textController, valueNotifierDateTime, context),
+              _onPressed(formKey, textController, valueNotifierDateTime, context),
             child: typeWidget!=3?Text(S.of(context).add):Text(S.of(context).modifi),
             style: theme.elevatedButtonTheme.style?.copyWith(
               minimumSize: const MaterialStatePropertyAll(Size(
@@ -137,7 +137,7 @@ class DayExpenseWidget extends StatelessWidget {
     );
   }
 
-  void onPressed(GlobalKey<FormState> formKey, TextEditingController textController, ValueNotifier<DateTime> valueNotifierDateTime, BuildContext context) {
+  void _onPressed(GlobalKey<FormState> formKey, TextEditingController textController, ValueNotifier<DateTime> valueNotifierDateTime, BuildContext context) {
     final cSt = formKey.currentState;
     final res = BigInt.tryParse(textController.text);
     final dateTime = valueNotifierDateTime.value;

@@ -89,7 +89,8 @@ class _DialogCategoryState extends State<DialogCategory> {
                         hintText: S.of(context).enterTheName,
                         validator: (value) => (
                             value != null &&
-                                value.isNotEmpty
+                            value.isNotEmpty &&
+                            value.cleanString.isNotEmpty
                         )
                             ?null
                             :S.of(context).fieldIsEmpty,
@@ -124,7 +125,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                                       ?Icons.color_lens_outlined
                                       :Icons.color_lens_rounded),
                                 ),
-                                onEditingComplete: () => onPressed(context),
+                                onEditingComplete: () => _onPressed(context),
                               ),
                               Visibility(
                                 visible: value,
@@ -156,7 +157,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                 ),
                 child: Column(
                   children: [
-                    ElevatedButton(onPressed: () => onPressed(context),
+                    ElevatedButton(onPressed: () => _onPressed(context),
                       child: Text(widget.addCategory
                           ?S.of(context).add
                           :S.of(context).modifi),
@@ -185,19 +186,19 @@ class _DialogCategoryState extends State<DialogCategory> {
     );
   }
 
-  void onPressed(BuildContext context) {
+  void _onPressed(BuildContext context) {
     final cSt = formKey.currentState;
     final categoryExpenses = widget.categoryExpenses;
                          // throw Exception('Error search Key');
     CategoryExpenses? localCategoryExpenses;
     if(cSt != null && cSt.validate()) {
       localCategoryExpenses = widget.addCategory?CategoryExpenses(
-        name: _nameController.text,
+        name: _nameController.text.cleanStringFirstLast,
         colorHex: _colorController.text,
       )
           :CategoryExpenses(
         id: categoryExpenses?.id,
-        name: _nameController.text,
+        name: _nameController.text.cleanStringFirstLast,
         colorHex: _colorController.text,
       );
       if(widget.addCategory)_nameController.text = '';

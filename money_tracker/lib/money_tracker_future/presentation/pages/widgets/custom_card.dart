@@ -90,15 +90,15 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
         valueNotifierPencilVisible.value = false;
       },
       child: GestureDetector(
-        onDoubleTap: () =>
-        valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value,
-        onLongPress: ()=>
-        valueNotifierLongPress.value = !valueNotifierLongPress.value,
-        onSecondaryLongPress: () {
-          widget.deleteCard(context);
-          valueNotifierLongPress.value = false;
-          valueNotifierPencilVisible.value = false;
+        onDoubleTap: () {
+          valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value;
+          if (valueNotifierPencilVisible.value) _delayedFutureValueNotifier(second: 3);
         },
+        onLongPress: () {
+          valueNotifierLongPress.value = !valueNotifierLongPress.value;
+          if(valueNotifierLongPress.value)_delayedFutureValueNotifier(second: 3);
+        },
+        onSecondaryLongPress: () =>widget.deleteCard(context),
         child: Card(
           child: Container(
             padding: const EdgeInsets.only(
@@ -230,4 +230,10 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       ),
     );
   }
+
+  void _delayedFutureValueNotifier({required int second}) =>
+    Future.delayed(Duration(seconds: second), () {
+      valueNotifierLongPress.value = false;
+      valueNotifierPencilVisible.value = false;
+    },);
 }
