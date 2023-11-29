@@ -117,8 +117,10 @@ class RouteGenerator {
           title: Text(title[0]),
           centerTitle: true,
         ),
-        body: Center(
-          child: Text(S.of(context).pageNotFound),
+        body: SafeArea(
+          child: Center(
+            child: Text(S.of(context).pageNotFound),
+          ),
         ),
       );
     },

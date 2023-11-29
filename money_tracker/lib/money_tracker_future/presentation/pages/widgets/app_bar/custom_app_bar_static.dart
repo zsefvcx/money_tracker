@@ -41,7 +41,7 @@ class CustomAppBarStatic extends StatelessWidget  implements PreferredSizeWidget
                 child: AddEditCategory(
                   contextMacro: context,
                   statusUserProp: statusUserProp,
-                  icon: const StackContainerIconTwice(
+                  icon: const ContainerIconShadow(
                       icon: Icons.add
                   ),
                 ),

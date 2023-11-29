@@ -27,6 +27,10 @@ abstract class Logger {
         level: level,
       );
     }
+    // assert(() {
+    //   // ...debug-only code here...
+    //   return true;
+    // }());
     if (context != null)  CustomShowSnackBar.showSnackBar(msg, context);
   }
 }

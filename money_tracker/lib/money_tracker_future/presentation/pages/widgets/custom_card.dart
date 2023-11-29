@@ -154,7 +154,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                               contextMacro: context,
                               statusUserProp: widget.statusUserProp,
                               categoryExpenses: widget.categoryExpenses,
-                              icon: const StackContainerIconTwice(
+                              icon: const ContainerIconShadow(
                                   icon: Icons.edit
                               ),
                               addCategory: false,
@@ -165,7 +165,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   idDayExpense: dayExpense.id,
                                   statusUserProp: widget.statusUserProp,
                                   categoryExpenses: widget.categoryExpenses,
-                                  child: const StackContainerIconTwice(
+                                  child: const ContainerIconShadow(
                                       icon: Icons.edit
                                   ),
                               ),
@@ -175,8 +175,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                         Visibility(
                           visible: dayExpense is BigInt,
                           child: IconButton(
-                            onPressed: () {
-                              Navigator.of(context).pushReplacementNamed(HomeDetailPage.routeName,
+                            onPressed: () {//pushReplacementNamed
+                              Navigator.of(context).pushNamed(HomeDetailPage.routeName,
                                 arguments: {
                                   'statusUserProp': widget.statusUserProp,
                                   'categoryExpenses': widget.categoryExpenses,
@@ -185,7 +185,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                               );
                             },
                             icon: Hero(tag: '${Keys.heroIdSplash}${widget.categoryExpenses.id??''}',
-                              child: StackContainerIconTwice(
+                              child: ContainerIconShadow(
                                 icon: Icons.arrow_forward_ios,
                                 color: Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)),
                               ),

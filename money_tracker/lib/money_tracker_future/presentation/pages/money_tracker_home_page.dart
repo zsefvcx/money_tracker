@@ -52,40 +52,42 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
             builder: (_, value, __) => CustomAppBarStatic(
                 value: value, statusUserProp: widget.statusUserProp)),
       ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          BlocBuilder<CategoriesBloc, CategoriesBlocState>(
-            builder: (_, state) {
-              return state.map(
-                loading: (_) {
-                  return const CircularProgressIndicatorMod();
-                },
-                loaded: (value) {
-                  final localCategories = value.entity;
-                  if (localCategories == null){
-                    return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
-                      uuid: widget.statusUserProp.uuid,
+      body: SafeArea(
+        child: TabBarView(
+          controller: _tabController,
+          children: [
+            BlocBuilder<CategoriesBloc, CategoriesBlocState>(
+              builder: (_, state) {
+                return state.map(
+                  loading: (_) {
+                    return const CircularProgressIndicatorMod();
+                  },
+                  loaded: (value) {
+                    final localCategories = value.entity;
+                    if (localCategories == null){
+                      return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
+                        uuid: widget.statusUserProp.uuid,
+                      );
+                    }
+                    return MainTabWidget(
+                      statusUserProp: widget.statusUserProp,
+                      categories: localCategories,
                     );
-                  }
-                  return MainTabWidget(
-                    statusUserProp: widget.statusUserProp,
-                    categories: localCategories,
-                  );
-                },
-                error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
-                  uuid: widget.statusUserProp.uuid,
-                ),
-                timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
-                  uuid: widget.statusUserProp.uuid,
-                ),
-              );
-            },
-          ),
-          ProfileTabWidget(
-            statusUserProp: widget.statusUserProp
-          ),
-        ],
+                  },
+                  error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
+                    uuid: widget.statusUserProp.uuid,
+                  ),
+                  timeOut: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
+                    uuid: widget.statusUserProp.uuid,
+                  ),
+                );
+              },
+            ),
+            ProfileTabWidget(
+              statusUserProp: widget.statusUserProp
+            ),
+          ],
+        ),
       ),
 
       bottomNavigationBar: ValueListenableBuilder<int>(
@@ -101,7 +103,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
             BottomNavigationBarItem(icon:
               const Padding(
                 padding: EdgeInsets.only(bottom: 3),
-                child: StackContainerIconTwice(
+                child: ContainerIconShadow(
                   icon: Icons.credit_card,
                 ),
               ),
@@ -110,7 +112,7 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
             BottomNavigationBarItem(icon:
             const Padding(
               padding: EdgeInsets.only(bottom: 3),
-              child: StackContainerIconTwice(
+              child: ContainerIconShadow(
                 icon: Icons.person,
               ),
             ),

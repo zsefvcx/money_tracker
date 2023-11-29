@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
@@ -8,7 +9,6 @@ import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
-import 'package:money_tracker/money_tracker_future/src.dart';
 
 class HomeDetailPage extends StatelessWidget {
   static const routeName = r'\PageHomeDetailPage';
@@ -38,50 +38,48 @@ class HomeDetailPage extends StatelessWidget {
     final categoryExpensesColor = Color(
         int.parse('FF${categoryExpenses.colorHex}', radix: 16)
     );
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            leading: Padding(
-              padding: const EdgeInsets.only(left: 25),
+    return Scaffold(
+        appBar: AppBar(
+          leading: Padding(
+            padding: const EdgeInsets.only(left: 25),
+            child: PopScope(
+              onPopInvoked: (didPop) {
+                if (didPop) return;
+                Navigator.pop(context);
+              },
               child: IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushReplacementNamed(
-                    MainFormMoneyTracker.routeName,
-                    arguments: {
-                      'uuid': statusUserProp.uuid,
-                      'eMail': statusUserProp.eMail,
-                      'loadImage': statusUserProp.loadImage,
-                      'dateTime': dateTime,
-                    },
-                  );
+                  Navigator.pop(context);
                 },
-                icon: const StackContainerIconTwice(
+                icon: const ContainerIconShadow(
                   icon: Icons.arrow_back_ios,
                 ),
               ),
             ),
-            title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
-                //StackTextTwice
-                child: StackTextTwice(
-                    text: categoryExpenses.name,
-                    color: categoryExpensesColor,
-                ),
-            ),
-            backgroundColor: categoryExpensesColor,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 25),
-                child: AddDayExpense(
-                    typeWidget: 1,
-                    statusUserProp: statusUserProp,
-                    categoryExpenses: categoryExpenses,
-                    child: const StackContainerIconTwice(
-                        icon: Icons.add
-                )),
-              ),
-            ],
           ),
-          body: BlocBuilder<MonthlyExpensesBloc, MonthlyExpensesBlocState>(
+          title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
+              //StackTextTwice
+              child: StackTextTwice(
+                  text: categoryExpenses.name,
+                  color: categoryExpensesColor,
+              ),
+          ),
+          backgroundColor: categoryExpensesColor,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 25),
+              child: AddDayExpense(
+                  typeWidget: 1,
+                  statusUserProp: statusUserProp,
+                  categoryExpenses: categoryExpenses,
+                  child: const ContainerIconShadow(
+                      icon: Icons.add
+              )),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: BlocBuilder<MonthlyExpensesBloc, MonthlyExpensesBlocState>(
             builder: (context, state) {
               return state.map(
                   loading: (_) {
@@ -89,7 +87,6 @@ class HomeDetailPage extends StatelessWidget {
                   },
                   loaded: (value) {
                     var localCompleteExpenses = value.entity?.completeExpenses;
-
                       return RefreshIndicator(
                         onRefresh: () async {
                           final completer = Completer<MonthlyExpensesEntity>();
@@ -138,7 +135,7 @@ class HomeDetailPage extends StatelessWidget {
                   ),);
             },
           ),
-      ),
+        ),
     );
 
   }
