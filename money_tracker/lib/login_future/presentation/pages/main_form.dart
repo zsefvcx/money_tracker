@@ -78,9 +78,7 @@ class _MainFormState extends State<MainForm> {
 
     FocusScope.of(context).requestFocus();
     final dataLoginUserAuth = widget.loginUserAuth;
-    return Scaffold(
-      body: SafeArea(
-        child: (dataLoginUserAuth != null && dataLoginUserAuth)
+    return (dataLoginUserAuth != null && dataLoginUserAuth)
             ?const Center(child: CircularProgressIndicator(),)
             :Form(
             key: _formKey,
@@ -175,7 +173,6 @@ class _MainFormState extends State<MainForm> {
                   ),
                 ],
         ),
-            )),
       ),
     );
   }

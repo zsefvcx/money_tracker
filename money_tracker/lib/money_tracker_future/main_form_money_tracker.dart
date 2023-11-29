@@ -25,6 +25,7 @@ class MainFormMoneyTracker extends StatelessWidget {
     );
 
     return Scaffold(
+      appBar: AppBar(),
       body: SafeArea(
         child: BlocBuilder<MonthBloc, MonthBlocState>(
           builder: (context, state) {

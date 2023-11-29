@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:money_tracker/core/core.dart';
 
 
@@ -86,6 +87,13 @@ InputDecorationTheme _inputDecorationTheme(InputDecorationTheme base){
 
 AppBarTheme _appBarTheme(AppBarTheme base) {
   return base.copyWith(
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      // Status bar color
+      statusBarColor: CustomThemeProp.violetFirm,
+      // Status bar brightness (optional)
+      statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+      statusBarBrightness: Brightness.light, // For iOS (dark icons)
+    ),
     backgroundColor: CustomThemeProp.violetFirm,
     centerTitle: true,
     iconTheme: IconThemeData(color: CustomThemeProp.white, size: 24),

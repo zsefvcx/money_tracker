@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
@@ -6,6 +8,8 @@ import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 
 class MoneyTrackerHomePage extends StatefulWidget {
+  static const routeName = r'\MoneyTrackerHomePage';
+
   const MoneyTrackerHomePage({
     required this.statusUserProp,
     super.key
@@ -63,15 +67,25 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
                     return const CircularProgressIndicatorMod();
                   },
                   loaded: (value) {
-                    final localCategories = value.entity;
+                    var localCategories = value.entity;
                     if (localCategories == null){
                       return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                         uuid: widget.statusUserProp.uuid,
                       );
                     }
-                    return MainTabWidget(
-                      statusUserProp: widget.statusUserProp,
-                      categories: localCategories,
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        final completer = Completer<CategoriesExpensesEntity>();
+                        categoriesBloc.add(CategoriesBlocEvent.read(
+                          uuid: widget.statusUserProp.uuid,
+                          completer: completer,
+                        ));
+                        localCategories = await completer.future;
+                      },
+                      child: MainTabWidget(
+                        statusUserProp: widget.statusUserProp,
+                        categories: localCategories,
+                      ),
                     );
                   },
                   error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(

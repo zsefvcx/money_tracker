@@ -94,6 +94,22 @@ class RouteGenerator {
           }
         }
         return _errorRoute();
+      case MoneyTrackerHomePage.routeName:
+        if (args != null && args is Map<String, dynamic>)  {
+          final statusUserProp = args['StatusUserProp'];
+          if(statusUserProp != null && statusUserProp is StatusUserProp){
+            return PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  MoneyTrackerHomePage(
+                    statusUserProp: statusUserProp,
+                  ),
+            );
+          }
+        }
+
+
+
+        return _errorRoute();
       default:
         return _errorRoute();
     }

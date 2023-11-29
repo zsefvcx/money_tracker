@@ -16,6 +16,7 @@ class MainFormAuthorization extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return MultiProvider(
       providers: [
         Provider<UserAuthBloc>(
@@ -23,6 +24,9 @@ class MainFormAuthorization extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: theme.scaffoldBackgroundColor,
+        ),
         body: SafeArea(
           child: Center(
             child: Padding(

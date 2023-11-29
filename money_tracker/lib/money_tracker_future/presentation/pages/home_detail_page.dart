@@ -26,6 +26,7 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final idMonth = statusUserProp.monthCurrent.id;
+    final theme = Theme.of(context);
     final idCategory = categoryExpenses.id;
     if (idMonth != null && idCategory != null) {
       context.read<MonthlyExpensesBloc>()
@@ -40,16 +41,20 @@ class HomeDetailPage extends StatelessWidget {
     );
     return Scaffold(
         appBar: AppBar(
+          systemOverlayStyle: theme.appBarTheme.systemOverlayStyle?.copyWith(
+            statusBarColor: categoryExpensesColor,
+          ),
+          backgroundColor: categoryExpensesColor,
           leading: Padding(
             padding: const EdgeInsets.only(left: 25),
             child: PopScope(
               onPopInvoked: (didPop) {
                 if (didPop) return;
-                Navigator.pop(context);
+                Navigator.of(context, rootNavigator: true).pop();
               },
               child: IconButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  Navigator.of(context, rootNavigator: true).pop();
                 },
                 icon: const ContainerIconShadow(
                   icon: Icons.arrow_back_ios,
@@ -64,7 +69,7 @@ class HomeDetailPage extends StatelessWidget {
                   color: categoryExpensesColor,
               ),
           ),
-          backgroundColor: categoryExpensesColor,
+
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 25),

@@ -33,74 +33,62 @@ class MainTabWidget extends StatelessWidget {
       ));
     }
 
-    return RefreshIndicator(
-      onRefresh: () async {
-        final completer = Completer<CategoriesExpensesEntity>();
-        if (idMonth != null) {
-          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
-            uuid: statusUserProp.uuid,
-            idMonth: idMonth,
-            completer: completer,
-          ));
-        }
-      },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FutureBuilder<MonthlyExpensesEntity>(
-          future:  completer.future,
-          builder: (_, snapshot) {
-            if (snapshot.hasError) {
-              return Center(
-                child: Text(
-                    S.of(context).thereAreNoExpensesForMonthName(
-                        NameMonth(context).toNameMonth(
-                            statusUserProp.monthCurrent.month))
-                ),
-              );
-            }
-            if (!snapshot.hasData) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            return Hero(tag: Keys.heroIdSplash,
-              child: CustomPieChart(
-                statusUserProp: statusUserProp,
-                categoriesExpensesModels: categories,
-                data: _completeExpensesForPieChart(snapshot.data),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FutureBuilder<MonthlyExpensesEntity>(
+        future:  completer.future,
+        builder: (_, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                  S.of(context).thereAreNoExpensesForMonthName(
+                      NameMonth(context).toNameMonth(
+                          statusUserProp.monthCurrent.month))
               ),
             );
-          },
-          ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12.5),
-              itemCount: categories.categoriesId.length,
-              itemBuilder: (_, index) {
-                const date = 1;
-                final month= statusUserProp.monthCurrent.month;
-                final year = statusUserProp.monthCurrent.year;
-                final stringSelectedDateTime = '$year'
-                    '-${month<10?'0$month':month}'
-                    '-${date<10?'0$date':date}'
-                    ' 00:00:00.000000';
-                final categoryExpenses = categories.categoriesId.elementAt(index);
-                return AddDayExpense(
-                  typeWidget: 0,
+          }
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return Hero(tag: Keys.heroIdSplash,
+            child: CustomPieChart(
+              statusUserProp: statusUserProp,
+              categoriesExpensesModels: categories,
+              data: _completeExpensesForPieChart(snapshot.data),
+            ),
+          );
+        },
+        ),
+        Expanded(
+          child: ListView.builder(
+            padding: const EdgeInsets.all(12.5),
+            itemCount: categories.categoriesId.length,
+            itemBuilder: (_, index) {
+              const date = 1;
+              final month= statusUserProp.monthCurrent.month;
+              final year = statusUserProp.monthCurrent.year;
+              final stringSelectedDateTime = '$year'
+                  '-${month<10?'0$month':month}'
+                  '-${date<10?'0$date':date}'
+                  ' 00:00:00.000000';
+              final categoryExpenses = categories.categoriesId.elementAt(index);
+              return AddDayExpense(
+                typeWidget: 0,
+                statusUserProp: statusUserProp,
+                categoryExpenses: categoryExpenses,
+                child: CustomCard<BigInt>(
+                  dayExpense: BigInt.from(0),
                   statusUserProp: statusUserProp,
                   categoryExpenses: categoryExpenses,
-                  child: CustomCard<BigInt>(
-                    dayExpense: BigInt.from(0),
-                    statusUserProp: statusUserProp,
-                    categoryExpenses: categoryExpenses,
-                    dateTime: DateTime.tryParse(stringSelectedDateTime),
-                    deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
-                  ),
-                );
-              },
-            ),
+                  dateTime: DateTime.tryParse(stringSelectedDateTime),
+                  deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

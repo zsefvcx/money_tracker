@@ -22,6 +22,11 @@ class CustomAppBarStatic extends StatelessWidget  implements PreferredSizeWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AppBar(
+      systemOverlayStyle: theme.appBarTheme.systemOverlayStyle,
+      backgroundColor: theme.appBarTheme.backgroundColor,
+      centerTitle: theme.appBarTheme.centerTitle,
+      iconTheme: theme.appBarTheme.iconTheme,
+      titleTextStyle: theme.appBarTheme.titleTextStyle,
       title: value==0
           ? AppCalendarDialog(
               uuid: statusUserProp.uuid,
