@@ -65,8 +65,8 @@ class PhotoFromIntFileImpl extends PhotoFromIntFile {
 
     final response = await FlutterImageCompress.compressWithFile(
       path,
-      minWidth: 320~/4,
-      minHeight: 240~/4,
+      minWidth: 320,
+      minHeight: 240,
       quality: quality,
     );
     Logger.print(path);
