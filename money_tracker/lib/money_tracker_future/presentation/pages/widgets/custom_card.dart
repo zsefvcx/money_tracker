@@ -92,11 +92,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       child: GestureDetector(
         onDoubleTap: () {
           valueNotifierPencilVisible.value = !valueNotifierPencilVisible.value;
-          if (valueNotifierPencilVisible.value) _delayedFutureValueNotifier(second: 3);
+          if (valueNotifierPencilVisible.value) _delayedFutureValueNotifier(context, second: 5);
         },
         onLongPress: () {
           valueNotifierLongPress.value = !valueNotifierLongPress.value;
-          if(valueNotifierLongPress.value)_delayedFutureValueNotifier(second: 3);
+          if(valueNotifierLongPress.value)_delayedFutureValueNotifier(context, second: 5);
         },
         onSecondaryLongPress: () =>widget.deleteCard(context),
         child: Card(
@@ -231,8 +231,9 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
     );
   }
 
-  void _delayedFutureValueNotifier({required int second}) =>
+  void _delayedFutureValueNotifier(BuildContext context, {required int second}) =>
     Future.delayed(Duration(seconds: second), () {
+      if(!context.mounted) return;
       valueNotifierLongPress.value = false;
       valueNotifierPencilVisible.value = false;
     },);

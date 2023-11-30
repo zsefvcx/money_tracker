@@ -8,8 +8,9 @@ import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
+import 'package:money_tracker/money_tracker_future/src.dart';
 
-class HomeDetailPage extends StatelessWidget {
+class HomeDetailPage extends StatefulWidget {
   static const routeName = r'\PageHomeDetailPage';
 
   const HomeDetailPage({
@@ -23,20 +24,39 @@ class HomeDetailPage extends StatelessWidget {
   final DateTime dateTime;
 
   @override
+  State<HomeDetailPage> createState() => _HomeDetailPageState();
+}
+
+class _HomeDetailPageState extends State<HomeDetailPage> {
+
+  int needsToBeUpdated = 0;
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+  GlobalKey<RefreshIndicatorState>();
+  final valueNotifierNeedsToBeUpdatedList  = ValueNotifier<bool>(false);
+
+
+  @override
+  void dispose() {
+    valueNotifierNeedsToBeUpdatedList.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final idMonth = statusUserProp.monthCurrent.id;
+    final idMonth = widget.statusUserProp.monthCurrent.id;
     final theme = Theme.of(context);
-    final idCategory = categoryExpenses.id;
+    final idCategory = widget.categoryExpenses.id;
+
     if (idMonth != null && idCategory != null) {
       context.read<MonthlyExpensesBloc>()
         .add(MonthlyExpensesBlocEvent.init(
-          uuid: statusUserProp.uuid,
+          uuid: widget.statusUserProp.uuid,
           idMonth: idMonth,
           idCategory: idCategory,
         ));
     }
     final categoryExpensesColor = Color(
-        int.parse('FF${categoryExpenses.colorHex}', radix: 16)
+        int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16)
     );
     return Scaffold(
         appBar: AppBar(
@@ -49,11 +69,11 @@ class HomeDetailPage extends StatelessWidget {
             child: PopScope(
               onPopInvoked: (didPop) {
                 if (didPop) return;
-                Navigator.of(context, rootNavigator: true).pop();
+                gotoPop(context);
               },
               child: IconButton(
                 onPressed: () {
-                  Navigator.of(context, rootNavigator: true).pop();
+                  gotoPop(context);
                 },
                 icon: const ContainerIconShadow(
                   icon: Icons.arrow_back_ios,
@@ -64,7 +84,7 @@ class HomeDetailPage extends StatelessWidget {
           title: Hero(tag: '${Keys.heroIdSplash}${idCategory??''}',
               //StackTextTwice
               child: StackTextTwice(
-                  text: categoryExpenses.name,
+                  text: widget.categoryExpenses.name,
                   color: categoryExpensesColor,
               ),
           ),
@@ -74,8 +94,8 @@ class HomeDetailPage extends StatelessWidget {
               padding: const EdgeInsets.only(right: 25),
               child: AddDayExpense(
                   typeWidget: 1,
-                  statusUserProp: statusUserProp,
-                  categoryExpenses: categoryExpenses,
+                  statusUserProp: widget.statusUserProp,
+                  categoryExpenses: widget.categoryExpenses,
                   child: const ContainerIconShadow(
                       icon: Icons.add
               )),
@@ -90,50 +110,56 @@ class HomeDetailPage extends StatelessWidget {
                     return const CircularProgressIndicatorMod();
                   },
                   loaded: (value) {
+                    needsToBeUpdated++;
                     var localCompleteExpenses = value.entity?.completeExpenses;
                       return RefreshIndicator(
+                        key: _refreshIndicatorKey,
                         onRefresh: () async {
                           final completer = Completer<MonthlyExpensesEntity>();
                           if (idMonth != null && idCategory != null) {
                             context.read<MonthlyExpensesBloc>()
                                 .add(MonthlyExpensesBlocEvent.read(
-                              uuid: statusUserProp.uuid,
+                              uuid: widget.statusUserProp.uuid,
                               idMonth: idMonth,
                               idCategory: idCategory,
                               completer: completer,
                             ));
                             localCompleteExpenses = (await completer.future).completeExpenses;
+                            needsToBeUpdated++;
+                            valueNotifierNeedsToBeUpdatedList.value = !valueNotifierNeedsToBeUpdatedList.value;
                           }
-
                         },
-                        child: ListView.builder(
-                          padding: const EdgeInsets.all(12.5),
-                          itemCount: localCompleteExpenses?.length,
-                          itemBuilder: (_, index) {
-                            final data = localCompleteExpenses ??= <DayExpense>{};
-                            final dayExpense = data.elementAt(index);
-                            return Dismissible(
-                              key: UniqueKey(),
-                              confirmDismiss: (_) async {
-                                  return _deleteDayExpense(context, dayExpense);
-                              },
-                              child: CustomCard<DayExpense>(
-                                dayExpense:dayExpense,
-                                statusUserProp: statusUserProp,
-                                categoryExpenses: categoryExpenses,
-                                deleteCard: (context) => _deleteDayExpense(context, dayExpense),
-                              ),
-                            );
-                          }),
+                        child: ValueListenableBuilder<bool>(
+                            valueListenable: valueNotifierNeedsToBeUpdatedList,
+                            builder: (_, value, __) => ListView.builder(
+                            padding: const EdgeInsets.all(12.5),
+                            itemCount: localCompleteExpenses?.length,
+                            itemBuilder: (_, index) {
+                              final data = localCompleteExpenses ??= <DayExpense>{};
+                              final dayExpense = data.elementAt(index);
+                              return Dismissible(
+                                key: UniqueKey(),
+                                confirmDismiss: (_) async {
+                                    return _deleteDayExpense(context, dayExpense);
+                                },
+                                child: CustomCard<DayExpense>(
+                                  dayExpense:dayExpense,
+                                  statusUserProp: widget.statusUserProp,
+                                  categoryExpenses: widget.categoryExpenses,
+                                  deleteCard: (context) => _deleteDayExpense(context, dayExpense),
+                                ),
+                              );
+                            }),
+                        ),
                       );
                   },
                   error: (_) => ErrorTimeOut<MonthlyExpensesBloc, CategoriesExpensesEntity?>(
-                    uuid: statusUserProp.uuid,
+                    uuid: widget.statusUserProp.uuid,
                     idMonth: idMonth,
                     idCategory: idCategory,
                   ),
                   timeOut: (_) => ErrorTimeOut<MonthlyExpensesBloc, CategoriesExpensesEntity?>(
-                    uuid: statusUserProp.uuid,
+                    uuid: widget.statusUserProp.uuid,
                     idMonth: idMonth,
                     idCategory: idCategory,
                   ),);
@@ -142,6 +168,22 @@ class HomeDetailPage extends StatelessWidget {
         ),
     );
 
+  }
+
+  void gotoPop(BuildContext context) {
+    if(needsToBeUpdated <=1) {
+      Navigator.of(context, rootNavigator: true).pop();
+    } else {
+      Navigator.of(context).pushReplacementNamed(
+        MainFormMoneyTracker.routeName,
+        arguments: {
+          'uuid': widget.statusUserProp.uuid,
+          'eMail': widget.statusUserProp.eMail,
+          'loadImage': widget.statusUserProp.loadImage,
+          'dateTime': widget.dateTime,
+        },
+      );
+    }
   }
 
   Future<bool> _deleteDayExpense(
@@ -158,22 +200,21 @@ class HomeDetailPage extends StatelessWidget {
     );
     if (res != null && res) {
       final id = dayExpense.id;
-      final idMonth = statusUserProp.monthCurrent.id;
-      final idCategory = categoryExpenses.id;
+      final idMonth = widget.statusUserProp.monthCurrent.id;
+      final idCategory = widget.categoryExpenses.id;
       if (id != null && idMonth != null && idCategory != null) {
         monthlyExpensesBloc..add(MonthlyExpensesBlocEvent.deleteId(
-            uuid: statusUserProp.uuid,
+            uuid: widget.statusUserProp.uuid,
             id: id))
           ..add(MonthlyExpensesBlocEvent.read(
-            uuid: statusUserProp.uuid,
+            uuid: widget.statusUserProp.uuid,
             idMonth: idMonth,
             idCategory: idCategory,
           ));
-
+        needsToBeUpdated++;
         return true;
       }
     }
     return false;
   }
-
 }
