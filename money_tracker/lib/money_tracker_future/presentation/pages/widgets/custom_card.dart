@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
-import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
-import 'package:provider/provider.dart';
 
 class CustomCard<T> extends StatefulWidget {
   const CustomCard({
@@ -32,7 +30,7 @@ class CustomCard<T> extends StatefulWidget {
 
 class _CustomCardState<T> extends State<CustomCard<T>> {
 
-  final valueNotifierDayExpense  = ValueNotifier<BigInt>(BigInt.from(0));
+  final valueNotifierDayExpense = ValueNotifier<BigInt>(BigInt.zero);
   final valueNotifierLongPress  = ValueNotifier<bool>(false);
   final valueNotifierPencilVisible  = ValueNotifier<bool>(false);
 
@@ -57,31 +55,16 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final dayExpense = widget.dayExpense;
+    if(dayExpense is BigInt) {
+      valueNotifierDayExpense.value = dayExpense;
+    }
     final description = (dayExpense is BigInt)
         ?widget.categoryExpenses.name
         :(dayExpense is DayExpense)
         ?dayExpense.sum.toString()
         :S.of(context).notImplemented;
 
-    if(dayExpense is BigInt) {
-      Future.delayed(Duration.zero, () async {
-        final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
 
-        final idMonth = widget.statusUserProp.monthCurrent.id;
-        final idCategory = widget.categoryExpenses.id;
-        if (idMonth != null && idCategory != null) {
-          final completer = Completer<BigInt>();
-          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
-            uuid: widget.statusUserProp.uuid,
-            idMonth: idMonth,
-            idCategory: idCategory,
-            completer: completer,
-          ));
-          final res = await completer.future;
-          valueNotifierDayExpense.value = res;
-        }
-      },);
-    }
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,

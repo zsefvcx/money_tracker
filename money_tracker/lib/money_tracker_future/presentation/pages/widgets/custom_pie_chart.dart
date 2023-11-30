@@ -15,7 +15,7 @@ class CustomPieChart extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoriesExpensesEntity categoriesExpensesModels;
-  final Map<int, (double, String)> data;
+  final (Map<int, (double, String)>, BigInt) data;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -33,7 +33,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
           width: double.maxFinite,
           padding: const EdgeInsets.all(30),
           child: Center(
-            child: categoriesId.isNotEmpty?AspectRatio(
+            child: (categoriesId.isNotEmpty && widget.data.$2 != BigInt.zero)?AspectRatio(
               aspectRatio: 1,
                 child: PieChart(
                   PieChartData(
@@ -56,7 +56,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
                     ),
                     sectionsSpace: 1,
                     centerSpaceRadius: 30,
-                    sections: _showingSections(context, widget.data),
+                    sections: _showingSections(context, widget.data.$1),
                   ),
                 ),
             ):Text(S.of(context).thereAreNoExpensesForMonthName(

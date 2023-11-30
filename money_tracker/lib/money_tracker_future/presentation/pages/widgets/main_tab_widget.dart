@@ -23,76 +23,85 @@ class MainTabWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final valueNotifierNeedsToBeUpdatedList  = ValueNotifier<bool>(false);
     final idMonth = statusUserProp.monthCurrent.id;
-    final completer = Completer<MonthlyExpensesEntity>();
-    if (idMonth != null) {
-      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
-        uuid: statusUserProp.uuid,
-        idMonth: idMonth,
-        completer: completer,
-      ));
-    }
+    var monthlyExpensesEntity = const MonthlyExpensesEntity(
+      completeExpenses: <DayExpense>{}
+    );
+    Future.delayed(Duration.zero, () async {
+      final completer = Completer<MonthlyExpensesEntity>();
+      if (idMonth != null) {
+        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
+          uuid: statusUserProp.uuid,
+          idMonth: idMonth,
+          completer: completer,
+        ));
+      }
+      monthlyExpensesEntity = await completer.future;
+      valueNotifierNeedsToBeUpdatedList.value = !valueNotifierNeedsToBeUpdatedList.value;
+    },);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        FutureBuilder<MonthlyExpensesEntity>(
-        future:  completer.future,
-        builder: (_, snapshot) {
-          if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                  S.of(context).thereAreNoExpensesForMonthName(
-                      NameMonth(context).toNameMonth(
-                          statusUserProp.monthCurrent.month))
-              ),
-            );
-          }
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return Hero(tag: Keys.heroIdSplash,
-            child: CustomPieChart(
-              statusUserProp: statusUserProp,
-              categoriesExpensesModels: categories,
-              data: _completeExpensesForPieChart(snapshot.data),
-            ),
-          );
-        },
-        ),
-        Expanded(
-          child: ListView.builder(
-            padding: const EdgeInsets.all(12.5),
-            itemCount: categories.categoriesId.length,
-            itemBuilder: (_, index) {
-              const date = 1;
-              final month= statusUserProp.monthCurrent.month;
-              final year = statusUserProp.monthCurrent.year;
-              final stringSelectedDateTime = '$year'
-                  '-${month<10?'0$month':month}'
-                  '-${date<10?'0$date':date}'
-                  ' 00:00:00.000000';
-              final categoryExpenses = categories.categoriesId.elementAt(index);
-              return AddDayExpense(
-                typeWidget: 0,
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        if (idMonth != null) {
+          final completer = Completer<MonthlyExpensesEntity>();
+          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
+            uuid: statusUserProp.uuid,
+            idMonth: idMonth,
+            completer: completer,
+          ));
+          monthlyExpensesEntity = await completer.future;
+          valueNotifierNeedsToBeUpdatedList.value = !valueNotifierNeedsToBeUpdatedList.value;
+        }
+      },
+      child: ValueListenableBuilder<bool>(
+        valueListenable: valueNotifierNeedsToBeUpdatedList,
+        builder: (_, __, ___) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Hero(tag: Keys.heroIdSplash,
+              child: CustomPieChart(
                 statusUserProp: statusUserProp,
-                categoryExpenses: categoryExpenses,
-                child: CustomCard<BigInt>(
-                  dayExpense: BigInt.from(0),
-                  statusUserProp: statusUserProp,
-                  categoryExpenses: categoryExpenses,
-                  dateTime: DateTime.tryParse(stringSelectedDateTime),
-                  deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
-                ),
-              );
-            },
-          ),
+                categoriesExpensesModels: categories,
+                data: _completeExpensesForPieChart(monthlyExpensesEntity),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(12.5),
+                itemCount: categories.categoriesId.length,
+                itemBuilder: (_, index) {
+                  const date = 1;
+                  final month= statusUserProp.monthCurrent.month;
+                  final year = statusUserProp.monthCurrent.year;
+                  final stringSelectedDateTime = '$year'
+                      '-${month<10?'0$month':month}'
+                      '-${date<10?'0$date':date}'
+                      ' 00:00:00.000000';
+                  final categoryExpenses = categories.categoriesId.elementAt(index);
+                  return AddDayExpense(
+                    typeWidget: 0,
+                    statusUserProp: statusUserProp,
+                    categoryExpenses: categoryExpenses,
+                    child: CustomCard<BigInt>(
+                      dayExpense: _completeExpensesForCustomCard(monthlyExpensesEntity, categoryExpenses.id),
+                      statusUserProp: statusUserProp,
+                      categoryExpenses: categoryExpenses,
+                      dateTime: DateTime.tryParse(stringSelectedDateTime),
+                      deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
-  Map<int, (double, String)> _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
+  (Map<int, (double, String)>, BigInt) _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
     final completeExpenses = <DayExpense>{};
      if (data != null) {
       completeExpenses
@@ -100,16 +109,14 @@ class MainTabWidget extends StatelessWidget {
         ..addAll(data.completeExpenses);
     }
     final total = completeExpenses.fold(
-      BigInt.zero, (previousValue, element) => previousValue +
-      _abs(element.sum)
+        BigInt.zero, (previousValue, element) => previousValue +
+        _abs(element.sum)
     );
     final totalCategoriesPercent = <int, (double, String)>{};
     final categoriesId = categories.categoriesId;
     for (final value in categoriesId) {
       final idCategory = value.id;
       if (idCategory != null) {
-        totalCategoriesPercent[idCategory] = (0, '');
-        if(total != BigInt.zero) {
           var val = BigInt.zero;
           for (final elem in completeExpenses) {
             final id = elem.idCategory;
@@ -117,24 +124,40 @@ class MainTabWidget extends StatelessWidget {
               val += elem.sum;
             }
           }
-          totalCategoriesPercent[idCategory] = (_abs(val)/BigInt.from(1000), val<BigInt.zero?'-':'');
-        } else{
-          totalCategoriesPercent[idCategory] = (100/categoriesId.length, '');
-        }
+          totalCategoriesPercent[idCategory] = (_abs(val).toDouble(), val<BigInt.zero?'-':'');
+
       } else {
         throw Exception('Error id Category');
       }
     }
-    Logger.print('ChartData:$totalCategoriesPercent');
-    return totalCategoriesPercent;
+    Logger.print('ChartData:$totalCategoriesPercent:$total');
+    return (totalCategoriesPercent, total);
+  }
+
+  BigInt _completeExpensesForCustomCard(MonthlyExpensesEntity? data, int? idCategory) {
+    final completeExpenses = <DayExpense>{};
+    if (data != null) {
+      completeExpenses
+        ..clear()
+        ..addAll(data.completeExpenses);
+    }
+
+    final total = completeExpenses.fold(
+        BigInt.zero, (previousValue, element) =>
+          (element.idCategory==idCategory)
+              ?(previousValue + element.sum)
+              :previousValue
+    );
+
+
+    Logger.print('total idCategory:$total');
+    return total;
   }
 
   BigInt _abs(BigInt val) => val<BigInt.zero?-val:val;
 
-  Future<bool> _deleteCategory(
-      BuildContext context,
-      CategoryExpenses categoryExpenses
-  ) async {
+  Future<bool> _deleteCategory(BuildContext context,
+      CategoryExpenses categoryExpenses ) async {
     final categoriesBloc = context.read<CategoriesBloc>();
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final res = await showDialog<bool>(

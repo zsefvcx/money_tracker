@@ -5,18 +5,20 @@ import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 class CategoriesDataImpl extends CategoriesData {
 
-  final Map<int, CategoryExpenses> categoriesId = {};
+  final Set<CategoryExpenses> categoriesId = {};
 
   Set<CategoryExpenses> categoriesIdSort() {
     try {
-      final res = categoriesId.map((key, value) => MapEntry(key, value.name));
-
+      final res = categoriesId.map((value) => MapEntry(value.id??-1, value.name));
+      final mapCategoriesId = <int, CategoryExpenses>{
+        for(final elem in  categoriesId) elem.id??-1 : elem
+      };
       final sortedByKeyMap = Map.fromEntries(
-          res.entries.toList()
+          res.toList()
             ..sort((e1, e2) => e1.value.compareTo(e2.value)));
 
       return sortedByKeyMap.map<int, CategoryExpenses>((key, value) {
-        final data = categoriesId[key] ?? (throw Exception('Error search Key'));
+        final data = mapCategoriesId[key] ?? (throw Exception('Error search Key'));
         return MapEntry(key, data);
       }).values.toSet();
     } on Exception catch(e, t){
@@ -24,8 +26,8 @@ class CategoriesDataImpl extends CategoriesData {
       throw ArgumentError('Error categoriesIdSort!');
     }
   }
-  
-  
+
+
   @override
   Future<bool?> delete({required String uuid}) async{
     try {
@@ -42,22 +44,21 @@ class CategoriesDataImpl extends CategoriesData {
   @override
   Future<CategoriesExpensesModels?> getAllId({required String uuid}) async {
     try{
-      if(categoriesId.isEmpty){
-        final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-        final res = await dbSqlLiteLocal.getAllCategoryId();
-        if(res != null){
-          categoriesId.addAll(Map.fromEntries(
-            res.categoriesId.map((e) {
-              final id = e.id ?? (throw Exception('Error id'));
-              return MapEntry(id, e);
-            })
-          )
-          );
-        }
-      }
-      return CategoriesExpensesModels(
-          categoriesId: categoriesId.values.toSet()
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      final data = await dbSqlLiteLocal.getAllCategoryId();
+      final localData = CategoriesExpensesModels(
+          categoriesId: categoriesIdSort()
       );
+
+      if(data != localData){
+        Logger.print('Receive new categoriesId');
+        if(data!= null) {
+          categoriesId..clear()
+          ..addAll(data.categoriesId.toList());
+        }
+        return data;
+      }
+      return localData;
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error getAllId Categories: $e\n$t');
@@ -67,16 +68,21 @@ class CategoriesDataImpl extends CategoriesData {
   @override
   Future<CategoryExpenses?> getById({required String uuid, required int id}) async {
     try{
-      final localCategory = categoriesId[id];
-      if(localCategory == null){
-        final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
-        final res = await dbSqlLiteLocal.getCategoryById(id: id);
-        if(res != null){
-            final id = res.id;
-            if(id!=null)categoriesId.putIfAbsent(id, () => res);
+      final mapCategoriesId = <int, CategoryExpenses>{
+        for(final elem in  categoriesId) elem.id??-1 : elem
+      };
+
+      final localCategory = mapCategoriesId[id];
+      final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
+      final res = await dbSqlLiteLocal.getCategoryById(id: id);
+      if(localCategory != res){
+        categoriesId.remove(localCategory);
+        if (res != null) {
+          categoriesId.add(res);
         }
+        return res;
       }
-      return categoriesId[id];
+      return localCategory;
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error getById Categories: $e\n$t');
@@ -91,10 +97,10 @@ class CategoriesDataImpl extends CategoriesData {
       } {
         final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
         final res = await dbSqlLiteLocal.insertCategory(data);
-        categoriesId.putIfAbsent(res, () => data.copyWith(id: res));
+        categoriesId.add(data.copyWith(
+          id: res
+        ));
       }
-
-
       return CategoriesExpensesModels(
           categoriesId: categoriesIdSort()
       );
@@ -107,9 +113,13 @@ class CategoriesDataImpl extends CategoriesData {
   @override
   Future<CategoriesExpensesModels?> deleteId({required String uuid, required int id}) async{
     try{
+      final mapCategoriesId = <int, CategoryExpenses>{
+        for(final elem in  categoriesId) elem.id??-1 : elem
+      };
+
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.deleteCategory(id);
-      if(res > 0) categoriesId.remove(id);
+      if(res > 0) categoriesId.remove(mapCategoriesId[id]);
       return CategoriesExpensesModels(
           categoriesId: categoriesIdSort()
       );
@@ -122,13 +132,20 @@ class CategoriesDataImpl extends CategoriesData {
   @override
   Future<CategoriesExpensesModels?> update({required String uuid, required CategoryExpenses data}) async {
     try{
+      final mapCategoriesId = <int, CategoryExpenses>{
+        for(final elem in  categoriesId) elem.id??-1 : elem
+      };
+
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       final res = await dbSqlLiteLocal.updateCategory(data);
       final id = data.id;
-      if(res > 0 && id != null) categoriesId[id] = data;
-      return CategoriesExpensesModels(
-          categoriesId: categoriesIdSort()
-      );
+      if(res > 0 && id != null) {
+        categoriesId..remove(mapCategoriesId[id])
+        ..add(data);
+      }
+        return CategoriesExpensesModels(
+            categoriesId: categoriesIdSort()
+        );
     } on Exception catch(e,t){
       Logger.print('Error $e\n$t', name: 'err', error: true);
       throw ArgumentError('Error update Categories: $e\n$t');

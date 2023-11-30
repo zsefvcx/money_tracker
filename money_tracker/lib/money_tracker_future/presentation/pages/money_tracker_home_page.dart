@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
@@ -93,25 +91,15 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
                     return const CircularProgressIndicatorMod();
                   },
                   loaded: (value) {
-                    var localCategories = value.entity;
+                    final localCategories = value.entity;
                     if (localCategories == null){
                       return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                         uuid: widget.statusUserProp.uuid,
                       );
                     }
-                    return RefreshIndicator(
-                      onRefresh: () async {
-                        final completer = Completer<CategoriesExpensesEntity>();
-                        categoriesBloc.add(CategoriesBlocEvent.read(
-                          uuid: widget.statusUserProp.uuid,
-                          completer: completer,
-                        ));
-                        localCategories = await completer.future;
-                      },
-                      child: MainTabWidget(
+                    return MainTabWidget(
                         statusUserProp: widget.statusUserProp,
                         categories: localCategories,
-                      ),
                     );
                   },
                   error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
