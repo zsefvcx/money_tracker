@@ -44,11 +44,9 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
 
   @override
   Widget build(BuildContext context) {
-    final categoriesBloc = context.read<CategoriesBloc>();
     final theme = Theme.of(context);
-    if(!categoriesBloc.modelData.isLoaded) {
-      categoriesBloc.add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
-    }
+    context.read<CategoriesBloc>()
+        .add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(

@@ -15,6 +15,7 @@ class CustomCard<T> extends StatefulWidget {
     required this.categoryExpenses,
     required this.deleteCard,
     this.dateTime,
+    this.update,
     super.key
   });
 
@@ -23,6 +24,7 @@ class CustomCard<T> extends StatefulWidget {
   final T dayExpense;
   final DateTime? dateTime;
   final Future<bool> Function(BuildContext context) deleteCard;
+  final Future<void> Function()? update;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -151,6 +153,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   child: const ContainerIconShadow(
                                       icon: Icons.edit
                                   ),
+                                  update: widget.update,
                               ),
                             ):Text(S.of(context).notImplemented),
                           ),
@@ -178,10 +181,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                       ],
                     );
                   } else {
-                    return ElevatedButton(onPressed: () {
-                      widget.deleteCard(context);
+                    return ElevatedButton(onPressed: () async {
+                      await widget.deleteCard(context);
                       valueNotifierLongPress.value = false;
                       valueNotifierPencilVisible.value = false;
+                      await widget.update?.call();
                     },
                       child: Text(S.of(context).delete,
                         style: theme.textTheme.titleMedium?.copyWith(

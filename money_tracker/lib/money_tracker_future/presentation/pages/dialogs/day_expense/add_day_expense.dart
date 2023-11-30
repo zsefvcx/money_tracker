@@ -15,6 +15,7 @@ class AddDayExpense extends StatelessWidget {
     required this.categoryExpenses,
     required this.typeWidget,
     this.idDayExpense,
+    this.update,
     super.key,
   });
 
@@ -23,6 +24,7 @@ class AddDayExpense extends StatelessWidget {
   final int typeWidget;
   final int? idDayExpense;
   final Widget child;
+  final Future<void> Function()? update;
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +128,7 @@ class AddDayExpense extends StatelessWidget {
             idMonth: idMonth,
             idCategory: idCategory,
           ));
+          await update?.call();
         }
       } else {
         if (typeWidget == 3) {
@@ -134,6 +137,7 @@ class AddDayExpense extends StatelessWidget {
             idMonth: idMonth,
             idCategory: idCategory,
           ));
+          await update?.call();
         }
       }
     }

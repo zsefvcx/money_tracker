@@ -8,7 +8,6 @@ import 'package:money_tracker/money_tracker_future/core/core.dart';
 import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
-import 'package:money_tracker/money_tracker_future/src.dart';
 
 class HomeDetailPage extends StatefulWidget {
   static const routeName = r'\PageHomeDetailPage';
@@ -28,7 +27,6 @@ class HomeDetailPage extends StatefulWidget {
 }
 
 class _HomeDetailPageState extends State<HomeDetailPage> {
-  int needsToBeUpdated = 0;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final valueNotifierNeedsToBeUpdatedList = ValueNotifier<bool>(false);
@@ -60,11 +58,11 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
           child: PopScope(
             onPopInvoked: (didPop) {
               if (didPop) return;
-              _gotoPop(context);
+              Navigator.of(context).pop();
             },
             child: IconButton(
               onPressed: () {
-                _gotoPop(context);
+                Navigator.of(context).pop();
               },
               icon: const ContainerIconShadow(
                 icon: Icons.arrow_back_ios,
@@ -74,7 +72,6 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
         ),
         title: Hero(
           tag: '${Keys.heroIdSplash}${idCategory ?? ''}',
-          //StackTextTwice
           child: StackTextTwice(
             text: widget.categoryExpenses.name,
             color: categoryExpensesColor,
@@ -87,7 +84,9 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                 typeWidget: 1,
                 statusUserProp: widget.statusUserProp,
                 categoryExpenses: widget.categoryExpenses,
-                child: const ContainerIconShadow(icon: Icons.add)),
+                child: const ContainerIconShadow(icon: Icons.add),
+                update: () async => localCompleteExpenses = await _read(),
+            ),
           ),
         ],
       ),
@@ -114,6 +113,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                       categoryExpenses: widget.categoryExpenses,
                       deleteCard: (context) =>
                           _deleteDayExpense(context, dayExpense),
+                      update: () async => localCompleteExpenses = await _read(),
                     ),
                   );
                 }),
@@ -136,27 +136,10 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
             completer: completer,
           ));
       localCompleteExpenses = (await completer.future).completeExpenses;
-      needsToBeUpdated++;
       valueNotifierNeedsToBeUpdatedList.value =
           !valueNotifierNeedsToBeUpdatedList.value;
     }
     return localCompleteExpenses;
-  }
-
-  void _gotoPop(BuildContext context) {
-    if (needsToBeUpdated <= 1) {
-      Navigator.of(context).pop();
-    } else {
-      Navigator.of(context).pushReplacementNamed(
-        MainFormMoneyTracker.routeName,
-        arguments: {
-          'uuid': widget.statusUserProp.uuid,
-          'eMail': widget.statusUserProp.eMail,
-          'loadImage': widget.statusUserProp.loadImage,
-          'dateTime': widget.dateTime,
-        },
-      );
-    }
   }
 
   Future<bool> _deleteDayExpense(
@@ -175,14 +158,8 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
       final idCategory = widget.categoryExpenses.id;
       if (id != null && idMonth != null && idCategory != null) {
         monthlyExpensesBloc
-          ..add(MonthlyExpensesBlocEvent.deleteId(
-              uuid: widget.statusUserProp.uuid, id: id))
-          ..add(MonthlyExpensesBlocEvent.read(
-            uuid: widget.statusUserProp.uuid,
-            idMonth: idMonth,
-            idCategory: idCategory,
-          ));
-        needsToBeUpdated++;
+          .add(MonthlyExpensesBlocEvent.deleteId(
+              uuid: widget.statusUserProp.uuid, id: id));
         return true;
       }
     }
