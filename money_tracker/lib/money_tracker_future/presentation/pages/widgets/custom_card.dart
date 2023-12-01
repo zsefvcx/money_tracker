@@ -2,9 +2,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
 import 'package:money_tracker/money_tracker_future/core/core.dart';
+import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/dialogs.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 
@@ -83,7 +85,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
           valueNotifierLongPress.value = !valueNotifierLongPress.value;
           if(valueNotifierLongPress.value)_delayedFutureValueNotifier(context, second: 5);
         },
-        onSecondaryLongPress: () =>widget.deleteCard(context),
+        onSecondaryLongPress: () async {
+          await widget.deleteCard(context);
+          valueNotifierLongPress.value = false;
+          valueNotifierPencilVisible.value = false;
+        },
         child: Card(
           child: Container(
             padding: const EdgeInsets.only(
@@ -145,8 +151,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                               addCategory: false,
                             ):(dayExpense is DayExpense)?Padding(
                               padding: const EdgeInsets.only(right: 25),
-                              child: AddDayExpense(
-                                  typeWidget: 3,
+                              child: AddEditDayExpense(
+                                  typeWidget: TypeWidget.fromCardModify,
                                   idDayExpense: dayExpense.id,
                                   statusUserProp: widget.statusUserProp,
                                   categoryExpenses: widget.categoryExpenses,
@@ -167,6 +173,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   'statusUserProp': widget.statusUserProp,
                                   'categoryExpenses': widget.categoryExpenses,
                                   'dateTime': widget.dateTime,
+                                  'updateCard': _updateCard,
                                 },
                               );
                             },
@@ -185,7 +192,6 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                       await widget.deleteCard(context);
                       valueNotifierLongPress.value = false;
                       valueNotifierPencilVisible.value = false;
-                      await widget.update?.call();
                     },
                       child: Text(S.of(context).delete,
                         style: theme.textTheme.titleMedium?.copyWith(
@@ -216,6 +222,23 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
         ),
       ),
     );
+  }
+
+  Future<void> _updateCard() async {
+    final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
+    final idMonth = widget.statusUserProp.monthCurrent.id;
+    final idCategory = widget.categoryExpenses.id;
+    if (idMonth != null && idCategory != null) {
+      final completer = Completer<BigInt>();
+      monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
+        uuid: widget.statusUserProp.uuid,
+        idMonth: idMonth,
+        idCategory: idCategory,
+        completer: completer,
+      ));
+      final res = await completer.future;
+      valueNotifierDayExpense.value = res;
+    }
   }
 
   void _delayedFutureValueNotifier(BuildContext context, {required int second}) =>

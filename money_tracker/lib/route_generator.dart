@@ -79,9 +79,11 @@ class RouteGenerator {
           final statusUserProp = args['statusUserProp'];
           final categoryExpenses = args['categoryExpenses'];
           final dateTime = args['dateTime'];
+          final updateCard = args['updateCard'];
           if(statusUserProp != null && statusUserProp is StatusUserProp
           && categoryExpenses != null && categoryExpenses is CategoryExpenses
           && dateTime != null && dateTime is DateTime
+          && updateCard != null && updateCard is Future<void> Function()
           ){
             return PageRouteBuilder(
               pageBuilder: (context, animation, secondaryAnimation) =>
@@ -89,6 +91,7 @@ class RouteGenerator {
                 categoryExpenses: categoryExpenses,
                 statusUserProp: statusUserProp,
                 dateTime: dateTime,
+                updateCard: updateCard,
               ),
             );
           }

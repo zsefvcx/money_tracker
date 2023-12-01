@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/generated/l10n.dart';
@@ -87,6 +88,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                         keyboardType: TextInputType.text,
                         labelText: S.of(context).name,
                         hintText: S.of(context).enterTheName,
+                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9A-Za-zА-Яа-я ]{1,100}$'))],
                         validator: (value) => (
                             value != null &&
                             value.isNotEmpty &&
@@ -107,6 +109,7 @@ class _DialogCategoryState extends State<DialogCategory> {
                                 keyboardType: TextInputType.text,
                                 labelText: S.of(context).color,
                                 hintText: S.of(context).enterColor,
+                                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^[0-9A-Fa-f]{1,6}$'))],
                                 maxLength: 6,
                                 validator: (value) =>
                                 (   value != null &&

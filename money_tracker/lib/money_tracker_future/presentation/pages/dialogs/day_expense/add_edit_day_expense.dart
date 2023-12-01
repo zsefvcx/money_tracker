@@ -8,8 +8,14 @@ import 'package:money_tracker/money_tracker_future/presentation/pages/dialogs/di
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:provider/provider.dart';
 
-class AddDayExpense extends StatelessWidget {
-  const AddDayExpense({
+enum TypeWidget {
+  fromMainTabAdd,
+  fromCardModify,
+  fromHomeDetailAdd,
+}
+
+class AddEditDayExpense extends StatelessWidget {
+  const AddEditDayExpense({
     required this.child,
     required this.statusUserProp,
     required this.categoryExpenses,
@@ -21,14 +27,14 @@ class AddDayExpense extends StatelessWidget {
 
   final CategoryExpenses categoryExpenses;
   final StatusUserProp statusUserProp;
-  final int typeWidget;
+  final TypeWidget typeWidget;
   final int? idDayExpense;
   final Widget child;
   final Future<void> Function()? update;
 
   @override
   Widget build(BuildContext context) {
-    return typeWidget==0?GestureDetector(
+    return typeWidget==TypeWidget.fromMainTabAdd?GestureDetector(
        onTap: () => _addDayExpense(context),
        child: child,
     ): IconButton(
@@ -93,7 +99,7 @@ class AddDayExpense extends StatelessWidget {
 
       final completer = Completer();
 
-      monthlyExpensesBloc.add(typeWidget==3?MonthlyExpensesBlocEvent.update(
+      monthlyExpensesBloc.add(typeWidget==TypeWidget.fromCardModify?MonthlyExpensesBlocEvent.update(
           uuid: statusUserProp.uuid,
           data: DayExpense(
             id: idDayExpense,
@@ -117,12 +123,13 @@ class AddDayExpense extends StatelessWidget {
       await completer.future;
 
       if(!otherMonth) {
-        if(typeWidget == 0) {
+        if(typeWidget == TypeWidget.fromMainTabAdd) {
           categoriesBloc.add(
               CategoriesBlocEvent.init(uuid: statusUserProp.uuid
-              ));
+            )
+          );
         }
-        if (typeWidget != 0) {
+        if (typeWidget != TypeWidget.fromMainTabAdd) {
           monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
             uuid: statusUserProp.uuid,
             idMonth: idMonth,
@@ -131,7 +138,7 @@ class AddDayExpense extends StatelessWidget {
           await update?.call();
         }
       } else {
-        if (typeWidget == 3) {
+        if (typeWidget == TypeWidget.fromCardModify) {
           monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
             uuid: statusUserProp.uuid,
             idMonth: idMonth,

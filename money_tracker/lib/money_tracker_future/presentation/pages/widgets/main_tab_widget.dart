@@ -80,8 +80,8 @@ class MainTabWidget extends StatelessWidget {
                       '-${date<10?'0$date':date}'
                       ' 00:00:00.000000';
                   final categoryExpenses = categories.categoriesId.elementAt(index);
-                  return AddDayExpense(
-                    typeWidget: 0,
+                  return AddEditDayExpense(
+                    typeWidget: TypeWidget.fromMainTabAdd,
                     statusUserProp: statusUserProp,
                     categoryExpenses: categoryExpenses,
                     child: CustomCard<BigInt>(

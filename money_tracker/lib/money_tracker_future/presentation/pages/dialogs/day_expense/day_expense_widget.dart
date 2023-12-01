@@ -14,7 +14,7 @@ class DayExpenseWidget extends StatelessWidget {
   });
 
   final int id;
-  final int typeWidget;
+  final TypeWidget typeWidget;
   final DateTime dateTimeStart;
 
   @override
@@ -42,7 +42,7 @@ class DayExpenseWidget extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(typeWidget!=3?S.of(context).addExpense:S.of(context).editExpense,
+              Text(typeWidget!=TypeWidget.fromCardModify?S.of(context).addExpense:S.of(context).editExpense,
                   style: theme.textTheme.titleLarge?.copyWith(
                     fontSize: 20
                   )
@@ -116,7 +116,7 @@ class DayExpenseWidget extends StatelessWidget {
             focusNode: focusNodeSecond,
             onPressed: () =>
               _onPressed(formKey, textController, valueNotifierDateTime, context),
-            child: typeWidget!=3?Text(S.of(context).add):Text(S.of(context).modifi),
+            child: typeWidget!=TypeWidget.fromCardModify?Text(S.of(context).add):Text(S.of(context).modifi),
             style: theme.elevatedButtonTheme.style?.copyWith(
               minimumSize: const MaterialStatePropertyAll(Size(
                 double.maxFinite,50
