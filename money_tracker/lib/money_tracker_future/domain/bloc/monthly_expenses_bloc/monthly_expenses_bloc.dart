@@ -99,7 +99,7 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           }
         },
         add: (value) async {
-          final (error, timeOut, e, res) = await _runGoSData<bool>(
+          final (error, timeOut, e, res) = await _runGoSData<int>(
             function: () async =>
               _monthlyExpensesRepository.insert(
                   uuid: value.uuid,

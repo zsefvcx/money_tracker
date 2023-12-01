@@ -369,16 +369,16 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<bool?> insertExpenses(DayExpense data,{
+  Future<int?> insertExpenses(DayExpense data,{
     ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
   }) async {
     final db = await database;
 
-    return (await db.insert(
+    return db.insert(
       _tableExpenses,
       data.toJson(),
       conflictAlgorithm: conflictAlgorithm,
-    ))>0;
+    );
   }
 
   @override

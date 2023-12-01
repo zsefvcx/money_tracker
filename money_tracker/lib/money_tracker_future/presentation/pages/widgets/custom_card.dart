@@ -42,7 +42,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   void initState() {
     final dayExpense = widget.dayExpense;
     if(dayExpense is BigInt) {
-      _updateCard();
+      _updateCard(null);
     }
     super.initState();
   }
@@ -169,6 +169,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
                                   'categoryExpenses': widget.categoryExpenses,
                                   'dateTime': widget.dateTime,
                                   'updateCard': _updateCard,
+                                  'total': valueNotifierDayExpense.value,
                                 },
                               );
                             },
@@ -219,7 +220,12 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
     );
   }
 
-  Future<void> _updateCard() async {
+  Future<void> _updateCard(BigInt? data) async {
+    if(data != null){
+      valueNotifierDayExpense.value = data;
+      //await widget.update?.call();
+      return;
+    }
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final idMonth = widget.statusUserProp.monthCurrent.id;
     final idCategory = widget.categoryExpenses.id;
@@ -233,8 +239,8 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       ));
       final res = await completer.future;
       valueNotifierDayExpense.value = res;
-      //await widget.update?.call();
     }
+    //await widget.update?.call();
   }
 
   void _delayedFutureValueNotifier(BuildContext context, {required int second}) =>

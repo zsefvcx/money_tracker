@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,13 +18,14 @@ class HomeDetailPage extends StatefulWidget {
       required this.statusUserProp,
       required this.dateTime,
       required this.updateCard,
+      required this.total,
       super.key});
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
   final DateTime dateTime;
-  final Future<void> Function() updateCard;
-
+  final Future<void> Function(BigInt? data) updateCard;
+  final BigInt total;
   @override
   State<HomeDetailPage> createState() => _HomeDetailPageState();
 }
@@ -37,7 +39,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
 
   @override
   void initState() {
-    Future.delayed(Duration.zero,()async=>_update(),);
+    Future.delayed(Duration.zero,()async=>_update(null),);
 
     super.initState();
   }
@@ -69,12 +71,18 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
           child: PopScope(
             onPopInvoked: (didPop) {
               if (didPop) return;
-              widget.updateCard.call();
+              final newTotal = _localCompleteExpenses.values.fold(BigInt.zero, (previousValue, element) => previousValue+element.sum);
+              if(widget.total != newTotal) {
+                widget.updateCard.call(newTotal);
+              }
               Navigator.of(context).pop();
             },
             child: IconButton(
               onPressed: () {
-                widget.updateCard.call();
+                final newTotal = _localCompleteExpenses.values.fold(BigInt.zero, (previousValue, element) => previousValue+element.sum);
+                if(widget.total != newTotal) {
+                  widget.updateCard.call(newTotal);
+                }
                 Navigator.of(context).pop();
               },
               icon: const Hero(tag: Keys.heroIdSplash,
@@ -108,7 +116,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
       body: SafeArea(
         child: RefreshIndicator(
           key: _refreshIndicatorKey,
-          onRefresh: () async => _update(),
+          onRefresh: () async => _update(null),
           child: ValueListenableBuilder<bool>(
             valueListenable: _valueNotifierNeedsToBeUpdatedList,
             builder: (_, value, __) => ListView.builder(
@@ -138,17 +146,37 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
     );
   }
 
-  Future<void> _update(DayExpense? data) async {
+  Future<void> _update(DayExpense? data, {int? id}) async {
+    if(id != null){
+      _localCompleteExpenses.remove(id);
+      _valueNotifierNeedsToBeUpdatedList.value =
+      !_valueNotifierNeedsToBeUpdatedList.value;
+      return;
+    }
+
     if(data == null){
       _localCompleteExpenses = await _read();
     } else {
       final id = data.id;
       if (id != null) {
-        _localCompleteExpenses..remove(id)
-        ..putIfAbsent(id, () => data);
+        _localCompleteExpenses.remove(id);
+        if(data.dateTime.month == widget.dateTime.month &&
+           data.dateTime.year == widget.dateTime.year){
+          _localCompleteExpenses.putIfAbsent(id, () => data);
+          _localCompleteExpenses = categoriesIdSort(_localCompleteExpenses);
+          _valueNotifierNeedsToBeUpdatedList.value =
+          !_valueNotifierNeedsToBeUpdatedList.value;
+        }
       }
     }
   }
+
+  Map<int, DayExpense> categoriesIdSort(Map<int, DayExpense> data) =>
+      <int, DayExpense>{
+        for (final element in (data.values.toList()
+            ..sort((e1, e2) => e1.sum.compareTo(e2.sum))))element.id??-1:element
+  };
+
 
   Future<Map<int, DayExpense>> _read() async {
     final idMonth = widget.statusUserProp.monthCurrent.id;
@@ -163,13 +191,14 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
             completer: completer,
           ));
       localCompleteExpenses = (await completer.future).completeExpenses;
+
+
       _valueNotifierNeedsToBeUpdatedList.value =
           !_valueNotifierNeedsToBeUpdatedList.value;
     }
-    final mapCategoriesId = <int, DayExpense>{
+    return categoriesIdSort(<int, DayExpense>{
       for(final elem in  localCompleteExpenses) elem.id??-1 : elem
-    };
-    return mapCategoriesId;
+    });
   }
 
   Future<bool> _deleteDayExpense(
@@ -190,7 +219,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
         monthlyExpensesBloc
           .add(MonthlyExpensesBlocEvent.deleteId(
               uuid: widget.statusUserProp.uuid, id: id));
-        await _update();
+        await _update(null, id: id);
         return true;
       }
     }

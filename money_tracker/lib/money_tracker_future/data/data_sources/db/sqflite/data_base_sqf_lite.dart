@@ -5,8 +5,8 @@ import 'package:sqflite/sqflite.dart'
         if(dart.library.io.Platform.isLinux  )'package:sqflite_common_ffi/sqflite_ffi.dart';
 
 abstract class DataBaseExpensesSqfLite {
-  Future<bool?> insertExpenses(DayExpense data, {
-  ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
+  Future<int?> insertExpenses(DayExpense data, {
+    ConflictAlgorithm conflictAlgorithm = ConflictAlgorithm.ignore
   });
   Future<BigInt?> getTotalInMonthCategory(
     int idMonth,

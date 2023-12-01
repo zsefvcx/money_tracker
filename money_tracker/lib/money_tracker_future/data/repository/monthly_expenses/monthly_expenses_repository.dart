@@ -30,7 +30,7 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
   }
 
   @override
-  Future<bool?> insert({required String uuid, required DayExpense data}) async {
+  Future<int?> insert({required String uuid, required DayExpense data}) async {
     return expensesData.insert(uuid: uuid, data: data);
   }
 

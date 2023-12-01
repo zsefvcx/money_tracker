@@ -51,7 +51,7 @@ class ExpensesDataImpl extends ExpensesData {
   }
 
   @override
-  Future<bool?> insert({required String uuid, required DayExpense data}) async {
+  Future<int?> insert({required String uuid, required DayExpense data}) async {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       return await dbSqlLiteLocal.insertExpenses(data);

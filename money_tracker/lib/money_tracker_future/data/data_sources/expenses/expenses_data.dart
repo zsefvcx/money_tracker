@@ -3,7 +3,7 @@ import 'package:money_tracker/money_tracker_future/data/data.dart';
 
 abstract class ExpensesData {
 
-  Future<bool?> insert({
+  Future<int?> insert({
     required String uuid,
     required DayExpense data
   });

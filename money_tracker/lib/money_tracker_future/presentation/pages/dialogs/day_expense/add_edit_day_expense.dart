@@ -98,31 +98,66 @@ class AddEditDayExpense extends StatelessWidget {
         idMonthOther = await completer.future;
       }
 
-      final completer = Completer();
+      if(typeWidget==TypeWidget.fromCardModify){
+        final completer = Completer();
+        final data = DayExpense(
+          id: idDayExpense,
+          idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+          idCategory: idCategory,
+          dateTime: resDateTime,
+          sum: res.$1,
+        );
+        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.update(
+            uuid: statusUserProp.uuid,
+            data: data,
+            completer: completer
+        ));
+        await completer.future;
+        await update?.call(data);
+      } else {
+        final completer = Completer<int>();
+        final data = DayExpense(
+          idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+          idCategory: idCategory,
+          dateTime: resDateTime,
+          sum: res.$1,
+        );
+        monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.add(
+            uuid: statusUserProp.uuid,
+            data: data,
+            completer: completer
+        ));
+        final id = await completer.future;
+        await update?.call(data.copyWith(
+          id: id
+        ));
+      }
 
-      monthlyExpensesBloc.add(typeWidget==TypeWidget.fromCardModify?MonthlyExpensesBlocEvent.update(
-          uuid: statusUserProp.uuid,
-          data: DayExpense(
-            id: idDayExpense,
-            idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
-            idCategory: idCategory,
-            dateTime: resDateTime,
-            sum: res.$1,
-          ),
-          completer: completer
-      ):MonthlyExpensesBlocEvent.add(
-          uuid: statusUserProp.uuid,
-          data: DayExpense(
-            idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
-            idCategory: idCategory,
-            dateTime: resDateTime,
-            sum: res.$1,
-          ),
-          completer: completer
-        ),
-      );
-      await completer.future;
-      await update?.call();
+
+
+      // monthlyExpensesBloc.add(typeWidget==TypeWidget.fromCardModify?MonthlyExpensesBlocEvent.update(
+      //     uuid: statusUserProp.uuid,
+      //     data: DayExpense(
+      //       id: idDayExpense,
+      //       idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+      //       idCategory: idCategory,
+      //       dateTime: resDateTime,
+      //       sum: res.$1,
+      //     ),
+      //     completer: completer
+      // ):MonthlyExpensesBlocEvent.add(
+      //     uuid: statusUserProp.uuid,
+      //     data: DayExpense(
+      //       idMonth: otherMonth?(idMonthOther??idMonth):idMonth,
+      //       idCategory: idCategory,
+      //       dateTime: resDateTime,
+      //       sum: res.$1,
+      //     ),
+      //     completer: completer
+      //   ),
+      // );
+      //await completer.future;
+
     }
   }
 }

@@ -4,7 +4,7 @@ import 'package:money_tracker/money_tracker_future/domain/domain.dart';
 
 abstract class MonthlyExpensesRepository {
 
-  Future<bool?> insert({
+  Future<int?> insert({
     required String uuid,
     required DayExpense data
   });
