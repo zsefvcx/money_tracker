@@ -26,7 +26,7 @@ class CustomCard<T> extends StatefulWidget {
   final T dayExpense;
   final DateTime? dateTime;
   final Future<bool> Function(BuildContext context) deleteCard;
-  final Future<void> Function()? update;
+  final Future<void> Function(DayExpense? data)? update;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -42,7 +42,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   void initState() {
     final dayExpense = widget.dayExpense;
     if(dayExpense is BigInt) {
-      valueNotifierDayExpense.value = dayExpense;
+      _updateCard();
     }
     super.initState();
   }
@@ -59,16 +59,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final dayExpense = widget.dayExpense;
-    if(dayExpense is BigInt) {
-      valueNotifierDayExpense.value = dayExpense;
-    }
     final description = (dayExpense is BigInt)
         ?widget.categoryExpenses.name
         :(dayExpense is DayExpense)
         ?dayExpense.sum.toString()
         :S.of(context).notImplemented;
-
-
 
     return MouseRegion(
       cursor: SystemMouseCursors.click,
@@ -238,6 +233,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       ));
       final res = await completer.future;
       valueNotifierDayExpense.value = res;
+      //await widget.update?.call();
     }
   }
 

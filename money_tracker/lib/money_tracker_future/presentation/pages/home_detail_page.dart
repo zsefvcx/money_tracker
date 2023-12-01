@@ -32,7 +32,15 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final _valueNotifierNeedsToBeUpdatedList = ValueNotifier<bool>(false);
-  var _localCompleteExpenses = <DayExpense>{};
+
+  var _localCompleteExpenses = <int, DayExpense>{};
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero,()async=>_update(),);
+
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -48,7 +56,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
     final categoryExpensesColor =
         Color(int.parse('FF${widget.categoryExpenses.colorHex}', radix: 16));
 
-    Future.delayed(Duration.zero,()async=>_update(),);
+
 
     return Scaffold(
       appBar: AppBar(
@@ -61,14 +69,18 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
           child: PopScope(
             onPopInvoked: (didPop) {
               if (didPop) return;
+              widget.updateCard.call();
               Navigator.of(context).pop();
             },
             child: IconButton(
               onPressed: () {
+                widget.updateCard.call();
                 Navigator.of(context).pop();
               },
-              icon: const ContainerIconShadow(
-                icon: Icons.arrow_back_ios,
+              icon: const Hero(tag: Keys.heroIdSplash,
+                child: ContainerIconShadow(
+                  icon: Icons.arrow_back_ios,
+                ),
               ),
             ),
           ),
@@ -88,7 +100,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                 statusUserProp: widget.statusUserProp,
                 categoryExpenses: widget.categoryExpenses,
                 child: const ContainerIconShadow(icon: Icons.add),
-                update: () async => _update(),
+                update: _update,
             ),
           ),
         ],
@@ -104,7 +116,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                 itemCount: _localCompleteExpenses.length,
                 itemBuilder: (_, index) {
                   final data = _localCompleteExpenses;
-                  final dayExpense = data.elementAt(index);
+                  final dayExpense = data.values.elementAt(index);
                   return Dismissible(
                     key: UniqueKey(),
                     confirmDismiss: (_) async {
@@ -116,7 +128,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                       categoryExpenses: widget.categoryExpenses,
                       deleteCard: (context) =>
                           _deleteDayExpense(context, dayExpense),
-                      update: () async => _update(),
+                      update: _update,
                     ),
                   );
                 }),
@@ -126,12 +138,19 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
     );
   }
 
-  Future<void> _update() async {
-    _localCompleteExpenses = await _read();
-    await widget.updateCard.call();
+  Future<void> _update(DayExpense? data) async {
+    if(data == null){
+      _localCompleteExpenses = await _read();
+    } else {
+      final id = data.id;
+      if (id != null) {
+        _localCompleteExpenses..remove(id)
+        ..putIfAbsent(id, () => data);
+      }
+    }
   }
 
-  Future<Set<DayExpense>> _read() async {
+  Future<Map<int, DayExpense>> _read() async {
     final idMonth = widget.statusUserProp.monthCurrent.id;
     final idCategory = widget.categoryExpenses.id;
     var localCompleteExpenses = <DayExpense>{};
@@ -147,7 +166,10 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
       _valueNotifierNeedsToBeUpdatedList.value =
           !_valueNotifierNeedsToBeUpdatedList.value;
     }
-    return localCompleteExpenses;
+    final mapCategoriesId = <int, DayExpense>{
+      for(final elem in  localCompleteExpenses) elem.id??-1 : elem
+    };
+    return mapCategoriesId;
   }
 
   Future<bool> _deleteDayExpense(

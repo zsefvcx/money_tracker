@@ -7,7 +7,7 @@ import 'package:money_tracker/money_tracker_future/domain/bloc/bloc.dart';
 import 'package:money_tracker/money_tracker_future/presentation/presentation.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
 
-class MainFormMoneyTracker extends StatelessWidget {
+class MainFormMoneyTracker extends StatefulWidget {
   static const routeName = r'\PageMoneyTracker';
 
   const MainFormMoneyTracker({
@@ -18,11 +18,22 @@ class MainFormMoneyTracker extends StatelessWidget {
   final StatusUserProp statusUserProp;
 
   @override
-  Widget build(BuildContext context) {
+  State<MainFormMoneyTracker> createState() => _MainFormMoneyTrackerState();
+}
+
+class _MainFormMoneyTrackerState extends State<MainFormMoneyTracker> {
+
+  @override
+  void initState() {
+    super.initState();
     context.read<MonthBloc>().add(MonthBlocEvent.init(
-      uuid: statusUserProp.uuid,
-      data: statusUserProp.monthCurrent)
+        uuid: widget.statusUserProp.uuid,
+        data: widget.statusUserProp.monthCurrent)
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
 
     return BlocBuilder<MonthBloc, MonthBlocState>(
           builder: (context, state) {
@@ -30,14 +41,14 @@ class MainFormMoneyTracker extends StatelessWidget {
               loading: (_)=> const Scaffold(body: CircularProgressIndicatorMod()),
               error: (_)=> Scaffold(
                 body: ErrorTimeOut<MonthBloc, MonthCurrent>(
-                      uuid: statusUserProp.uuid,
-                      tCurrent: statusUserProp.monthCurrent
+                      uuid: widget.statusUserProp.uuid,
+                      tCurrent: widget.statusUserProp.monthCurrent
                 ),
               ),
               timeOut: (_)=> Scaffold(
                 body: ErrorTimeOut<MonthBloc, MonthCurrent>(
-                      uuid: statusUserProp.uuid,
-                      tCurrent: statusUserProp.monthCurrent
+                      uuid: widget.statusUserProp.uuid,
+                      tCurrent: widget.statusUserProp.monthCurrent
                 ),
               ),
               loaded: (value) {
@@ -45,12 +56,12 @@ class MainFormMoneyTracker extends StatelessWidget {
                 if (localMonthCurrent == null){
                   return Scaffold(
                     body: ErrorTimeOut<MonthBloc, MonthCurrent>(
-                          uuid: statusUserProp.uuid,
-                          tCurrent: statusUserProp.monthCurrent
+                          uuid: widget.statusUserProp.uuid,
+                          tCurrent: widget.statusUserProp.monthCurrent
                     ),
                   );
                 }
-                final localStatusUserProp = statusUserProp.copyWith(
+                final localStatusUserProp = widget.statusUserProp.copyWith(
                     monthCurrent: localMonthCurrent
                 );
                 return MoneyTrackerHomePage(

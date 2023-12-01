@@ -33,7 +33,8 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
     _tabController.addListener(() {
       _valueNotifierPage.value = _tabController.index;
     });
-
+    context.read<CategoriesBloc>()
+        .add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
   }
 
   @override
@@ -45,8 +46,6 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    context.read<CategoriesBloc>()
-        .add(CategoriesBlocEvent.init(uuid: widget.statusUserProp.uuid));
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(

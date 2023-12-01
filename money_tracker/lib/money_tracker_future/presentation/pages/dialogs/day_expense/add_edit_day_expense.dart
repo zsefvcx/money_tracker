@@ -30,7 +30,8 @@ class AddEditDayExpense extends StatelessWidget {
   final TypeWidget typeWidget;
   final int? idDayExpense;
   final Widget child;
-  final Future<void> Function()? update;
+  final Future<void> Function(DayExpense? data)? update;
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,32 +122,7 @@ class AddEditDayExpense extends StatelessWidget {
         ),
       );
       await completer.future;
-
-      if(!otherMonth) {
-        if(typeWidget == TypeWidget.fromMainTabAdd) {
-          categoriesBloc.add(
-              CategoriesBlocEvent.init(uuid: statusUserProp.uuid
-            )
-          );
-        }
-        if (typeWidget != TypeWidget.fromMainTabAdd) {
-          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
-            uuid: statusUserProp.uuid,
-            idMonth: idMonth,
-            idCategory: idCategory,
-          ));
-          await update?.call();
-        }
-      } else {
-        if (typeWidget == TypeWidget.fromCardModify) {
-          monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.init(
-            uuid: statusUserProp.uuid,
-            idMonth: idMonth,
-            idCategory: idCategory,
-          ));
-          await update?.call();
-        }
-      }
+      await update?.call();
     }
   }
 }
