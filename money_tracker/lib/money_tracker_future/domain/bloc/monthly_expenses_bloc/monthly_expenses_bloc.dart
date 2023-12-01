@@ -162,14 +162,14 @@ class MonthlyExpensesBloc extends Bloc<MonthlyExpensesBlocEvent, MonthlyExpenses
           await _response(emit);
         },
         readWithMonth: (value) async {
-          final (error, timeOut, e, res) = await _runGoSData<MonthlyExpensesEntity>(
+          final (error, timeOut, e, res) = await _runGoSData<Map<int, BigInt>?>(
             function: () async =>
             _monthlyExpensesRepository.readWithMonth(
                 uuid: value.uuid,
                 idMonth: value.idMonth),
           );
           modelData = modelData.copyWithData(
-            data: res,
+            data: null,
             timeOut: timeOut,
             error: error,
             e: e,

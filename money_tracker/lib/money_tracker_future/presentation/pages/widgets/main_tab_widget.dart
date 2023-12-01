@@ -26,7 +26,7 @@ class MainTabWidget extends StatefulWidget {
 
 class _MainTabWidgetState extends State<MainTabWidget> {
 
-  MonthlyExpensesEntity? monthlyExpensesEntity;
+  Map<int, BigInt>? _localTotalCategories;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
 
 
     Future.delayed(Duration.zero, () async {
-      final completer = Completer<MonthlyExpensesEntity>();
+      final completer = Completer<Map<int, BigInt>>();
       if (idMonth != null) {
         monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
           uuid: widget.statusUserProp.uuid,
@@ -45,7 +45,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
           completer: completer,
         ));
       }
-      monthlyExpensesEntity = await completer.future;
+      _localTotalCategories = await completer.future;
       valueNotifierNeedsToBeUpdatedList.value = !valueNotifierNeedsToBeUpdatedList.value;
     },);
 
@@ -54,7 +54,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
         children: [
           ValueListenableBuilder<bool>(
             valueListenable: valueNotifierNeedsToBeUpdatedList,
-            builder: (_, __, ___) => monthlyExpensesEntity==null?Container(
+            builder: (_, __, ___) => _localTotalCategories==null?Container(
               color: theme.colorScheme.secondary,
               height: 240,
               width: double.maxFinite,
@@ -63,7 +63,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
             ) : CustomPieChart(
               statusUserProp: widget.statusUserProp,
               categoriesExpensesModels: widget.categories,
-              data: _completeExpensesForPieChart(monthlyExpensesEntity),
+              data: _localTotalCategories??<int, BigInt>{},
             ),
           ),
           Expanded(
@@ -89,7 +89,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
                     categoryExpenses: categoryExpenses,
                     dateTime: DateTime.tryParse(stringSelectedDateTime),
                     deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
-                    //update: () => updateCustomPieChart(monthlyExpensesBloc: monthlyExpensesBloc),
+                    updateMainTab: _updateMainTab,
                   ),
                 );
               },
@@ -99,57 +99,21 @@ class _MainTabWidgetState extends State<MainTabWidget> {
     );
   }
 
-  // Future<void> updateCustomPieChart({
-  //   required MonthlyExpensesBloc monthlyExpensesBloc
-  // }) async {
-  //
-  //   final completer = Completer<MonthlyExpensesEntity>();
-  //   final idMonth = widget.statusUserProp.monthCurrent.id;
-  //   if (idMonth != null) {
-  //     monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
-  //       uuid: widget.statusUserProp.uuid,
-  //       idMonth: idMonth,
-  //       completer: completer,
-  //     ));
-  //   }
-  //   monthlyExpensesEntity = await completer.future;
-  // }
+  Future<void> _updateMainTab() async {
 
-  (Map<int, (double, String)>, BigInt) _completeExpensesForPieChart(MonthlyExpensesEntity? data) {
+    Logger.print('Error Not Implement Yet', error: true, level: 10);
 
-    final completeExpenses = <DayExpense>{};
-     if (data != null) {
-      completeExpenses
-        ..clear()
-        ..addAll(data.completeExpenses);
-    }
-    final total = completeExpenses.fold(
-        BigInt.zero, (previousValue, element) => previousValue +
-        _abs(element.sum)
-    );
-    final totalCategoriesPercent = <int, (double, String)>{};
-    final categoriesId = widget.categories.categoriesId;
-    for (final value in categoriesId) {
-      final idCategory = value.id;
-      if (idCategory != null) {
-          var val = BigInt.zero;
-          for (final elem in completeExpenses) {
-            final id = elem.idCategory;
-            if (id == idCategory) {
-              val += elem.sum;
-            }
-          }
-          totalCategoriesPercent[idCategory] = (_abs(val).toDouble(), val<BigInt.zero?'-':'');
-
-      } else {
-        throw Exception('Error id Category');
-      }
-    }
-    Logger.print('ChartData:$totalCategoriesPercent:$total');
-    return (totalCategoriesPercent, total);
+    // final completer = Completer<MonthlyExpensesEntity>();
+    // final idMonth = widget.statusUserProp.monthCurrent.id;
+    // if (idMonth != null) {
+    //   monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
+    //     uuid: widget.statusUserProp.uuid,
+    //     idMonth: idMonth,
+    //     completer: completer,
+    //   ));
+    // }
+    // monthlyExpensesEntity = await completer.future;
   }
-
-  BigInt _abs(BigInt val) => val<BigInt.zero?-val:val;
 
   Future<bool> _deleteCategory(BuildContext context,
       CategoryExpenses categoryExpenses ) async {

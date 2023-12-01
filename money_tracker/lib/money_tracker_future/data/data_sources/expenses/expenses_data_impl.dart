@@ -73,7 +73,7 @@ class ExpensesDataImpl extends ExpensesData {
   }
 
   @override
-  Future<MonthlyExpensesModel?> readWithMonth({required String uuid, required int idMonth}) async {
+  Future<Map<int, BigInt>?> readWithMonth({required String uuid, required int idMonth}) async {
     try{
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
       return await dbSqlLiteLocal.readWithMonth(idMonth);

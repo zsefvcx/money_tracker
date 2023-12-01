@@ -397,7 +397,9 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
 
     final query = await db.query(_tableExpenses,
         where: '"$_idMonth" = ? and "$_idCategory" = ?',
-        whereArgs: [idMonth, idCategory]);
+        whereArgs: [idMonth, idCategory],
+        orderBy: _sum
+    );
 
     final completeExpenses = <DayExpense>{};
 
@@ -444,26 +446,41 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
   }
 
   @override
-  Future<MonthlyExpensesModel?> readWithMonth(int idMonth) async {
+  Future<Map<int, BigInt>?> readWithMonth(int idMonth) async {
     final db = await database;
 
     final query = await db.query(_tableExpenses,
-        where: '"$_idMonth" = ?',
-        whereArgs: [idMonth]);
+      where: '"$_idMonth" = ?',
+      whereArgs: [idMonth],
+      orderBy: _idCategory,
+    );
 
-    final completeExpenses = <DayExpense>{};
+    final totalExpenses = <int, BigInt>{};
 
     if (query.isNotEmpty){
+      int? idCategory;
+      var sum = BigInt.zero;
       for(final elem in query){
         final dayExpense  =DayExpense.fromJson(elem);
-        completeExpenses.add(dayExpense);
+        Logger.print('dayExpense:$dayExpense)}');
+        if(idCategory != dayExpense.idCategory) {
+          if(idCategory != null){
+            totalExpenses.putIfAbsent(idCategory, () => sum);
+            sum = BigInt.zero;
+          }
+          idCategory = dayExpense.idCategory;
+        }
+
+        sum += dayExpense.sum;
+      }
+      if(idCategory != null){
+        totalExpenses.putIfAbsent(idCategory, () => sum);
       }
 
     }
+    Logger.print('totalExpenses:$totalExpenses)}');
+    return totalExpenses;
 
-    return MonthlyExpensesModel(
-        completeExpenses: completeExpenses
-    );
   }
 
   @override

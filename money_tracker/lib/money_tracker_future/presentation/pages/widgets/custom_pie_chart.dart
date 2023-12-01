@@ -15,7 +15,7 @@ class CustomPieChart extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoriesExpensesEntity categoriesExpensesModels;
-  final (Map<int, (double, String)>, BigInt) data;
+  final Map<int, BigInt> data;
 
   @override
   State<CustomPieChart> createState() => _CustomPieChartState();
@@ -33,7 +33,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
           width: double.maxFinite,
           padding: const EdgeInsets.all(30),
           child: Center(
-            child: (categoriesId.isNotEmpty && widget.data.$2 != BigInt.zero)?AspectRatio(
+            child: (categoriesId.isNotEmpty && widget.data.values.fold(BigInt.zero, (previousValue, element) => previousValue+element)!= BigInt.zero)?AspectRatio(
               aspectRatio: 1,
                 child: PieChart(
                   PieChartData(
@@ -56,7 +56,7 @@ class _CustomPieChartState extends State<CustomPieChart> {
                     ),
                     sectionsSpace: 1,
                     centerSpaceRadius: 30,
-                    sections: _showingSections(context, widget.data.$1),
+                    sections: _showingSections(context, widget.data),
                   ),
                 ),
             ):Text(S.of(context).thereAreNoExpensesForMonthName(
@@ -67,21 +67,23 @@ class _CustomPieChartState extends State<CustomPieChart> {
         );
   }
 
+  BigInt _abs(BigInt val) => val<BigInt.zero?-val:val;
+
   List<PieChartSectionData> _showingSections(
       BuildContext context,
-      Map<int, (double, String)> data,
+      Map<int, BigInt> data,
   ) {
     final theme = Theme.of(context);
     final categoriesId = widget.categoriesExpensesModels.categoriesId;
     return List.generate(categoriesId.length, (i){
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 60.0 : 50.0;
-      final value = data[categoriesId.elementAt(i).id]??(0,'');
+      final value = data[categoriesId.elementAt(i).id]??BigInt.zero;
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
         borderSide: const BorderSide(width: 0.2),
-        value: value.$1,
-        title: '${value.$2}${categoriesId.elementAt(i).name}',
+        value: _abs(value).toDouble(),
+        title: '${value<BigInt.zero?'-':''} ${categoriesId.elementAt(i).name}',
         radius: radius,
         showTitle: true,
         titleStyle: theme.textTheme.displaySmall?.copyWith(

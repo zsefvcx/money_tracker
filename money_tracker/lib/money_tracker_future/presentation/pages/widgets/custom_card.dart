@@ -18,6 +18,7 @@ class CustomCard<T> extends StatefulWidget {
     required this.deleteCard,
     this.dateTime,
     this.update,
+    this.updateMainTab,
     super.key
   });
 
@@ -27,6 +28,7 @@ class CustomCard<T> extends StatefulWidget {
   final DateTime? dateTime;
   final Future<bool> Function(BuildContext context) deleteCard;
   final Future<void> Function(DayExpense? data)? update;
+  final Future<void> Function()? updateMainTab;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -223,7 +225,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   Future<void> _updateCard(BigInt? data) async {
     if(data != null){
       valueNotifierDayExpense.value = data;
-      //await widget.update?.call();
+      await widget.updateMainTab?.call();
       return;
     }
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
@@ -240,7 +242,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       final res = await completer.future;
       valueNotifierDayExpense.value = res;
     }
-    //await widget.update?.call();
+    await widget.updateMainTab?.call();
   }
 
   void _delayedFutureValueNotifier(BuildContext context, {required int second}) =>

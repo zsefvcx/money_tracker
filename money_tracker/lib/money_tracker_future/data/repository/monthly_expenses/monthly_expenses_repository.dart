@@ -40,7 +40,7 @@ class MonthlyExpensesRepositoryImpl extends MonthlyExpensesRepository {
   }
 
   @override
-  Future<MonthlyExpensesEntity?> readWithMonth({required String uuid, required int idMonth}) async {
+  Future<Map<int, BigInt>?> readWithMonth({required String uuid, required int idMonth}) async {
     return expensesData.readWithMonth(uuid: uuid, idMonth: idMonth);
   }
 

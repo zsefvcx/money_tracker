@@ -25,7 +25,7 @@ abstract class ExpensesData {
     required int idCategory,
   });
 
-  Future<MonthlyExpensesModel?> readWithMonth({
+  Future<Map<int, BigInt>?> readWithMonth({
     required String uuid,
     required int idMonth,
   });

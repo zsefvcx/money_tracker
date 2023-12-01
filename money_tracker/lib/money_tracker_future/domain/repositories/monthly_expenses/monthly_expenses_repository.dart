@@ -26,7 +26,7 @@ abstract class MonthlyExpensesRepository {
     required int idCategory,
   });
 
-  Future<MonthlyExpensesEntity?> readWithMonth({
+  Future<Map<int, BigInt>?> readWithMonth({
     required String uuid,
     required int idMonth,
   });

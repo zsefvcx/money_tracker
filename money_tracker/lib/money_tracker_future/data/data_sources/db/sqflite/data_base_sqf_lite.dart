@@ -19,7 +19,7 @@ abstract class DataBaseExpensesSqfLite {
   Future<int> deleteWithCategory(
     int idCategory,
   );
-  Future<MonthlyExpensesModel?> readWithMonth(
+  Future<Map<int, BigInt>?> readWithMonth(
     int idMonth,
   );
   Future<int> deleteIdExpenses(int id);

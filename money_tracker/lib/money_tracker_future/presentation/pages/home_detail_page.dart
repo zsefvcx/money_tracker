@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -156,6 +155,8 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
 
     if(data == null){
       _localCompleteExpenses = await _read();
+      _valueNotifierNeedsToBeUpdatedList.value =
+         !_valueNotifierNeedsToBeUpdatedList.value;
     } else {
       final id = data.id;
       if (id != null) {
@@ -191,11 +192,8 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
             completer: completer,
           ));
       localCompleteExpenses = (await completer.future).completeExpenses;
-
-
-      _valueNotifierNeedsToBeUpdatedList.value =
-          !_valueNotifierNeedsToBeUpdatedList.value;
     }
+    //Тут сортировка по бигинту, а  в базе данных по строке...
     return categoriesIdSort(<int, DayExpense>{
       for(final elem in  localCompleteExpenses) elem.id??-1 : elem
     });
