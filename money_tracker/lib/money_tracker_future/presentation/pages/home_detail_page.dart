@@ -69,19 +69,13 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
           padding: const EdgeInsets.only(left: 25),
           child: PopScope(
             onPopInvoked: (didPop) {
-              if (didPop) return;
               final newTotal = _localCompleteExpenses.values.fold(BigInt.zero, (previousValue, element) => previousValue+element.sum);
               if(widget.total != newTotal) {
                 widget.updateCard.call(newTotal);
               }
-              Navigator.of(context).pop();
             },
             child: IconButton(
               onPressed: () {
-                final newTotal = _localCompleteExpenses.values.fold(BigInt.zero, (previousValue, element) => previousValue+element.sum);
-                if(widget.total != newTotal) {
-                  widget.updateCard.call(newTotal);
-                }
                 Navigator.of(context).pop();
               },
               icon: const Hero(tag: Keys.heroIdSplash,
