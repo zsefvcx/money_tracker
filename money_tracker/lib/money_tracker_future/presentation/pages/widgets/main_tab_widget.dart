@@ -25,12 +25,18 @@ class MainTabWidget extends StatefulWidget {
 }
 
 class _MainTabWidgetState extends State<MainTabWidget> {
-
+  final _valueNotifierNeedsToBeUpdatedList  = ValueNotifier<bool>(false);
   Map<int, BigInt>? _localTotalCategories;
 
   @override
+  void dispose() {
+    super.dispose();
+    _valueNotifierNeedsToBeUpdatedList.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final valueNotifierNeedsToBeUpdatedList  = ValueNotifier<bool>(false);
+    
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final idMonth = widget.statusUserProp.monthCurrent.id;
     final theme = Theme.of(context);
@@ -46,14 +52,15 @@ class _MainTabWidgetState extends State<MainTabWidget> {
         ));
       }
       _localTotalCategories = await completer.future;
-      valueNotifierNeedsToBeUpdatedList.value = !valueNotifierNeedsToBeUpdatedList.value;
+      _valueNotifierNeedsToBeUpdatedList.value = 
+        !_valueNotifierNeedsToBeUpdatedList.value;
     },);
 
     return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ValueListenableBuilder<bool>(
-            valueListenable: valueNotifierNeedsToBeUpdatedList,
+            valueListenable: _valueNotifierNeedsToBeUpdatedList,
             builder: (_, __, ___) => _localTotalCategories==null?Container(
               color: theme.colorScheme.secondary,
               height: 240,
@@ -66,53 +73,61 @@ class _MainTabWidgetState extends State<MainTabWidget> {
               data: _localTotalCategories??<int, BigInt>{},
             ),
           ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(12.5),
-              itemCount: widget.categories.categoriesId.length,
-              itemBuilder: (_, index) {
-                const date = 1;
-                final month= widget.statusUserProp.monthCurrent.month;
-                final year = widget.statusUserProp.monthCurrent.year;
-                final stringSelectedDateTime = '$year'
-                    '-${month<10?'0$month':month}'
-                    '-${date<10?'0$date':date}'
-                    ' 00:00:00.000000';
-                final categoryExpenses = widget.categories.categoriesId.elementAt(index);
-                return AddEditDayExpense(
-                  typeWidget: TypeWidget.fromMainTabAdd,
-                  statusUserProp: widget.statusUserProp,
-                  categoryExpenses: categoryExpenses,
-                  child: CustomCard<BigInt>(
-                    statusUserProp: widget.statusUserProp,
-                    dayExpense: BigInt.zero,
-                    categoryExpenses: categoryExpenses,
-                    dateTime: DateTime.tryParse(stringSelectedDateTime),
-                    deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
-                    updateMainTab: _updateMainTab,
-                  ),
-                );
-              },
+          ValueListenableBuilder<bool>(
+            valueListenable: _valueNotifierNeedsToBeUpdatedList,
+            builder: (_, __, ___) => Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(12.5),
+                itemCount: widget.categories.categoriesId.length,
+                itemBuilder: (_, index) {
+                  const date = 1;
+                  final month= widget.statusUserProp.monthCurrent.month;
+                  final year = widget.statusUserProp.monthCurrent.year;
+                  final stringSelectedDateTime = '$year'
+                      '-${month<10?'0$month':month}'
+                      '-${date<10?'0$date':date}'
+                      ' 00:00:00.000000';
+                  final categoryExpenses = widget.categories.categoriesId.elementAt(index);
+                  Logger.print('rebuild $index');
+                  return AddEditDayExpense(
+                      typeWidget: TypeWidget.fromMainTabAdd,
+                      statusUserProp: widget.statusUserProp,
+                      categoryExpenses: categoryExpenses,
+                      updateMainTab: _updateMainTab,
+                      child: CustomCard<BigInt>(
+                        statusUserProp: widget.statusUserProp,
+                        dayExpense: BigInt.zero,
+                        categoryExpenses: categoryExpenses,
+                        dateTime: DateTime.tryParse(stringSelectedDateTime),
+                        deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
+                        updateMainTab: _updateMainTab,
+                      ),
+                  );
+                },
+              ),
             ),
           ),
         ],
     );
   }
 
-  Future<void> _updateMainTab() async {
+  Future<void> _updateMainTab(BigInt total, int idCategory, {bool? addData}) async {
 
-    Logger.print('Error Not Implement Yet', error: true, level: 10);
+    if(addData != null && addData){
+      final data = _localTotalCategories?[idCategory];
+      if (data != null){
+        _localTotalCategories?[idCategory] = data + total;
+        _valueNotifierNeedsToBeUpdatedList.value =
+        !_valueNotifierNeedsToBeUpdatedList.value;
+      }
+      return;
+    }
 
-    // final completer = Completer<MonthlyExpensesEntity>();
-    // final idMonth = widget.statusUserProp.monthCurrent.id;
-    // if (idMonth != null) {
-    //   monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readWithMonth(
-    //     uuid: widget.statusUserProp.uuid,
-    //     idMonth: idMonth,
-    //     completer: completer,
-    //   ));
-    // }
-    // monthlyExpensesEntity = await completer.future;
+    _localTotalCategories?.remove(idCategory);
+    _localTotalCategories?.putIfAbsent(idCategory, () => total);
+    _valueNotifierNeedsToBeUpdatedList.value =
+      !_valueNotifierNeedsToBeUpdatedList.value;
+
   }
 
   Future<bool> _deleteCategory(BuildContext context,

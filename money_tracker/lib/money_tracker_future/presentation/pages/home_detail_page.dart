@@ -175,7 +175,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
   Map<int, DayExpense> categoriesIdSort(Map<int, DayExpense> data) =>
       <int, DayExpense>{
         for (final element in (data.values.toList()
-            ..sort((e1, e2) => e1.sum.compareTo(e2.sum))))element.id??-1:element
+            ..sort((e1, e2) => e1.sum.compareTo(e2.sum))))element.id??(throw Exception('Error id')):element
   };
 
 
@@ -194,9 +194,15 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
       localCompleteExpenses = (await completer.future).completeExpenses;
     }
     //Тут сортировка по бигинту, а  в базе данных по строке...
-    return categoriesIdSort(<int, DayExpense>{
-      for(final elem in  localCompleteExpenses) elem.id??-1 : elem
-    });
+    final res = <int, DayExpense>{};
+
+    for(final elem in  localCompleteExpenses){
+      final id = elem.id;
+      if(id == null) continue;
+      res.putIfAbsent(id, () => elem);
+    }
+
+    return categoriesIdSort(res);
   }
 
   Future<bool> _deleteDayExpense(

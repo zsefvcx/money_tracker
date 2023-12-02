@@ -28,7 +28,7 @@ class CustomCard<T> extends StatefulWidget {
   final DateTime? dateTime;
   final Future<bool> Function(BuildContext context) deleteCard;
   final Future<void> Function(DayExpense? data)? update;
-  final Future<void> Function()? updateMainTab;
+  final Future<void> Function(BigInt total, int icCategory)? updateMainTab;
 
   @override
   State<CustomCard<T>> createState() => _CustomCardState<T>();
@@ -42,10 +42,6 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
 
   @override
   void initState() {
-    final dayExpense = widget.dayExpense;
-    if(dayExpense is BigInt) {
-      _updateCard(null);
-    }
     super.initState();
   }
 
@@ -66,7 +62,10 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
         :(dayExpense is DayExpense)
         ?dayExpense.sum.toString()
         :S.of(context).notImplemented;
-
+    Logger.print('rebuild card:${widget.categoryExpenses}');
+    if(dayExpense is BigInt) {
+      _updateCard(null);
+    }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onExit: (event) {
@@ -223,14 +222,16 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   }
 
   Future<void> _updateCard(BigInt? data) async {
+    final idCategory = widget.categoryExpenses.id;
     if(data != null){
       valueNotifierDayExpense.value = data;
-      await widget.updateMainTab?.call();
+      if(idCategory != null) {
+        await widget.updateMainTab?.call(data, idCategory,);
+      }
       return;
     }
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
     final idMonth = widget.statusUserProp.monthCurrent.id;
-    final idCategory = widget.categoryExpenses.id;
     if (idMonth != null && idCategory != null) {
       final completer = Completer<BigInt>();
       monthlyExpensesBloc.add(MonthlyExpensesBlocEvent.readTotal(
@@ -242,7 +243,11 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
       final res = await completer.future;
       valueNotifierDayExpense.value = res;
     }
-    await widget.updateMainTab?.call();
+    if(data != null) {
+      if(idCategory != null) {
+        await widget.updateMainTab?.call(data, idCategory,);
+      }
+    }
   }
 
   void _delayedFutureValueNotifier(BuildContext context, {required int second}) =>

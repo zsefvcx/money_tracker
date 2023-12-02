@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_tracker/core/core.dart';
@@ -46,6 +48,8 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final valueNotifierNeedsToBeUpdatedList = ValueNotifier<bool>(false);
+    final categoriesBloc = context.read<CategoriesBloc>();
     return Scaffold(
       appBar: AppBar(
         title: ValueListenableBuilder<int>(
@@ -88,15 +92,33 @@ class _MoneyTrackerHomePageState extends State<MoneyTrackerHomePage>
                     return const CircularProgressIndicatorMod();
                   },
                   loaded: (value) {
-                    final localCategories = value.entity;
+                    var localCategories = value.entity;
                     if (localCategories == null){
                       return ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(
                         uuid: widget.statusUserProp.uuid,
                       );
                     }
-                    return MainTabWidget(
-                        statusUserProp: widget.statusUserProp,
-                        categories: localCategories,
+                    return RefreshIndicator(
+                      onRefresh: () async {
+                        final completer = Completer<CategoriesExpensesEntity>();
+                        categoriesBloc.add(CategoriesBlocEvent.read(
+                          uuid: widget.statusUserProp.uuid,
+                          completer: completer,
+                        ));
+                        localCategories = await completer.future;
+                        valueNotifierNeedsToBeUpdatedList.value =
+                            !valueNotifierNeedsToBeUpdatedList.value;
+                      },
+                      child: ValueListenableBuilder<bool>(
+                        valueListenable: valueNotifierNeedsToBeUpdatedList,
+                        builder: (_, __, ___) {
+                          final data = localCategories;
+                          return MainTabWidget(
+                          statusUserProp: widget.statusUserProp,
+                          categories: data?? (throw Exception('Error get Categories')),
+                        );
+                        },
+                      ),
                     );
                   },
                   error: (value) => ErrorTimeOut<CategoriesBloc, CategoriesExpensesEntity?>(

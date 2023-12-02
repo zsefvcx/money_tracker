@@ -22,6 +22,7 @@ class AddEditDayExpense extends StatelessWidget {
     required this.typeWidget,
     this.idDayExpense,
     this.update,
+    this.updateMainTab,
     super.key,
   });
 
@@ -31,7 +32,7 @@ class AddEditDayExpense extends StatelessWidget {
   final int? idDayExpense;
   final Widget child;
   final Future<void> Function(DayExpense? data)? update;
-
+  final Future<void> Function(BigInt total, int icCategory, {bool? addData})? updateMainTab;
 
   @override
   Widget build(BuildContext context) {
@@ -131,6 +132,11 @@ class AddEditDayExpense extends StatelessWidget {
         await update?.call(data.copyWith(
           id: id
         ));
+        await updateMainTab?.call(
+          data.sum,
+          idCategory,
+          addData: true
+        );
       }
 
 

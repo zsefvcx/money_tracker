@@ -9,9 +9,9 @@ class CategoriesDataImpl extends CategoriesData {
 
   Set<CategoryExpenses> categoriesIdSort() {
     try {
-      final res = categoriesId.map((value) => MapEntry(value.id??-1, value.name));
+      final res = categoriesId.map((value) => MapEntry(value.id?? (throw Exception('Error id')), value.name));
       final mapCategoriesId = <int, CategoryExpenses>{
-        for(final elem in  categoriesId) elem.id??-1 : elem
+        for(final elem in  categoriesId) elem.id ?? (throw Exception('Error id')) : elem
       };
       final sortedByKeyMap = Map.fromEntries(
           res.toList()
@@ -69,7 +69,7 @@ class CategoriesDataImpl extends CategoriesData {
   Future<CategoryExpenses?> getById({required String uuid, required int id}) async {
     try{
       final mapCategoriesId = <int, CategoryExpenses>{
-        for(final elem in  categoriesId) elem.id??-1 : elem
+        for(final elem in  categoriesId) elem.id?? (throw Exception('Error id')) : elem
       };
 
       final localCategory = mapCategoriesId[id];
@@ -114,7 +114,7 @@ class CategoriesDataImpl extends CategoriesData {
   Future<CategoriesExpensesModels?> deleteId({required String uuid, required int id}) async{
     try{
       final mapCategoriesId = <int, CategoryExpenses>{
-        for(final elem in  categoriesId) elem.id??-1 : elem
+        for(final elem in  categoriesId) elem.id?? (throw Exception('Error id')) : elem
       };
 
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
@@ -133,7 +133,7 @@ class CategoriesDataImpl extends CategoriesData {
   Future<CategoriesExpensesModels?> update({required String uuid, required CategoryExpenses data}) async {
     try{
       final mapCategoriesId = <int, CategoryExpenses>{
-        for(final elem in  categoriesId) elem.id??-1 : elem
+        for(final elem in  categoriesId) elem.id?? (throw Exception('Error Key')) : elem
       };
 
       final dbSqlLiteLocal = DataBaseSqfLiteImpl.db(uuid: uuid);
