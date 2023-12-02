@@ -19,7 +19,7 @@ abstract class Logger {
       BuildContext? context,
     }) {
     final msg = message;
-    if (kDebugMode) {
+    if (kDebugMode || Settings.showLogData) {
       dev.log(
         '|:${error?'E':'N'}:|$msg',
         time: DateTime.now(),

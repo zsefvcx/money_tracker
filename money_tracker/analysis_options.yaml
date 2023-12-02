@@ -139,7 +139,8 @@ linter:
     diagnostic_describe_all_properties: false
     directives_ordering: true
     discarded_futures: false
-    do_not_use_environment: true
+    #do_not_use_environment: true
+    do_not_use_environment: false
     empty_catches: true
     empty_constructor_bodies: true
     enable_null_safety: true

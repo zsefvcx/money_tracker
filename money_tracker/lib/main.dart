@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:money_tracker/core/core.dart';
 import 'package:money_tracker/login_future/src.dart';
 import 'package:money_tracker/money_tracker_app.dart';
 import 'package:money_tracker/money_tracker_future/src.dart';
@@ -29,6 +30,8 @@ Future<void> main() async {
       await windowManager.focus();
     });
   }
+
+  Settings.showLogData = const bool.fromEnvironment('showLogData');
 
   LoginBlocInit.initState();
   MoneyTrackerBlocsInit.initState();
