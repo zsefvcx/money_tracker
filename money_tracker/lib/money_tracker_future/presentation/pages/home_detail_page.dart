@@ -124,6 +124,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                 itemBuilder: (_, index) {
                   final data = _localCompleteExpenses;
                   final dayExpense = data.values.elementAt(index);
+                  Logger.print('dayExpense:$dayExpense');
                   return Dismissible(
                     key: UniqueKey(),
                     confirmDismiss: (_) async {

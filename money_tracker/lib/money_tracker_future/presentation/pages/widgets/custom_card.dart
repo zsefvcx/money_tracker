@@ -43,6 +43,10 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   @override
   void initState() {
     super.initState();
+    final dayExpense = widget.dayExpense;
+    if(dayExpense is BigInt) {
+      valueNotifierDayExpense.value = dayExpense;
+    }
   }
 
   @override
@@ -62,7 +66,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
         :(dayExpense is DayExpense)
         ?dayExpense.sum.toString()
         :S.of(context).notImplemented;
-    Logger.print('rebuild card:${widget.categoryExpenses}');
+    Logger.print('rebuild card is ${dayExpense.runtimeType}:${widget.categoryExpenses}:$dayExpense');
     if(dayExpense is BigInt) {
       _updateCard(null);
     }

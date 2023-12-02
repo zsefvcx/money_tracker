@@ -48,7 +48,6 @@ class AddEditDayExpense extends StatelessWidget {
   Future<void> _addDayExpense(BuildContext context) async {
     final monthBloc = context.read<MonthBloc>();
     final monthlyExpensesBloc = context.read<MonthlyExpensesBloc>();
-    final categoriesBloc = context.read<CategoriesBloc>();
     final id = categoryExpenses.id;
 
     final locStat = statusUserProp;

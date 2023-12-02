@@ -75,7 +75,9 @@ class _MainTabWidgetState extends State<MainTabWidget> {
           ),
           ValueListenableBuilder<bool>(
             valueListenable: _valueNotifierNeedsToBeUpdatedList,
-            builder: (_, __, ___) => Expanded(
+            builder: (_, __, ___) => _localTotalCategories==null
+              ?const CircularProgressIndicator()
+              :Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(12.5),
                 itemCount: widget.categories.categoriesId.length,
@@ -117,9 +119,12 @@ class _MainTabWidgetState extends State<MainTabWidget> {
       final data = _localTotalCategories?[idCategory];
       if (data != null){
         _localTotalCategories?[idCategory] = data + total;
-        _valueNotifierNeedsToBeUpdatedList.value =
-        !_valueNotifierNeedsToBeUpdatedList.value;
+      } else {
+        _localTotalCategories?[idCategory] = total;
       }
+      _valueNotifierNeedsToBeUpdatedList.value =
+      !_valueNotifierNeedsToBeUpdatedList.value;
+
       return;
     }
 
