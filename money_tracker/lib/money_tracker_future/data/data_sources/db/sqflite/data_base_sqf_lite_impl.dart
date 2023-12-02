@@ -51,7 +51,7 @@ class DataBaseSqfLiteImpl implements DataBaseMonthSqfLite,
     return openDatabase(path, version: 3, onCreate: _createDB);
   }
 
-  //переделать
+  // ignore: prefer_constructors_over_static_methods
   static DataBaseSqfLiteImpl db({required String uuid}) {
     if (_lastUuid != null && _lastUuid != uuid){
       _database?.close();
