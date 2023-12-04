@@ -79,11 +79,12 @@ class _CustomPieChartState extends State<CustomPieChart> {
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 60.0 : 50.0;
       final value = data[categoriesId.elementAt(i).id]??BigInt.zero;
+      final name = categoriesId.elementAt(i).name;
       return PieChartSectionData(
         color: Color(int.parse('FF${categoriesId.elementAt(i).colorHex}', radix: 16)),
         borderSide: const BorderSide(width: 0.2),
         value: _abs(value).toDouble(),
-        title: '${value<BigInt.zero?'-':''} ${categoriesId.elementAt(i).name}',
+        title: '${value<BigInt.zero?'-':''} $name',
         radius: radius,
         showTitle: true,
         titleStyle: theme.textTheme.displaySmall?.copyWith(

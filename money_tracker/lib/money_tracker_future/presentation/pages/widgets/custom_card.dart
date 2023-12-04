@@ -12,7 +12,7 @@ import 'package:money_tracker/money_tracker_future/presentation/presentation.dar
 
 class CustomCard<T> extends StatefulWidget {
   const CustomCard({
-    required this.dayExpense,
+    required this.cardData,
     required this.statusUserProp,
     required this.categoryExpenses,
     required this.deleteCard,
@@ -24,7 +24,7 @@ class CustomCard<T> extends StatefulWidget {
 
   final StatusUserProp statusUserProp;
   final CategoryExpenses categoryExpenses;
-  final T dayExpense;
+  final T cardData;
   final DateTime? dateTime;
   final Future<bool> Function(BuildContext context) deleteCard;
   final Future<void> Function(DayExpense? data)? update;
@@ -43,7 +43,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   @override
   void initState() {
     super.initState();
-    final dayExpense = widget.dayExpense;
+    final dayExpense = widget.cardData;
     if(dayExpense is BigInt) {
       valueNotifierDayExpense.value = dayExpense;
     }
@@ -60,7 +60,7 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final dayExpense = widget.dayExpense;
+    final dayExpense = widget.cardData;
     final description = (dayExpense is BigInt)
         ?widget.categoryExpenses.name
         :(dayExpense is DayExpense)
@@ -68,8 +68,12 @@ class _CustomCardState<T> extends State<CustomCard<T>> {
         :S.of(context).notImplemented;
     Logger.print('rebuild card is ${dayExpense.runtimeType}:${widget.categoryExpenses}:$dayExpense');
     if(dayExpense is BigInt) {
-      _updateCard(null);
+      valueNotifierDayExpense.value = dayExpense;
     }
+
+    // if(dayExpense is BigInt) {
+    //   _updateCard(null);
+    // }
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onExit: (event) {

@@ -125,7 +125,7 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                       return _deleteDayExpense(context, dayExpense);
                     },
                     child: CustomCard<DayExpense>(
-                      dayExpense: dayExpense,
+                      cardData: dayExpense,
                       statusUserProp: widget.statusUserProp,
                       categoryExpenses: widget.categoryExpenses,
                       deleteCard: (context) =>

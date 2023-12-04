@@ -90,6 +90,8 @@ class _MainTabWidgetState extends State<MainTabWidget> {
                       '-${date<10?'0$date':date}'
                       ' 00:00:00.000000';
                   final categoryExpenses = widget.categories.categoriesId.elementAt(index);
+                  final idCategory = categoryExpenses.id??(throw Exception('Error id category'));
+                  final dataForCard = _localTotalCategories?[idCategory];
                   Logger.print('rebuild $index');
                   return AddEditDayExpense(
                       typeWidget: TypeWidget.fromMainTabAdd,
@@ -98,7 +100,7 @@ class _MainTabWidgetState extends State<MainTabWidget> {
                       updateMainTab: _updateMainTab,
                       child: CustomCard<BigInt>(
                         statusUserProp: widget.statusUserProp,
-                        dayExpense: BigInt.zero,
+                        cardData: dataForCard??BigInt.zero,
                         categoryExpenses: categoryExpenses,
                         dateTime: DateTime.tryParse(stringSelectedDateTime),
                         deleteCard:(context)=>_deleteCategory(context,categoryExpenses),
